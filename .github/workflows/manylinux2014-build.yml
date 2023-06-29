@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v3
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
       - run: cmake --build build --config Release --target install
-      - run: cd ../wheelhouse
+      - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
       - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
       - run: mv wheelhouse/* .
