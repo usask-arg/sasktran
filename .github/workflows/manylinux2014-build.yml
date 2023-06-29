@@ -8,7 +8,8 @@ on:
 
 jobs:
   build-cpp:
-    runs-on: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
+    runs-on: ubuntu-latest
+    container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
     env:
         BUILDPYTHONENV: "cp37-cp37m;cp38-cp38;cp39-cp39;cp310-cp310;cp311-cp311"
         IN_MANYLINUX_CONTAINER: "TRUE"
