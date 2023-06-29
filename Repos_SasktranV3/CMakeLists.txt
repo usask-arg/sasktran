@@ -1,0 +1,346 @@
+# ssasktranv3 source code
+
+set(sasktran_common_src
+    modules/sktran_common/curvedrays/sktran_raystorage_curved.cpp
+	modules/sktran_common/curvedrays/sktran_raytracer_curved_shells.cpp
+    modules/sktran_common/curvedrays/sktran_ray_curved.cpp
+	modules/sktran_common/engine/sktran_enginebase.cxx
+	modules/sktran_common/diagnostics/sktran_diagnosticinterface.cxx
+	modules/sktran_common/emissiontables/sktran_emissiontable_1d.cpp
+	modules/sktran_common/emissiontables/sktran_emissiontable_base.cpp
+	modules/sktran_common/emissiontables/sktran_emissiontable_notable.cpp
+	modules/sktran_common/grids/sktran_griddefscatterangle.cpp
+	modules/sktran_common/grids/sktran_raytracingshells.cpp
+	modules/sktran_common/miscellaneous/sktran_codetimer.cxx
+	modules/sktran_common/miscellaneous/sktran_sourceterm.cpp
+	modules/sktran_common/opticalpropertytables/sktran_opticalproperties_1d_heightv3.cpp
+	modules/sktran_common/opticalpropertytables/sktran_opticalproperties_3d_unitsphere.cpp
+	modules/sktran_common/opticalpropertytables/sktran_polarizationprops.cpp
+	modules/sktran_common/opticalpropertytables/sktran_scattermatrix.cpp
+	modules/sktran_common/quadrature/opticaldepthcalculator_linearwithheight.cxx
+	modules/sktran_common/quadrature/sktran_integrator_adaptive.cpp
+	modules/sktran_common/quadrature/sktran_integrator_base.cpp
+	modules/sktran_common/quadrature/sktran_integrator_straight.cpp
+	modules/sktran_common/quadrature/sktran_srcintegrator.cpp
+	modules/sktran_common/solartransmissiontables/sktran_solartransmission_2d.cpp
+	modules/sktran_common/solartransmissiontables/sktran_solartransmission_3d.cpp
+	modules/sktran_common/solartransmissiontables/sktran_solartransmission_base.cpp
+	modules/sktran_common/solartransmissiontables/sktran_solartransmission_notable.cpp
+	modules/sktran_common/solartransmissiontables/sktran_sun.cpp
+	modules/sktran_common/specifications/raytracingregionmanager.cxx
+	modules/sktran_common/specifications/sktran_lineofsightarray.cxx
+	modules/sktran_common/straightrays/sktran_indexofrefraction.cpp
+	modules/sktran_common/straightrays/sktran_rayminimumcontainer.cpp
+	modules/sktran_common/straightrays/sktran_raytracer_shells.cpp
+	modules/sktran_common/straightrays/sktran_raytracer_straight_generic.cpp
+	modules/sktran_common/straightrays/sktran_ray_base.cpp
+	modules/sktran_common/straightrays/sktran_ray_straight.cpp
+	modules/sktran_common/straightrays/sktran_storage_curved.cpp
+	modules/sktran_common/unitspheres/sktran_unitsphere.cxx
+	modules/sktran_common/unitspheres/sktran_unitsphere_bucky.cxx
+	modules/sktran_common/unitspheres/sktran_unitsphere_delaunay.cpp
+	modules/sktran_common/unitspheres/sktran_unitsphere_dummy.cpp
+	modules/sktran_common/unitspheres/sktran_unitsphere_latlongrid.cxx
+	modules/sktran_common/unitspheres/sktran_unitsphere_me.cpp
+	modules/sktran_common/unitspheres/sktran_unitsphere_plane.cpp
+)
+
+set(sasktran_mc_src
+    modules/monte_carlo/sktran_averagingkernel.cpp
+	modules/monte_carlo/sktran_configurationmanager_mc.cpp
+	modules/monte_carlo/sktran_engine_mc_v21.cpp
+	modules/monte_carlo/sktran_erptmanager.cpp
+	modules/monte_carlo/sktran_hpflipop.cpp
+	modules/monte_carlo/sktran_integrator_mc.cpp
+    modules/monte_carlo/sktran_mc_optimal_scatter_sequence.cpp
+	modules/monte_carlo/sktran_mc.cpp
+	modules/monte_carlo/sktran_mcamfcalculator.cpp
+	modules/monte_carlo/sktran_mcobservermanager.cpp
+	modules/monte_carlo/sktran_mcphoton.cpp
+	modules/monte_carlo/sktran_mcscatteroperator.cpp
+    modules/monte_carlo/sktran_mcsolartransmission.cpp
+	modules/monte_carlo/sktran_random_number_generator.cpp
+	modules/monte_carlo/sktran_specifications_mc.cpp
+	modules/monte_carlo/sktran_sun_randomdisc.cpp
+    modules/monte_carlo/sktran_tableopticalproperties_inelastic_mc.cpp
+	modules/monte_carlo/sktran_tableopticalproperties_mc.cpp
+)
+set(sasktran_hr_src
+    modules/sktran_highres/sktran_diffuse_table_cpu_eatcalculator_dorotation.cpp
+	modules/sktran_highres/sktran_diffuse_table_cpu_etacalculator_norotation.cpp
+	modules/sktran_highres/sktran_hr.cpp
+	modules/sktran_highres/sktran_hr_debug.cpp
+	modules/sktran_highres/sktran_hr_diffuse_aval_base.cpp
+	modules/sktran_highres/sktran_hr_diffuse_aval_matrixstore.cpp
+	modules/sktran_highres/sktran_hr_diffuse_aval_matrixtable.cpp
+	modules/sktran_highres/sktran_hr_diffuse_aval_scalarstore.cpp
+	modules/sktran_highres/sktran_hr_diffuse_point.cpp
+	modules/sktran_highres/sktran_hr_diffuse_radstore_base.cpp
+	modules/sktran_highres/sktran_hr_diffuse_radstore_polarized.cpp
+	modules/sktran_highres/sktran_hr_diffuse_radstore_pseudovec1.cpp
+	modules/sktran_highres/sktran_hr_diffuse_radstore_scalar.cpp
+	modules/sktran_highres/sktran_hr_diffuse_second_order_source.cpp
+	modules/sktran_highres/sktran_hr_diffuse_source.cpp
+	modules/sktran_highres/sktran_hr_diffuse_table_cpu.cpp
+	modules/sktran_highres/sktran_hr_diffuse_table_sza.cpp
+	modules/sktran_highres/sktran_hr_engine.cpp
+	modules/sktran_highres/sktran_hr_linesofsighttable.cpp
+	modules/sktran_highres/sktran_hr_perturbation_absorption.cpp
+	modules/sktran_highres/sktran_hr_rayregionmanager.cpp
+	modules/sktran_highres/sktran_hr_sparse_mv.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_core.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_diffuse.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_integrator.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_opticalpropertiestable.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_raytracer.cpp
+	modules/sktran_highres/sktran_hr_specs_internal_wf.cpp
+	modules/sktran_highres/sktran_hr_specs_user_diffuse.cpp
+	modules/sktran_highres/sktran_hr_specs_user_integrator.cpp
+	modules/sktran_highres/sktran_hr_specs_user_opticalpropertiestable.cpp
+	modules/sktran_highres/sktran_hr_specs_user_raytracer.cpp
+	modules/sktran_highres/sktran_hr_specs_user_wf.cpp
+	modules/sktran_highres/sktran_hr_thread_manager.cpp
+	modules/sktran_highres/sktran_hr_wf_speciesinformation.cpp
+	modules/sktran_highres/sktran_hr_wf_extinction_table.cpp
+	modules/sktran_highres/sktran_hr_wf_integrator.cpp
+	modules/sktran_highres/sktran_hr_wf_ray.cpp
+	modules/sktran_highres/sktran_hr_wf_store.cpp
+	modules/sktran_highres/sktran_outgoingsphereobject.cpp
+)
+set(sasktran_so_src
+    modules/sktran_so/jindex/sktran_jindex.cpp
+	modules/sktran_so/sktran_engine/sktran_diffusegroundpoint.cpp
+	modules/sktran_so/sktran_engine/sktran_diffusepointgeometry.cpp
+	modules/sktran_so/sktran_engine/sktran_diffusepointoptical.cpp
+	modules/sktran_so/sktran_engine/sktran_diffusepointstable.cpp
+	modules/sktran_so/sktran_engine/sktran_diffuseprofilegeometry.cpp
+	modules/sktran_so/sktran_engine/sktran_diffuseprofileopticalarray.cpp
+	modules/sktran_so/sktran_engine/sktran_diffuseprofileoptical.cpp
+	modules/sktran_so/sktran_engine/sktran_diffusescatteringmatrixgeometry.cpp
+	modules/sktran_so/sktran_engine/sktran_enginegeometry.cpp
+	modules/sktran_so/sktran_engine/sktran_groundpointtable.cpp
+	modules/sktran_so/sktran_engine/sktran_lineofsight.cpp
+	modules/sktran_so/sktran_engine/sktran_losgeometry_v2.cpp
+	modules/sktran_so/sktran_engine/sktran_lossinglescattable_v21.cpp
+	modules/sktran_so/sktran_engine/sktran_observerlineofsight.cpp
+	modules/sktran_so/sktran_engine/sktran_observerlinesofsightoptical.cpp
+	modules/sktran_so/sktran_engine/sktran_raytracingbase_v2.cpp
+	modules/sktran_so/sktran_engine/sktran_solartransmissionoptical_v21.cpp
+	modules/sktran_so/sktran_engine/sktran_solartransmission_v21.cpp
+	modules/sktran_so/sktran_engine/sktran_specsinternal.cpp
+	modules/sktran_so/sktran_engine/sktran_threadaction.cxx
+	modules/sktran_so/sktran_engine/sktran_thread.cxx
+	modules/sktran_so/sktran_engine/sktran_threadmanagerboost.cxx
+	modules/sktran_so/sktran_engine/sktran_threadmanager_openmp.cxx
+	modules/sktran_so/sktran_legacy/sktran_diffuseprofilemanager_v2.cpp
+	modules/sktran_so/sktran_legacy/sktran_emissionstable_1d.cpp
+	modules/sktran_so/sktran_legacy/sktran_gridspecifications_v2.cpp
+	modules/sktran_so/sktran_legacy/sktran_groundpointtable_uniform.cpp
+	modules/sktran_so/sktran_legacy/sktran_opticalproperties_v2.cpp
+	modules/sktran_so/sktran_legacy/sktran_quadrature_uniform.cpp
+	modules/sktran_so/sktran_legacy/sktran_raytracespecs_general.cpp
+	modules/sktran_so/sktran_legacy/sktran_solargeomcache_v2.cpp
+	modules/sktran_so/sktran_legacy/sktranspecificationsdiffuse_2dheightsza.cpp
+	modules/sktran_so/sktran_legacy/sktran_tableraylos_legacy.cpp
+)
+set(sasktran_occ_src
+	modules/sktran_occ/skoccult_engine.cpp 
+    modules/sktran_occ/skoccult_opticalproperties1d_heightwavelength.cpp 
+    modules/sktran_occ/sktran_ray_curved_piecewise.cpp
+	modules/sktran_occ/refrac.cpp  
+)
+
+set(sasktran_core_src
+    modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base.cpp
+	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base_specifics.cpp
+	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_linearcombo.cpp
+	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_msis.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_hr.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_mc.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_so.cpp
+	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
+		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
+
+set(sasktran_dll_src
+		modules/sasktranv3_impl/dllimplementation/configuresasktranregistry.cxx
+		modules/sasktranv3_impl/dllimplementation/dllmain.cpp
+		modules/sasktranv3_impl/dllimplementation/stdafx.cpp
+		modules/sasktranv3_impl/dllimplementation/SasktranImpl.cpp
+		)
+
+set(sasktran_test_src
+	Application/TestInstallation/compare_sktran_to_hr.cpp 
+	Application/TestInstallation/runmc.cpp
+	Application/TestInstallation/sasktran_unit_tests.cpp
+	Application/TestInstallation/short_emission_test.cpp
+	Application/TestInstallation/short_test_suite.cpp
+	Application/TestInstallation/simple_ray_test.cpp
+	Application/TestInstallation/test_aband.cpp
+	Application/TestInstallation/test_curvedrays.cpp
+	Application/TestInstallation/test_hitran.cpp
+	Application/TestInstallation/test_hr.cpp 
+	Application/TestInstallation/test_linearcombo.cpp 
+	Application/TestInstallation/test_mc.cpp 
+	Application/TestInstallation/test_mcamf.cpp 
+	Application/TestInstallation/test_msisatomico.cpp 
+	Application/TestInstallation/test_o2_o2.cpp 
+	Application/TestInstallation/test_polarization.cpp 
+	Application/TestInstallation/test_so2.cpp 
+	Application/TestInstallation/testdelaunaysphere.cpp 
+	Application/TestInstallation/testscattermatrices.cpp 
+	Application/TestInstallation/testsinglescatter.cpp
+
+
+
+)
+
+# Build the library
+add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src})
+
+# Set the header files
+install (TARGETS ${SASKTRAN_BASE_NAME}
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRAN_BASE_NAME})
+
+install(DIRECTORY "./"
+		DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRAN_BASE_NAME}
+		FILES_MATCHING
+		PATTERN "*.h"
+		)
+
+
+add_library(${SASKTRAN_STUB_NAME} ${sasktran_core_src})
+add_library(${SASKTRAN_CORE_NAME} SHARED ${sasktran_dll_src})
+
+# Set the header files
+install (TARGETS ${SASKTRAN_STUB_NAME}
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRAN_BASE_NAME})
+
+
+add_executable(sasktran_tests ${sasktran_test_src})
+
+set_target_properties(${SASKTRAN_CORE_NAME} PROPERTIES RELEASE_POSTFIX "")
+set_target_properties(${SASKTRAN_CORE_NAME} PROPERTIES DEBUG_POSTFIX "")
+
+# Windows specific links
+set(sasktran_win_links
+	hitran_tips
+	wiscombemie
+	msis90e
+	tmatrixrandomep
+	bcrypt
+)
+# linux specific links
+set(sasktran_unix_links
+	dl
+	rt
+	z
+)
+# mac specific links
+set(sasktran_darwin_links
+		z
+		gfortran
+		)
+
+set(sasktran_links
+		${SASKTRAN_STUB_NAME}
+		${SASKTRAN_BASE_NAME}
+		${SKCLIMATOLOGY_NAME}
+		${SKOPTICALPROPERTIES_NAME}
+		${SASKTRANIF_NAME}
+		${NXBASE_NAME}
+		${NXNETCDFIO_NAME}
+		${netCDF_LIBRARIES}
+		${Boost_LIBRARIES}
+		${HDF5_LIBRARY}
+		yaml-cpp
+)
+
+target_link_libraries(${SASKTRAN_CORE_NAME}
+	${sasktran_links}
+	)
+target_link_libraries(sasktran_tests
+		${sasktran_links}
+		)
+
+if(WIN32)
+	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_win_links})
+	target_link_libraries(sasktran_tests ${sasktran_win_links})
+elseif(LINUX)
+	find_package(BLAS REQUIRED)
+	find_package(LAPACK REQUIRED)
+	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+
+	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_unix_links})
+	target_link_libraries(sasktran_tests ${sasktran_unix_links})
+
+	# Set static linking
+	# target_link_libraries(${SASKTRAN_CORE_NAME} -static-libgcc -static-libstdc++)
+
+elseif(APPLE)
+	find_package(BLAS REQUIRED)
+	find_package(LAPACK REQUIRED)
+	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
+
+	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_darwin_links})
+	target_link_libraries(sasktran_tests ${sasktran_darwin_links})
+endif()
+
+
+# Some special logic to support both CATCH2 version 2 and 3 for now
+find_package(Catch2 2 CONFIG QUIET)
+
+if(Catch2_FOUND)
+	# Found Catch2 Version 2
+	target_link_libraries(sasktran_tests Catch2::Catch2)
+else()
+	# Look for Catch2 Version 3
+	message("Could not find Catch2 Version 2, Looking for Version 3")
+	find_package(Catch2 3 CONFIG REQUIRED)
+	target_link_libraries(sasktran_tests Catch2::Catch2WithMain)
+	target_compile_definitions(sasktran_tests PUBLIC SKTRAN_CATCH2_VERSION3)
+endif()
+
+
+# Build wheels for each python environment
+if(TRUE)
+	if(DEFINED PythonEnvironments)
+		message(STATUS "Building wheels for ${PythonEnvironments}")
+
+		add_custom_command(TARGET ${SASKTRAN_CORE_NAME}
+			POST_BUILD
+			COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${SASKTRAN_CORE_NAME}> ${CMAKE_SOURCE_DIR}/Repos_SasktranV3/python_sasktrancore/sasktran_core/
+		)
+
+		get_target_property(YAML_LIBRARY_DIR yaml-cpp LOCATION_RELEASE)
+
+		# This is the proper way to do it but for some reason this segfaults in the linux build container
+		# So instead we allow passing of pure files to the setup.py and remove it there
+		# cmake_path(REMOVE_FILENAME YAML_LIBRARY_DIR)
+
+		set(SASKTRAN_IF_INCLUDE_PATH "${Boost_INCLUDE_DIRS}\;${YAML_CPP_INCLUDE_DIR} ")
+		set(SASKTRAN_IF_LIBRARY_PATH "$<TARGET_FILE_DIR:${SASKTRANIF_NAME}>\;$<TARGET_FILE_DIR:${NXBASE_NAME}>\;${Boost_LIBRARY_DIRS}\;${YAML_LIBRARY_DIR} ")
+
+		foreach(env ${PythonEnvironments})
+			if(WIN32)
+				add_custom_command(TARGET ${SASKTRAN_CORE_NAME}
+					POST_BUILD
+					COMMAND ./buildscripts/build_whl_sasktran_win.bat ${env} "${SASKTRAN_IF_INCLUDE_PATH}" "${SASKTRAN_IF_LIBRARY_PATH}"
+					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+				)
+			else()
+				add_custom_command(TARGET ${SASKTRAN_CORE_NAME}
+					POST_BUILD
+					COMMAND bash buildscripts/build_whl_sasktran_linux ${env} "${SASKTRAN_IF_INCLUDE_PATH}" "${SASKTRAN_IF_LIBRARY_PATH}" ${CMAKE_C_COMPILER} ${CMAKE_CXX_COMPILER}
+					WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+				)
+			endif()
+		endforeach(env)
+	endif()
+endif()

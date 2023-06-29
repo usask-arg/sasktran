@@ -1,0 +1,75 @@
+
+Example 1
+=========
+
+An example is shown below. The example uses the Successive Orders (SO) engine to calculate the radiance
+seen along 2 lines of sight at 3 wavelengths. The calculation accounts for Rayleigh scattering and ozone 
+absorption. The Rayleigh scattering uses air number density extracted from the MSIS atmospheric model. The 
+ozone absorption uses cross-sections developed for the Odin-OSIRIS instrument and extracts ozone number density
+from the Labow O3 climatology model. The albedo of the ground is set to 1.0::
+
+.. highlight:: python
+
+Python Version
+^^^^^^^^^^^^^^
+::
+
+   #import sasktranif.sasktranif as skif 
+   engine             = skif.ISKEngine('SO');
+   rayleigh           = skif.ISKOpticalProperty('RAYLEIGH');
+   msis90             = skif.ISKClimatology    ('MSIS90');
+   o3_opticalprops    = skif.ISKOpticalProperty('O3_OSIRISRES');   
+   o3numberdensity    = skif.ISKClimatology    ('O3LABOW');
+
+   engine.AddSpecies( 'SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3', msis90, rayleigh );
+   engine.AddSpecies( 'SKCLIMATOLOGY_O3_CM3', o3numberdensity, o3_opticalprops);
+   engine.SetAlbedo (1.0 );
+
+   wavelen   = [600.0,550.0, 340.0];
+   engine.SetWavelengths( wavelen );
+
+   Observer1 = [ 3.676013154788849600e+005, 1.009976313640051500e+006, -6.871601202127538600e+006];
+   Los1      = [ 2.884568631765662100e-001, 7.925287180643269000e-001,  5.372996083468238900e-001];
+   Mjd1      = 54832.5;
+
+   Observer2 = [ 3.692808540679614500e+005, 1.014590807988641800e+006, -6.870844156040793300e+006];
+   Los2      = [ 2.884568631765662100e-001, 7.925287180643269000e-001,  5.372996083468238900e-001];
+   Mjd2      = 54832.5;
+
+   engine.AddLineOfSight( Mjd1,  Observer1, Los1);
+   engine.AddLineOfSight( Mjd2,  Observer2, Los2);
+
+   ok, radiance = engine.CalculateRadiance();
+   print(radiance)
+
+.. highlight:: matlab
+
+Matlab Version
+^^^^^^^^^^^^^^
+::
+
+    engine             = ISKEngine('SO');
+    rayleigh           = ISKOpticalProperty('RAYLEIGH');
+    msis90             = ISKClimatology    ('MSIS90');
+    o3_opticalprops    = ISKOpticalProperty('O3_OSIRISRES');   
+    o3numberdensity    = ISKClimatology    ('O3LABOW');
+
+    engine.AddSpecies('SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3', msis90, rayleigh );
+    engine.AddSpecies('SKCLIMATOLOGY_O3_CM3', o3numberdensity, o3_opticalprops);
+    engine.SetAlbedo (1.0 );
+
+    wavelen   = [600.0,550.0, 340.0];
+    engine.SetWavelengths( wavelen );
+
+    Observer1 = [ 3.676013154788849600e+005, 1.009976313640051500e+006, -6.871601202127538600e+006];
+    Los1      = [ 2.884568631765662100e-001, 7.925287180643269000e-001,  5.372996083468238900e-001];
+    Mjd1      = 54832.5;
+
+    Observer2 = [ 3.692808540679614500e+005, 1.014590807988641800e+006, -6.870844156040793300e+006];
+    Los2      = [ 2.884568631765662100e-001, 7.925287180643269000e-001,  5.372996083468238900e-001];
+    Mjd2      = 54832.5;
+
+    engine.AddLineOfSight( Mjd1,  Observer1, Los1);
+    engine.AddLineOfSight( Mjd2,  Observer2, Los2);
+
+    [ok, radiance] = engine.CalculateRadiance();

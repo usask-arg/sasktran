@@ -1,0 +1,11 @@
+name: py37_test
+dependencies:
+  - python=3.7
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - pip:
+    - pytest-cov

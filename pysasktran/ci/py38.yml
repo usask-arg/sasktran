@@ -1,0 +1,11 @@
+name: py38_test
+dependencies:
+  - python=3.8
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - pip:
+    - pytest-cov

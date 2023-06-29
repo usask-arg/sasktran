@@ -1,0 +1,11 @@
+name: py39_test
+dependencies:
+  - python=3.9
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - pip:
+    - pytest-cov

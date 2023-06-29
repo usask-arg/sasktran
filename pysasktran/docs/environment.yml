@@ -1,0 +1,20 @@
+name: doc_env
+dependencies:
+  - python=3.9
+  - numpy
+  - h5py
+  - hdf4
+  - scipy
+  - netCDF4
+  - jpeg
+  - ipython
+  - jupyter
+  - pandoc
+  - matplotlib
+  - xarray
+  - pip
+  - pip:
+    - sphinx
+    - sphinx_rtd_theme
+    - pytest-cov
+    - nbsphinx

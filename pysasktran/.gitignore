@@ -1,0 +1,11 @@
+*__pycache__*
+.idea/*
+.coverage
+.cache/
+docs/build/
+htmlcov/
+*.egg-info
+build/
+dist/
+.vscode/
+*.ipynb_checkpoints*

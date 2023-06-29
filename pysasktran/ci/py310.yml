@@ -1,0 +1,11 @@
+name: py310_test
+dependencies:
+  - python=3.10
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - pip:
+    - pytest-cov

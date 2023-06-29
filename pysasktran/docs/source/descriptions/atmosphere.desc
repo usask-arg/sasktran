@@ -1,0 +1,4 @@
+:ref:`atmosphere`
+    An object that describes the atmospheric constituents, and surface type to the engine. 
+    Atmospheric constituents are defined by a list of :ref:`species`, and surfaces are defined by
+    a given :ref:`brdf`.

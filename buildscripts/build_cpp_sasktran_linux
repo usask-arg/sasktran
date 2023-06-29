@@ -1,0 +1,225 @@
+set -e
+
+THIRDPARTYINCLUDE=~/thirdparty/include
+THIRDPARTYLIB=~/thirdparty/lib/
+BASEDIR=`pwd`
+INSTALLDIR=`pwd`/locallibs
+#PYENV=""
+MANYLINUXBUILD='no'
+JUSTBASECODE="no"
+
+DEBUG='no'
+CLEAN='no'
+
+echo " "
+echo " "
+echo "***********************************************************************************************************"
+echo "* SasktranCoreComponents port to Linux, 2016-11-03"
+echo "* ------------------------------------------------"
+echo "* This script is used to built the USASK-ARG SasktranCoreComponents taken from the master branch"
+echo "* of the SasktranCoreComponents repository at git@arggit.usask.ca:ARGPackages/SasktranCoreComponents.git"
+echo "* Note:"
+echo "*  This repository contains submodules that must be initialized and updated with"
+echo "*       > git submodule init"
+echo "*   and > git submodule update" 
+echo "* "
+echo "* "
+
+while getopts "b:i:l:p:jmchg" opt; do
+  case $opt in
+
+    m)
+      MANYLINUXBUILD="yes"
+      ;;
+    b)
+      INSTALLDIR=$OPTARG
+      ;;
+    i)
+      THIRDPARTYINCLUDE=$OPTARG
+      ;;
+    j)
+      JUSTBASECODE="yes"
+      ;;
+#    p)
+#      PYENV=$OPTARG
+#      ;;
+    l)
+      THIRDPARTYLIB=$OPTARG
+      ;;
+    c)
+      CLEAN="yes"
+      ;;
+    g)
+      DEBUG="yes"
+      ;;
+    h)
+      echo "* buildarglibrarieslinux -b <installdir> -i <includedirs> -p <pyEnv> -g -c -h"
+      echo "* "
+      echo "*    Options:"
+      echo "*    -b <installdir>           : Install libraries, executables, caches registry under this folder"
+      echo "*                                default is ~/localinstall"
+      echo "*    -i <includedirs>          : Directories used to search for header files of third party software, colon separated list, default is ~/thirdparty/include/"
+      echo "*    -l <libdirs>              : Directories used to search for third party libraries, colon separated list, default is ~/thirdparty/lib/"
+#      echo "*    -p <python environment>   : Build the wheel using the specified python environment"
+      echo "*                                (uses 'source activate <pyEnv>' and 'source deactivate'), default uses current python environment"
+      echo "*    -j                        : Build just the Repose_BaseCode. Useful for many of the ARG instruments which dont need Sasktran"
+      echo "*    -m                        : Build the manylinux python wheel. You must be in a suitable Docker environment and have , default no" 
+      echo "*    -c                        : clean the projects as they are built. Default is not to clean."
+      echo "*    -g                        : Build debug versions. Note that you should also use option -c to ensure"
+      echo "*                                all objects are rebuilt in debug mode"
+      echo "*    -h                        : print this message and exit"
+      echo "* "
+      echo "***********************************************************************************************************"
+      exit
+      ;;
+    \?)
+      echo "Invalid option: -$OPTARG" >&2
+      exit
+      ;;
+  esac
+done
+shift "$((OPTIND-1))" # Shift off the options and optional --.
+
+SASKTRANIF_VERSION_WITHSPACE=$(sed -n '/<SASKTRANIF_VERSION>/{s:[[:space:]]*<SASKTRANIF_VERSION>\([-0-9\.a-zA-Z_+]*\)</SASKTRANIF_VERSION>[[:space:]]*:\1: p}' ./Repos_SasktranV3/sasktranif_version.props)
+SASKTRANIF_VERSION="$(echo -e "${SASKTRANIF_VERSION_WITHSPACE}" | sed -e 's/^[[:space:]]*//' -e 's/[[:space:]]*$//')"
+
+export SASKTRANIF_VERSION
+
+#if [ -z "$PYENV" ]
+#  then
+#     PYENVOSTR="base"
+#  else
+#     PYENVOSTR="$PYENV"
+#fi
+
+
+echo "* Options Used for Build"
+echo "* ----------------------"
+echo "* Installation Directory = $INSTALLDIR"
+echo "* Third Party Includes   = $THIRDPARTYINCLUDE"
+echo "* Third Party libraries  = $THIRDPARTYLIB"
+echo "* CLEAN projects         = $CLEAN"
+echo "* DEBUG code             = $DEBUG"
+#echo "* Python Environment     = $PYENVOSTR"
+echo "***********************************************************************************************************"
+echo " "
+
+CPLUS_INCLUDE_PATH=$BASEDIR/Repos_BaseCode/nxbase:$CPLUS_INCLUDE_PATH
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$BASEDIR/Repos_BaseCode/lapack
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$BASEDIR/Repos_BaseCode/atombase
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$BASEDIR/Repos_SasktranIF
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$BASEDIR/Repos_skclimatology:$BASEDIR/Repos_skopticalproperties
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$BASEDIR/Repos_BaseCode/nxhdf/nxnetcdfio:$BASEDIR/Repos_BaseCode/nxhdf/nxhdfeos:$BASEDIR/Repos_BaseCode/nxhdf/nxhdfeos5
+CPLUS_INCLUDE_PATH=$CPLUS_INCLUDE_PATH:$THIRDPARTYINCLUDE:$THIRDPARTYINCLUDE/hdfeos5:$THIRDPARTYINCLUDE/hdf5
+
+LIBRARY_PATH=$INSTALLDIR/lib:$THIRDPARTYLIB:$LIBRARY_PATH
+LD_LIBRARY_PATH=$THIRDPARTYLIB:$LD_LIBRARY_PATH
+LD_RUN_PATH=$THIRDPARTYLIB:$LD_RUN_PATH
+export CPLUS_INCLUDE_PATH LIBRARY_PATH LD_LIBRARY_PATH LD_RUN_PATH
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building Basecode"
+echo "* 	-----------------"
+echo "***********************************************************************************************************"
+echo ''
+
+
+pushd Repos_BaseCode
+autoconf configure.in > configure
+chmod u+x configure
+./configure --prefix=$INSTALLDIR --enable-debug=$DEBUG THIRDPARTYINCLUDE=$THIRDPARTYINCLUDE THIRDPARTYLIB=$THIRDPARTYLIB
+if [ $CLEAN == "yes" ]; then make clean; fi
+make
+make install
+popd
+
+if [ "$JUSTBASECODE" == "yes" ]
+  then
+  exit
+fi
+
+
+#if [ -n "$PYENVOSTR" ]
+#  then
+#  echo "Activating python environment $PYENVOSTR"
+#  source activate $PYENVOSTR
+#fi
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building sasktranif"
+echo "* 	----------------------"
+echo "***********************************************************************************************************"
+echo ''
+
+
+pushd Repos_SasktranIF
+autoconf configure.in > configure
+chmod u+x configure
+./configure --prefix=$INSTALLDIR --enable-debug=$DEBUG
+if [ $CLEAN == "yes" ]; then make clean; fi
+make
+make install
+popd
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building skclimatology"
+echo "* 	----------------------"
+echo "***********************************************************************************************************"
+echo ''
+
+pushd Repos_skclimatology
+autoconf configure.in > configure
+chmod u+x configure
+./configure --prefix=$INSTALLDIR --enable-debug=$DEBUG THIRDPARTYINCLUDE=$THIRDPARTYINCLUDE THIRDPARTYLIB=$THIRDPARTYLIB
+if [ $CLEAN == "yes" ]; then make clean; fi
+make
+make install
+popd
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building skopticalproperties"
+echo "* 	----------------------------"
+echo "***********************************************************************************************************"
+echo ''
+
+
+pushd Repos_skopticalproperties
+autoconf configure.in > configure
+chmod u+x configure
+./configure --prefix=$INSTALLDIR --enable-debug=$DEBUG THIRDPARTYINCLUDE=$THIRDPARTYINCLUDE THIRDPARTYLIB=$THIRDPARTYLIB
+if [ $CLEAN == "yes" ]; then make clean; fi
+make
+make install
+popd
+
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building sasktranV3"
+echo "* 	-------------------"
+echo "***********************************************************************************************************"
+echo ''
+
+pushd Repos_SasktranV3
+autoconf configure.in > configure
+chmod u+x configure
+./configure --prefix=$INSTALLDIR --enable-debug=$DEBUG SASKTRANIF_VERSION=$SASKTRANIF_VERSION THIRDPARTYINCLUDE=$THIRDPARTYINCLUDE THIRDPARTYLIB=$THIRDPARTYLIB
+if [ $CLEAN == "yes" ]; then make clean; fi
+make
+make install
+popd
+
+echo ''
+echo "***********************************************************************************************************"
+echo "* 	Building sasktran core python wheel"
+echo "* 	-----------------------------------"
+echo "***********************************************************************************************************"
+echo ''
+
+mv Repos_SasktranV3/_sasktran_core_internals.so Repos_SasktranV3/python_sasktrancore/sasktran_core
+
+

@@ -1,0 +1,38 @@
+.. _clim_osiris_ecmwf:
+
+OSIRIS_ECMWF (DEPRECATED)
+=========================
+A climatology class that provides the background atmospheric state used in Odin-OSIRIS retrievals. 
+The atmospheric state parameters are derived from the ECMWF climatology interpolated to individual OSIRIS scan. 
+The advantage of the class is that a much smaller file size can store the ECMWF information for one scan and 
+it is much quicker to read in the small file than the entire ECMWF climatology.
+
+..  note::
+
+    This climatology is no longer part of Sasktran Core components. It is now installed as part of the OSIRIS
+    Level 1 Services.
+
+The class only considers mjd when updating the cache and completely ignores any latitude and longitude parameters 
+provided by the user. The class is very useful for providing the atmospheric state of OSIRIS scans 
+but has limited value outside this purpose::
+
+   import sasktranif as skif
+
+   mjd = 52393.3792987115
+   lat = 0.0
+   lng = 0.0
+   height = 25000.0
+   location = [lat,lng,height,mjd]
+   climate = skif.ISKClimatology('OSIRIS_ECMWF')
+   climate.UpdateCache( location )
+   ok1, air = climate.GetParameter( 'SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3', location);
+   ok2, P   = climate.GetParameter( 'SKCLIMATOLOGY_PRESSURE_PA',          location);
+   ok3, T   = climate.GetParameter( 'SKCLIMATOLOGY_TEMPERATURE_K',        location);
+
+Supported Species
+^^^^^^^^^^^^^^^^^
+
+* SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3
+* SKCLIMATOLOGY_TEMPERATURE_K
+* SKCLIMATOLOGY_PRESSURE_PA
+

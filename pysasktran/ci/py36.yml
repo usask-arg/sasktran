@@ -1,0 +1,11 @@
+name: py36_test
+dependencies:
+  - python=3.6
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - pip:
+    - pytest-cov

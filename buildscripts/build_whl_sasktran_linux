@@ -1,0 +1,27 @@
+#!/bin/bash
+
+PYENV=$1
+export SASKTRAN_IF_INCLUDE_PATH=$2
+export SASKTRAN_IF_LIBRARY_PATH=$3
+export CC=$4
+export CXX=$5
+AUDITWHEEL=$6
+
+
+if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
+    eval "$(conda shell.bash hook)"
+    conda activate $PYENV
+
+    pushd pysasktran
+    python3 setup.py bdist_wheel -d ../wheelhouse
+    popd
+    conda deactivate
+else
+  pushd pysasktran
+  /opt/python/$PYENV/bin/python setup.py bdist_wheel -d ../wheelhouse
+  popd
+fi
+
+
+
+

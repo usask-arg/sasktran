@@ -1,0 +1,4 @@
+:ref:`geometry`
+    Objects which describe the geometry of the calculations to the engine. At a minimum these 
+    objects define the :ref:`lines_of_sight`, but can also specify things such as the suns
+    position and the polling reference point.
