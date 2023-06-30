@@ -23,7 +23,7 @@ jobs:
           activate-environment: ""
 
       - name: Create Conda py38 Build Environment
-        run: conda -n py38 python=3.8 numpy=1.11.3
+        run: conda create -n py38 python=3.8 numpy=1.11.3
 
       - name: Install boost
         uses: MarkusJx/install-boost@v2.4.1
