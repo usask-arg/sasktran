@@ -50,6 +50,9 @@ jobs:
         with:
           name: wheels-linux
           path: wheelhouse
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Test wheel
         run: ./buildscripts/test_sasktran_linux ${{ matrix.py_version }}
