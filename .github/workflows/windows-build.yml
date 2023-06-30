@@ -84,6 +84,9 @@ jobs:
         with:
           auto-activate-base: true
           activate-environment: ""
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
@@ -91,8 +94,5 @@ jobs:
           name: wheels-windows
           path: wheelhouse
       
-      - name: Checkout repository
-        uses: actions/checkout@v3
-      
       - name: Test wheel
-        run: call buildscripts\\test_sasktran_win ${{ matrix.py_version }}
+        run: ./buildscripts/test_sasktran_win.bat ${{ matrix.py_version }}

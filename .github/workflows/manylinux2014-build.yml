@@ -45,14 +45,14 @@ jobs:
         py_version: [py37, py38, py39, py310, py311]
 
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
         with:
           name: wheels-linux
           path: wheelhouse
-      
-      - name: Checkout repository
-        uses: actions/checkout@v3
 
       - name: Test wheel
-        run: sh buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+        run: bash buildscripts/test_sasktran_linux ${{ matrix.py_version }}
