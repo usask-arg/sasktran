@@ -37,6 +37,7 @@ jobs:
           path: deps
 
   test-wheels-linux:
+    needs: build-cpp-wheels-manylinux2014
     runs-on: ubuntu-latest
     container: continuumio/anaconda3
     strategy:

@@ -73,6 +73,7 @@ jobs:
           path: deps
   
   test-wheels-windows:
+    needs: build-cpp-wheels-windows 
     runs-on: windows-latest
     strategy:
       matrix:
