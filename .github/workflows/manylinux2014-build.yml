@@ -21,9 +21,8 @@ jobs:
       - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
       - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
-      - run: mv wheelhouse/* .
-      - run: rmdir wheelhouse
       - run: cd ..
+      - run: ls wheelhouse/
 
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3
