@@ -11,6 +11,8 @@ jobs:
     runs-on: windows-latest
     env:
         BUILDPYTHONENV: "py37;py38;py39;py310;py311"
+        VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -19,6 +21,16 @@ jobs:
         id: install-boost
         with:
           boost_version: 1.73.0
+
+      - name: Install netCDF
+        run: vcpkg install netcdf-c
+
+      - name: Install catch2
+        run: vcpkg install catch2
+
+      - name: Install yaml-cpp
+        run: vcpkg install yaml-cpp
+          
 
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
         env:
