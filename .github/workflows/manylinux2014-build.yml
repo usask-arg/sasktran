@@ -25,13 +25,13 @@ jobs:
       - run: rmdir wheelhouse
 
       - name: Save wheel artifacts
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: wheels-linux
           path: wheelhouse
 
       - name: Save cpp artifacts
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: cpp-linux
           path: deps

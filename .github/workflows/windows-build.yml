@@ -61,13 +61,13 @@ jobs:
       - run: cmake --build build --config Release --target install
 
       - name: Save wheel artifacts
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: wheels-windows
           path: wheelhouse
 
       - name: Save cpp artifacts
-      - uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v3
         with:
           name: cpp-windows
           path: deps
