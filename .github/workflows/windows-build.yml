@@ -86,8 +86,8 @@ jobs:
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
-          with:
-            name: wheels-windows
-            path: wheelhouse
+        with:
+          name: wheels-windows
+          path: wheelhouse
 
       run: call buildscripts\\test_sasktran_win ${{ matrix.py_version }}
