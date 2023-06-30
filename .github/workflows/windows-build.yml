@@ -21,6 +21,8 @@ jobs:
       - name: Install Boost
         run: |
           ./boost.exe /S /SP- /VERYSILENT
+          dir c:/local
+          dir c:/local/boost_1_82_0
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
@@ -45,4 +47,5 @@ jobs:
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
+          BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.2/
       - run: cmake --build build --config Release --target install
