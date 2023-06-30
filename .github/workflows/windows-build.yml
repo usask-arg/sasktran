@@ -17,8 +17,13 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+
       - name: Create Conda py38 Build Environment
-        run: c:/Miniconda/bin/conda.exe -n py38 python=3.8 numpy=1.11.3
+        run: conda -n py38 python=3.8 numpy=1.11.3
 
       - name: Install boost
         uses: MarkusJx/install-boost@v2.4.1
