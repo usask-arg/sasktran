@@ -20,7 +20,7 @@ jobs:
 
       - name: Install Boost
         run: |
-          ./boost.exe /S /SP- /VERYSILENT
+          ./boost.exe /sp- /verysilent /suppressmsgboxes /norestart /dir="c:/local/" | more
           dir c:/local
           dir c:/local/boost_1_82_0
 
