@@ -7,7 +7,7 @@ on:
 
 
 jobs:
-  build-cpp:
+  build-cpp-wheels-windows:
     runs-on: windows-latest
     env:
         BUILDPYTHONENV: "py37;py38;py39;py310;py311"
@@ -59,3 +59,35 @@ jobs:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
       - run: cmake --build build --config Release --target install
+
+      - name: Save wheel artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: wheels-windows
+          path: wheelhouse
+
+      - name: Save cpp artifacts
+      - uses: actions/upload-artifact@v3
+        with:
+          name: cpp-windows
+          path: deps
+  
+  test-wheels-windows:
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        py_version: [py37, py38, py39, py310, py311]
+
+    steps:
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+          with:
+            name: wheels-windows
+            path: wheelhouse
+
+      run: call buildscripts\\test_sasktran_win ${{ matrix.py_version }}

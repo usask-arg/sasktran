@@ -33,7 +33,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 # Try to find boost 1.6 or greater
 set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS system regex timer random)
+find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random)
 
 # Try to find OpenMP
 find_package(OpenMP REQUIRED)
