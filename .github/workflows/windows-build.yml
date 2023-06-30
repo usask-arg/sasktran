@@ -14,8 +14,11 @@ jobs:
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+      - name: Download boost
+        run: wget https://boostorg.jfrog.io/artifactory/main/release/1.82.0/binaries/boost_1_82_0-msvc-14.2-64.exe
+
+      - name: Install Boost
+        run: binaries/boost_1_82_0-msvc-14.2-64.exe /sp- /verysilent /suppressmsgboxes /norestart | more
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
@@ -25,12 +28,6 @@ jobs:
       - name: Create Conda py38 Build Environment
         run: conda create -n py38 python=3.8 numpy=1.11.3
 
-      - name: Install boost
-        uses: MarkusJx/install-boost@v2.4.1
-        id: install-boost
-        with:
-          boost_version: 1.73.0
-
       - name: Install netCDF
         run: vcpkg install netcdf-c
 
@@ -39,7 +36,10 @@ jobs:
 
       - name: Install yaml-cpp
         run: vcpkg install yaml-cpp
-          
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake
         env:
           BOOST_ROOT: ${{ steps.install-boost.outputs.BOOST_ROOT }}
