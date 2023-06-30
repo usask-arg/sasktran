@@ -319,7 +319,7 @@ if(TRUE)
 		)
 
 		get_target_property(YAML_LIBRARY_DIR yaml-cpp LOCATION_RELEASE)
-		get_target_property(YAML_INCLUDER_DIRS TARGET yaml-cpp PROPERTY INTERFACE_INCLUDE_DIRECTORIES)
+		get_target_property(YAML_INCLUDER_DIRS yaml-cpp INTERFACE_INCLUDE_DIRECTORIES)
 
 
 		# This is the proper way to do it but for some reason this segfaults in the linux build container
