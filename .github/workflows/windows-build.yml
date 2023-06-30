@@ -14,11 +14,13 @@ jobs:
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
 
     steps:
-      - name: Download boost
-        run: wget https://boostorg.jfrog.io/artifactory/main/release/1.82.0/binaries/boost_1_82_0-msvc-14.2-64.exe
+      - name: Download Boost
+        run: |
+          curl -L -o boost.exe https://boostorg.jfrog.io/artifactory/main/release/1.82.0/binaries/boost_1_82_0-msvc-14.2-64.exe
 
       - name: Install Boost
-        run: binaries/boost_1_82_0-msvc-14.2-64.exe /sp- /verysilent /suppressmsgboxes /norestart | more
+        run: |
+          ./boost.exe /S /SP- /VERYSILENT
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
