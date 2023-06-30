@@ -42,12 +42,11 @@ jobs:
     strategy:
       matrix:
         py_version: [py37, py38, py39, py310, py311]
-
+        
     steps:
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
         with:
           name: wheels-linux
           path: wheelhouse
-
-      run: ./buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+        run: ./buildscripts/test_sasktran_linux ${{ matrix.py_version }}

@@ -89,5 +89,4 @@ jobs:
         with:
           name: wheels-windows
           path: wheelhouse
-
-      run: call buildscripts\\test_sasktran_win ${{ matrix.py_version }}
+        run: call buildscripts\\test_sasktran_win ${{ matrix.py_version }}
