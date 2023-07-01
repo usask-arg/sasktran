@@ -23,11 +23,15 @@ jobs:
           channels: conda-forge
           auto-activate-base: false
 
-      - run: | 
+      - name: configure cmake project
+        shell: bash -el {0}
+        run: | 
           conda list
           printenv
           cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
-      - run: cmake --build build --config Release --target install
+      - name: build cpp
+        shell: bash -el {0}
+        run: cmake --build build --config Release --target install
 
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3
