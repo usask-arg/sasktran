@@ -24,8 +24,8 @@ jobs:
           auto-activate-base: false
 
       - run: | 
-          echo $CMAKE_ARGS
-          echo ${CMAKE_ARGS}
+          conda list
+          printenv
           cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
       - run: cmake --build build --config Release --target install
 
