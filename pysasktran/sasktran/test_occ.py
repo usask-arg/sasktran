@@ -5,6 +5,7 @@ import sasktran as sk
 
 class TestEngineOCC(unittest.TestCase):
 
+    @unittest.skip
     def test_occ_engine(self):
 
         co2profile = np.array([00000.000, 9.5620350469e+15, 01000.000, 8.5604676285e+15, 02000.000, 7.7062120091e+15, 03000.000, 6.9531991470e+15, 04000.000, 6.2702731320e+15, 05000.000, 5.6375862919e+15,

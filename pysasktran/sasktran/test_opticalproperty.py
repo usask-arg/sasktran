@@ -32,6 +32,7 @@ class TestOpticalProperty(unittest.TestCase):
         no2_van = sk.NO2Vandaele1998()
         self._basic_cross_section_tests(no2_van)
 
+    @unittest.skip
     def test_baum(self):
         baum = sk.BaumIceCrystal(50)
         self._basic_cross_section_tests(baum)

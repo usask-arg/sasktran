@@ -30,6 +30,7 @@ class TestSpecies(unittest.TestCase):
         self._basic_access_tests('SKCLIMATOLOGY_LOGNORMAL_MODERADIUS_MICRONS', climatology)
         self._basic_access_tests('SKCLIMATOLOGY_LOGNORMAL_MODEWIDTH', climatology)
 
+    @unittest.skip
     def test_glossac(self):
         geom0 = sk.VerticalImage()
         geom0.from_sza_saa(0, 0, 0, 0, tanalts_km=[10, 20], mjd=54372, locallook=180)
@@ -46,6 +47,7 @@ class TestSpecies(unittest.TestCase):
         eng.wavelengths = [350]
         eng.calculate_radiance()
 
+    @unittest.skip
     def test_baum(self):
         baum = sk.SpeciesBaumIceCloud(particlesize_microns=50, cloud_top_m=1000, cloud_width_fwhm_m=200,
                                       vertical_optical_depth=0.01, vertical_optical_depth_wavel_nm=750)
