@@ -951,7 +951,7 @@ bool SKTRAN_MCThreadRadianceLogger::SetMinFractionHigherOrder(const std::vector<
 		m_minFracHO = minfrac;
 	}
 	else {
-		nxLog::Record(NXLOG_WARNING, "SKTRAN_MCThreadRadianceLogger::SetMinFractionHigherOrder, Could not set minfrac %f.", minfrac);
+		// nxLog::Record(NXLOG_WARNING, "SKTRAN_MCThreadRadianceLogger::SetMinFractionHigherOrder, Could not set minfrac %f.", minfrac);
 	}
 
 	return ok;
