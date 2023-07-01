@@ -10,18 +10,17 @@ jobs:
   build-cpp-wheels-mac:
     runs-on: macos-11
     env:
-        BUILDPYTHONENV: "py37;py38;py39;py310;py311"
+        BUILDPYTHONENV: "py38"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment 
+        uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-activate-base: true
-          activate-environment: ""
-
-      - name: "Create Conda build Environments"
-        run: conda install -c conda-forge c-compiler cxx-compiler fortran-compiler boost libnetcdf catch2 openblas yaml-cpp
+          activate-environment: build_py38
+          environment-file: buildscripts/mac-ci-envs/build-py38.yml
+          auto-activate-base: false
 
       - run: | 
           conda activate
