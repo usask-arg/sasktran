@@ -1,0 +1,36 @@
+name: 'mac Build'
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+
+jobs:
+  build-cpp-wheels-mac:
+    runs-on: macos-11
+    env:
+        BUILDPYTHONENV: "py37;py38;py39;py310;py311"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+
+      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
+      - run: cmake --build build --config Release --target install
+
+      - name: Save wheel artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels-mac
+          path: wheelhouse
+
+      - name: Save cpp artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpp-mac
+          path: deps
