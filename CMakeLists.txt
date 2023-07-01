@@ -33,7 +33,7 @@ set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
 # Try to find boost 1.6 or greater
-set(Boost_USE_STATIC_LIBS FORCE_BOOST_STATIC)
+set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
 find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread)
 
 # Try to find OpenMP
