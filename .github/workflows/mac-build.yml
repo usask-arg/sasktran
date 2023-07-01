@@ -23,7 +23,6 @@ jobs:
           auto-activate-base: false
 
       - run: | 
-          conda activate
           echo $CMAKE_ARGS
           echo ${CMAKE_ARGS}
           cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
