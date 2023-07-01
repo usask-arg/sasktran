@@ -21,7 +21,7 @@ jobs:
           activate-environment: ""
 
       - name: "Create Conda build Environments"
-        run: conda install c-compiler cxx-compiler fortran-compiler 
+        run: conda install -c conda-forge c-compiler cxx-compiler fortran-compiler boost libnetcdf catch2 openblas yaml-cpp
 
       - run: cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
       - run: cmake --build build --config Release --target install
