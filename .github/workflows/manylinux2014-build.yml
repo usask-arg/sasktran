@@ -13,6 +13,7 @@ jobs:
     env:
         BUILDPYTHONENV: "cp37-cp37m;cp38-cp38;cp39-cp39;cp310-cp310;cp311-cp311"
         IN_MANYLINUX_CONTAINER: "TRUE"
+        CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -34,7 +35,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: cpp-linux
-          path: deps
+          path: /opt/sasktran
 
   test-wheels-linux:
     needs: build-cpp-wheels-manylinux2014

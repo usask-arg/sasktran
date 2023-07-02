@@ -12,6 +12,7 @@ jobs:
     env:
         BUILDPYTHONENV: "py37;py38;py39;py310;py311"
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
+        CMAKE_INSTALL_PREFIX: c:/local/sasktran
 
     steps:
       - name: Download Boost
@@ -70,7 +71,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: cpp-windows
-          path: deps
+          path: c:/local/sasktran
   
   test-wheels-windows:
     needs: build-cpp-wheels-windows 
