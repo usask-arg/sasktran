@@ -9,13 +9,21 @@ AUDITWHEEL=$6
 
 
 if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
-    eval "$(conda shell.bash hook)"
-    conda activate $PYENV
 
-    pushd pysasktran
-    python3 setup.py bdist_wheel -d ../wheelhouse
-    popd
-    conda deactivate
+    if ["$PYENV" == "current"]; then 
+        pushd pysasktran
+        python3 setup.py bdist_wheel -d ../wheelhouse
+        popd
+
+    else
+        eval "$(conda shell.bash hook)"
+        conda activate $PYENV
+
+        pushd pysasktran
+        python3 setup.py bdist_wheel -d ../wheelhouse
+        popd
+        conda deactivate
+    fi
 else
   pushd pysasktran
   /opt/python/$PYENV/bin/python setup.py bdist_wheel -d ../wheelhouse

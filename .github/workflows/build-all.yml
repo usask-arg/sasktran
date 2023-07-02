@@ -1,0 +1,241 @@
+name: 'Build, Test, and Upload Wheels/Docs'
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+
+jobs:
+  build-cpp-wheels-manylinux2014:
+    runs-on: ubuntu-latest
+    container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
+    env:
+        BUILDPYTHONENV: "cp37-cp37m;cp38-cp38;cp39-cp39;cp310-cp310;cp311-cp311"
+        IN_MANYLINUX_CONTAINER: "TRUE"
+        CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
+      - run: cmake --build build --config Release --target install
+      - run: cd wheelhouse
+      - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
+      - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
+      - run: cd ..
+      - run: ls wheelhouse/
+
+      - name: Save wheel artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels-linux
+          path: wheelhouse
+
+      - name: Save cpp artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpp-linux
+          path: /opt/sasktran
+
+  test-wheels-linux:
+    needs: build-cpp-wheels-manylinux2014
+    runs-on: ubuntu-latest
+    container: continuumio/anaconda3
+    strategy:
+      matrix:
+        py_version: [py37, py38, py39, py310, py311]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-linux
+          path: wheelhouse
+
+      - name: Test wheel
+        run: bash buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+
+  build_docs:
+    needs: build-cpp-wheels-manylinux2014
+    runs-on: ubuntu-latest
+    container: continuumio/anaconda3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-linux
+          path: wheelhouse
+
+      - name: Install Make
+        run: |
+          apt update
+          apt install make -y
+
+      - name: Build Sphinx Docs
+        run: |
+          cd pysasktran
+          conda env create --file docs/environment.yml
+          source activate doc_env
+          pip install sasktran -f ../wheelhouse/
+          mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
+          python dummy_install.py
+          cd docs
+          make html
+          cd ..
+          cd ..
+
+  build-cpp-wheels-mac:
+    runs-on: macos-11
+    env:
+        BUILDPYTHONENV: "current"
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Conda build environment 
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: build_py38
+          environment-file: buildscripts/mac-ci-envs/build-py38.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+      - name: configure cmake project
+        shell: bash -el {0}
+        run: | 
+          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DFORCE_BOOST_STATIC=OFF
+      - name: build cpp
+        shell: bash -el {0}
+        run: cmake --build build --config Release --target install
+
+      - name: delocate wheels
+        shell: bash -el {0}
+        run: | 
+          cd wheelhouse
+          ls
+          find . -name "*x86_64.whl" -type f -exec delocate-listdeps --all '{}' \;
+          find . -name "*x86_64.whl" -type f -exec delocate-wheel -v '{}' \;
+          cd ..
+
+
+      - name: Save wheel artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels-mac
+          path: wheelhouse
+
+      - name: Save cpp artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpp-mac
+          path: deps
+
+  build-cpp-wheels-windows:
+    runs-on: windows-latest
+    env:
+        BUILDPYTHONENV: "py37;py38;py39;py310;py311"
+        VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
+        CMAKE_INSTALL_PREFIX: c:/local/sasktran
+
+    steps:
+      - name: Download Boost
+        run: |
+          curl -L -o boost.exe https://boostorg.jfrog.io/artifactory/main/release/1.82.0/binaries/boost_1_82_0-msvc-14.3-64.exe
+
+      - name: Install Boost
+        run: |
+          ./boost.exe /sp- /verysilent /suppressmsgboxes /norestart /dir="c:/local/boost_1_82_0" | more
+
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+
+      - name: Create Conda py37 Build Environment
+        run: conda create -n py37 python=3.7 numpy=1.11.3
+
+      - name: Create Conda py38 Build Environment
+        run: conda create -n py38 python=3.8 numpy=1.11.3
+
+      - name: Create Conda py39 Build Environment
+        run: conda create -n py39 python=3.9 numpy=1.16.6
+
+      - name: Create Conda py310 Build Environment
+        run: conda create -n py310 python=3.10 numpy=1.21.5
+
+      - name: Create Conda py311 Build Environment
+        run: conda create -n py311 python=3.11 numpy=1.22.3
+
+      - name: Install netCDF
+        run: vcpkg install netcdf-c
+
+      - name: Install catch2
+        run: vcpkg install catch2
+
+      - name: Install yaml-cpp
+        run: vcpkg install yaml-cpp
+
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake
+        env:
+          BOOST_ROOT: C:/local/boost_1_82_0
+          BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
+      - run: cmake --build build --config Release --target install
+
+      - name: Save wheel artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: wheels-windows
+          path: wheelhouse
+
+      - name: Save cpp artifacts
+        uses: actions/upload-artifact@v3
+        with:
+          name: cpp-windows
+          path: c:/local/sasktran
+  
+  test-wheels-windows:
+    needs: build-cpp-wheels-windows 
+    runs-on: windows-latest
+    strategy:
+      matrix:
+        py_version: [py37, py38, py39, py310, py311]
+
+    steps:
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-windows
+          path: wheelhouse
+      
+      - name: Test wheel
+        run: ./buildscripts/test_sasktran_win.bat ${{ matrix.py_version }}
+  
+  pycodestyle_check:
+    runs-on: ubuntu-latest
+    container: continuumio/anaconda3
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: pycodestyle checks
+        run: |
+          cd pysasktran
+          pip install pycodestyle
+          pycodestyle sasktran
