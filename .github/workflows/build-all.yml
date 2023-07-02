@@ -220,6 +220,32 @@ jobs:
       
       - name: Test wheel
         run: ./buildscripts/test_sasktran_win.bat ${{ matrix.py_version }}
+
+  test-wheels-mac:
+    needs: build-cpp-wheels-mac 
+    runs-on: macos-latest
+    strategy:
+      matrix:
+        py_version: [py38]
+
+    steps:
+      - uses: conda-incubator/setup-miniconda@v2
+        with:
+          auto-activate-base: true
+          activate-environment: ""
+      
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac
+          path: wheelhouse
+      
+      - name: Test wheel
+        shell: bash -el {0}
+        run: ./buildscripts/test_sasktran_linux ${{ matrix.py_version }}
   
   pycodestyle_check:
     runs-on: ubuntu-latest
