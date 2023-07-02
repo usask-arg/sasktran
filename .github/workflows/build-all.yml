@@ -78,6 +78,7 @@ jobs:
           apt install make -y
 
       - name: Build Sphinx Docs
+        shell: bash -el {0}
         run: |
           cd pysasktran
           conda env create --file docs/environment.yml
@@ -245,7 +246,9 @@ jobs:
       
       - name: Test wheel
         shell: bash -el {0}
-        run: ./buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+        run: |
+          ls wheelhouse
+          bash buildscripts/test_sasktran_linux ${{ matrix.py_version }}
   
   pycodestyle_check:
     runs-on: ubuntu-latest
