@@ -81,7 +81,7 @@ jobs:
         run: |
           cd pysasktran
           conda env create --file docs/environment.yml
-          source activate doc_env
+          conda activate doc_env
           pip install sasktran -f ../wheelhouse/
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
           python dummy_install.py
@@ -109,7 +109,7 @@ jobs:
       - name: configure cmake project
         shell: bash -el {0}
         run: | 
-          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DFORCE_BOOST_STATIC=OFF
+          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
       - name: build cpp
         shell: bash -el {0}
         run: cmake --build build --config Release --target install
@@ -129,12 +129,6 @@ jobs:
         with:
           name: wheels-mac
           path: wheelhouse
-
-      - name: Save cpp artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: cpp-mac
-          path: deps
 
   build-cpp-wheels-windows:
     runs-on: windows-latest
