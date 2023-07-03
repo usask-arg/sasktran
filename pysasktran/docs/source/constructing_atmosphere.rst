@@ -30,7 +30,7 @@ definition is also associated.
 
 Users can defined their own user defined climatologies using the
 :py:class:`sasktran.ClimatologyUserDefined` class. Some climatologies that we use a lot are built
-into SASKTRAN (see `Useful Climatology Shorthands`_).
+into SASKTRAN (see `Useful Climatology Shorthands`).
 
 Available Climatologies
 ^^^^^^^^^^^^^^^^^^^^^^^

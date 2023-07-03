@@ -232,8 +232,9 @@ jobs:
     steps:
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          auto-activate-base: true
-          activate-environment: ""
+          activate-environment: py38
+          environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
+          auto-activate-base: false
       
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -248,7 +249,11 @@ jobs:
         shell: bash -el {0}
         run: |
           ls wheelhouse
-          bash buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+          pip install sasktran -f wheelhouse/
+          cd pysasktran
+          mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
+          python dummy_install.py > /dev/null 2>&1
+          py.test sasktran
   
   pycodestyle_check:
     runs-on: ubuntu-latest
