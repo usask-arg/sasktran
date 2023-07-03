@@ -28,5 +28,6 @@ jobs:
           auto-activate-base: false
 
       - name: Build Conda package
+        shell: bash -el {0}
         run: |
           conda-build --python ${{ matrix.py_version }} conda-recipe
