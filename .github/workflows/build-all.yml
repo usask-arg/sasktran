@@ -3,6 +3,7 @@ name: 'Build, Test, and Upload Wheels/Docs'
 on:
   workflow_dispatch:
   push:
+    - main
   pull_request:
 
 

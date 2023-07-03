@@ -27,6 +27,6 @@ jobs:
           channels: conda-forge
           auto-activate-base: false
 
-    - name: Build Conda package
-      run: |
-        conda-build --python ${{ matrix.py_version }} conda-recipe
+      - name: Build Conda package
+        run: |
+          conda-build --python ${{ matrix.py_version }} conda-recipe
