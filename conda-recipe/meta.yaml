@@ -1,0 +1,44 @@
+package:
+  name: sasktran
+  version: "0.0.0"
+
+source:
+  path: ../ # this can be changed to git-url
+
+build:
+  number: 0
+  binary_relocation: true
+  script:
+    - cmake -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" # [not win]
+    - cmake -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF # [win]
+    - cmake --build build_conda
+    - pip install sasktran --no-deps -f wheelhouse/
+
+requirements:
+  build:
+    - cmake >=3.5
+    - {{ compiler('cxx') }}
+    - {{ compiler('c') }}
+    - {{ compiler('fortran')}} # [not win]
+  host:
+    - python {{ python }}
+    - boost
+    - numpy
+    - libnetcdf
+    - yaml-cpp
+    - catch2
+    - openblas
+    - zlib
+  run:
+    - numpy
+    - libnetcdf
+    - yaml-cpp
+    - openblas
+    - zlib
+    - python
+
+
+about:
+  home: http://www.example.com
+  license: MIT
+  summary: "Summary in here ..."

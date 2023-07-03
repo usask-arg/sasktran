@@ -10,7 +10,7 @@ AUDITWHEEL=$6
 
 if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
 
-    if ["$PYENV" == "current"]; then 
+    if [ $PYENV == "current" ]; then 
         pushd pysasktran
         python3 setup.py bdist_wheel -d ../wheelhouse
         popd

@@ -1,0 +1,32 @@
+name: 'Build, Test, and Upload Conda Packages'
+
+on:
+  workflow_dispatch:
+  push:
+  pull_request:
+
+
+jobs:
+  build-conda:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-11]
+        py_version: [3.8, 3.9, 3.10, 3.11]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Conda build environment 
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: conda_build
+          environment-file: buildscripts/conda-build-env.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+    - name: Build Conda package
+      run: |
+        conda-build --python ${{ matrix.py_version }} conda-recipe
