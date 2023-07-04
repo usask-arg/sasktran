@@ -11,7 +11,7 @@ build:
   script:
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" -DCMAKE_BUILD_TYPE=Release # [not win]
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DCMAKE_BUILD_TYPE=Release # [win]
-    - cmake --build build_conda
+    - cmake --build build_conda --config Release
     - pip install sasktran --no-deps -f wheelhouse/
 
 requirements:

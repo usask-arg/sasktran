@@ -32,3 +32,28 @@ jobs:
         shell: bash -el {0}
         run: |
           conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe
+  
+  build-conda-cross-mac-arm:
+    runs-on: macos-11
+
+    strategy:
+      fail-fast: false
+      matrix:
+        py_version: ["3.8", "3.9", "3.10", "3.11"]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Setup Conda build environment 
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: conda_build
+          environment-file: buildscripts/conda-build-env.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+      - name: Build Conda package
+        shell: bash -el {0}
+        run: |
+          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m .conda-recipe/osx_arm64_.yaml
