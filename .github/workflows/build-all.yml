@@ -285,7 +285,7 @@ jobs:
 
     environment:
       name: pypi
-      url: https://test.pypi.org/p/xarray
+      url: https://test.pypi.org/p/sasktran
     permissions:
       id-token: write
 
