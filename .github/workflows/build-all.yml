@@ -3,7 +3,6 @@ name: 'Build, Test, and Upload Wheels/Docs'
 on:
   workflow_dispatch:
   push:
-    - main
   pull_request:
 
 
@@ -278,3 +277,40 @@ jobs:
           cd pysasktran
           pip install pycodestyle
           pycodestyle sasktran
+
+  upload-to-test-pypi:
+    needs: [test-wheels-linux, test-wheels-mac, test-wheels-windows]
+    if: github.event_name == 'push'
+    runs-on: ubuntu-latest
+
+    environment:
+      name: pypi
+      url: https://test.pypi.org/p/xarray
+    permissions:
+      id-token: write
+
+    steps:
+      - name: Download linux wheel artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-linux
+          path: dist
+
+      - name: Download windows wheel artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-windows
+          path: dist
+
+      - name: Download mac wheel artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac
+          path: dist
+
+      - name: Publish package to TestPyPI
+        if: github.event_name == 'push'
+        uses: pypa/gh-action-pypi-publish@v1.8.7
+        with:
+          repository_url: https://test.pypi.org/legacy/
+          verbose: true
