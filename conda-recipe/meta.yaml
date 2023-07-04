@@ -9,8 +9,8 @@ build:
   number: 0
   binary_relocation: true
   script:
-    - cmake -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" # [not win]
-    - cmake -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF # [win]
+    - cmake -H. -Bbuild_conda --config Release -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" # [not win]
+    - cmake -H. -Bbuild_conda --config Release -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF # [win]
     - cmake --build build_conda
     - pip install sasktran --no-deps -f wheelhouse/
 
@@ -23,14 +23,15 @@ requirements:
   host:
     - python {{ python }}
     - boost
-    - numpy
+    - numpy # [not py311]
+    - numpy 1.23 [py311]
     - libnetcdf
     - yaml-cpp
     - catch2
     - openblas
     - zlib
   run:
-    - numpy
+    - {{ pin_compatible("numpy") }}
     - libnetcdf
     - yaml-cpp
     - openblas
