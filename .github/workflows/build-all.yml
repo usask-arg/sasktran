@@ -279,7 +279,7 @@ jobs:
           pycodestyle sasktran
 
   upload-to-test-pypi:
-    needs: [test-wheels-linux, test-wheels-mac, test-wheels-windows]
+    needs: [test-wheels-linux, test-wheels-windows]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
@@ -300,12 +300,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheels-windows
-          path: dist
-
-      - name: Download mac wheel artifacts
-        uses: actions/download-artifact@v3
-        with:
-          name: wheels-mac
           path: dist
 
       - name: Publish package to TestPyPI
