@@ -84,7 +84,7 @@ jobs:
 
       - name: Run SASKTRAN tests
         run: |
-          py.test sasktran
+          pytest --pyargs sasktran
 
   build_docs:
     needs: build-cpp-wheels-manylinux2014
