@@ -11,6 +11,7 @@ dependencies:
   - jupyter
   - pandoc
   - matplotlib
+  - jinja2=3.0.3
   - xarray
   - pip
   - pip:
