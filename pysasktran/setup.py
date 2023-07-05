@@ -177,6 +177,7 @@ setup(
     author='Daniel Zawada',
     author_email='daniel.zawada@usask.ca',
     description='',
+    long_description='',
     include_package_data=True,
     package_data={**package_data, **{'sasktran': ['aband/data/*']}},
     data_files=data_files,
@@ -187,7 +188,7 @@ setup(
         'urllib3',
         'appdirs',
         'packaging'
-    ]
+    ],
 )
 
 
