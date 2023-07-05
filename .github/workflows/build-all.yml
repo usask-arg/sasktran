@@ -57,6 +57,29 @@ jobs:
 
       - name: Test wheel
         run: bash buildscripts/test_sasktran_linux ${{ matrix.py_version }}
+  
+  test-linux-wheel-system-python:
+    needs: build-cpp-wheels-manylinux2014
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/setup-python@v4
+        name: Install Python
+        with:
+          python-version: "3.11"
+
+      - name: Download wheel artifacts 
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-linux
+          path: wheelhouse
+
+      - name: Install SASKTRAN
+        run: |
+          python -m pip install sasktran -f wheelhouse/
+      
+      - name: Import SASKTRAN
+        run: |
+          python -c "import sasktran"
 
   build_docs:
     needs: build-cpp-wheels-manylinux2014

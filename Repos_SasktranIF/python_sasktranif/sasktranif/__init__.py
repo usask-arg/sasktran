@@ -1,6 +1,7 @@
 import os
 import os.path
 import sys
+import sysconfig
 import logging
 from . import sasktranif
 from .sasktranif import ISKClimatology, ISKOpticalProperty, ISKEngine, ISKBrdf, ISKSolarSpectrum, ISKEmission, ISKGeodetic, SKTRAN_IFSetRegistryDirectory
@@ -17,8 +18,8 @@ from .sasktranif_registry import SasktranifRegistry
 #
 #-----------------------------------------------------------------------------------------
 
-registry_directory = os.path.join(sys.exec_prefix,'share', 'usask-arg', 'registry', 'sasktranif')
-package_directory  = os.path.join(sys.exec_prefix,'share', 'usask-arg', 'sasktran', 'installed_modules')
+registry_directory = os.path.join(sysconfig.get_path('data'), 'share', 'usask-arg', 'registry', 'sasktranif')
+package_directory  = os.path.join(sysconfig.get_path('data'), 'share', 'usask-arg', 'sasktran', 'installed_modules')
 SKTRAN_IFSetRegistryDirectory(registry_directory)                                                                              # Setup each sasktran module so it uses a text based registry within its own area. This value is stored internally in the sasktranif C++ code
 registry = SasktranifRegistry()
 if os.path.exists(package_directory):
