@@ -178,6 +178,7 @@ setup(
     author_email='daniel.zawada@usask.ca',
     description='',
     long_description='',
+    long_description_content_type='text/markdown',
     include_package_data=True,
     package_data={**package_data, **{'sasktran': ['aband/data/*']}},
     data_files=data_files,
