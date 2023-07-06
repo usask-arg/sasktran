@@ -18,7 +18,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
-      - run: cmake --build build --config Release --target install
+      - run: cmake --build build --config Release --target install -j 2
       - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
       - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
@@ -182,7 +182,7 @@ jobs:
       - name: configure cmake project
         shell: bash -el {0}
         run: | 
-          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
+          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF -j 3
       - name: build cpp
         shell: bash -el {0}
         run: cmake --build build --config Release --target install
@@ -251,7 +251,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake
+      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -j 2
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
