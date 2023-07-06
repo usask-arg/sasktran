@@ -112,12 +112,6 @@ jobs:
           name: wheels-linux
           path: wheelhouse
 
-      - name: Install Make
-        shell: bash -el {0}
-        run: |
-          apt update
-          apt install make -y
-
       - name: Build Sphinx Docs
         shell: bash -el {0}
         run: |
