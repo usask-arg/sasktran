@@ -7,6 +7,11 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
+if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    add_definitions(-Wno-inconsistent-missing-override)
+endif()
+
+
 execute_process(COMMAND git describe
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     OUTPUT_VARIABLE GIT_DESCRIBE_TEMP
