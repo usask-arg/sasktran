@@ -7,7 +7,7 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
-set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-inconsistent-missing-override -Wno-suggest-override")
+add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override")
 
 execute_process(COMMAND git describe
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
