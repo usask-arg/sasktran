@@ -31,12 +31,6 @@ jobs:
           name: wheels-linux
           path: wheelhouse
 
-      - name: Save cpp artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: cpp-linux
-          path: /opt/sasktran
-
   test-wheels-linux:
     needs: build-cpp-wheels-manylinux2014
     runs-on: ubuntu-latest
@@ -241,12 +235,6 @@ jobs:
         with:
           name: wheels-windows
           path: wheelhouse
-
-      - name: Save cpp artifacts
-        uses: actions/upload-artifact@v3
-        with:
-          name: cpp-windows
-          path: c:/local/sasktran
   
   test-wheels-windows:
     needs: build-cpp-wheels-windows 
