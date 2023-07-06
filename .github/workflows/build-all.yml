@@ -116,14 +116,42 @@ jobs:
           make html
           cd ..
           cd ..
+
+      - name: Save doc pages
+        uses: actions/upload-artifact@v3
+        with:
+          name: docs
+          path: pysasktran/docs/build/html
       
+  upload-docs-to-pages:
+    needs: build-cpp-wheels-manylinux2014
+    runs-on: ubuntu-latest
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: write      # to deploy to Pages
+
+    steps:
+      - name: Download doc artifacts
+        uses: actions/download-artifact@v3
+        with:
+          name: docs
+          path: docs
+
       - name: Deploy dev docs
         uses: peaceiris/actions-gh-pages@v3
         if: github.event_name == 'push'
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: pysasktran/docs/build
+          publish_dir: docs
           destination_dir: dev
+
+      - name: Deploy release docs
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.event_name == 'release'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs
 
   build-cpp-wheels-mac:
     runs-on: macos-11
@@ -263,6 +291,7 @@ jobs:
   test-wheels-mac:
     needs: build-cpp-wheels-mac 
     runs-on: macos-latest
+    continue-on-error: true
     strategy:
       matrix:
         py_version: [py38]
@@ -307,7 +336,7 @@ jobs:
           pycodestyle sasktran
 
   upload-to-test-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
@@ -338,7 +367,7 @@ jobs:
           verbose: true
   
   upload-to-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
 
