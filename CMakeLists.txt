@@ -7,7 +7,7 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
-add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override")
+add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment")
 
 execute_process(COMMAND git describe
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
