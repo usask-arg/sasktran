@@ -14,8 +14,8 @@ execute_process(COMMAND git describe
 )
 
 if(EXISTS ${GIT_DESCRIBE_TEMP})
-    string(REGEX MATCH "sasktran_([0-9\\.]+)" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
-    string(REPLACE "sasktran_" "" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
+    string(REGEX MATCH "v([0-9\\.]+)" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
+    string(REPLACE "v" "" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
 else()
     set(SASKTRAN_CORE_VERSION 1.5.0)
 endif()
