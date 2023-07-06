@@ -80,7 +80,7 @@ jobs:
         run: |
           pytest --pyargs sasktran
 
-  build_docs:
+  build-docs:
     needs: build-cpp-wheels-manylinux2014
     runs-on: ubuntu-latest
 
@@ -124,7 +124,7 @@ jobs:
           path: pysasktran/docs/build/html
       
   upload-docs-to-pages:
-    needs: build-cpp-wheels-manylinux2014
+    needs: build-docs
     runs-on: ubuntu-latest
 
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
