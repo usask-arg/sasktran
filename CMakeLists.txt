@@ -2,7 +2,6 @@ cmake_minimum_required      (VERSION 3.16)                                      
 include                     (CMakePackageConfigHelpers )                                            # Provids function/macro write_basic_package_version_file
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
-add_definitions(-w)
 
 if(UNIX AND NOT APPLE)
     set(LINUX TRUE)

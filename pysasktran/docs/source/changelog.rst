@@ -2,6 +2,11 @@
 
 Changelog
 *********
+1.7.1
+=====
+* Development of the model has moved over to github, see https://github.com/usask-arg/sasktran
+* Fixed several bugs involving running sasktran on non-anaconda based python environments
+
 1.7.0
 =====
 * Added support for python 3.10/3.11 builds on both Windows and Linux
