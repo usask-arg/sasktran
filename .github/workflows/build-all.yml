@@ -320,7 +320,7 @@ jobs:
           pycodestyle sasktran
 
   upload-to-test-pypi:
-    needs: [test-wheels-linux, test-wheels-windows]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python]
     if: github.event_name == 'push'
     runs-on: ubuntu-latest
 
