@@ -140,8 +140,7 @@ jobs:
 
       - name: Deploy dev docs
         uses: peaceiris/actions-gh-pages@v3
-        if: github.event_name == 'push'
-        if: github.ref == 'refs/heads/main'
+        if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: docs
@@ -338,8 +337,7 @@ jobs:
 
   upload-to-test-pypi:
     needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
-    if: github.event_name == 'push'
-    if: github.ref == 'refs/heads/main'
+    if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
 
     environment:
