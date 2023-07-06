@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Emission &mdash; SASKTRAN 0+unknown documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Solar Spectrum" href="solar_spectrum.html" />
+    <link rel="prev" title="Optical Properties" href="optical_property.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+unknown
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#complete-api-reference-pages">Complete API Reference Pages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="atmosphere.html">Atmosphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brdf.html">BRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geodetic.html">Geodetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lines_of_sight.html">Lines of Sight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical_property.html">Optical Properties</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Emission</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#emission-base-class">Emission Base Class</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emissiontable">EmissionTable</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#emissionthermal">EmissionThermal</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hitranphotochemical">HITRANPhotoChemical</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hitranphotochemical-o2-aband">HITRANPhotoChemical_O2_ABand</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#hitranphotochemical-o2-singletdelta">HITRANPhotoChemical_O2_SingletDelta</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#abandemission">ABandEmission</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="solar_spectrum.html">Solar Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="species.html">Species</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stokes_vector.html">Stokes Vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api_reference.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Emission</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/emission.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="emission">
+<span id="id1"></span><h1>Emission<a class="headerlink" href="#emission" title="Permalink to this heading">¶</a></h1>
+<p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.emission</span></code></p>
+<p>Classes that describe emissions occuring within the atmosphere and are typically thermal or photochemical. The overall purpose
+of the Emissions classes is to provide the volume emission rate as a function of wavelength at any location in the atmosphere.</p>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sasktran.EmissionTable" title="sasktran.EmissionTable"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.EmissionTable</span></code></a>(altitude_m, wavel_nm, ...)</p></td>
+<td><p>Defines an emission in the atmosphere represented with a table of volume emission rates on an altitude/wavelength grid.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sasktran.EmissionThermal" title="sasktran.EmissionThermal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.EmissionThermal</span></code></a>([emissivity])</p></td>
+<td><p>Class used to enable thermal emissions within the HR radiative transfer model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sasktran.HITRANPhotoChemical" title="sasktran.HITRANPhotoChemical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.HITRANPhotoChemical</span></code></a>(chemical_name, ...)</p></td>
+<td><p>Calculates the photo-chemical emission from an excited molecular upper state.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sasktran.HITRANPhotoChemical_O2_ABand" title="sasktran.HITRANPhotoChemical_O2_ABand"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.HITRANPhotoChemical_O2_ABand</span></code></a>(...[, ...])</p></td>
+<td><p>Calculates the photo-chemical emission from the O2 A-Band around 762 nm.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#sasktran.HITRANPhotoChemical_O2_SingletDelta" title="sasktran.HITRANPhotoChemical_O2_SingletDelta"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.HITRANPhotoChemical_O2_SingletDelta</span></code></a>(...)</p></td>
+<td><p>Calculates the photo-chemical emission from the O2 Singlet Delta around 1.27 microns.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#sasktran.ABandEmission" title="sasktran.ABandEmission"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.ABandEmission</span></code></a>(altArray_km)</p></td>
+<td><p></p></td>
+</tr>
+</tbody>
+</table>
+<section id="emission-base-class">
+<h2>Emission Base Class<a class="headerlink" href="#emission-base-class" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Emission">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Emission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">EmissionBase</span></code></p>
+<p>Class which represents the emission of a species in the atmosphere.  Most of the time it is not recommended to use
+this class and more specific classes, such as EmissionTable, should be used instead.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name handle of the emission to create.</p>
+</dd>
+</dl>
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.Emission.isotropic_emission">
+<span class="sig-name descname"><span class="pre">isotropic_emission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isground</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Emission.isotropic_emission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Calculates the isotropic emission rate.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atmospheric_state</strong> (<a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><em>sasktran.Climatology</em></a>) – Atmospheric state (sometime called background climatology, corresponds to
+<a class="reference internal" href="atmosphere.html#sasktran.Atmosphere.atmospheric_state" title="sasktran.Atmosphere.atmospheric_state"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Atmosphere.atmospheric_state</span></code></a>). Typically the background climatology must
+support temperature and pressure, e.g. msis90.  Some optical properties may not need a background
+climatology, for example Mie aerosols, however one must still be passed in for the function to operate.</p></li>
+<li><p><strong>latitude</strong> (<em>float</em>) – Latitude in degrees.</p></li>
+<li><p><strong>longitude</strong> (<em>float</em>) – Longitude in degrees.</p></li>
+<li><p><strong>altitude</strong> (<em>float</em>) – Altitude in meters.</p></li>
+<li><p><strong>mjd</strong> (<em>float</em>) – Modified Julian Date.</p></li>
+<li><p><strong>wavelengths</strong> (<em>np.array</em>) – Wavelengths in nm.</p></li>
+<li><p><strong>isground</strong> (<em>bool</em><em>, </em><em>Optional</em>) – Set to true if this is a ground emission, default is False.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p><strong>emission</strong> – Array of emissions in [photons/sec/nm/ster/cm2], same length at wavelengths</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>np.ndarray</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="emissiontable">
+<h2>EmissionTable<a class="headerlink" href="#emissiontable" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.EmissionTable">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">EmissionTable</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude_m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavel_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">volumeemission</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.EmissionTable" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.Emission" title="sasktran.emission.Emission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Emission</span></code></a></p>
+<p>Defines an emission in the atmosphere represented with a table of volume emission rates on an altitude/wavelength
+grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>altitude_m</strong> (<em>np.ndarray</em>) – Array of altitudes in [m] defining the altitude dimension of the emission grid</p></li>
+<li><p><strong>wavel_nm</strong> (<em>np.ndarray</em>) – Array of wavelengths in [nm] defining the wavelength dimension of the altitude grid</p></li>
+<li><p><strong>volumeemission</strong> (<em>np.ndarray</em>) – Two dimensional array of volume emission rates in [photons/nm/sec/ster] with dimension (len(alts), len(wavel))</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">alts</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">500</span><span class="p">,</span> <span class="mi">100500</span><span class="p">,</span> <span class="mi">1000</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">wavel</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">linspace</span><span class="p">(</span><span class="mi">300</span><span class="p">,</span> <span class="mi">350</span><span class="p">,</span> <span class="mi">50</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">ver</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">ones</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">alts</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">wavel</span><span class="p">)))</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">emission</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EmissionTable</span><span class="p">(</span><span class="n">alts</span><span class="p">,</span> <span class="n">wavel</span><span class="p">,</span> <span class="n">ver</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">emission</span><span class="p">)</span>
+<span class="go">Emission of type: USERDEFINED_WAVELENGTHHEIGHT</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="emissionthermal">
+<h2>EmissionThermal<a class="headerlink" href="#emissionthermal" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.EmissionThermal">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">EmissionThermal</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">emissivity</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.EmissionThermal" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.Emission" title="sasktran.emission.Emission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Emission</span></code></a></p>
+<p>Class used to enable thermal emissions within the HR radiative transfer model.  Currently only works as part
+of a full radiative transfer calculation.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">emission</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EmissionThermal</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">geometry</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">VerticalImage</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">geometry</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="n">sza</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">saa</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tanalts_km</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">54372</span><span class="p">,</span> <span class="n">locallook</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>         <span class="n">satalt_km</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">refalt_km</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;ozone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">O3OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;air&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">())</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">atmosphere</span><span class="o">.</span><span class="n">emissions</span><span class="p">[</span><span class="s1">&#39;thermal&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">emission</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EngineHR</span><span class="p">(</span><span class="n">geometry</span><span class="p">,</span> <span class="n">atmosphere</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="p">[</span><span class="mi">1000</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">num_orders_of_scatter</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">include_emissions</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+<span class="go">array([[ 0.01218222,  0.00270503,  0.00055809,  0.00013423]])</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="hitranphotochemical">
+<h2>HITRANPhotoChemical<a class="headerlink" href="#hitranphotochemical" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.HITRANPhotoChemical">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">HITRANPhotoChemical</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chemical_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">wavenumber_range</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><span class="pre">float</span><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">float</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atmospheric_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">excited_upper_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lower_state_global_quanta_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">upper_state_global_quanta_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">self_broadening_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(None,</span> <span class="pre">'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotope_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.HITRANPhotoChemical" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.Emission" title="sasktran.emission.Emission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Emission</span></code></a></p>
+<p>Calculates the photo-chemical emission from an excited molecular upper state. This work was originally developed
+to model the molecular oxygen atmospheric emissions due to A-band and singlet delta etc. but can also be used for OH and other
+molecular bands in the hitran database. This class wraps the SasktranIF Emission object, <code class="docutils literal notranslate"><span class="pre">HITRAN_PHOTOCHEMICAL</span></code> and
+users are encouraged to refer to the available documentation within that package.</p>
+<p>The HITRANPhotoChemical object calculates the photo-chemical emission of a molecular band (assumed vibrational) using the Einstein-A coefficients
+given in the Hitran database. The code calculates the spectral emission of a single electron statistically distributed
+across the vibrational band. All spectral lines are modelled using a Voigt profile. The user must explicitly select
+an appropriate wavenumber range, and upper and lower quanta so only lines from the target vibrational band are selected
+from the Hitran database. The user can specify the climatology used to calculate pressure and temperature used in the Voigt
+profile claculation. By default the MSIS90 model is used.</p>
+<p>The user must provide a climatology object that returns the number of electrons in the excited upper state. The climatology object
+can be as simple as a user-defined profile or as complex as a photochemical model. The HITRANPhotoChemical object thermalizes the
+distribution of these electrons across the upper band using a Boltzmann distribution.</p>
+<p>The HITRANPhotoChemical object can account for self-broadening of the line-shapes but requires the user to provide
+a climatology object for the number density of the molecule of interest. If no climatology is provided then self-braodening
+is ignored.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chemical_name</strong> (<em>str</em>) – Chemical abbreviation of the molecule of interest. Typically O2, OH etc.</p></li>
+<li><p><strong>wavenumber_range</strong> (<em>Tuple</em><em>[</em><em>float</em><em>,</em><em>float</em><em>]</em>) – A two element tuple specifying the range of wavenumbers in cm-1 used to select spectral lines from the Hitran database.
+The selection range should span the entire wavenumber range of the target vibrational band. The range is used
+along with the <code class="docutils literal notranslate"><span class="pre">lower_state_global_quant_filter</span></code> and <code class="docutils literal notranslate"><span class="pre">upper_state_global_quanta_filter</span></code> to select all the lines
+associated with the target vibrational band.  The first element should be the lower wavenumber. The second element
+should be the upper wavenumber. Both are in cm-1.</p></li>
+<li><p><strong>lower_state_global_quanta_filter</strong> (<em>str</em><em>, </em><em>optional</em>) – The quanta filter used to select spectral lines in the given wavenumber that match the lower quantum state.
+These quanta are given in the Hitran data records as the V′ and V′′ fields and are strings similar to “X 0”.
+The code will only accept spectral lines that match the lower state filter.
+The code ignores spaces but is case sensitive and order sensitive. i.e ‘X 0’ is not the same as ‘0 X’. This
+option requires the user to be familiar with the Hitran 160 character records and is comfortable reading the
+Hitran files to ascertain the notation used in the database files. The default is an empty string,””, which
+disables the filter and matches all spectral lines regardless of lower state quanta, this is usually not the
+desired behaviour and the string must be set.</p></li>
+<li><p><strong>upper_state_global_quanta_filter</strong> (<em>str</em><em>, </em><em>optional</em>) – Same as lower_global_quanta_filter except for the upper state. The default is the empty string, “” which is
+not correct for isolating upper state vibrational levels.</p></li>
+<li><p><strong>climatology</strong><strong>)</strong> (<em>atmospheric_state_climatology</em><em>(</em><em>object</em>) – The climatology object used to calculate pressure and temperature for the Voigt profile calculations.</p></li>
+<li><p><strong>excited_upper_state_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – A two element tuple providing the climatology object to be used for calculation of the total number of excited
+upper state molecules in molecules/cm3. The first element is the <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> object that  captures the
+photo-chemistry of the atmosphere. It can be as simple as a user defined height profile or a more complicted
+photo-chemical model. The climatology object should provide the number of excited molecules consistent
+with the selected spectral lines, i.e. they are referring to the same vibrational band etc. The second element
+is the climatology handle used by the excited upper-state climatology to acquire the number of excited molecules
+per cm3. A typical value for the oxygen molecule is ‘SKEMISSION_PHOTOCHEMICAL_O2’. A full list of valid
+climatology handles is available in the SasktranIF documentation.</p></li>
+<li><p><strong>climatology</strong><strong>)</strong> – The climatology object used to calculate pressure and temperature for the Voigt profile calculations.</p></li>
+<li><p><strong>self_broadening_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – Optional. A two element tuple providing the climatology object to be used for self-broadening calculations.
+The first element is a <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> object that must provide the number density of the target molecule
+in molecules/cm3. The second element is the climatology handle used by the self-broadening climatology to acquire
+the number of molecules/cm3 of the target molecule. A typical value for the oxygen molecule is
+‘SKCLIMATOLOGY_O2_CM3’.  A full list of climatology handles is available in the SasktranIF documentation. This
+climatology is used along with the pressure and temperature values from the atmospheric_state_climatology to
+calculate the partial pressure of the molecule which is used in the self broadening calculation. If no
+climatology is provided then self broadening is ignored. For reference, ignoring this item leads to an error on
+the order of 1% for O2 in the A-band.</p></li>
+<li><p><strong>isotope_filter</strong> (<em>int</em><em>, </em><em>optional</em>) – Optional Allows the HITRAN object to load in just one isotope of the requested molecule. The value set must match one of
+the isotope labels used for the given molecule in the HITRAN database file, molparam.txt. Note that the code
+does not adjust the line strength but uses the line strength value as written in the HITRAN database. This
+means you may have to account for and/or remove the abundance automatically built into the HITRAN database line
+strength values. A value of 0 will load all isotopes in the Hitran database. Default is 0. Most users will not
+change this value.</p></li>
+<li><p><strong>use_cache</strong> (<em>bool</em><em>, </em><em>optional</em>) – Optional. Species that this emission object will create an internal cache of signals in wavelength and location.
+This feature is provided for RT engines, such as HR, SO, Disco and MC, that internally need to calculate the Voigt profile at
+many locations for one wavelength while the Voigt line profile code is much more efficient if performed
+across all wavenumbers at each location. This feature, if active, is only used inside method skif_object when the
+input arguments have an ‘engine’ keyword. The default is True.</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+</section>
+<section id="hitranphotochemical-o2-aband">
+<h2>HITRANPhotoChemical_O2_ABand<a class="headerlink" href="#hitranphotochemical-o2-aband" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.HITRANPhotoChemical_O2_ABand">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">HITRANPhotoChemical_O2_ABand</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">excited_upper_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">atmospheric_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">self_broadening_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(None,</span> <span class="pre">'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotope_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.HITRANPhotoChemical_O2_ABand" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.HITRANPhotoChemical" title="sasktran.emission_hitranphotochemical.HITRANPhotoChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">HITRANPhotoChemical</span></code></a></p>
+<p>Calculates the photo-chemical emission from the O2 A-Band around 762 nm. This is a small wrapper around the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> class. The O2 A-band spectral lines cover the wavelength range 748 nnm to 780 nm,  correspondiong
+to 12820.0 to 13369.0 cm-1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>climatology</strong><strong>)</strong> (<em>atmospheric_state_climatology</em><em>(</em><em>object</em>) – The climatology object used to calculate pressure and temperature for the Voigt profile calculations.</p></li>
+<li><p><strong>excited_upper_state_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – A two element tuple providing the climatology object to be used for calculation of the total number of O2 A-band
+molecules in molecules/cm3. The first element is the <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> object that  captures the
+photo-chemistry of the atmosphere. It can be as simple as a user defined height profile or a more complicated
+photo-chemical model. The climatology object should provide the number of excited molecules in the oxygen A-band
+The second element is the climatology handle used by the excited upper-state climatology to acquire the number of excited molecules
+per cm3. A typical value for the oxygen molecule is ‘SKEMISSION_PHOTOCHEMICAL_O2’. A full list of valid
+climatology handles is available in the SasktranIF documentation.</p></li>
+<li><p><strong>climatology</strong><strong>)</strong> – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+<li><p><strong>self_broadening_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+<li><p><strong>isotope_filter</strong> (<em>int</em><em>, </em><em>optional</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+<li><p><strong>use_cache</strong> (<em>boo</em><em>, </em><em>optional</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span>   <span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">msis</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">constant</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">ClimatologyUserDefined</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100000.0</span><span class="p">]),</span> <span class="p">{</span><span class="s1">&#39;SKEMISSION_PHOTOCHEMICAL_O2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0E6</span><span class="p">,</span> <span class="mf">1.0E6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">emission</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">HITRANPhotoChemical_O2_ABand</span><span class="p">(</span><span class="n">msis</span><span class="p">,</span> <span class="p">(</span><span class="n">constant</span><span class="p">,</span> <span class="s1">&#39;SKEMISSION_PHOTOCHEMICAL_O2&#39;</span><span class="p">),</span> <span class="n">self_broadening_climatology</span><span class="o">=</span><span class="p">(</span><span class="n">msis</span><span class="p">,</span> <span class="s1">&#39;SKCLIMATOLOGY_O2_CM3&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">wavelen</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">749.0</span><span class="p">,</span> <span class="mf">779.0</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">signal</span> <span class="o">=</span> <span class="n">emission</span><span class="o">.</span><span class="n">isotropic_emission</span><span class="p">(</span><span class="mf">52.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">106.0</span><span class="p">,</span> <span class="mf">80000.0</span><span class="p">,</span> <span class="mf">57005.8</span><span class="p">,</span> <span class="n">wavelen</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="hitranphotochemical-o2-singletdelta">
+<h2>HITRANPhotoChemical_O2_SingletDelta<a class="headerlink" href="#hitranphotochemical-o2-singletdelta" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.HITRANPhotoChemical_O2_SingletDelta">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">HITRANPhotoChemical_O2_SingletDelta</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atmospheric_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">excited_upper_state_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span></em>, <em class="sig-param"><span class="n"><span class="pre">self_broadening_climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">Tuple</span><span class="p"><span class="pre">[</span></span><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a><span class="p"><span class="pre">,</span></span><span class="w"> </span><span class="pre">str</span><span class="p"><span class="pre">]</span></span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">(None,</span> <span class="pre">'')</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotope_filter</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">use_cache</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">True</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.HITRANPhotoChemical_O2_SingletDelta" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.HITRANPhotoChemical" title="sasktran.emission_hitranphotochemical.HITRANPhotoChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">HITRANPhotoChemical</span></code></a></p>
+<p>Calculates the photo-chemical emission from the O2 Singlet Delta around 1.27 microns. This is a small wrapper around the
+<code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> class. The O2 A-band spectral lines cover the wavelength range 1.223 microns to 1.321 microns,
+correspondiong to 7570 to 8172 cm-1.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>climatology</strong><strong>)</strong> (<em>atmospheric_state_climatology</em><em>(</em><em>object</em>) – The climatology object used to calculate pressure and temperature for the Voigt profile calculations.</p></li>
+<li><p><strong>excited_upper_state_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – A two element tuple providing the climatology object to be used for calculation of the total number of O2 A-band
+molecules in molecules/cm3. The first element is the <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> object that  captures the
+photo-chemistry of the atmosphere. It can be as simple as a user defined height profile or a more complicated
+photo-chemical model. The climatology object should provide the number of excited molecules in the oxygen A-band
+The second element is the climatology handle used by the excited upper-state climatology to acquire the number of excited molecules
+per cm3. A typical value for the oxygen molecule is ‘SKEMISSION_PHOTOCHEMICAL_O2’. A full list of valid
+climatology handles is available in the SasktranIF documentation.</p></li>
+<li><p><strong>self_broadening_climatology</strong> (<em>Tuple</em><em>[ </em><em>object</em><em>, </em><em>str</em><em>]</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+<li><p><strong>isotope_filter</strong> (<em>int</em><em>, </em><em>optional</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+<li><p><strong>use_cache</strong> (<em>boo</em><em>, </em><em>optional</em>) – Optional. See <code class="xref py py-class docutils literal notranslate"><span class="pre">HitranPhotoChemical</span></code> for a description of this parameter.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span>   <span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="gp">&gt;&gt;&gt;</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">msis</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">constant</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">ClimatologyUserDefined</span><span class="p">(</span><span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mf">0.0</span><span class="p">,</span> <span class="mf">100000.0</span><span class="p">]),</span> <span class="p">{</span><span class="s1">&#39;SKEMISSION_PHOTOCHEMICAL_O2&#39;</span><span class="p">:</span> <span class="p">[</span><span class="mf">1.0E6</span><span class="p">,</span> <span class="mf">1.0E6</span><span class="p">]})</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">emission</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">HITRANPhotoChemical_O2_SingletDelta</span><span class="p">(</span> <span class="n">msis</span><span class="p">,</span> <span class="p">(</span><span class="n">constant</span><span class="p">,</span> <span class="s1">&#39;SKEMISSION_PHOTOCHEMICAL_O2&#39;</span><span class="p">),</span> <span class="n">self_broadening_climatology</span><span class="o">=</span><span class="p">(</span><span class="n">msis</span><span class="p">,</span> <span class="s1">&#39;SKCLIMATOLOGY_O2_CM3&#39;</span><span class="p">))</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">wavelen</span>  <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">1223.0</span><span class="p">,</span> <span class="mf">1321.0</span><span class="p">,</span> <span class="mf">0.0001</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span>   <span class="n">signal</span> <span class="o">=</span> <span class="n">emission</span><span class="o">.</span><span class="n">isotropic_emission</span><span class="p">(</span><span class="mf">52.0</span><span class="p">,</span> <span class="o">-</span><span class="mf">106.0</span><span class="p">,</span> <span class="mf">80000.0</span><span class="p">,</span> <span class="mf">57005.8</span><span class="p">,</span> <span class="n">wavelen</span><span class="p">,</span> <span class="kc">False</span><span class="p">)</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="abandemission">
+<h2>ABandEmission<a class="headerlink" href="#abandemission" title="Permalink to this heading">¶</a></h2>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.ABandEmission">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ABandEmission</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altArray_km</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ABandEmission" title="Permalink to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.Emission" title="sasktran.emission.Emission"><code class="xref py py-class docutils literal notranslate"><span class="pre">Emission</span></code></a></p>
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.ABandEmission.run_model">
+<span class="sig-name descname"><span class="pre">run_model</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">atmosphere</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refPoint</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">sunPos</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ABandEmission.run_model" title="Permalink to this definition">¶</a></dt>
+<dd><dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>atmosphere</strong> (<em>sk.Atmosphere</em>) – Atmospheric state to run the emission model at.  Note that the atmosphere MUST contain the keys
+‘ozone’, ‘air’, and ‘O2’</p></li>
+<li><p><strong>refPoint</strong> (<em>List</em>) – 4 element list of [latitude, longitude, altitude, mjd] which defines the location to run the model at.
+The altitude parameter is generally not used.</p></li>
+<li><p><strong>sunPos</strong> (<em>np.array</em>) – 3 element unit vector of (x, y, z) in geocentric coordinates pointing towards the sun.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns<span class="colon">:</span></dt>
+<dd class="field-even"><p>Source function for emission as a two dimensional array (wavelength, altitude), and corresponding
+wavelength array (wavlenA)</p>
+</dd>
+<dt class="field-odd">Return type<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Jemi_nm, wavlenA</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a></dt><dd><p>An object that describes the atmospheric constituents, and surface type to the engine.
+Atmospheric constituents are defined by a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a>, and surfaces are defined by
+a given <a class="reference internal" href="brdf.html#brdf"><span class="std std-ref">BRDF</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="optical_property.html" class="btn btn-neutral float-left" title="Optical Properties" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="solar_spectrum.html" class="btn btn-neutral float-right" title="Solar Spectrum" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
