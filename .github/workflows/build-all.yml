@@ -2,7 +2,8 @@ name: 'Build, Test, and Upload Wheels/Docs'
 
 on:
   push:
-    - main
+    branches:
+      - main
   pull_request:
   release:
 
