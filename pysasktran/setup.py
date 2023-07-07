@@ -83,7 +83,13 @@ else:
     extra_compile_args=['-std=gnu++11', '-fvisibility=hidden','-fPIC' ]
     if sys.platform == 'darwin':
         # mac
+        import os
         extra_link_args = []
+
+        if 'SDKROOT' in os.environ:
+            extra_compile_args.append('-isysroot{}'.format(os.environ['SDKROOT']))
+        if 'MACOSX_DEPLOYMENT_TARGET' in os.environ:
+            extra_compile_args.append('-mmacosx-version-min={}'.format(os.environ['MACOSX_DEPLOYMENT_TARGET']))
     else:
         # Linux
         extra_link_args   =[]
@@ -177,6 +183,8 @@ setup(
     author='Daniel Zawada',
     author_email='daniel.zawada@usask.ca',
     description='',
+    long_description='',
+    long_description_content_type='text/markdown',
     include_package_data=True,
     package_data={**package_data, **{'sasktran': ['aband/data/*']}},
     data_files=data_files,
@@ -187,7 +195,7 @@ setup(
         'urllib3',
         'appdirs',
         'packaging'
-    ]
+    ],
 )
 
 

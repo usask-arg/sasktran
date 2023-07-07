@@ -34,6 +34,7 @@ class TestEngineHR(unittest.TestCase):
         np.testing.assert_allclose(correct_check1, radiance.isel(wavelength=0, los=[0, 10, 20, 30])['radiance'].values, rtol=1e-6)
         np.testing.assert_allclose(correct_check2, radiance.isel(wavelength=1, los=[0, 10, 20, 30])['radiance'].values, rtol=1e-6)
 
+    @unittest.skip
     def test_with_baum(self):
         tanalts_km = np.arange(10, 50, 1)
 

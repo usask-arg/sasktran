@@ -7,14 +7,18 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
+if(UNIX)
+    add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment")
+endif()
+
 execute_process(COMMAND git describe
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     OUTPUT_VARIABLE GIT_DESCRIBE_TEMP
 )
 
 if(EXISTS ${GIT_DESCRIBE_TEMP})
-    string(REGEX MATCH "sasktran_([0-9\\.]+)" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
-    string(REPLACE "sasktran_" "" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
+    string(REGEX MATCH "v([0-9\\.]+)" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
+    string(REPLACE "v" "" SASKTRAN_CORE_VERSION ${GIT_DESCRIBE_TEMP})
 else()
     set(SASKTRAN_CORE_VERSION 1.5.0)
 endif()
@@ -31,9 +35,10 @@ endif()
 set (CMAKE_CXX_STANDARD 11)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
+option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
 # Try to find boost 1.6 or greater
-set(Boost_USE_STATIC_LIBS ON)
-find_package(Boost REQUIRED COMPONENTS system regex timer random)
+set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
+find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread)
 
 # Try to find OpenMP
 find_package(OpenMP REQUIRED)

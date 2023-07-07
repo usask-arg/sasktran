@@ -52,7 +52,7 @@ class SKTRAN_MCAirMassFactorCalculator_Base
 	
 	public:
 								SKTRAN_MCAirMassFactorCalculator_Base();
-							   ~SKTRAN_MCAirMassFactorCalculator_Base();
+		virtual 			   ~SKTRAN_MCAirMassFactorCalculator_Base();
 		bool					ReleaseResources();
 
 		bool					SetCoords						( std::shared_ptr<const SKTRAN_CoordinateTransform_V2>& coords )				{ m_coords = coords; return true; }

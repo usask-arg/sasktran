@@ -1,0 +1,12 @@
+numpy
+h5py
+hdf4
+scipy
+netCDF4
+jpeg
+ipython
+jupyter
+pandoc
+matplotlib
+jinja2==3.0.3
+xarray

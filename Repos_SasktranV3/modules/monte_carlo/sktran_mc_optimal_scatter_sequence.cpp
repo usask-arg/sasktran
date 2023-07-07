@@ -266,7 +266,8 @@ bool SKTRAN_OptimalScatterSequenceManager_Uniform::CalculateCovariance(const SKT
 		for (size_t uidx = lidx + 1; uidx < m_numDistinctOrders; uidx++)
 		{
 			//rSums.covEstimate[cidx++] = 0 < rSums.numSamples[uidx] ? (rSums.rad2SumCov[cidx] - ((rSums.radSum[uidx].I() * rSums.radSum[lidx].I()) / ((double)rSums.numSamples[lidx]))) * pow((double)rSums.numSamples[uidx], -1.0) : 0.0;
-			covariance[cidx++] = 0 < rSums.numSamples[uidx] ? (rSums.rad2SumCov[cidx] - ((rSums.radSum[uidx].I() * rSums.radSum[lidx].I()) / ((double)rSums.numSamples[lidx]))) * pow((double)rSums.numSamples[lidx], -1.0) * pow((double)rSums.numSamples[uidx], -1.0) : 0.0;
+			covariance[cidx] = 0 < rSums.numSamples[uidx] ? (rSums.rad2SumCov[cidx] - ((rSums.radSum[uidx].I() * rSums.radSum[lidx].I()) / ((double)rSums.numSamples[lidx]))) * pow((double)rSums.numSamples[lidx], -1.0) * pow((double)rSums.numSamples[uidx], -1.0) : 0.0;
+			++cidx;
 		}
 	}
 
@@ -1026,8 +1027,8 @@ bool SKTRAN_OptimalScatterSequenceManager_UniformSecondary::SortSamples(const si
 	bool ok = true;
 
 	size_t maxOrder = ossIdx < m_numDistinctOrders ? ossIdx + 1 : m_numDistinctOrders;
-	size_t i = 0, j = m_numDistinctOrders;
-	for (i; i < maxOrder; i++, j++)
+	size_t j = m_numDistinctOrders;
+	for (size_t i = 0; i < maxOrder; i++, j++)
 	{
 		rSums.numSamples[i]++;
 		rSums.numSamples[j]++;
@@ -1045,7 +1046,7 @@ bool SKTRAN_OptimalScatterSequenceManager_UniformSecondary::SortSamples(const si
 		}
 	}
 
-	for (i = 0; i < rSums.radBuffer.size(); i++) rSums.radBuffer[i].SetTo(0.0);
+	for (size_t i = 0; i < rSums.radBuffer.size(); i++) rSums.radBuffer[i].SetTo(0.0);
 
 	return ok;
 }

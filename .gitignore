@@ -9,7 +9,6 @@ ipch
 *.filters
 MatlabInstallation
 PythonWheels
-/Repos_BaseCode/lapack
 /Repos_BaseCode/matlabmex
 /Repos_BaseCode/matlabplot
 /Repos_BaseCode/nxCOMAutomation

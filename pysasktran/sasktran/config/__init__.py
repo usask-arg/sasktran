@@ -1,4 +1,5 @@
 import sys
+import sysconfig
 import os
 import yaml
 import appdirs
@@ -9,7 +10,7 @@ from pathlib import Path
 from packaging import version
 
 # Location of the sasktranif registry yaml file
-REGISTRY_FILE = os.path.join(sys.exec_prefix, 'share', 'usask-arg', 'registry', 'sasktranif', 'globalkey.yaml')
+REGISTRY_FILE = os.path.join(sysconfig.get_path('data'), 'share', 'usask-arg', 'registry', 'sasktranif', 'globalkey.yaml')
 
 # Mapping from option in the user config file to sasktranif registry setting
 OPTION_MAPPINGS = {'hitran_directory': ['software', 'usask-arg', 'skopticalproperties',

@@ -2,6 +2,7 @@ from typing import Any
 import os
 import os.path
 import sys
+import sysconfig
 import yaml
 
 #------------------------------------------------------------------------------
@@ -81,5 +82,5 @@ class SasktranifRegistry():
 
     def registry_filename(self):
 
-        filename = os.path.join(sys.exec_prefix,'share', 'usask-arg','registry','sasktranif','globalkey.yaml')
+        filename = os.path.join(sysconfig.get_path('data'), 'share', 'usask-arg','registry','sasktranif','globalkey.yaml')
         return filename

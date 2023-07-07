@@ -122,7 +122,7 @@ class SKTRAN_MCPhoton_Base
 
 	public:
 		                                SKTRAN_MCPhoton_Base   ( ); 
-		                               ~SKTRAN_MCPhoton_Base   ( );
+		virtual                        ~SKTRAN_MCPhoton_Base   ( );
 	//	                                SKTRAN_MCPhoton		( SKTRAN_MCPhoton&& other );	// The 
 										SKTRAN_MCPhoton_Base		( const SKTRAN_MCPhoton_Base& other );		// The copy constructor is really a move operator
 	//									SKTRAN_MCPhoton		( const SKTRAN_MCPhoton& other );		// Copy constructor used by std::vector::resize under g++
