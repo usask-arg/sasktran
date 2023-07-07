@@ -14,6 +14,10 @@ specific domain that it is applicable to.  The primary two engines are ``SASKTRA
 scattering model and contained within this package, and ``SASKTRAN-DO`` which is a discrete ordinates model suitable for
 nadir viewing applications.  More information on ``SASKTRAN-DO`` can be found at https://arg.usask.ca/docs/sasktran_do/.
 
+Development
+-----------
+The SASKTRAN code is open-source and is in active development at https://github.com/usask-arg/sasktran
+
 License
 -------
 SASKTRAN is made available under the MIT license restricted for academic and educational use, for commercial use please contact the package authors.
@@ -28,7 +32,7 @@ Bourassa, A. E., Degenstein, D. A., and Llewellyn, E. J.: SASKTRAN: A Spherical 
 
 Contact
 -------
-Inquiries and bug reports can be sent to Daniel Zawada (daniel.zawada@usask.ca).
+Inquiries and bug reports can be posted at https://github.com/usask-arg/sasktran.
 
 
 .. toctree::

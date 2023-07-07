@@ -1,0 +1,12 @@
+name: build_py310
+dependencies:
+  - python=3.10
+  - c-compiler
+  - cxx-compiler
+  - fortran-compiler
+  - boost
+  - libnetcdf
+  - catch2
+  - openblas
+  - yaml-cpp
+  - delocate

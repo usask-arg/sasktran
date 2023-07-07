@@ -160,6 +160,10 @@ jobs:
         CONDA_BUILD_SYSROOT: "/tmp/MacOSX10.9.sdk"
         SDKROOT: "/tmp/MacOSX10.9.sdk"
         MACOSX_DEPLOYMENT_TARGET: "10.9"
+    
+    strategy:
+      matrix:
+        py_version: [py38, py39, py310, py311]
         
     steps:
       - name: Checkout repository
@@ -174,8 +178,8 @@ jobs:
       - name: Setup Conda build environment 
         uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: build_py38
-          environment-file: buildscripts/mac-ci-envs/build-py38.yml
+          activate-environment: build_${{ matrix.py_version }}
+          environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
           channels: conda-forge
           auto-activate-base: false
 
@@ -200,7 +204,7 @@ jobs:
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: wheels-mac
+          name: wheels-mac-${{ matrix.py_version }}
           path: wheelhouse
 
   build-cpp-wheels-windows:
@@ -294,7 +298,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py38]
+        py_version: [py38, py39, py310, py311]
 
     steps:
       - name: Checkout repository
@@ -336,7 +340,7 @@ jobs:
           pycodestyle sasktran
 
   upload-to-test-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, test-wheels-mac, build-docs]
     if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
 
@@ -358,6 +362,30 @@ jobs:
         with:
           name: wheels-windows
           path: dist
+      
+      - name: Download mac wheel py38
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py38
+          path: dist
+
+      - name: Download mac wheel py39
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py39
+          path: dist
+
+      - name: Download mac wheel py310
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py310
+          path: dist
+
+      - name: Download mac wheel py311
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py311
+          path: dist
 
       - name: Publish package to TestPyPI
         uses: pypa/gh-action-pypi-publish@v1.8.7
@@ -366,7 +394,7 @@ jobs:
           verbose: true
   
   upload-to-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, test-wheels-mac, build-docs]
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
 
@@ -387,6 +415,30 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheels-windows
+          path: dist
+
+      - name: Download mac wheel py38
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py38
+          path: dist
+
+      - name: Download mac wheel py39
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py39
+          path: dist
+
+      - name: Download mac wheel py310
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py310
+          path: dist
+
+      - name: Download mac wheel py311
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-mac-py311
           path: dist
 
       - name: Publish package to PyPI

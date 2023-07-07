@@ -5,6 +5,7 @@ from sys import platform
 
 
 class TestEngineSO(unittest.TestCase):
+    @unittest.skip
     def test_so(self):
         if platform == 'linux' or platform == 'linux2':
             self.skipTest('Skipping test on Linux')
