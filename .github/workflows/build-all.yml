@@ -183,6 +183,11 @@ jobs:
           channels: conda-forge
           auto-activate-base: false
 
+      - name: Display conda environment
+        shell: bash -el {0}
+        run: | 
+          conda list
+
       - name: configure cmake project
         shell: bash -el {0}
         run: | 
