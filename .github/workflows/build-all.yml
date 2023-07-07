@@ -306,14 +306,14 @@ jobs:
 
       - uses: conda-incubator/setup-miniconda@v2
         with:
-          activate-environment: py38
+          activate-environment: ${{ matrix.py_version }}
           environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
           auto-activate-base: false
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac
+          name: wheels-mac-${{ matrix.py_version }}
           path: wheelhouse
       
       - name: Test wheel
