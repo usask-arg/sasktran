@@ -345,7 +345,7 @@ jobs:
           pycodestyle sasktran
 
   upload-to-test-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, test-wheels-mac, build-docs]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-cpp-wheels-mac, build-docs]
     if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
     runs-on: ubuntu-latest
 
@@ -399,7 +399,7 @@ jobs:
           verbose: true
   
   upload-to-pypi:
-    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, test-wheels-mac, build-docs]
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-cpp-wheels-mac, build-docs]
     if: github.event_name == 'release'
     runs-on: ubuntu-latest
 
