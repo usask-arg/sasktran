@@ -2,6 +2,12 @@
 
 Changelog
 *********
+1.7.1
+=====
+* Development of the model has moved over to github, see https://github.com/usask-arg/sasktran
+* Fixed several bugs involving running sasktran on non-anaconda based python environments
+* Built experimental wheels for osx x86_64, python 3.8, 3.9, 3.10, 3.11
+
 1.7.0
 =====
 * Added support for python 3.10/3.11 builds on both Windows and Linux

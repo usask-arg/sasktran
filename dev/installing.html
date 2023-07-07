@@ -91,13 +91,15 @@
              
   <section id="installing-sasktran">
 <span id="installing"></span><h1>Installing SASKTRAN<a class="headerlink" href="#installing-sasktran" title="Permalink to this heading">¶</a></h1>
-<p>SASKTRAN is designed to work with the Anaconda scientific Python distribution (<a class="reference external" href="https://www.anaconda.com/products/distribution">https://www.anaconda.com/products/distribution</a>).
-Currently we support Python versions 3.7, 3.8, 3.9, and 3.10 on Windows and Linux x64 environments.</p>
+<p>SASKTRAN is designed to work with the Anaconda scientific Python distribution (<a class="reference external" href="https://www.anaconda.com/products/distribution">https://www.anaconda.com/products/distribution</a>), but it may work with your system Python distribution as long as the necessary dependencies are also available.
+Currently we support Python versions 3.8, 3.9, 3.10, 3.11 on Windows and Linux x64 environments.
+Mac wheels for x86_64 are also built for the same Python versions, but support is considered experimental and problems are known to exist.
+Mac ARM builds are planned, but not currently available.</p>
 <p>Installing SASKTRAN is as simple as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sasktran</span> <span class="o">-</span><span class="n">f</span> <span class="n">https</span><span class="p">:</span><span class="o">//</span><span class="n">arg</span><span class="o">.</span><span class="n">usask</span><span class="o">.</span><span class="n">ca</span><span class="o">/</span><span class="n">wheels</span><span class="o">/</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">sasktran</span>
 </pre></div>
 </div>
-<p>This will install this package as well as the C++ code for SASKTRAN HR.</p>
+<p>This will install this package as well as the C++ code.</p>
 </section>
 
 
