@@ -11,7 +11,7 @@ if(UNIX)
     add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment")
 endif()
 
-execute_process(COMMAND git describe
+execute_process(COMMAND git describe --tags
     WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
     OUTPUT_VARIABLE GIT_DESCRIBE_TEMP
 )
