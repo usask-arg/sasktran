@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The SASKTRAN Radiative Transfer Framework &mdash; SASKTRAN 0+untagged.1.g96c3b1d documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Installing SASKTRAN" href="installing.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="#">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+untagged.1.g96c3b1d
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="#">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="#" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">The SASKTRAN Radiative Transfer Framework</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-sasktran-radiative-transfer-framework">
+<h1>The SASKTRAN Radiative Transfer Framework<a class="headerlink" href="#the-sasktran-radiative-transfer-framework" title="Permalink to this heading">¶</a></h1>
+<p>The SASKTRAN radiative transfer framework is a radiative transfer tool developed at the University of Saskatchewan.
+Originally designed for use with the OSIRIS instrument (<a class="reference external" href="https://research-groups.usask.ca/osiris/">https://research-groups.usask.ca/osiris/</a>) it has since
+evolved to be applicable to a large variety of applications.  SASKTRAN is a full framework and not just a radiative
+transfer model, as such it contains databases or interfaces to standard climatologies and species optical properties.
+It also contains multiple methods to solve the radiative transfer equation that we call <cite>engines</cite>, each one of which has a
+specific domain that it is applicable to.  The primary two engines are <code class="docutils literal notranslate"><span class="pre">SASKTRAN-HR</span></code> which is a fully spherical
+scattering model and contained within this package, and <code class="docutils literal notranslate"><span class="pre">SASKTRAN-DO</span></code> which is a discrete ordinates model suitable for
+nadir viewing applications.  More information on <code class="docutils literal notranslate"><span class="pre">SASKTRAN-DO</span></code> can be found at <a class="reference external" href="https://arg.usask.ca/docs/sasktran_do/">https://arg.usask.ca/docs/sasktran_do/</a>.</p>
+<section id="development">
+<h2>Development<a class="headerlink" href="#development" title="Permalink to this heading">¶</a></h2>
+<p>The SASKTRAN code is open-source and is in active development at <a class="reference external" href="https://github.com/usask-arg/sasktran">https://github.com/usask-arg/sasktran</a></p>
+</section>
+<section id="license">
+<h2>License<a class="headerlink" href="#license" title="Permalink to this heading">¶</a></h2>
+<p>SASKTRAN is made available under the MIT license restricted for academic and educational use, for commercial use please contact the package authors.
+Commerical level support may also be available for specific applications.
+We request that users of the model contact the authors before publishing results using SASKTRAN, and that
+the following publications are acknowledged:</p>
+<p>Zawada, D. J., Dueck, S. R., Rieger, L. A., Bourassa, A. E., Lloyd, N. D., and Degenstein, D. A.: High-resolution and Monte Carlo additions to the SASKTRAN radiative transfer model, Atmos. Meas. Tech., 8, 2609-2623, <a class="reference external" href="https://doi.org/10.5194/amt-8-2609-2015">https://doi.org/10.5194/amt-8-2609-2015</a>, 2015.</p>
+<p>Bourassa, A. E., Degenstein, D. A., and Llewellyn, E. J.: SASKTRAN: A Spherical Geometry Radiative Transfer Code for Efficient Estimation of Limb Scattered Sunlight, J Quant Spectrosc Radiat Trans, Volume 109, Issue 1, 52-73, <a class="reference external" href="https://doi.org/10.1016/j.jqsrt.2007.07.007">https://doi.org/10.1016/j.jqsrt.2007.07.007</a>, 2008.</p>
+</section>
+<section id="contact">
+<h2>Contact<a class="headerlink" href="#contact" title="Permalink to this heading">¶</a></h2>
+<p>Inquiries and bug reports can be posted at <a class="reference external" href="https://github.com/usask-arg/sasktran">https://github.com/usask-arg/sasktran</a>.</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#defining-the-geometry">Defining the Geometry</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#representing-the-atmosphere">Representing the Atmosphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="quickstart.html#setting-up-the-engine">Setting up the Engine</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="constructing_atmosphere.html#climatologies">Climatologies</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_atmosphere.html#optical-properties">Optical Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_atmosphere.html#the-species-object">The Species Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_atmosphere.html#the-atmospheric-state">The Atmospheric State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_atmosphere.html#brdf">BRDF</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="constructing_geometry.html#What-is-the-Geometry?">What is the Geometry?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_geometry.html#Convenience-Classes">Convenience Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="constructing_geometry.html#Using-the-Geodetic-Object">Using the Geodetic Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#sasktran-hr">SASKTRAN-HR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#sasktran-occ">SASKTRAN-OCC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#sasktran-mc">SASKTRAN-MC</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#sasktran-do">SASKTRAN-DO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#sasktran-tir">SASKTRAN-TIR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="other_engines.html#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="user_aerosol.html#GloSSAC-Climatology">GloSSAC Climatology</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="examples/climatology_examples.html">Climatology Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/brdf_examples.html">BRDF Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/opticalproperty_examples.html">Optical Property Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/geometry_examples.html">Geometry Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/hr_examples.html">SASKTRAN-HR Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="examples/mc_examples.html">SASKTRAN-MC Examples</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="config.html#databases">Databases</a></li>
+<li class="toctree-l2"><a class="reference internal" href="config.html#key-reference">Key Reference</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#complete-api-reference-pages">Complete API Reference Pages</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html#creating-sasktranif-like-objects">Creating SasktranIF Like Objects</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="aband_emission.html">A Band Emission Model</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">0.1.3</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+<section id="specific-engine-information">
+<h2>Specific Engine Information<a class="headerlink" href="#specific-engine-information" title="Permalink to this heading">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_hr.html#polarization-in-sasktran-hr">Polarization in SASKTRAN-HR</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_hr.html#commonly-used-options">Commonly Used Options</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_hr.html#advanced-configuration">Advanced Configuration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_hr.html#advanced-accuracy-performance">Advanced Accuracy/Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_hr.html#experimental-settings">Experimental Settings</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+</section>
+<section id="indices-and-tables">
+<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this heading">¶</a></h1>
+<ul class="simple">
+<li><p><a class="reference internal" href="genindex.html"><span class="std std-ref">Index</span></a></p></li>
+<li><p><a class="reference internal" href="py-modindex.html"><span class="std std-ref">Module Index</span></a></p></li>
+<li><p><a class="reference internal" href="search.html"><span class="std std-ref">Search Page</span></a></p></li>
+</ul>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="installing.html" class="btn btn-neutral float-right" title="Installing SASKTRAN" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

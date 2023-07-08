@@ -1,0 +1,309 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "# Collecting diagnostic data during radiative transfer calculation with HR\n",
+    "\n",
+    "In this example we collect diagnostic data, namely in- and out-radiance at specified diffuse profiles and orders of scattering, and store it to an hdf5 file. To enable data collection, at least one of the following two HR engine options should be set:\n",
+    "\n",
+    "- diagnosticscatterorders    -   the list of orders of scattering,\n",
+    "\n",
+    "- diagnosticdiffuseprofiles  -   the list of diffuse profiles.\n",
+    "\n",
+    "If only one option is set manually, the second will be set to default value. Deafults are [1] for the scattering orders and [0] for the diffuse profiles.\n",
+    "\n",
+    "The data is stored to DiagnosticData.h5 file in the working directory. If the file already exists, it is overwritten.\n",
+    "\n",
+    "To stop collecting diagnostic data without re-initializing the engine, one should set both parameters to zero-length arrays: engine.options['optname'] = []."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "%matplotlib inline"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import sasktran as sk\n",
+    "from sasktran.geometry import VerticalImage\n",
+    "import numpy as np\n",
+    "import matplotlib.pyplot as plt\n",
+    "import h5py"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Create geometry\n",
+    "tanalts = [15, 25, 35]\n",
+    "geometry = VerticalImage()\n",
+    "geometry.from_sza_saa(sza=60, saa=60, lat=0, lon=0, tanalts_km=tanalts, mjd=54372, \n",
+    "                      locallook=0, satalt_km=600, refalt_km=20)\n",
+    "\n",
+    "# Create an atmosphere with aerosol absorption and Rayleigh scattering\n",
+    "atmosphere = sk.Atmosphere()\n",
+    "atmosphere['air'] = sk.Species(optical_property=sk.Rayleigh(), climatology=sk.MSIS90())\n",
+    "\n",
+    "engine = sk.EngineHR(geometry=geometry, atmosphere=atmosphere)\n",
+    "wlens = [350, 400]\n",
+    "engine.wavelengths = wlens\n",
+    "\n",
+    "# To collect diagnostic data,\n",
+    "# specify scattering orders\n",
+    "myorders = [1,2,3]\n",
+    "engine.options['diagnosticscatterorders'] = myorders\n",
+    "\n",
+    "# Use more than one diffuse profile\n",
+    "engine.options['numdiffuseprofilesinplane'] = 3\n",
+    "\n",
+    "myprofiles = [0,1,2]\n",
+    "engine.options['diagnosticdiffuseprofiles'] = myprofiles\n",
+    "\n",
+    "# Execute\n",
+    "rad = engine.calculate_radiance()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "One can have a look at the list of data that was collected:"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "h5f = h5py.File('DiagnosticData.h5', 'r')\n",
+    "print('The following diagnostic data was stored:')\n",
+    "for k in h5f.keys():\n",
+    "    dsinf = str(h5f[k])\n",
+    "    print(dsinf[14:dsinf.find(')')+1])\n",
+    "h5f.close()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "# Keep the first file under different name\n",
+    "import os\n",
+    "def convert_bytes(num):\n",
+    "    for x in ['bytes', 'KB', 'MB', 'GB', 'TB']:\n",
+    "        if num < 1024.0:\n",
+    "            return \"%3.1f %s\" % (num, x)\n",
+    "        num /= 1024.0\n",
+    "def file_size(file_path):\n",
+    "   if os.path.isfile(file_path):\n",
+    "        file_info = os.stat(file_path)\n",
+    "        return convert_bytes(file_info.st_size)\n",
+    "\n",
+    "fname = 'DiagnosticData.h5'\n",
+    "# print the file size    \n",
+    "print(fname, ' :', file_size(fname))  "
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {
+    "scrolled": true
+   },
+   "outputs": [],
+   "source": [
+    "# To dismiss collecting diagnostic data:\n",
+    "engine.options['diagnosticscatterorders'] = []\n",
+    "engine.options['diagnosticdiffuseprofiles'] = []\n",
+    "\n",
+    "# Execute\n",
+    "rad = engine.calculate_radiance()"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "metadata": {},
+   "source": [
+    "Note: for polarized light scattering, the shape of incoming radiance data is (nheights, npoints, 10), and row structure is [x, y, z, rad, true_x, true_y, true_z, stokes_x, stokes_y, stokes_z]\n",
+    "\n",
+    "\n",
+    "Following are two useful plotting functions to visualize the collected data."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "def plotOnSphere(fname, wlen, type = 'in', order = 1, profile = 0, height=4500, \n",
+    "                 mycolormap = plt.cm.coolwarm):\n",
+    "    from mpl_toolkits.mplot3d import Axes3D\n",
+    "    from mpl_toolkits.mplot3d.art3d import Poly3DCollection\n",
+    "    from scipy.spatial import ConvexHull\n",
+    "    import matplotlib.colors as colors\n",
+    "    \n",
+    "    h5f = h5py.File(fname, 'r')\n",
+    "    heights = np.array( h5f.get('heights') )\n",
+    "    # get 3d rad data \n",
+    "    # non-polarized: [heights][points][x y z rad]\n",
+    "    # polarized: [heights][points][x y z rad tru_x tru_y tru_z stokes_x stokes_y stokes_z]\n",
+    "    rads = np.array( h5f.get(type + '_wlen_' + '%.2f'%wlen + '_ord_' + str(order) +\n",
+    "                             '_prof_' + str(profile)) )\n",
+    "    h5f.close()\n",
+    "    \n",
+    "    hidx = np.abs(heights-height).argmin()\n",
+    "    rad = rads[hidx]\n",
+    "    rad = rad[np.argsort(rad[:,3])]\n",
+    "    xyz, rvals = rad[:,0:3], rad[:,3]\n",
+    "\n",
+    "    hull = ConvexHull(xyz)\n",
+    "    idxs = hull.simplices\n",
+    "    verts = xyz[idxs]\n",
+    "    facevals = np.average(rvals[idxs], axis=1)\n",
+    "    mynorm = plt.Normalize(min(facevals), max(facevals))\n",
+    "    facecols = mycolormap(mynorm(facevals))\n",
+    "\n",
+    "    coll = Poly3DCollection(verts, facecolors=facecols, edgecolors='white', linewidths=0.1)\n",
+    "\n",
+    "    fig = plt.figure(figsize=(10,8))\n",
+    "    ax = fig.add_subplot(projection='3d')\n",
+    "    ax.add_collection(coll)\n",
+    "    ax.axis([-1, 1,-1, 1]), ax.set_zlim(-1, 1)\n",
+    "    ax.set_xlabel('X'), ax.set_ylabel('Y'), ax.set_zlabel('Z')\n",
+    "\n",
+    "    m = plt.cm.ScalarMappable(cmap=mycolormap)\n",
+    "    m.set_array([min(facevals),max(facevals)])\n",
+    "    fig.colorbar(m, shrink=0.5, aspect=15, ticks=np.linspace(min(facevals), \n",
+    "                                                             max(facevals), 10))\n",
+    "    plt.tight_layout()\n",
+    "    plt.title(type+' radiance, wavelength = ' + '%.2f'%wlen + \n",
+    "              '; profile = ' + str(profile) + '; order of scatter = ' + \n",
+    "              str(order) + '; height = ' + str(height))\n",
+    "    plt.show()\n",
+    "    plt.close()\n",
+    "\n",
+    "def plot2DHeightProf(fname, wlen, type = 'in', orders=[1,2,3], profile=0, point = [0. ,0., 1.], \n",
+    "                     theta = None, phi = None, np2int = 4):\n",
+    "    # where np2int is a number of points to interpolate\n",
+    "    # and the target point can be specified either as [x y z] or as {theta, phi}    \n",
+    "    if (theta is not None) and (phi is not None):\n",
+    "        theta = np.radians(theta)\n",
+    "        phi = np.radians(phi)\n",
+    "        point[0] = np.sin(theta)*np.cos(phi)\n",
+    "        point[1] = np.sin(theta)*np.sin(phi)\n",
+    "        point[2] = np.cos(theta)\n",
+    "        \n",
+    "    h5f = h5py.File(fname, 'r')\n",
+    "    heights = np.array( h5f.get('heights') )\n",
+    "    h5f.close()\n",
+    "    mylegend = []\n",
+    "    fig = plt.figure(figsize=(12,8))\n",
+    "    for order in orders:\n",
+    "        rads = []\n",
+    "        h5f = h5py.File(fname, 'r')\n",
+    "        # get 3d rad data \n",
+    "        # n/pol.: [heights][points][x y z rad]\n",
+    "        # pol.: [heights][points][x y z rad tru_x tru_y tru_z stokes_x stokes_y stokes_z]\n",
+    "        rad = np.array( h5f.get(type + '_wlen_' + '%.2f'%wlen + '_ord_' + \n",
+    "                                str(order) + '_prof_' + str(profile)) )\n",
+    "        h5f.close()\n",
+    "        for hidx in range(len(rad)):\n",
+    "            mynum, myden = 0, 0\n",
+    "            mags = np.linalg.norm(rad[hidx,:,0:3] - point, axis=1)\n",
+    "            if ( mags[np.argmin(mags)] < 1e-6 ) or ( np2int == 1 ): \n",
+    "                #if perfect match found, ignore np2int\n",
+    "                rads.append(rad[hidx, np.argmin(mags), 3])\n",
+    "            else:\n",
+    "                # use modified Shepard interp. for limited num. points\n",
+    "                my_radius = mags[np.argsort(mags)[np2int]]\n",
+    "                for npt in range(np2int):\n",
+    "                    coef = pow( max( 0, my_radius-mags[np.argsort(mags)[npt]]) / \n",
+    "                    ( mags[np.argsort(mags)[npt]] * my_radius), 2)\n",
+    "                    mynum += coef * rad[hidx, np.argsort(mags)[npt], 3]\n",
+    "                    myden += coef\n",
+    "                rads.append( mynum / myden )\n",
+    "        mylegend.append('scat.ord. ' + str(order))\n",
+    "        plt.plot(rads, heights)\n",
+    "    plt.legend(mylegend)\n",
+    "    plt.ylabel('height (m)')\n",
+    "    plt.xlabel(type + '. rad.')\n",
+    "    if np2int == 1: subtitle = 'Nearest-neighbor interpolation'\n",
+    "    else: subtitle = str(np2int) + '-pt interpolation'\n",
+    "    plt.title(type + '. rad. at the point ' + \n",
+    "              \"[%s]\"%\", \".join(map(str,np.around(point,decimals=3))) +\n",
+    "              '; ' + subtitle)\n",
+    "    plt.show()\n",
+    "    plt.close()"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fname = 'DiagnosticData.h5'\n",
+    "\n",
+    "# - plot on unisphere, one plot per one order, profile, height\n",
+    "plotOnSphere(fname, 350, 'in', order=1, profile=2, height=10500, mycolormap = plt.cm.rainbow)\n",
+    "plotOnSphere(fname, 350, 'out', order=1, profile=2, height=10500, mycolormap = plt.cm.rainbow)\n",
+    "# - plot on unisphere, one plot per one order, profile, height\n",
+    "plotOnSphere(fname, 400, 'in', order=2, profile=0, height=0.01)\n",
+    "plotOnSphere(fname, 400, 'out', order=2, profile=0, height=0.01)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "fname = 'DiagnosticData.h5'\n",
+    "# - or plot a height profile for particular diffuse point\n",
+    "plot2DHeightProf(fname, 350, orders=myorders, profile=0, point=[-0.5,  0.85, -0.1])\n",
+    "plot2DHeightProf(fname, 350, type='out', orders=myorders, profile=2, np2int=1)\n",
+    "plot2DHeightProf(fname, 400, theta=91, phi=60, np2int=2)"
+   ]
+  }
+ ],
+ "metadata": {
+  "kernelspec": {
+   "display_name": "Python 3",
+   "language": "python",
+   "name": "python3"
+  },
+  "language_info": {
+   "codemirror_mode": {
+    "name": "ipython",
+    "version": 3
+   },
+   "file_extension": ".py",
+   "mimetype": "text/x-python",
+   "name": "python",
+   "nbconvert_exporter": "python",
+   "pygments_lexer": "ipython3",
+   "version": "3.6.4"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 2
+}

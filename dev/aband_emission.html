@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>A Band Emission Model &mdash; SASKTRAN 0+untagged.1.g96c3b1d documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Changelog" href="changelog.html" />
+    <link rel="prev" title="Experimental Features" href="experimental.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+untagged.1.g96c3b1d
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="experimental.html">Experimental Features</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">A Band Emission Model</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#running-the-model">Running the Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#including-the-model-in-a-radiative-transfer-calculation">Including the Model in a Radiative Transfer Calculation</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="experimental.html">Experimental Features</a></li>
+      <li class="breadcrumb-item active">A Band Emission Model</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/aband_emission.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="a-band-emission-model">
+<span id="aband"></span><h1>A Band Emission Model<a class="headerlink" href="#a-band-emission-model" title="Permalink to this heading">¶</a></h1>
+<p>SASKTRAN includes a model to include effects from photochemical emission in the oxygen A band.
+This is included as <a class="reference internal" href="emission.html#sasktran.ABandEmission" title="sasktran.ABandEmission"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABandEmission</span></code></a>, and can be created through</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">emissions_alts_km</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">200</span><span class="p">)</span>
+
+<span class="n">aband_emission</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">ABandEmission</span><span class="p">(</span><span class="n">emissions_alts_km</span><span class="p">)</span>
+</pre></div>
+</div>
+<section id="running-the-model">
+<h2>Running the Model<a class="headerlink" href="#running-the-model" title="Permalink to this heading">¶</a></h2>
+<p>To run the model we need three things</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>A representation of the atmospheric state, containing pressure, temperature, ozone, and O2.</p></li>
+<li><p>A location to run the model at.</p></li>
+<li><p>The solar geometry</p></li>
+</ol>
+</div></blockquote>
+<p>The representation of the atmospheric state is an instance of the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atmosphere</span></code></a> object, for example,</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+
+<span class="c1"># Set the background pressure/temperature</span>
+<span class="n">atmosphere</span><span class="o">.</span><span class="n">atmospheric_state</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">()</span>
+
+<span class="c1"># Set the constituent species</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;ozone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">O3OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;air&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;O2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">HITRANChemical</span><span class="p">(</span><span class="s1">&#39;O2&#39;</span><span class="p">),</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">(</span><span class="n">include_o2</span><span class="o">=</span><span class="kc">True</span><span class="p">),</span> <span class="n">species</span><span class="o">=</span><span class="s1">&#39;SKCLIMATOLOGY_O2_CM3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Note that some of the climatologies used here are focused on the stratosphere, and may not be suitable for the mesosphere.
+For more accurate calculations using the A band emission model it is recommended to create <a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined" title="sasktran.ClimatologyUserDefined"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClimatologyUserDefined</span></code></a> objects with realistic mesospheric profiles.</p>
+<p>Having created the atmosphere we can then run the model, usually running the model takes around 40 seconds depending how many altitudes are requested.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ref</span> <span class="o">=</span> <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">]</span>    <span class="c1"># Lat/lon/altitude/mjd</span>
+<span class="n">sun</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
+
+<span class="n">emission_source</span><span class="p">,</span> <span class="n">emission_wavel</span> <span class="o">=</span> <span class="n">aband_emission</span><span class="o">.</span><span class="n">run_model</span><span class="p">(</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">ref</span><span class="p">,</span> <span class="n">sun</span><span class="p">)</span>
+</pre></div>
+</div>
+</section>
+<section id="including-the-model-in-a-radiative-transfer-calculation">
+<h2>Including the Model in a Radiative Transfer Calculation<a class="headerlink" href="#including-the-model-in-a-radiative-transfer-calculation" title="Permalink to this heading">¶</a></h2>
+<p>There are two ways we can use the emission model and include them in a radiative transfer calculation.
+The first is to take the values we have already calculated and create a <a class="reference internal" href="emission.html#sasktran.EmissionTable" title="sasktran.EmissionTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmissionTable</span></code></a> object.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1"># Convert emission altitudes to m, and source function from /cm to /m</span>
+<span class="n">emission_table</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EmissionTable</span><span class="p">(</span><span class="n">emissions_alts_km</span> <span class="o">*</span> <span class="mi">1000</span><span class="p">,</span> <span class="n">emission_wavel</span><span class="p">,</span> <span class="n">emission_source</span> <span class="o">*</span> <span class="mi">100</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>The <a class="reference internal" href="emission.html#sasktran.EmissionTable" title="sasktran.EmissionTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmissionTable</span></code></a> can then be added to the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atmosphere</span></code></a> object that goes into the radiative transfer model.
+We also have to tell the radiative transfer model to specifically include emissions in the calculation.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">emissions</span><span class="p">[</span><span class="s1">&#39;aband&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">emission_table</span>
+
+<span class="n">geo</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">VerticalImage</span><span class="p">()</span>
+<span class="n">geo</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">]),</span> <span class="mi">54372</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EngineHR</span><span class="p">(</span><span class="n">geometry</span><span class="o">=</span><span class="n">geo</span><span class="p">,</span> <span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">760</span><span class="p">,</span> <span class="mi">780</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">))</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">include_emissions</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">radiance</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This method of including emissions in the model is a bit clunky since we have to first run the model at a specific location and solar geometry.</p>
+<p>The second method uses the <a class="reference internal" href="emission.html#sasktran.ABandEmission" title="sasktran.ABandEmission"><code class="xref py py-class docutils literal notranslate"><span class="pre">ABandEmission</span></code></a> object directly instead of creating an intermediate <a class="reference internal" href="emission.html#sasktran.EmissionTable" title="sasktran.EmissionTable"><code class="xref py py-class docutils literal notranslate"><span class="pre">EmissionTable</span></code></a></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">emissions</span><span class="p">[</span><span class="s1">&#39;aband&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">ABandEmission</span><span class="p">(</span><span class="n">emissions_alts_km</span><span class="p">)</span>
+
+<span class="n">geo</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">VerticalImage</span><span class="p">()</span>
+<span class="n">geo</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="mi">70</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">([</span><span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">,</span> <span class="mi">50</span><span class="p">,</span> <span class="mi">60</span><span class="p">,</span> <span class="mi">70</span><span class="p">]),</span> <span class="mi">54372</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+
+<span class="n">engine</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">EngineHR</span><span class="p">(</span><span class="n">geometry</span><span class="o">=</span><span class="n">geo</span><span class="p">,</span> <span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">760</span><span class="p">,</span> <span class="mi">780</span><span class="p">,</span> <span class="mf">1e-2</span><span class="p">))</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">include_emissions</span> <span class="o">=</span> <span class="kc">True</span>
+
+<span class="n">radiance</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The main advantage to this method is that the location and solar geometry used to run the A band emission model are taken directly from SASKTRAN to match the radiative calculation.
+The downside is that the A band emission model is executed every time the radiative transfer calculation is performed.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="experimental.html" class="btn btn-neutral float-left" title="Experimental Features" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="changelog.html" class="btn btn-neutral float-right" title="Changelog" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
