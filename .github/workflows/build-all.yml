@@ -25,6 +25,7 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+      - run: git config --global --add safe.directory /__w/sasktran/sasktran
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
       - run: cmake --build build --config Release --target install -j 2
       - run: cd wheelhouse
