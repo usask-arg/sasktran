@@ -16,7 +16,7 @@ set(nxnetcdfio_src
 # Build the library
 add_library(${NXNETCDFIO_NAME} ${nxnetcdfio_src})
 
-install(DIRECTORY "nxnetcdfio/"
+install(DIRECTORY "nxnetcdfio"
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXNETCDFIO_NAME}
         FILES_MATCHING
         PATTERN "*.h"

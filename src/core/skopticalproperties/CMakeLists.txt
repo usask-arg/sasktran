@@ -96,19 +96,19 @@ set(CMAKE_Fortran_FLAGS "-std=legacy -fPIC -fdefault-real-8 -fdefault-double-8 -
 if(WIN32)
 	set(skopticalproperties_platform_src)
 else()
-	set(skopticalproperties_platform_src 
-		../fortran_libraries/wiscombemie/sources/MIEV0.f
-		../fortran_libraries/wiscombemie/sources/ErrPack.f
-		../fortran_libraries/wiscombemie/sources/RDI1MACHmodule.F90
-		../fortran_libraries/hitran/bd_tips_2017/sources/BD_TIPS_2017_v1p0.f
-		../fortran_libraries/nonspherescatter/TMatrixRandom/tmd.lp.f
+	set(skopticalproperties_platform_src
+            ../../../fortran_libraries/wiscombemie/sources/MIEV0.f
+            ../../../fortran_libraries/wiscombemie/sources/ErrPack.f
+            ../../../fortran_libraries/wiscombemie/sources/RDI1MACHmodule.F90
+            ../../../fortran_libraries/hitran/bd_tips_2017/sources/BD_TIPS_2017_v1p0.f
+            ../../../fortran_libraries/nonspherescatter/TMatrixRandom/tmd.lp.f
 	)
 endif()
 
 # Build the library
 add_library(${SKOPTICALPROPERTIES_NAME} ${skopticalproperties_src} ${skopticalproperties_platform_src})
 
-install(DIRECTORY "./"
+install(DIRECTORY "."
 		DESTINATION ${INCLUDE_INSTALL_DIR}/${SKOPTICALPROPERTIES_NAME}
 		FILES_MATCHING
 		PATTERN "*.h"

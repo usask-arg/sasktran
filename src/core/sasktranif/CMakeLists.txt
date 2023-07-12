@@ -10,7 +10,7 @@ set(sasktranif_src
     sources/sasktranif.cpp
     sources/stokesvector.cpp 
     sources/sasktranif_classfactory.cpp
-    ../Repos_SasktranV3/modules/sktran_common/miscellaneous/iskmodule_base.cpp
+        ../sasktran/modules/sktran_common/miscellaneous/iskmodule_base.cpp
 
          "sources/iskmie.cpp")
 
@@ -30,7 +30,7 @@ install (TARGETS ${SASKTRANIF_NAME}
         LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
         INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRANIF_NAME})
 
-install(DIRECTORY "includes/"
+install(DIRECTORY "includes"
         DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRANIF_NAME}
         FILES_MATCHING
         PATTERN "*.h"

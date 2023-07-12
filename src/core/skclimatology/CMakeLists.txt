@@ -24,7 +24,7 @@ if(WIN32)
     set(skclimatology_platform_src)
 else()
     set(skclimatology_platform_src
-        ../fortran_libraries/msis90/sources/msise90.for
+            ../../../fortran_libraries/msis90/sources/msise90.for
     )
 endif()
 
@@ -38,7 +38,7 @@ install (TARGETS ${SKCLIMATOLOGY_NAME}
         LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
         INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SKCLIMATOLOGY_NAME})
 
-install(DIRECTORY "./"
+install(DIRECTORY "."
         DESTINATION ${INCLUDE_INSTALL_DIR}/${SKCLIMATOLOGY_NAME}
         FILES_MATCHING
         PATTERN "*.h"

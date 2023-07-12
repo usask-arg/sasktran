@@ -75,7 +75,7 @@ ISKEngine::~ISKEngine()
  *	\param observer
  *		The geographic location of the observer expressed in meters as a cartesian position vector
  *		from the center of the geoid earth. The coordinates are provided in the array in the order [X,Y,Z].
- *		Class nxGeodetic in Repos_BaseCode can be used to convert latitudes, longitudes and heights to
+ *		Class nxGeodetic in base can be used to convert latitudes, longitudes and heights to
  *		cartesian position vectors.
  *
  *	\param lookvector

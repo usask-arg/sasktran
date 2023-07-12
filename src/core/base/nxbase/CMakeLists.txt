@@ -57,7 +57,7 @@ if (WIN32)
     )
 else()
     set(nxbase_platform_src
-        module/math/netlib/algama.f
+            module/math/netlib/algama.f
     )
 endif(WIN32)
 
@@ -129,12 +129,12 @@ add_library(${NXBASE_NAME} ${nxbase_core_src}
         ${nxbase_la_src}
         )
 
-install(DIRECTORY "./"
+install(DIRECTORY "."
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXBASE_NAME}
         FILES_MATCHING
         PATTERN "*.h"
         )
-install(DIRECTORY "./"
+install(DIRECTORY "."
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXBASE_NAME}
         FILES_MATCHING
         PATTERN "*.hpp"

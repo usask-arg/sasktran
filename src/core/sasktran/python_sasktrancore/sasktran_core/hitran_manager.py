@@ -51,8 +51,8 @@ class Hitran_HAPI_Manager:
             mol_id = k[MIDX]                                            # Get the molecule ID
             iso_id = k[IIDX]                                            # Getthe ISO ID. This number has chnaged from earlier version sof HITRAN
             entries = molecules.get(mol_id)                             # Get the listof isotopologues currently processed for this molecule
-            abundance      = hapi.abundance(mol_id,iso_id)              # Get the abundance
-            molecularmass  = hapi.molecularMass(mol_id,iso_id)          # and molecular mass
+            abundance      = hapi.abundance(mol_id, iso_id)              # Get the abundance
+            molecularmass  = hapi.molecularMass(mol_id, iso_id)          # and molecular mass
             qt             = 0.0
             gj             = 0
             thisentry      = [ iso_id, abundance, molecularmass, qt, gj, global_id]
@@ -125,7 +125,7 @@ class Hitran_HAPI_Manager:
                 for e in isoid:
                     print(name, e)
                 try:
-                    hapi.fetch_by_ids(name, isoid,0.0, 1.0E6)
+                    hapi.fetch_by_ids(name, isoid, 0.0, 1.0E6)
                 except Exception as e:
                     print(e)
 
