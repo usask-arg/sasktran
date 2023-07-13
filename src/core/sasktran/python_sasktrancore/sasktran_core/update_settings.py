@@ -235,7 +235,7 @@ def _display_menu(skregistry:SasktranifRegistry):
 
 def _test_hapi():
     hapi.db_begin(r'C:\temp')
-    hapi.fetch_by_ids('H2O', [1,2,3,4,5,6,7], 0.0, 1.0E6)
+    hapi.fetch_by_ids('H2O', [1, 2, 3, 4, 5, 6, 7], 0.0, 1.0E6)
     #miekeys = skregistry.subkey('software/usask-arg/skopticalproperties/mieaerosol')
     #miekeys['aerosol_cache_directory'] = input('Enter folder for the Mie aerosol cache: ')
     #print('The value is ', miekeys['aerosol_cache_directory'] )

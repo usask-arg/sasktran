@@ -988,8 +988,8 @@ $2 = &nump;
 
 
 
-%include "../../Repos_BaseCode/nxbase/module/math/nxvector.h"
-%include "../../Repos_BaseCode/nxbase/module/sktran_core/geodetic_instant.h"
-%include "../../Repos_SasktranIF/includes/climatology_handles.h"
-%include "../../Repos_SasktranIF/includes/sasktran_polarization.h"
-%include "../../Repos_SasktranIF/includes/sasktran_interfaces.h"
+%include "../../src/core/base/nxbase/module/math/nxvector.h"
+%include "../../src/core/base/nxbase/module/sktran_core/geodetic_instant.h"
+%include "../../src/core/sasktranif/includes/climatology_handles.h"
+%include "../../src/core/sasktranif/includes/sasktran_polarization.h"
+%include "../../src/core/sasktranif/includes/sasktran_interfaces.h"

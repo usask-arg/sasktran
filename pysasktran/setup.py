@@ -51,9 +51,9 @@ extra_objects = []
 
 cplus_include_path, cplus_library_path = get_cplus_paths()
 
-include_dirs      =[  r'../Repos_SasktranIF/includes',                                                              # setup the include folders for the compilation
+include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
                       np.get_include(),
-                      r'../Repos_BaseCode/nxbase'
+                      r'../src/core/base/nxbase'
                       ] +  cplus_include_path
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
@@ -101,11 +101,11 @@ except OSError:
     # Directory already exists
     pass
 
-copyfile( r'../Repos_SasktranIF/python_sasktranif/sasktranif/__init__.py', 'sasktranif/__init__.py' )
-copyfile( r'../Repos_SasktranIF/python_sasktranif/sasktranif/sasktranif_registry.py', 'sasktranif/sasktranif_registry.py' )
-copyfile( r'../Repos_SasktranIF/swig/sasktranif.py', 'sasktranif/sasktranif.py')                               # Copy the swig generated file
-copyfile( r'../Repos_SasktranIF/sources/pythonlogger.cpp','pythonlogger.cpp')                                            # Copy the sources over. Note that relative links to the source code
-copyfile( r'../Repos_SasktranIF/swig/sasktranif_wrap.cxx','sasktranif_wrap.cxx')                                         # failed when building on Linux
+copyfile( r'../src/core/sasktranif/python_sasktranif/sasktranif/__init__.py', 'sasktranif/__init__.py' )
+copyfile( r'../src/core/sasktranif/python_sasktranif/sasktranif/sasktranif_registry.py', 'sasktranif/sasktranif_registry.py' )
+copyfile( r'../src/core/sasktranif/swig/sasktranif.py', 'sasktranif/sasktranif.py')                               # Copy the swig generated file
+copyfile( r'../src/core/sasktranif/sources/pythonlogger.cpp','pythonlogger.cpp')                                            # Copy the sources over. Note that relative links to the source code
+copyfile( r'../src/core/sasktranif/swig/sasktranif_wrap.cxx','sasktranif_wrap.cxx')                                         # failed when building on Linux
 
 # Sasktran Core Components parts
 
@@ -117,19 +117,19 @@ except OSError:
 
 data_files = [ ('share/usask-arg/sasktran/installed_modules',['sasktran_core.sktran'])]
 
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core/sasktran_core_firsttime.sktran', 'sasktran_core/sasktran_core_firsttime.sktran')
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core/__init__.py', 'sasktran_core/__init__.py')
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core/hapi.py', 'sasktran_core/hapi.py')
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core/hitran_manager.py', 'sasktran_core/hitran_manager.py')
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core/update_settings.py', 'sasktran_core/update_settings.py')
+copyfile(r'../src/core/sasktran/python_sasktrancore/sasktran_core/sasktran_core_firsttime.sktran', 'sasktran_core/sasktran_core_firsttime.sktran')
+copyfile(r'../src/core//sasktran/python_sasktrancore/sasktran_core/__init__.py', 'sasktran_core/__init__.py')
+copyfile(r'../src/core//sasktran/python_sasktrancore/sasktran_core/hapi.py', 'sasktran_core/hapi.py')
+copyfile(r'../src/core//sasktran/python_sasktrancore/sasktran_core/hitran_manager.py', 'sasktran_core/hitran_manager.py')
+copyfile(r'../src/core//sasktran/python_sasktrancore/sasktran_core/update_settings.py', 'sasktran_core/update_settings.py')
 
-copyfile(r'../Repos_SasktranV3/python_sasktrancore/sasktran_core.sktran', 'sasktran_core.sktran')
+copyfile(r'../src/core/sasktran/python_sasktrancore/sasktran_core.sktran', 'sasktran_core.sktran')
 
 
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
     print('Copying Fortran and Sasktran core DLLs into package')
-    copyfile(r'..\Repos_SasktranV3\python_sasktrancore\sasktran_core\_sasktran_core_internals.dll', 'sasktran_core/_sasktran_core_internals.dll')
+    copyfile(r'..\src\core\sasktran\python_sasktrancore\sasktran_core\_sasktran_core_internals.dll', 'sasktran_core/_sasktran_core_internals.dll')
 
     dllnames = glob.glob(  os.path.join( 'sasktran_core','_sasktran_core_internals.dll') )
     dllname = os.path.basename(dllnames[0])                                                                                    # This file is built before calling setup.py by the SasktranCoreComponents/buildarglibraries.bat
@@ -158,7 +158,7 @@ else:
     else:
         soname = 'lib_sasktran_core_internals.so'
 
-    copyfile('../Repos_SasktranV3/python_sasktrancore/sasktran_core/{}'.format(soname), 'sasktran_core/{}'.format(soname))
+    copyfile('../src/core/sasktran/python_sasktrancore/sasktran_core/{}'.format(soname), 'sasktran_core/{}'.format(soname))
     package_data      ={'sasktran_core': [ 'sasktran_core_firsttime.sktran', soname ] }                # this file tells sasktran_core that it is the firsttime it is loaded. This will trigger initialization of the module.
 
 extension_module = Extension(                                                                           # specify that we are creating a python extension

@@ -81,12 +81,14 @@ set (EXPORT_NAME sasktran-coreTargets)
 
 # Platform independent including
 include_directories(
-    ${CMAKE_SOURCE_DIR}/Repos_SasktranV3
-    ${CMAKE_SOURCE_DIR}/Repos_skclimatology
-    ${CMAKE_SOURCE_DIR}/Repos_BaseCode/nxbase
-    ${CMAKE_SOURCE_DIR}/Repos_SasktranIF/includes
-    ${CMAKE_SOURCE_DIR}/Repos_BaseCode/nxhdf/nxnetcdfio
-    ${CMAKE_SOURCE_DIR}/Repos_skopticalproperties
+    ${CMAKE_SOURCE_DIR}/src/core/base
+    ${CMAKE_SOURCE_DIR}/src/core/sasktran
+    ${CMAKE_SOURCE_DIR}/src/core/base/nxbase
+    ${CMAKE_SOURCE_DIR}/src/core/sasktranif/includes
+    ${CMAKE_SOURCE_DIR}/src/core/base/nxhdf/nxnetcdfio
+    ${CMAKE_SOURCE_DIR}/src/core/skopticalproperties
+    ${CMAKE_SOURCE_DIR}/src/core/skclimatology
+
 
     ${Boost_INCLUDE_DIRS}
     ${YAML_CPP_INCLUDE_DIR}
@@ -124,11 +126,11 @@ write_basic_package_version_file( "sasktran-coreconfigVersion.cmake"
 
 
 # Add subprojects
-add_subdirectory (Repos_BaseCode)
-add_subdirectory (Repos_SasktranIF)
-add_subdirectory (Repos_skclimatology)
-add_subdirectory (Repos_skopticalproperties)
-add_subdirectory (Repos_SasktranV3)
+add_subdirectory (src/core/base)
+add_subdirectory (src/core/sasktranif)
+add_subdirectory (src/core/skclimatology)
+add_subdirectory (src/core/skopticalproperties)
+add_subdirectory (src/core/sasktran)
 add_subdirectory (fortran_libraries)
 
 install(EXPORT sasktran-coreTargets
