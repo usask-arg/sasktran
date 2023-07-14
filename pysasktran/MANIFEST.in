@@ -2,3 +2,4 @@ include versioneer.py
 include sasktranif/_version.py
 include sasktran/_version.py
 include sasktran/mie/data/*
+include sasktran/tir/data/*

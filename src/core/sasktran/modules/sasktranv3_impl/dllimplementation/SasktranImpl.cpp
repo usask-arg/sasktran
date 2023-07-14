@@ -311,6 +311,11 @@ extern "C" DLL_PUBLIC bool SKTRANIF_CreateEngine2( const char* userenginename, I
 		*engine = new ISKEngine_Stub_OCC;
 		ok = (engine != nullptr);
 	}
+    else if (enginename == "TIR")
+    {
+        *engine = new ISKEngine_Stub_TIR;
+        ok = (engine != nullptr);
+    }
 	else
 	{
 		*engine = nullptr;

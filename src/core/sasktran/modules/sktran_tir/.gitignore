@@ -1,0 +1,11 @@
+/cmake_install.cmake
+/INSTALL.vcxproj
+/INSTALL.vcxproj.filters
+/sktran_disco_engine.vcxproj
+/sktran_disco_engine.vcxproj.filters
+/sktran_disco_engine_tests.vcxproj
+/sktran_disco_engine_tests.vcxproj.filters
+sktran_disco_engine_tests.dir
+sktran_disco_engine.dir
+Release
+/to_be_ported

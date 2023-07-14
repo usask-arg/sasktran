@@ -150,6 +150,29 @@ set(sasktran_occ_src
 	modules/sktran_occ/refrac.cpp  
 )
 
+set(sasktran_tir_src
+	modules/sktran_tir/sktran_indexofrefraction_tir.cpp
+	modules/sktran_tir/sktran_tir.cpp
+	modules/sktran_tir/sktran_tir_atmosphericstate.cpp
+	modules/sktran_tir/sktran_tir_engine.cpp
+	modules/sktran_tir/sktran_tir_integrator.cpp
+	modules/sktran_tir/sktran_tir_linesofsighttable.cpp
+	modules/sktran_tir/sktran_tir_opticalproperties.cpp
+	modules/sktran_tir/sktran_tir_rayregionmanager.cpp
+	modules/sktran_tir/sktran_tir_raystorage.cpp
+	modules/sktran_tir/sktran_tir_specs_internal_core.cpp
+	modules/sktran_tir/sktran_tir_specs_internal_integrator.cpp
+	modules/sktran_tir/sktran_tir_specs_internal_opticalpropertiestable.cpp
+	modules/sktran_tir/sktran_tir_specs_internal_raytracer.cpp
+	modules/sktran_tir/sktran_tir_specs_internal_wf.cpp
+	modules/sktran_tir/sktran_tir_specs_user_integrator.cpp
+	modules/sktran_tir/sktran_tir_specs_user_opticalpropertiestable.cpp
+	modules/sktran_tir/sktran_tir_specs_user_raytracer.cpp
+	modules/sktran_tir/sktran_tir_specs_user_wf.cpp
+	modules/sktran_tir/sktran_tir_thread_manager.cpp
+	modules/sktran_tir/sktran_tir_wf.cpp
+		)
+
 set(sasktran_core_src
     modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base.cpp
 	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base_specifics.cpp
@@ -190,13 +213,10 @@ set(sasktran_test_src
 	Application/TestInstallation/testdelaunaysphere.cpp 
 	Application/TestInstallation/testscattermatrices.cpp 
 	Application/TestInstallation/testsinglescatter.cpp
-
-
-
 )
 
 # Build the library
-add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src})
+add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src})
 
 # Set the header files
 install (TARGETS ${SASKTRAN_BASE_NAME}

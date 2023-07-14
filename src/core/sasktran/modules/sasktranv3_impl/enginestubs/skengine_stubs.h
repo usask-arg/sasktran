@@ -214,6 +214,69 @@ class ISKEngine_Stub_MC : public ISKEngine_Stub
 
 
 /*-----------------------------------------------------------------------------
+*					ISKEngine_Stub_TIR		2018-6-5*/
+/** **/
+/*---------------------------------------------------------------------------*/
+
+class ISKEngine_Stub_TIR : public ISKEngine_Stub
+{
+private:
+    SKTRAN_TIR_Engine						m_engine;
+    SKTRAN_TIR_AtmosphericOpticalState		m_opticalstate;
+    SKTRAN_TIR_Specs_User					m_specs;
+    SKTRAN_LineOfSightArray_V21				m_linesofsight;
+    size_t									m_numthreads;
+    bool									m_cacheisvalid;
+    std::vector<double>						m_wavelen;
+    nx2dArray<double>						m_radiance;
+    bool									m_modelisconfigured;
+    nx3dArray<double>						m_wfbuffer;
+
+    bool									m_usecache;
+
+    std::map< nxString, std::function<bool(double)> >				m_scalarsetfunctions;
+    std::map< nxString, std::function<bool(const double*, int)> >	m_vectorsetfunctions;
+    std::map< nxString, std::function<bool(nxUnknown*)> >			m_objectsetfunctions;
+    std::map< nxString, std::function<bool(double*)> >				m_scalargetfunctions;
+    std::map< nxString, std::function<bool(int)> >					m_vectorgetfunctions;
+    std::map< nxString, std::function<bool(const char*)> >			m_stringsetfunctions;
+    std::vector<double>												m_getpropertybuffer;
+
+private:
+    bool									MakeScalarSetFunctions();
+    bool									MakeVectorSetFunctions();
+    bool									MakeStringSetFunctions();
+    bool									MakeVectorGetFunctions();
+    bool									MakeScalarGetFunctions();
+    bool									GetPropertyScalar(const char* propertyname, double* value);
+    bool									ParseCommandAndIndex(const nxString& input, nxString& command, int& index);
+    bool									CheckModelNotInitialized(const char* propertystr) const;
+
+public:
+    ISKEngine_Stub_TIR();
+    virtual 							   ~ISKEngine_Stub_TIR()override;
+    virtual bool							AddLineOfSight(double mjd, const nxVector& observer, const nxVector& lookvector, int* losindex) override;
+    virtual bool							AddSpecies(const CLIMATOLOGY_HANDLE& species, ISKClimatology_Stub* climatology, ISKOpticalProperty_Stub* opticalproperty) override;
+    virtual bool							AddWeightingFunctionSpecies(CLIMATOLOGY_HANDLE& species);
+    virtual bool							AddEmission(const EMISSION_HANDLE& species, ISKEmission_Stub* emissionobject) override;
+    virtual bool							SetAlbedo(double albedo)override;
+    virtual bool							SetBRDF(ISKBrdf_Stub* brdf) override;
+    virtual bool							SetPolarizationMode(int polarizationmode) override;
+    virtual bool							SetAtmosphericState(ISKClimatology_Stub* climatology)override;
+    virtual bool							SetWavelengths(const double* wavelen, int numwavelen)override;
+    virtual bool							InitializeModel();
+    virtual bool							CalculateRadiance(const double** radiance, int* numwavelens, int* numlinesofsight)override;
+    virtual bool							CalculateStokesVector(const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight) override;
+    virtual bool							GetWeightingFunctions(const double** wf, int* numwavel, int* numlinesofsight, int* numwf) override;
+    virtual bool							SetPropertyScalar(const char* propertyname, double value) override;							//!< [NOT Supported in Base class]
+    virtual bool							SetPropertyArray(const char* propertyname, const double* value, int numpoints) override;	//!< [NOT Supported in Base class]
+    virtual bool							SetPropertyObject(const char* propertyname, nxUnknown* object) override;					//!< [NOT Supported in Base class]
+    virtual bool							SetPropertyString(const char* propertyname, const char* str) override;
+    virtual bool							GetProperty(const char* propertyname, const double** value, int* numpoints) override;
+};
+
+
+/*-----------------------------------------------------------------------------
  *					class ISKGeodetic_Stub_std						2014- 5- 7*/
 /** A stub for the ISKCgeodetic class
 **/
