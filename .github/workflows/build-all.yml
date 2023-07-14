@@ -78,7 +78,7 @@ jobs:
 
       - name: Install SASKTRAN and optional dependencies
         run: |
-          python -m pip install sasktran -f wheelhouse/
+          python -m pip install sasktran --no-index -f wheelhouse/
           python -m pip install pytest xarray scipy
       
       - name: Import SASKTRAN
@@ -118,7 +118,7 @@ jobs:
         shell: bash -el {0}
         run: |
           cd pysasktran
-          pip install sasktran -f ../wheelhouse/
+          pip install sasktran --no-index -f ../wheelhouse/
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
           python dummy_install.py
           cd docs
@@ -334,7 +334,7 @@ jobs:
         shell: bash -el {0}
         run: |
           ls wheelhouse
-          pip install sasktran -f wheelhouse/
+          pip install sasktran --no-index -f wheelhouse/
           cd pysasktran
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
           python dummy_install.py > /dev/null 2>&1

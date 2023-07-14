@@ -182,6 +182,7 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_mc.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_so.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
 		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
 
