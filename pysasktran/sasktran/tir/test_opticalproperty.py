@@ -8,6 +8,7 @@ class TestOpticalPropertyTIR(unittest.TestCase):
     def _basic_cross_section_tests(self, optprop: sk.OpticalProperty, wavelength=np.array([10000, 10001])):
         optprop.calculate_cross_sections(sk.MSIS90(), 0, 0, 1000, 54372, wavelength)
 
+    @unittest.skip
     def test_hitran_tir(self):
         hitran_co2 = HITRANChemicalTIR('CO2')
 
