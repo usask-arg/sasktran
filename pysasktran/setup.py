@@ -198,7 +198,7 @@ setup(
     long_description='',
     long_description_content_type='text/markdown',
     include_package_data=True,
-    package_data={**package_data, **{'sasktran': ['aband/data/*', 'tir/data/*']}},
+    package_data={**package_data, **{'sasktran': ['aband/data/*', 'tir/data/atm/fascode/*', 'tir/data/atm/mipas_1998/*', 'tir/data/atm/mipas_2001/*']}},
     data_files=data_files,
     ext_modules=[extension_module],
     install_requires=get_install_requires(),
