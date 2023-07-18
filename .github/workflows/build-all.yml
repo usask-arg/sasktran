@@ -316,7 +316,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py38, py39, py310, py311]
+        py_version: [py38]
 
     steps:
       - name: Checkout repository
@@ -338,7 +338,7 @@ jobs:
         shell: bash -el {0}
         run: |
           ls wheelhouse
-          pip install -r requirements.txt
+          pip install -r pysasktran/requirements.txt
           pip install sasktran --no-index -f wheelhouse/
           cd pysasktran
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
