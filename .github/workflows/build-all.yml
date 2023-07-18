@@ -334,6 +334,7 @@ jobs:
         shell: bash -el {0}
         run: |
           ls wheelhouse
+          pip install -r requirements.txt
           pip install sasktran --no-index -f wheelhouse/
           cd pysasktran
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/

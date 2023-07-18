@@ -5,6 +5,7 @@ call conda env create --file pysasktran\ci\%PYVER%.yml
 IF %ERRORLEVEL% NEQ 0 GOTO exitprog
 call conda activate %PYVER%_test
 IF %ERRORLEVEL% NEQ 0 GOTO exitprog
+pip install -r requirements.txt
 pip install sasktran --no-index -f .\wheelhouse\
 IF %ERRORLEVEL% NEQ 0 GOTO exitprog
 python -c "import sasktran"

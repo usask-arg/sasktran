@@ -2,7 +2,8 @@ PYVER=$1
 pushd pysasktran
 conda env create --file ci/$PYVER.yml > /dev/null 2>&1
 source activate ${PYVER}_test
-pip install sasktran -f ../wheelhouse/
+pip install -r requirements.txt
+pip install sasktran --no-index -f ../wheelhouse/
 mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
 python dummy_install.py > /dev/null 2>&1
 py.test sasktran
