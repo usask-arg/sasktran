@@ -65,6 +65,9 @@ jobs:
     needs: build-cpp-wheels-manylinux2014
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
       - uses: actions/setup-python@v4
         name: Install Python
         with:
