@@ -44,7 +44,8 @@ bool ConfigureSasktranIFEntries( const char* dllname, bool createentries)
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/HR",										dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/MC",										dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/OCC",										dllname, createentries); ok = ok && ok1;
-	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Geodetic/STANDARD",								dllname, createentries); ok = ok && ok1;
+    ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/TIR",										dllname, createentries); ok = ok && ok1;
+    ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Geodetic/STANDARD",								dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/SolarSpectrum/SAO2010",							dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/SolarSpectrum/FONTELA_UVIS_3MICRON",				dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/SolarSpectrum/FONTELA_UVIS_100MICRON",			dllname, createentries); ok = ok && ok1;

@@ -119,6 +119,8 @@ set(SASKTRAN_BASE_NAME sktran_base)
 set(SASKTRAN_CORE_NAME _sasktran_core_internals)
 set(SASKTRAN_STUB_NAME sktran_stubs)
 
+set ( SKTRAN_TIR_NAME   "sktran_tir_engine")
+
 write_basic_package_version_file( "sasktran-coreconfigVersion.cmake"
         VERSION ${sasktran-core_VERSION}
         COMPATIBILITY SameMajorVersion

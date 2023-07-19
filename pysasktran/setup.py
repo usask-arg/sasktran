@@ -11,6 +11,18 @@ import numpy as np
 import glob
 from copy import copy
 from pathlib import Path
+from typing import List
+
+
+def get_install_requires() -> List[str]:
+    """Returns requirements.txt parsed to a list"""
+    fname = Path(__file__).parent / 'requirements.txt'
+    targets = []
+    if fname.exists():
+        with open(fname, 'r') as f:
+            targets = f.read().splitlines()
+    return targets
+
 
 def get_cplus_paths():
     cplus_include_path = []
@@ -186,16 +198,10 @@ setup(
     long_description='',
     long_description_content_type='text/markdown',
     include_package_data=True,
-    package_data={**package_data, **{'sasktran': ['aband/data/*']}},
+    package_data={**package_data, **{'sasktran': ['aband/data/*', 'tir/data/atm/fascode/*', 'tir/data/atm/mipas_1998/*', 'tir/data/atm/mipas_2001/*']}},
     data_files=data_files,
     ext_modules=[extension_module],
-    install_requires=[
-        'numpy',
-        'pyyaml',
-        'urllib3',
-        'appdirs',
-        'packaging'
-    ],
+    install_requires=get_install_requires(),
 )
 
 

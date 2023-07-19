@@ -11,3 +11,4 @@ Examples
    examples/geometry_examples
    examples/hr_examples
    examples/mc_examples
+   examples/tir_examples

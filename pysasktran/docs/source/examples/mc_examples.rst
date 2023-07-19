@@ -1,4 +1,4 @@
-.. _hr_examples:
+.. _mc_examples:
 
 SASKTRAN-MC Examples
 ********************
