@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Species &mdash; SASKTRAN 1.7.1 documentation</title>
+  <title>Species &mdash; SASKTRAN 0+untagged.1.ga219ace documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.1
+                0+untagged.1.ga219ace
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -88,6 +88,7 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
 </ul>
 
         </div>
@@ -118,7 +119,7 @@
   <section id="species">
 <span id="id1"></span><h1>Species<a class="headerlink" href="#species" title="Permalink to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.species</span></code></p>
-<p>Classes that associate an atmospheric constituents <a class="reference internal" href="optical_property.html#optical-property"><span class="std std-ref">Optical Properties</span></a> and <a class="reference internal" href="climatology.html#climatology"><span class="std std-ref">Climatology</span></a>.</p>
+<p>Classes that associate an atmospheric constituents <a class="reference internal" href="optical_property.html#optical-property"><span class="std std-ref">Optical Properties</span></a> and <a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a>.</p>
 <section id="molecular">
 <h2>Molecular<a class="headerlink" href="#molecular" title="Permalink to this heading">¶</a></h2>
 <dl class="py class">
@@ -126,7 +127,7 @@
 <em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">optical_property</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="optical_property.html#sasktran.OpticalProperty" title="sasktran.opticalproperty.OpticalProperty"><span class="pre">OpticalProperty</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">climatology</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.climatology.Climatology"><span class="pre">Climatology</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">species</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Species" title="Permalink to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>An object representing some atmospheric constituent. A species is an object that associates a constituents
-<a class="reference internal" href="optical_property.html#optical-property"><span class="std std-ref">Optical Properties</span></a> and <a class="reference internal" href="climatology.html#climatology"><span class="std std-ref">Climatology</span></a>.</p>
+<a class="reference internal" href="optical_property.html#optical-property"><span class="std std-ref">Optical Properties</span></a> and <a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a>.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">no2</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">optical_property</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">NO2Vandaele1998</span><span class="p">(),</span> <span class="n">climatology</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">Pratmo</span><span class="p">())</span>
@@ -305,7 +306,7 @@ layers.</p></li>
 <section id="see-also">
 <h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
 <dl class="simple">
-<dt><a class="reference internal" href="climatology.html#climatology"><span class="std std-ref">Climatology</span></a></dt><dd><p>A profile quantifying something in/about the atmosphere. For example climatologies could be
+<dt><a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a></dt><dd><p>A profile quantifying something in/about the atmosphere. For example climatologies could be
 used to define profiles for temperature, pressure, gas number densities, etc.</p>
 </dd>
 </dl>
