@@ -9,7 +9,6 @@ Which engine to use depends on the specific task at hand.
 SASKTRAN-HR
 ===========
 SASKTRAN-HR is the primary engine used and is described in Zawada et. al. (2015).
-SASKTRAN-HR is contained within the primary SASKTRAN package.
 
 Suitable For
 ^^^^^^^^^^^^
@@ -31,7 +30,6 @@ Disadvantages
 SASKTRAN-OCC
 ============
 SASKTRAN-OCC is an engine designed for fast occultation applications.
-SASKTRAN-OCC is contained within the primary SASKTRAN package.
 
 
 Suitable For
@@ -50,7 +48,6 @@ Disadvantages
 SASKTRAN-MC
 ===========
 SASKTRAN-MC performs Monte-Carlo integration to solve the RTE and is described in Zawada et. al. (2015).
-SASKTRAN-MC is contained within the main SASKTRAN package.
 
 Suitable For
 ^^^^^^^^^^^^
@@ -88,11 +85,10 @@ Disadvantages
 SASKTRAN-TIR
 ============
 SASKTRAN-TIR is a thermal radiative transfer model designed for applications in the IR and beyond spectral regions.
-SASKTRAN-TIR must be installed separately and can be found at https://arg.usask.ca/docs/sasktran_tir/.
 
 Suitable For
 ^^^^^^^^^^^^
-Applications in the IR and beyong spectral regime where scattering can be neglected.
+Applications in the IR and beyond spectral regime where scattering can be neglected.
 
 Advantages
 ^^^^^^^^^^

@@ -2,6 +2,11 @@
 
 Changelog
 *********
+
+1.8.0
+=====
+* SASKTRAN-TIR is now a part of the main sasktran package instead of an extension module
+
 1.7.1
 =====
 * Development of the model has moved over to github, see https://github.com/usask-arg/sasktran
