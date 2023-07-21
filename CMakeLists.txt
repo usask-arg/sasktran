@@ -1,4 +1,4 @@
-cmake_minimum_required      (VERSION 3.16)                                                          # Version 3.16 provides support for pre-compiled headers
+cmake_minimum_required(VERSION 3.20.0)
 include                     (CMakePackageConfigHelpers )                                            # Provids function/macro write_basic_package_version_file
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -8,7 +8,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(UNIX)
-    add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment")
+    add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment -Wno-deprecated-declarations")
 endif()
 
 execute_process(COMMAND git describe --tags
@@ -32,7 +32,9 @@ else()
     enable_language(Fortran)
 endif()
 
-set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
@@ -47,6 +49,8 @@ find_package(OpenMP REQUIRED)
 find_package(netCDF REQUIRED CONFIG)
 
 find_package(yaml-cpp CONFIG REQUIRED)
+
+find_package(Eigen3 REQUIRED)
 
 # hdf5 is annoying because sometimes it doesn't bundle the config
 # First try to find config HDF5
@@ -88,11 +92,13 @@ include_directories(
     ${CMAKE_SOURCE_DIR}/src/core/base/nxhdf/nxnetcdfio
     ${CMAKE_SOURCE_DIR}/src/core/skopticalproperties
     ${CMAKE_SOURCE_DIR}/src/core/skclimatology
+    ${CMAKE_SOURCE_DIR}/include
 
 
     ${Boost_INCLUDE_DIRS}
     ${YAML_CPP_INCLUDE_DIR}
     ${netCDF_INCLUDE_DIR}
+    ${EIGEN3_INCLUDE_DIR}
 )
 
 # Platform definitions
@@ -134,6 +140,8 @@ add_subdirectory (src/core/skclimatology)
 add_subdirectory (src/core/skopticalproperties)
 add_subdirectory (src/core/sasktran)
 add_subdirectory (fortran_libraries)
+
+add_subdirectory (src/sasktran2)
 
 install(EXPORT sasktran-coreTargets
         FILE sasktran-coreTargets.cmake

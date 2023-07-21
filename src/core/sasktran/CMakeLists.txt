@@ -173,6 +173,29 @@ set(sasktran_tir_src
 	modules/sktran_tir/sktran_tir_wf.cpp
 		)
 
+set(sasktran_do_src
+		modules/sktran_do_deprecated/sktran_do.cpp
+		modules/sktran_do_deprecated/sktran_do_engine.cpp
+		modules/sktran_do_deprecated/sktran_do_geometrylayerarray.cpp
+		modules/sktran_do_deprecated/sktran_do_layerarray.cpp
+		modules/sktran_do_deprecated/sktran_do_lazyazimuth.cpp
+		modules/sktran_do_deprecated/sktran_do_linearization_types.cpp
+		modules/sktran_do_deprecated/sktran_do_misc.cpp
+		modules/sktran_do_deprecated/sktran_do_opticallayer.cpp
+		modules/sktran_do_deprecated/sktran_do_opticalstate.cpp
+		modules/sktran_do_deprecated/sktran_do_pconfig.cpp
+		modules/sktran_do_deprecated/sktran_do_pentadiagonal.cpp
+		modules/sktran_do_deprecated/sktran_do_polarization_types.cpp
+		modules/sktran_do_deprecated/sktran_do_postprocessing.cpp
+		modules/sktran_do_deprecated/sktran_do_quadrature.cpp
+		modules/sktran_do_deprecated/sktran_do_rte.cpp
+		modules/sktran_do_deprecated/sktran_do_specs.cpp
+		modules/sktran_do_deprecated/sktran_do_spherical.cpp
+		modules/sktran_do_deprecated/sktran_do_surface.cpp
+		modules/sktran_do_deprecated/sktran_do_testing.cpp
+		modules/sktran_do_deprecated/sktran_do_types.cpp
+		)
+
 set(sasktran_core_src
     modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base.cpp
 	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base_specifics.cpp
@@ -183,6 +206,7 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_so.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_do.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
 		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
 
@@ -217,7 +241,7 @@ set(sasktran_test_src
 )
 
 # Build the library
-add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src})
+add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src})
 
 # Set the header files
 install (TARGETS ${SASKTRAN_BASE_NAME}
@@ -278,6 +302,8 @@ set(sasktran_links
 		${netCDF_LIBRARIES}
 		${Boost_LIBRARIES}
 		${HDF5_LIBRARY}
+		Eigen3::Eigen
+		sasktran2
 		yaml-cpp
 )
 
@@ -312,6 +338,20 @@ elseif(APPLE)
 	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_darwin_links})
 	target_link_libraries(sasktran_tests ${sasktran_darwin_links})
 endif()
+
+find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
+find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
+include_directories(
+		${LAPACKE_H_INCLUDE_DIR}
+		${CBLAS_H_INCLUDE_DIR})
+
+
+if(WIN32)
+	# OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
+	target_compile_options(${SASKTRAN_CORE_NAME} INTERFACE /wd4190)
+	target_compile_options(sasktran_tests INTERFACE /wd4190)
+endif()
+
 
 
 # Some special logic to support both CATCH2 version 2 and 3 for now

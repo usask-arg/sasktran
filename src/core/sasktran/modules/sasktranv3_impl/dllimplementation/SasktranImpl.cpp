@@ -4,6 +4,13 @@
 #include "../dllimplementation/stdafx.h"
 #include "modules/sasktranv3_impl/sktranif_impl_helperclasses.h"
 
+#include <sktran_disco/sktran_do_lowlevelinterface.h>
+
+extern "C" void calculate(const sasktran_disco_lowlevel::Atmosphere* atmosphere, const sasktran_disco_lowlevel::Config* config,
+                          const sasktran_disco_lowlevel::WeightingFunctions* weightingfunctions,
+                          const sasktran_disco_lowlevel::ViewingGeometry* geometry, const sasktran_disco_lowlevel::Output* output) {
+    sasktran_disco_lowlevel::calculate(atmosphere, config, weightingfunctions, geometry, output);
+}
 
 /*-----------------------------------------------------------------------------
  *					SetModule_SandboxRegistryDirectory		 2016- 11- 10*/
@@ -314,6 +321,11 @@ extern "C" DLL_PUBLIC bool SKTRANIF_CreateEngine2( const char* userenginename, I
     else if (enginename == "TIR")
     {
         *engine = new ISKEngine_Stub_TIR;
+        ok = (engine != nullptr);
+    }
+    else if (enginename == "DO")
+    {
+        *engine = new ISKEngine_Stub_DO;
         ok = (engine != nullptr);
     }
 	else

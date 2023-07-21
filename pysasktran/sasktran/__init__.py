@@ -19,6 +19,8 @@ from .emission import Emission, EmissionTable, EmissionThermal
 from .emission_hitranphotochemical import HITRANPhotoChemical_O2_ABand, HITRANPhotoChemical_O2_SingletDelta, HITRANPhotoChemical
 from .aband.model import ABandEmission
 from .mie import Mie, MieWiscombe
+from .tir.engine import EngineTIR
+from .disco.engine import EngineDO
 
 # Utility classes overtop of sasktranif objects
 from .lineofsight import LineOfSight
