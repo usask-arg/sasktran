@@ -108,6 +108,9 @@ endif()
 # Build the library
 add_library(${SKOPTICALPROPERTIES_NAME} ${skopticalproperties_src} ${skopticalproperties_platform_src})
 
+target_compile_definitions(${SKOPTICALPROPERTIES_NAME} INTERFACE BOOST_NO_CXX98_FUNCTION_BASE)
+
+
 install(DIRECTORY "."
 		DESTINATION ${INCLUDE_INSTALL_DIR}/${SKOPTICALPROPERTIES_NAME}
 		FILES_MATCHING

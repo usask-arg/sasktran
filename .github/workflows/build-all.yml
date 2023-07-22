@@ -271,7 +271,7 @@ jobs:
         run: vcpkg install yaml-cpp
 
       - name: Install eigen3
-        run: vcpkg install eigen
+        run: vcpkg install eigen3
 
       - name: Create openblas directory
         run: mkdir "c:\local\openblas"

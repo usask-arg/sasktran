@@ -33,6 +33,9 @@ set(CMAKE_Fortran_FLAGS "-std=legacy -fPIC -fdefault-real-8 -fdefault-double-8 -
 # Build the library
 add_library(${SKCLIMATOLOGY_NAME} ${skclimatology_src} ${skclimatology_platform_src})
 
+target_compile_definitions(${SKCLIMATOLOGY_NAME} INTERFACE BOOST_NO_CXX98_FUNCTION_BASE)
+
+
 install (TARGETS ${SKCLIMATOLOGY_NAME}
         EXPORT ${EXPORT_NAME}
         LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
