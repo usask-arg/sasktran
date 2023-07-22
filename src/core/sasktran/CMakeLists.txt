@@ -243,6 +243,8 @@ set(sasktran_test_src
 # Build the library
 add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src})
 
+target_compile_definitions(${SASKTRAN_BASE_NAME} INTERFACE BOOST_NO_CXX98_FUNCTION_BASE)
+
 # Set the header files
 install (TARGETS ${SASKTRAN_BASE_NAME}
 		EXPORT ${EXPORT_NAME}
@@ -258,6 +260,9 @@ install(DIRECTORY "."
 
 add_library(${SASKTRAN_STUB_NAME} ${sasktran_core_src})
 add_library(${SASKTRAN_CORE_NAME} SHARED ${sasktran_dll_src})
+
+target_compile_definitions(${SASKTRAN_STUB_NAME} INTERFACE BOOST_NO_CXX98_FUNCTION_BASE)
+target_compile_definitions(${SASKTRAN_CORE_NAME} INTERFACE BOOST_NO_CXX98_FUNCTION_BASE)
 
 # Set the header files
 install (TARGETS ${SASKTRAN_STUB_NAME}

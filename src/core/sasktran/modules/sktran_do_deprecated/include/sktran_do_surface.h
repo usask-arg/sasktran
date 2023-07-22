@@ -7,6 +7,8 @@ namespace sktran_do_detail
 	class BRDF_Base
 	{
 	public:
+        virtual ~BRDF_Base() {};
+
 		// BRDF arguments:
 		// coszen_out : cosine of outgoing ray zenith angle
 		// coszen_in : cosine of incoming ray zenith angle

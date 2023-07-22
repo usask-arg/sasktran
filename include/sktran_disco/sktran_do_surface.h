@@ -7,7 +7,9 @@ namespace sasktran_disco
 	class BRDF_Base
 	{
 	public:
-		// BRDF arguments:
+        virtual ~BRDF_Base() {};
+
+        // BRDF arguments:
 		// coszen_out : cosine of outgoing ray zenith angle
 		// coszen_in : cosine of incoming ray zenith angle
 		// az_diff : difference in azimuth angles [units: radians] 
