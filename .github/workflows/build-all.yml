@@ -26,7 +26,7 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
       - run: git config --global --add safe.directory /__w/sasktran/sasktran
-      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX
+      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DCMAKE_PREFIX_PATH=/usr/local/include/openblas
       - run: cmake --build build --config Release --target install -j 2
       - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
@@ -270,10 +270,31 @@ jobs:
       - name: Install yaml-cpp
         run: vcpkg install yaml-cpp
 
+      - name: Install eigen3
+        run: vcpkg install eigen
+
+      - name: Create openblas directory
+        run: mkdir "c:\local\openblas"
+
+      - name: Download OpenBLAS
+        run: |
+          $url = "https://github.com/xianyi/OpenBLAS/releases/download/v0.3.23/OpenBLAS-0.3.23-x64.zip"
+          $output = "c:\local\OpenBLAS-0.3.23-x64.zip"
+          Invoke-WebRequest -Uri $url -OutFile $output
+        shell: powershell
+
+      - name: Extract OpenBLAS
+        run: |
+          $zipfile = "c:\local\OpenBLAS-0.3.23-x64.zip"
+          $folder = "c:\local\openblas"
+          Add-Type -AssemblyName System.IO.Compression.FileSystem
+          [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $folder)
+        shell: powershell
+
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake
+      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/"
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
