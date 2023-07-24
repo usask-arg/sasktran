@@ -163,6 +163,8 @@ namespace sasktran2::grids {
     public:
         SourceLocationInterpolator(AltitudeGrid&& altitude_grid);
 
+        virtual ~SourceLocationInterpolator() {};
+
         virtual int num_interior_points() const = 0;
 
         virtual int num_ground_points() const = 0;

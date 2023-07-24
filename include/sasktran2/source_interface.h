@@ -15,6 +15,8 @@ protected:
 
 
 public:
+    virtual ~SourceTermInterface() {};
+
     virtual void initialize_config(const sasktran2::Config& config) {};
 
     /** Initializes any geometry information that is required for calculating the source term.  This method is called
