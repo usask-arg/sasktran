@@ -22,7 +22,7 @@ void sktran_do_detail::LPTripleProduct<NSTOKES, CNSTR>::calculate(const std::vec
 }
 
 template<int NSTOKES, int CNSTR>
-void sktran_do_detaill::LPTripleProduct<NSTOKES, CNSTR>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<NSTOKES, CNSTR>& holder) {
+void sktran_do_detail::LPTripleProduct<NSTOKES, CNSTR>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<NSTOKES, CNSTR>& holder) {
     if constexpr(NSTOKES == 1) {
         uint nstr = (uint)m_aux.first.d_by_legendre_coeff.size();
 

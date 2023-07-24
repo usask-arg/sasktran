@@ -5,7 +5,7 @@
 
 
 bool lessthan_Eupper(const skSpectralLine_HitranLine* left, const skSpectralLine_HitranLine* right) {
-	return Left->EUpper() < Right->EUpper(); 
+	return left->EUpper() < right->EUpper(); 
 }
 
 
