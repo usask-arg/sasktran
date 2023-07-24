@@ -36,7 +36,7 @@ set(CMAKE_CXX_STANDARD 17)
 
 if(APPLE)
     # This is nominally a windows definition but for some reason BOOST < 1.8.3 has problems on clang without this?
-    add_definitions(-D_HAS_AUTO_PTR_ETC)
+    add_definitions(-D_HAS_AUTO_PTR_ETC 0)
 endif()
 
 set(CMAKE_CXX_STANDARD_REQUIRED ON)

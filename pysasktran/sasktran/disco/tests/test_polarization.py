@@ -35,7 +35,6 @@ def test_coulsen_tables():
     geo = sk.NadirGeometry()
     geo.from_zeniths_and_azimuth_difference(sza, zen, azi, observer_alt=1e8, solar_azimuth=180)
 
-
     correct_rad = np.array([0.44129802, -0.01753141, 0,
                             0.16889020, 0.01119511, 0,
                             0.05300496, 0.03755859, 0,
@@ -87,10 +86,10 @@ def test_inside_atmo():
 
     all_rad = xr.concat(all_rad, dim='los')
 
-    true_values = np.array([5.42336818e-02,  1.08188359e-02, -3.77652886e-06,  6.22770341e-02,
-                            1.53645841e-02, -5.36331177e-06,  6.31686981e-02,  1.60992561e-02,
-                            -5.61976340e-06,  6.32779067e-02,  1.61629650e-02, -5.64200223e-06,
-                            6.42701851e-02,  1.65945662e-02, -5.79266110e-06,  6.42701851e-02,
+    true_values = np.array([5.42336818e-02, 1.08188359e-02, -3.77652886e-06, 6.22770341e-02,
+                            1.53645841e-02, -5.36331177e-06, 6.31686981e-02, 1.60992561e-02,
+                            -5.61976340e-06, 6.32779067e-02, 1.61629650e-02, -5.64200223e-06,
+                            6.42701851e-02, 1.65945662e-02, -5.79266110e-06, 6.42701851e-02,
                             1.65945662e-02, -5.79266106e-06])
 
     np.testing.assert_array_almost_equal(all_rad['radiance'].values.flatten(), true_values)
