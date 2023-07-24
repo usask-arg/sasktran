@@ -270,8 +270,30 @@ jobs:
       - name: Install yaml-cpp
         run: vcpkg install yaml-cpp
 
-      - name: Install eigen3
-        run: vcpkg install eigen3
+      - name: Create Eigen3 directory
+        run: mkdir "c:\local\eigen"
+
+      - name: Download Eigen
+        run: |
+          $url = "https://gitlab.com/libeigen/eigen/-/archive/3.4.0/eigen-3.4.0.tar.gz"
+          $output = "c:\local\eigen-3.4.0.tar.gz"
+          Invoke-WebRequest -Uri $url -OutFile $output
+        shell: powershell
+
+      - name: Extract Eigen
+        run: |
+          $tarfile = "c:\local\eigen-3.4.0.tar.gz"
+          $folder = "c:\local\eigen"
+          7z e $tarfile -o$folder -y
+          7z e $folder\*.tar -o$folder -y
+          Remove-Item $folder\*.tar
+        shell: cmd
+
+      - name: Install Eigen
+        run: |
+          cd c:/local/eigen
+          dir
+          cmake -S . -B build && cmake --install
 
       - name: Create openblas directory
         run: mkdir "c:\local\openblas"
