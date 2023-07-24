@@ -32,7 +32,7 @@ else()
     enable_language(Fortran)
 endif()
 
-set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD 11)
 
 if(APPLE)
     # This is nominally a windows definition but for some reason BOOST < 1.8.3 has problems on clang without this?

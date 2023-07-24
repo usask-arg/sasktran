@@ -134,4 +134,4 @@ add_subdirectory(tests)
 
 
 # On install, copy sasktran2/include directory to install_directory/include
-install (DIRECTORY ${CMAKE_SOURCE_DIR}/include DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}/sasktran2)
+install (DIRECTORY ${CMAKE_SOURCE_DIR}/include DESTINATION ${INCLUDE_INSTALL_DIR}/sasktran2)
