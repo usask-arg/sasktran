@@ -47,7 +47,7 @@ def test_num_streams():
     geo = default_geometry(mjd=54732, zenith=0, azimuth=0)
 
     wavelengths = [360]
-    all_rad =[]
+    all_rad = []
     for num_stream in np.arange(2, 41, 2):
         engine = do.EngineDO(geometry=geo, atmosphere=atmo, wavelengths=wavelengths)
         engine.num_streams = num_stream
@@ -57,7 +57,7 @@ def test_num_streams():
     all_rad = xr.concat(all_rad, dim='streams')
 
     true_values = np.array([0.10616244, 0.11598831, 0.11630997, 0.11622187, 0.11619075,
-                            0.11618959, 0.11619159, 0.11619204, 0.11619181, 0.1161916 ,
+                            0.11618959, 0.11619159, 0.11619204, 0.11619181, 0.1161916,
                             0.11619153, 0.11619153, 0.11619153, 0.11619153, 0.11619153,
                             0.11619152, 0.11619152, 0.11619152, 0.11619152, 0.11619152])
 
@@ -69,7 +69,7 @@ def test_num_layers():
     geo = default_geometry(mjd=54732, zenith=0, azimuth=0)
 
     wavelengths = [360]
-    all_rad =[]
+    all_rad = []
     for num_layer in [1, 2, 10, 50, 100]:
         engine = do.EngineDO(geometry=geo, atmosphere=atmo, wavelengths=wavelengths)
         engine.num_layers = num_layer
@@ -92,15 +92,13 @@ def test_inside_atmo():
         geo.from_zeniths_and_azimuths(60, 0, 54372, 0, 0, reference_point=(0, 0, 0, 54372),
                                       observer_altitudes=obs_alt*1000)
 
-
         engine = do.EngineDO(geometry=geo, atmosphere=atmo, wavelengths=[350])
 
         all_rad.append(engine.calculate_radiance(output_format='xarray').isel(los=0, wavelength=0))
 
     all_rad = xr.concat(all_rad, dim='los')
 
-    true_values = np.array([0.05544467, 0.06379937, 0.06471301, 0.06482461, 0.0658386 ,
-       0.0658386 ])
+    true_values = np.array([0.05544467, 0.06379937, 0.06471301, 0.06482461, 0.0658386, 0.0658386])
 
     np.testing.assert_array_almost_equal(all_rad['radiance'].values, true_values)
 
@@ -136,7 +134,7 @@ def test_layer_construction():
 
     all_rad = xr.concat(all_rad, dim='streams')
 
-    true_values = np.array([0.11622914, 0.1162065 , 0.1161917 , 0.11619113, 0.11619111])
+    true_values = np.array([0.11622914, 0.1162065, 0.1161917, 0.11619113, 0.11619111])
 
     np.testing.assert_array_almost_equal(all_rad['radiance'].values, true_values)
 

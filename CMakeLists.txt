@@ -33,7 +33,12 @@ else()
 endif()
 
 set(CMAKE_CXX_STANDARD 17)
-add_definitions(-DBOOST_NO_CXX98_FUNCTION_BASE) # necessary for cxx 17 BOOST on clang
+
+if(APPLE)
+    # This is nominally a windows definition but for some reason BOOST < 1.8.3 has problems on clang without this?
+    add_definitions(-D_HAS_AUTO_PTR_ETC)
+endif()
+
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)

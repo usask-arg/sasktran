@@ -15,7 +15,7 @@ def shared_library_path() -> Path:
         Full path to the shared library object for the isk_disco object
     """
     filename = sys.modules["sasktran_core"].__file__
-    dirname  = os.path.dirname(filename)
+    dirname = os.path.dirname(filename)
 
     if platform.system() == 'Windows':
         dllname = dirname + os.sep + '_sasktran_core_internals.dll'

@@ -27,4 +27,3 @@ def test_nadir_viewing_same_radiance():
     p_diff = (rad_spherical['radiance'] - rad_plane_parallel['radiance']) / rad_spherical['radiance'] * 100
 
     np.testing.assert_almost_equal(p_diff.values.flatten(), 0.0, decimal=2)
-

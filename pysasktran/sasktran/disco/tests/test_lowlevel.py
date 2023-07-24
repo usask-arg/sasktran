@@ -52,11 +52,11 @@ def test_coulsen_albedo_08():
     output = lowlevel.calculate(atmosphere, config, weightingfunctions, viewing_geometry).xarray().isel(wavelength=0)['radiance'].values * np.pi
 
     true = np.array([0.47382125, -0.01553672, 0,
-             0.23059806, 0.01144320, 0,
-             0.13280858, 0.03755859, 0,
-             0.33343531, -0.15766132, 0.07365528,
-             0.18923236, -0.06041229, 0.05293867,
-             0.13280858, -0.01877930, 0.03252669]).reshape((6, 3)).T
+                     0.23059806, 0.01144320, 0,
+                     0.13280858, 0.03755859, 0,
+                     0.33343531, -0.15766132, 0.07365528,
+                     0.18923236, -0.06041229, 0.05293867,
+                     0.13280858, -0.01877930, 0.03252669]).reshape((6, 3)).T
 
     np.testing.assert_allclose(output, true, rtol=1e-3, atol=1e-4)
 

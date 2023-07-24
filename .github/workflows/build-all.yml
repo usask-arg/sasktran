@@ -282,11 +282,7 @@ jobs:
 
       - name: Extract Eigen
         run: |
-          $tarfile = "c:\local\eigen-3.4.0.tar.gz"
-          $folder = "c:\local\eigen"
-          7z e $tarfile -o$folder -y
-          7z e $folder\*.tar -o$folder -y
-          Remove-Item $folder\*.tar
+          7z.exe x "c:\local\eigen-3.4.0.tar.gz" -so | 7z.exe x -aoa -si -ttar -o"c:\local\eigen"
         shell: cmd
 
       - name: Install Eigen
