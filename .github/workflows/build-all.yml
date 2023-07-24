@@ -289,7 +289,7 @@ jobs:
         run: |
           cd c:/local/eigen/eigen-3.4.0
           dir
-          cmake -S . -B build && cmake --install
+          cmake -S . -B build && cmake --build build --target install
 
       - name: Create openblas directory
         run: mkdir "c:\local\openblas"
