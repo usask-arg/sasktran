@@ -21,63 +21,65 @@ void sktran_do_detail::LPTripleProduct<NSTOKES, CNSTR>::calculate(const std::vec
     m_aux.second.calculate(lephase, lp1, lp2, true, m_association_order);
 }
 
-template<>
-void sktran_do_detail::LPTripleProduct<1>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<1>& holder) {
-    uint nstr = (uint)m_aux.first.d_by_legendre_coeff.size();
+template<int NSTOKES, int CNSTR>
+void sktran_do_detaill::LPTripleProduct<NSTOKES, CNSTR>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<NSTOKES, CNSTR>& holder) {
+    if constexpr(NSTOKES == 1) {
+        uint nstr = (uint)m_aux.first.d_by_legendre_coeff.size();
 
-    if (num % 2 == 0) {
-        holder.value = m_aux.first.value;
-        holder.d_by_legendre_coeff = m_aux.first.d_by_legendre_coeff;
+        if (num % 2 == 0) {
+            holder.value = m_aux.first.value;
+            holder.d_by_legendre_coeff = m_aux.first.d_by_legendre_coeff;
+        }
+        else {
+            holder.value = m_aux.second.value;
+            holder.d_by_legendre_coeff =  m_aux.second.d_by_legendre_coeff;
+        }
     }
-    else {
-        holder.value = m_aux.second.value;
-        holder.d_by_legendre_coeff =  m_aux.second.d_by_legendre_coeff;
+
+    if constexpr(NSTOKES == 3) {
+        if (num % 2 == 0) {
+            holder.value = m_aux.first.value;
+            holder.a1deriv = m_aux.first.a1deriv;
+            holder.a2deriv = m_aux.first.a2deriv;
+            holder.a3deriv = m_aux.first.a3deriv;
+            holder.b1deriv = m_aux.first.b1deriv;
+        }
+        else {
+            holder.value = m_aux.second.value;
+            holder.a1deriv = m_aux.second.a1deriv;
+            holder.a2deriv = m_aux.second.a2deriv;
+            holder.a3deriv = m_aux.second.a3deriv;
+            holder.b1deriv = m_aux.second.b1deriv;
+        }
+    }
+
+    if constexpr(NSTOKES == 4) {
+        if (num % 2 == 0) {
+            holder.value = m_aux.first.value;
+            holder.a1deriv = m_aux.first.a1deriv;
+            holder.a2deriv = m_aux.first.a2deriv;
+            holder.a3deriv = m_aux.first.a3deriv;
+            holder.a4deriv = m_aux.first.a4deriv;
+            holder.b1deriv = m_aux.first.b1deriv;
+            holder.b2deriv = m_aux.first.b2deriv;
+        }
+        else {
+            holder.value = m_aux.second.value;
+            holder.a1deriv = m_aux.second.a1deriv;
+            holder.a2deriv = m_aux.second.a2deriv;
+            holder.a3deriv = m_aux.second.a3deriv;
+            holder.a4deriv = m_aux.second.a4deriv;
+            holder.b1deriv = m_aux.second.b1deriv;
+            holder.b2deriv = m_aux.second.b2deriv;
+        }
     }
 }
+
 
 template class sktran_do_detail::LPTripleProduct<1>;
 template class sktran_do_detail::LPTripleProduct<3>;
 template class sktran_do_detail::LPTripleProduct<4>;
 
-template<>
-void sktran_do_detail::LPTripleProduct<4>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<4>& holder) {
-    if (num % 2 == 0) {
-        holder.value = m_aux.first.value;
-        holder.a1deriv = m_aux.first.a1deriv;
-        holder.a2deriv = m_aux.first.a2deriv;
-        holder.a3deriv = m_aux.first.a3deriv;
-        holder.a4deriv = m_aux.first.a4deriv;
-        holder.b1deriv = m_aux.first.b1deriv;
-        holder.b2deriv = m_aux.first.b2deriv;
-    }
-    else {
-        holder.value = m_aux.second.value;
-        holder.a1deriv = m_aux.second.a1deriv;
-        holder.a2deriv = m_aux.second.a2deriv;
-        holder.a3deriv = m_aux.second.a3deriv;
-        holder.a4deriv = m_aux.second.a4deriv;
-        holder.b1deriv = m_aux.second.b1deriv;
-        holder.b2deriv = m_aux.second.b2deriv;
-    }
-}
-
-template<>
-void sktran_do_detail::LPTripleProduct<3>::negations_derivative_emplace(uint num, sktran_do_detail::TripleProductDerivativeHolder<3>& holder) {
-    if (num % 2 == 0) {
-        holder.value = m_aux.first.value;
-        holder.a1deriv = m_aux.first.a1deriv;
-        holder.a2deriv = m_aux.first.a2deriv;
-        holder.a3deriv = m_aux.first.a3deriv;
-        holder.b1deriv = m_aux.first.b1deriv;
-    }
-    else {
-        holder.value = m_aux.second.value;
-        holder.a1deriv = m_aux.second.a1deriv;
-        holder.a2deriv = m_aux.second.a2deriv;
-        holder.a3deriv = m_aux.second.a3deriv;
-        holder.b1deriv = m_aux.second.b1deriv;
-    }
-}
 
 template <>
 void sktran_do_detail::LayerInputDerivative<1>::setZero() {

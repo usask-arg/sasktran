@@ -4,14 +4,9 @@
 //#include "hitranline_upperstates.h"
 
 
-struct lessthan_Eupper : public binary_function <const skSpectralLine_HitranLine*, const skSpectralLine_HitranLine*, bool>
-{
-    bool operator()( const skSpectralLine_HitranLine* Left, const skSpectralLine_HitranLine* Right) const 
-	{ 
-		return Left->EUpper() < Right->EUpper(); 
-	}
-
-};
+bool lessthan_Eupper(const skSpectralLine_HitranLine* left, const skSpectralLine_HitranLine* right) {
+	return Left->EUpper() < Right->EUpper(); 
+}
 
 
 /*---------------------------------------------------------------------------
@@ -224,7 +219,7 @@ bool HitranLine_SelectUpperStatesFromLines::make_list_of_unique_upperstates	(	st
 	std::vector<double>				state_energy;
 
 	state_energy.reserve(100);																							// Reserve some space to store all the lines associoated with current uppe level state
-	all_spectral_lines.sort( 	lessthan_Eupper() );																	//  sort the Raw HITRAN lines into ascending wavenumber
+	all_spectral_lines.sort( 	lessthan_Eupper );																	//  sort the Raw HITRAN lines into ascending wavenumber
 	spectrallines->clear();																								// Clear out the list 
 
 	for (auto& entry : all_spectral_lines)

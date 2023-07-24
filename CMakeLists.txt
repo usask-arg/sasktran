@@ -111,6 +111,7 @@ include_directories(
 if(WIN32)
     add_definitions(-DNOMINMAX)
     add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+    add_definitions(-D_SILENCE_CXX17_ITERATOR_BASE_CLASS_DEPRECATION_WARNING)
 else()
     add_definitions(-DBOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED)
 endif()
