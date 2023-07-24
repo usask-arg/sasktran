@@ -8,6 +8,8 @@ namespace sasktran2::math {
     class UnitSphere {
     private:
     public:
+        virtual ~UnitSphere() {};
+
         virtual int num_points() const = 0;
 
         virtual Eigen::Vector3d get_quad_position(int index) const = 0;

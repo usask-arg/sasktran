@@ -42,6 +42,8 @@ namespace sasktran2::viewinggeometry {
          */
         virtual ViewingRay construct_ray(const sasktran2::Coordinates& geometry) = 0;
 
+        virtual ~ViewingGeometryBase() {};
+
     };
 
     /** A singular line of sight that is defined from parameters at the tangent altitude of the measurement.

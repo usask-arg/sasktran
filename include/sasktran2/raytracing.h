@@ -254,6 +254,8 @@ namespace sasktran2::raytracing {
      */
     class RayTracerBase {
     public:
+        virtual ~RayTracerBase() {};
+
         /** Traces a ray
          *
          * @param ray ViewingRay to trace
