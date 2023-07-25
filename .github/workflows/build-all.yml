@@ -68,6 +68,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
+      - name: Display system info
+        run: |
+          cat /proc/cpuinfo | grep flags | tail -1
+
       - uses: actions/setup-python@v4
         name: Install Python
         with:
