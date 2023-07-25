@@ -129,6 +129,8 @@ add_library(${NXBASE_NAME} ${nxbase_core_src}
         ${nxbase_la_src}
         )
 
+target_link_libraries(${NXBASE_NAME} PUBLIC sasktranCoreBuildProperties)
+
 install(DIRECTORY "."
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXBASE_NAME}
         FILES_MATCHING

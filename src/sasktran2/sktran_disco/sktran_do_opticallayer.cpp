@@ -15,7 +15,7 @@ sasktran_disco::OpticalLayer<NSTOKES, CNSTR>
         M_ALT_FLOOR(altitude_floor),
         M_INDEX(index),
         m_solutions(thread_data.rte_solution(index)),
-        m_legendre_sum(config.nstr(), M_SSA, *this->M_LP_MU, thread_data.legendre_sum_storage(index)),
+        m_legendre_sum(config.nstr(), 1, *this->M_LP_MU, thread_data.legendre_sum_storage(index)),
         m_compute_deriv(false),
         m_input_derivs(input_derivs),
         m_layercache(thread_data.layer_cache(index)),

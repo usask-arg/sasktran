@@ -6,61 +6,6 @@ add_library(sasktran2BuildProperties INTERFACE)
 target_include_directories(sasktran2BuildProperties INTERFACE
 		${CMAKE_SOURCE_DIR}/include)
 
-# Find dependencies and "link" them to sasktran2
-set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
-find_package(Boost 1.60.0 REQUIRED COMPONENTS system regex timer log)
-target_link_libraries(sasktran2BuildProperties INTERFACE Boost::system Boost::regex Boost::timer Boost::log)
-
-find_package(OpenMP REQUIRED)
-target_link_libraries(sasktran2BuildProperties INTERFACE OpenMP::OpenMP_CXX)
-
-find_package(Eigen3 REQUIRED)
-target_link_libraries(sasktran2BuildProperties INTERFACE Eigen3::Eigen)
-
-
-# We support multiple blas vendors, but these can require some funny options
-set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
-		"Sets the BLAS/LAPACK vendor. See https://cmake.org/cmake/help/latest/module/FindBLAS.html#blas-lapack-vendors.")
-set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple)
-
-if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
-	set(BLA_STATIC FALSE)
-	set(BLA_SIZEOF_INTEGER 4)
-elseif(SKTRAN_BLAS_VENDOR MATCHES "Apple")
-	set(BLA_STATIC TRUE)
-	set(BLA_SIZEOF_INTEGER 4)
-	target_include_directories(sasktran2BuildProperties INTERFACE /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers)
-	target_compile_definitions(sasktran2BuildProperties INTERFACE SKTRAN_USE_ACCELERATE)
-else()
-	set(BLA_STATIC FALSE)
-	set(BLA_SIZEOF_INTEGER 4)
-endif()
-set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
-set(CMAKE_FIND_LIBRARY_PREFIXES "" lib)  # openblas include a "lib" prefix in it's names
-find_package(BLAS REQUIRED)
-find_package(LAPACK REQUIRED)
-target_link_libraries(sasktran2BuildProperties INTERFACE BLAS::BLAS LAPACK::LAPACK)
-target_compile_definitions(sasktran2BuildProperties INTERFACE
-		$<$<AND:$<PLATFORM_ID:Windows>,$<STREQUAL:${BLA_VENDOR},OpenBLAS>>:__WIN64__>   # for compatibility with Eigen/src/misc/blas.h
-		)
-
-if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
-	find_path(LAPACKE_H_INCLUDE_DIR mkl_lapacke.h REQUIRED)  # include directory for <lapacke.h>
-	target_include_directories(sasktran2BuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
-	target_compile_definitions(sasktran2BuildProperties INTERFACE SKTRAN_USE_MKL)
-else()
-	find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
-	find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
-	target_include_directories(sasktran2BuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR})
-
-	if(WIN32)
-		# OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
-		target_compile_options(sasktran2BuildProperties INTERFACE /wd4190)
-	endif()
-
-endif()
-
-
 # Add sub libraries
 add_library(sasktran2 
 			STATIC
@@ -127,7 +72,7 @@ add_library(sasktran2
 		sktran_disco/source_term/do_source_spherical_corrected.cpp
 		sktran_disco/sktran_do_dll_expose.cpp)
 
-target_link_libraries(sasktran2 PUBLIC sasktran2BuildProperties)
+target_link_libraries(sasktran2 PUBLIC sasktran2BuildProperties sasktranBuildProperties)
 
 include(CTest)
 add_subdirectory(tests)

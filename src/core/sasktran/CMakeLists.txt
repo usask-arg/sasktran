@@ -243,6 +243,9 @@ set(sasktran_test_src
 # Build the library
 add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src})
 
+target_link_libraries(${SASKTRAN_BASE_NAME} PUBLIC sasktranCoreBuildProperties)
+
+
 # Set the header files
 install (TARGETS ${SASKTRAN_BASE_NAME}
 		EXPORT ${EXPORT_NAME}
@@ -258,6 +261,12 @@ install(DIRECTORY "."
 
 add_library(${SASKTRAN_STUB_NAME} ${sasktran_core_src})
 add_library(${SASKTRAN_CORE_NAME} SHARED ${sasktran_dll_src})
+
+target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktranCoreBuildProperties)
+target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktranCoreBuildProperties)
+
+target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktran2)
+
 
 # Set the header files
 install (TARGETS ${SASKTRAN_STUB_NAME}
@@ -299,72 +308,39 @@ set(sasktran_links
 		${SASKTRANIF_NAME}
 		${NXBASE_NAME}
 		${NXNETCDFIO_NAME}
-		${netCDF_LIBRARIES}
-		${Boost_LIBRARIES}
-		${HDF5_LIBRARY}
-		Eigen3::Eigen
-		sasktran2
-		yaml-cpp
 )
 
 target_link_libraries(${SASKTRAN_CORE_NAME}
+		PUBLIC
 	${sasktran_links}
 	)
 target_link_libraries(sasktran_tests
+		PUBLIC
 		${sasktran_links}
 		)
 
 if(WIN32)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_win_links})
-	target_link_libraries(sasktran_tests ${sasktran_win_links})
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_win_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_win_links})
 elseif(LINUX)
-	find_package(BLAS REQUIRED)
-	find_package(LAPACK REQUIRED)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_unix_links})
-	target_link_libraries(sasktran_tests ${sasktran_unix_links})
-
-	# Set static linking
-	# target_link_libraries(${SASKTRAN_CORE_NAME} -static-libgcc -static-libstdc++)
-
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_unix_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_unix_links})
 elseif(APPLE)
-	find_package(BLAS REQUIRED)
-	find_package(LAPACK REQUIRED)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_darwin_links})
-	target_link_libraries(sasktran_tests ${sasktran_darwin_links})
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_darwin_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_darwin_links})
 endif()
-
-find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
-find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
-include_directories(
-		${LAPACKE_H_INCLUDE_DIR}
-		${CBLAS_H_INCLUDE_DIR})
-
-
-if(WIN32)
-	# OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
-	target_compile_options(${SASKTRAN_CORE_NAME} INTERFACE /wd4190)
-	target_compile_options(sasktran_tests INTERFACE /wd4190)
-endif()
-
-
 
 # Some special logic to support both CATCH2 version 2 and 3 for now
 find_package(Catch2 2 CONFIG QUIET)
 
 if(Catch2_FOUND)
 	# Found Catch2 Version 2
-	target_link_libraries(sasktran_tests Catch2::Catch2)
+	target_link_libraries(sasktran_tests PUBLIC Catch2::Catch2)
 else()
 	# Look for Catch2 Version 3
 	message("Could not find Catch2 Version 2, Looking for Version 3")
 	find_package(Catch2 3 CONFIG REQUIRED)
-	target_link_libraries(sasktran_tests Catch2::Catch2WithMain)
+	target_link_libraries(sasktran_tests PUBLIC Catch2::Catch2WithMain)
 	target_compile_definitions(sasktran_tests PUBLIC SKTRAN_CATCH2_VERSION3)
 endif()
 
