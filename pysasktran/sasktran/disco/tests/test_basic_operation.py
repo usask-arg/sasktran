@@ -6,16 +6,14 @@ import numpy as np
 
 
 def test_simple_calculation():
+    atmo = default_atmosphere()
+    geo = default_geometry()
 
-    while True:
-        atmo = default_atmosphere()
-        geo = default_geometry()
+    wavelengths = np.arange(280, 800, 1)
 
-        wavelengths = np.arange(280, 800, 1)
+    engine = do.EngineDO(geometry=geo, atmosphere=atmo, wavelengths=wavelengths)
 
-        engine = do.EngineDO(geometry=geo, atmosphere=atmo, wavelengths=wavelengths)
-
-        rad = engine.calculate_radiance(output_format='xarray')
+    rad = engine.calculate_radiance(output_format='xarray')
 
 
 def test_multiple_lines_of_sight():
