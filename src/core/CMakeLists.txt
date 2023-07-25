@@ -80,7 +80,7 @@ set(SASKTRAN_STUB_NAME sktran_stubs)
 
 set(SKTRAN_TIR_NAME sktran_tir_engine)
 
-write_basic_package_version_file( "../sasktran-coreconfigVersion.cmake"
+write_basic_package_version_file( "../../sasktran-coreconfigVersion.cmake"
         VERSION ${sasktran-core_VERSION}
         COMPATIBILITY SameMajorVersion
         )
@@ -98,7 +98,7 @@ install(EXPORT sasktran-coreTargets
         DESTINATION lib/cmake/sasktran-core
         )
 
-install( FILES "../sasktran-coreConfig.cmake" DESTINATION lib/cmake/sasktran-core)
+install( FILES "../../sasktran-coreConfig.cmake" DESTINATION lib/cmake/sasktran-core)
 
 if(WIN32)
     # Bundle the fortran libraries along with the installed libraries
