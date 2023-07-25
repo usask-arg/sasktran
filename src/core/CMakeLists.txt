@@ -59,6 +59,13 @@ else()
     target_compile_definitions(sasktranCoreBuildProperties INTERFACE BOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED)
 endif()
 
+# Fortran library settings, windows we add a link directory, linux we build it
+if(WIN32)
+    link_directories(${CMAKE_SOURCE_DIR}/src/core/fortran_libraries/lib/Windows_x64/)
+else()
+    enable_language(Fortran)
+endif()
+
 # Platform library names
 if(WIN32)
     set(CMAKE_RELEASE_POSTFIX _Release)

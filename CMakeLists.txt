@@ -25,13 +25,6 @@ endif()
 
 project (sasktran-core VERSION ${SASKTRAN_CORE_VERSION})
 
-# Fortran library settings, windows we add a link directory, linux we build it
-if(WIN32)
-    link_directories(${CMAKE_SOURCE_DIR}/fortran_libraries/lib/Windows_x64/)
-else()
-    enable_language(Fortran)
-endif()
-
 set(CMAKE_CXX_STANDARD 17)
 
 if(APPLE)
