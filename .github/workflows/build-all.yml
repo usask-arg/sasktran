@@ -320,8 +320,9 @@ jobs:
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
-          SKTRAN_BLAS_BUNDLE: c:/local/openblas/bin/libopenblas.dll
       - run: cmake --build build --config Release --target install -j 2
+        env:
+          SKTRAN_BLAS_BUNDLE: c:/local/openblas/bin/libopenblas.dll
 
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3

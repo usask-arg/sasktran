@@ -1,14 +1,7 @@
 name: 'Build, Test, and Upload Conda Packages'
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    types: [opened, reopened, synchronize, labeled]
-  release:
-    types:
-      - published
+  workflow_dispatch:
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
