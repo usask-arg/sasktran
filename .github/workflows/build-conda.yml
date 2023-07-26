@@ -1,7 +1,14 @@
 name: 'Build, Test, and Upload Conda Packages'
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [opened, reopened, synchronize, labeled]
+  release:
+    types:
+      - published
 
 
 jobs:
@@ -12,7 +19,7 @@ jobs:
       fail-fast: false
       matrix:
         os: [ubuntu-latest, windows-latest, macos-11]
-        py_version: ["3.8", "3.9", "3.10", "3.11"]
+        py_version: ["3.10"]
 
     steps:
       - name: Checkout repository
@@ -37,7 +44,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        py_version: ["3.8", "3.9", "3.10", "3.11"]
+        py_version: ["3.10"]
 
     steps:
       - name: Checkout repository

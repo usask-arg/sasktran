@@ -150,18 +150,23 @@ if sys.platform =='win32':                                                      
     copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\msis90e.dll',            r'sasktran_core\msis90e.dll')
     copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\hitran_tips.dll',        r'sasktran_core\hitran_tips.dll')
     copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\netlib.dll',             r'sasktran_core\netlib.dll')
-    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\blaslapack.dll',         r'sasktran_core\blaslapack.dll')
 
     package_data  = {'sasktran_core': [ 'wiscombemie.dll',                             # these are necessary DLL's for the windows build
                                          'tmatrixrandomep.dll',
                                          'msis90e.dll',
                                          'hitran_tips.dll',
                                          'netlib.dll',
-                                         'blaslapack.dll',
                                          dllname,
                                          'sasktran_core_firsttime.sktran'               # this file tells sasktran_core that it is the firsttime it is loaded. This will trigger initialization of the module.
                                        ]
                      }
+
+    if os.environ.get('SKTRAN_BLAS_BUNDLE', None) is not None:
+        bundled_blas_library = Path(os.environ.get('SKTRAN_BLAS_BUNDLE', None))
+        copyfile(bundled_blas_library.as_posix(), r'sasktran_core/' + bundled_blas_library.stem + bundled_blas_library.suffix)
+
+        package_data['sasktran_core'].append(bundled_blas_library.stem + bundled_blas_library.suffix)
+
     print('Copying completed')
 
 else:

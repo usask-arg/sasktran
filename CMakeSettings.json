@@ -7,8 +7,7 @@
       "inheritEnvironments": [ "msvc_x64_x64" ],
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
-      "buildCommandArgs": "",
+      "cmakeCommandArgs": " -DPythonEnvironments=py38 -DCMAKE_PREFIX_PATH=\"c:/local/openblas;c:/local/eigen-3.4.0\"",
       "ctestCommandArgs": "",
       "variables": [
         {
@@ -25,7 +24,7 @@
       "configurationType": "Release",
       "buildRoot": "${projectDir}\\out\\build\\${name}",
       "installRoot": "${projectDir}\\out\\install\\${name}",
-      "cmakeCommandArgs": "",
+      "cmakeCommandArgs": " -DPythonEnvironments=py38 -DCMAKE_PREFIX_PATH=\"c:/local/openblas;c:/local/eigen-3.4.0\"",
       "buildCommandArgs": "",
       "ctestCommandArgs": "",
       "inheritEnvironments": [ "msvc_x64_x64" ],

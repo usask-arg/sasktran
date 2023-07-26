@@ -97,6 +97,7 @@ elseif(SKTRAN_BLAS_VENDOR MATCHES "Apple")
     target_include_directories(sasktranBuildProperties INTERFACE /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers)
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_ACCELERATE)
 else()
+    # have to set this on unix even when using static openblas because of a cmake fortran bug
     set(BLA_STATIC FALSE)
     set(BLA_SIZEOF_INTEGER 4)
 endif()
