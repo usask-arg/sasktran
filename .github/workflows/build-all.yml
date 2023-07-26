@@ -300,14 +300,14 @@ jobs:
 
       - name: Download OpenBLAS
         run: |
-          $url = "https://github.com/xianyi/OpenBLAS/releases/download/v0.3.23/OpenBLAS-0.3.23-x64.zip"
-          $output = "c:\local\OpenBLAS-0.3.23-x64.zip"
+          $url = "https://github.com/xianyi/OpenBLAS/releases/download/v0.3.18/OpenBLAS-0.3.18-x64.zip"
+          $output = "c:\local\OpenBLAS-0.3.18-x64.zip"
           Invoke-WebRequest -Uri $url -OutFile $output
         shell: powershell
 
       - name: Extract OpenBLAS
         run: |
-          $zipfile = "c:\local\OpenBLAS-0.3.23-x64.zip"
+          $zipfile = "c:\local\OpenBLAS-0.3.18-x64.zip"
           $folder = "c:\local\openblas"
           Add-Type -AssemblyName System.IO.Compression.FileSystem
           [System.IO.Compression.ZipFile]::ExtractToDirectory($zipfile, $folder)

@@ -4,7 +4,7 @@
 
 namespace blas
 {
-#if defined (NX_UNIX_VER)
+#if true
 	#define F77CALL 						// Method for calling Intel Fortran functions. Redefine with __pascal or __stdcall or whatever.
 	#define F77EXTERNC extern "C"			// Disable Name Mangling for Intel Fortran
 	#define BLAS(X) blas::X					// Macro to access Lapack namespace. Redefine if acessing Intel MKL

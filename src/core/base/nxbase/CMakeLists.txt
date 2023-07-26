@@ -86,7 +86,7 @@ set(nxbase_math_src
     module/math/data_analysis/runningstraightlinefit.cxx
 )
 
-if(WIN32)
+if(false)
     set(nxbase_la_src 
         module/math/linearalgebra/lapackblas.cxx
         module/math/linearalgebra/matrix.cxx
