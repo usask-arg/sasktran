@@ -11,7 +11,7 @@ build:
   script:
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" -DCMAKE_BUILD_TYPE=Release # [not win]
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DCMAKE_BUILD_TYPE=Release # [win]
-    - cmake --build build_conda --config Release
+    - cmake --build build_conda --config Release -j
     - pip install sasktran --no-deps -f wheelhouse/
 
 requirements:
@@ -28,13 +28,16 @@ requirements:
     - numpy # [py!=311]
     - numpy 1.23 # [py==311]
     - libnetcdf
+    - hdf5
     - yaml-cpp
     - catch2
     - openblas
+    - eigen
     - zlib
   run:
     - {{ pin_compatible("numpy") }}
     - libnetcdf
+    - hdf5
     - yaml-cpp
     - openblas
     - zlib
