@@ -58,6 +58,8 @@ Specific Engine Information
    :glob:
 
    sasktran_hr
+   tir/index
+   do/index
 
 Indices and tables
 ==================

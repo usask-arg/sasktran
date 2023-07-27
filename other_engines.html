@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Choosing an Engine &mdash; SASKTRAN 1.7.1 documentation</title>
+  <title>Choosing an Engine &mdash; SASKTRAN 1.8.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.1
+                1.8.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -96,6 +96,8 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
 </ul>
 
         </div>
@@ -129,8 +131,7 @@ The radiative transfer equation can be solved in multiple ways, and SASKTRAN con
 Which engine to use depends on the specific task at hand.</p>
 <section id="sasktran-hr">
 <h2>SASKTRAN-HR<a class="headerlink" href="#sasktran-hr" title="Permalink to this heading">¶</a></h2>
-<p>SASKTRAN-HR is the primary engine used and is described in Zawada et. al. (2015).
-SASKTRAN-HR is contained within the primary SASKTRAN package.</p>
+<p>SASKTRAN-HR is the primary engine used and is described in Zawada et. al. (2015).</p>
 <section id="suitable-for">
 <h3>Suitable For<a class="headerlink" href="#suitable-for" title="Permalink to this heading">¶</a></h3>
 <p>Problems requiring fast and accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant.</p>
@@ -154,8 +155,7 @@ SASKTRAN-HR is contained within the primary SASKTRAN package.</p>
 </section>
 <section id="sasktran-occ">
 <h2>SASKTRAN-OCC<a class="headerlink" href="#sasktran-occ" title="Permalink to this heading">¶</a></h2>
-<p>SASKTRAN-OCC is an engine designed for fast occultation applications.
-SASKTRAN-OCC is contained within the primary SASKTRAN package.</p>
+<p>SASKTRAN-OCC is an engine designed for fast occultation applications.</p>
 <section id="id1">
 <h3>Suitable For<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
 <p>Occultation viewing geometry in all spectral regions.</p>
@@ -176,8 +176,7 @@ SASKTRAN-OCC is contained within the primary SASKTRAN package.</p>
 </section>
 <section id="sasktran-mc">
 <h2>SASKTRAN-MC<a class="headerlink" href="#sasktran-mc" title="Permalink to this heading">¶</a></h2>
-<p>SASKTRAN-MC performs Monte-Carlo integration to solve the RTE and is described in Zawada et. al. (2015).
-SASKTRAN-MC is contained within the main SASKTRAN package.</p>
+<p>SASKTRAN-MC performs Monte-Carlo integration to solve the RTE and is described in Zawada et. al. (2015).</p>
 <section id="id4">
 <h3>Suitable For<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
 <p>Problems requiring accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant and runtime is of secondary concern.</p>
@@ -222,11 +221,10 @@ SASKTRAN-DO must be installed separately and can be found at <a class="reference
 </section>
 <section id="sasktran-tir">
 <h2>SASKTRAN-TIR<a class="headerlink" href="#sasktran-tir" title="Permalink to this heading">¶</a></h2>
-<p>SASKTRAN-TIR is a thermal radiative transfer model designed for applications in the IR and beyond spectral regions.
-SASKTRAN-TIR must be installed separately and can be found at <a class="reference external" href="https://arg.usask.ca/docs/sasktran_tir/">https://arg.usask.ca/docs/sasktran_tir/</a>.</p>
+<p>SASKTRAN-TIR is a thermal radiative transfer model designed for applications in the IR and beyond spectral regions.</p>
 <section id="id10">
 <h3>Suitable For<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
-<p>Applications in the IR and beyong spectral regime where scattering can be neglected.</p>
+<p>Applications in the IR and beyond spectral regime where scattering can be neglected.</p>
 </section>
 <section id="id11">
 <h3>Advantages<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.7.1 documentation</title>
+  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.0 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
@@ -40,7 +40,7 @@
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.1
+                1.8.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -73,6 +73,8 @@
 </ul>
 </li>
 <li class="toctree-l2"><a class="reference internal" href="../mc_examples.html">SASKTRAN-MC Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tir_examples.html">SASKTRAN-TIR Examples</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../do_examples.html">SASKTRAN-DO Examples</a></li>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="../../config.html">Configuration</a></li>
@@ -83,6 +85,8 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../do/index.html">SASKTRAN-DO</a></li>
 </ul>
 
         </div>
@@ -426,11 +430,11 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2864/2621053390.py:9: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
+/tmp/ipykernel_3280/2621053390.py:9: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
   heights = np.array( h5f.get(&#39;heights&#39;) )
-/tmp/ipykernel_2864/2621053390.py:13: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
+/tmp/ipykernel_3280/2621053390.py:13: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
   rads = np.array( h5f.get(type + &#39;_wlen_&#39; + &#39;%.2f&#39;%wlen + &#39;_ord_&#39; + str(order) +
-/tmp/ipykernel_2864/2621053390.py:39: MatplotlibDeprecationWarning: Unable to determine Axes to steal space for Colorbar. Using gca(), but will raise in the future. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
+/tmp/ipykernel_3280/2621053390.py:39: MatplotlibDeprecationWarning: Unable to determine Axes to steal space for Colorbar. Using gca(), but will raise in the future. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
   fig.colorbar(m, shrink=0.5, aspect=15, ticks=np.linspace(min(facevals),
 </pre></div></div>
 </div>
@@ -479,9 +483,9 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_2864/2621053390.py:60: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
+/tmp/ipykernel_3280/2621053390.py:60: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
   heights = np.array( h5f.get(&#39;heights&#39;) )
-/tmp/ipykernel_2864/2621053390.py:70: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
+/tmp/ipykernel_3280/2621053390.py:70: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
   rad = np.array( h5f.get(type + &#39;_wlen_&#39; + &#39;%.2f&#39;%wlen + &#39;_ord_&#39; +
 </pre></div></div>
 </div>

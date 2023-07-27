@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atmosphere &mdash; SASKTRAN 1.7.1 documentation</title>
+  <title>Atmosphere &mdash; SASKTRAN 1.8.0 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.7.1
+                1.8.0
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -86,6 +86,8 @@
 </ul>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
 </ul>
 
         </div>
@@ -127,13 +129,13 @@ The first component of this is defining a set of atmospheric constituents, which
 <a class="reference internal" href="brdf.html#brdf"><span class="std std-ref">BRDF</span></a> can be set with the <a class="reference internal" href="#sasktran.Atmosphere.brdf" title="sasktran.Atmosphere.brdf"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.brdf</span></code></a> property.</p>
 <p>Emissions can also be added to the atmosphere using the <a class="reference internal" href="#sasktran.Atmosphere.brdf" title="sasktran.Atmosphere.brdf"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.brdf</span></code></a> property.  Note that
 currently the only radiative transfer model that supports emissions is the HR engine.</p>
-<p>Additionally, the atmosphere object can be used to set the temperature and pressure <a class="reference internal" href="climatology.html#climatology"><span class="std std-ref">Climatology</span></a> (see
+<p>Additionally, the atmosphere object can be used to set the temperature and pressure <a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a> (see
 <a class="reference internal" href="#sasktran.Atmosphere.atmospheric_state" title="sasktran.Atmosphere.atmospheric_state"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.atmospheric_state</span></code></a>), as well as species to calculate weighting functions for (see
 <a class="reference internal" href="#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a>).</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.atmospheric_state">
 <em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atmospheric_state</span></span><a class="headerlink" href="#sasktran.Atmosphere.atmospheric_state" title="Permalink to this definition">¶</a></dt>
-<dd><p>A special <a class="reference internal" href="climatology.html#climatology"><span class="std std-ref">Climatology</span></a> used to set the atmosphere’s temperature, and pressure. This
+<dd><p>A special <a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a> used to set the atmosphere’s temperature, and pressure. This
 climatology must support both ‘SKCLIMATOLOGY_TEMPERATURE_K’ and ‘SKCLIMATOLOGY_PRESSURE_PA’. The default
 atmospheric state is <a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.MSIS90</span></code></a>.</p>
 <p class="rubric">Examples</p>
