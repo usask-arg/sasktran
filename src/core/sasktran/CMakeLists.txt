@@ -173,6 +173,29 @@ set(sasktran_tir_src
 	modules/sktran_tir/sktran_tir_wf.cpp
 		)
 
+set(sasktran_do_src
+		modules/sktran_do_deprecated/sktran_do.cpp
+		modules/sktran_do_deprecated/sktran_do_engine.cpp
+		modules/sktran_do_deprecated/sktran_do_geometrylayerarray.cpp
+		modules/sktran_do_deprecated/sktran_do_layerarray.cpp
+		modules/sktran_do_deprecated/sktran_do_lazyazimuth.cpp
+		modules/sktran_do_deprecated/sktran_do_linearization_types.cpp
+		modules/sktran_do_deprecated/sktran_do_misc.cpp
+		modules/sktran_do_deprecated/sktran_do_opticallayer.cpp
+		modules/sktran_do_deprecated/sktran_do_opticalstate.cpp
+		modules/sktran_do_deprecated/sktran_do_pconfig.cpp
+		modules/sktran_do_deprecated/sktran_do_pentadiagonal.cpp
+		modules/sktran_do_deprecated/sktran_do_polarization_types.cpp
+		modules/sktran_do_deprecated/sktran_do_postprocessing.cpp
+		modules/sktran_do_deprecated/sktran_do_quadrature.cpp
+		modules/sktran_do_deprecated/sktran_do_rte.cpp
+		modules/sktran_do_deprecated/sktran_do_specs.cpp
+		modules/sktran_do_deprecated/sktran_do_spherical.cpp
+		modules/sktran_do_deprecated/sktran_do_surface.cpp
+		modules/sktran_do_deprecated/sktran_do_testing.cpp
+		modules/sktran_do_deprecated/sktran_do_types.cpp
+		)
+
 set(sasktran_core_src
     modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base.cpp
 	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base_specifics.cpp
@@ -183,6 +206,7 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_so.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_do.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
 		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
 
@@ -217,7 +241,10 @@ set(sasktran_test_src
 )
 
 # Build the library
-add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src})
+add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src})
+
+target_link_libraries(${SASKTRAN_BASE_NAME} PUBLIC sasktranCoreBuildProperties)
+
 
 # Set the header files
 install (TARGETS ${SASKTRAN_BASE_NAME}
@@ -234,6 +261,12 @@ install(DIRECTORY "."
 
 add_library(${SASKTRAN_STUB_NAME} ${sasktran_core_src})
 add_library(${SASKTRAN_CORE_NAME} SHARED ${sasktran_dll_src})
+
+target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktranCoreBuildProperties)
+target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktranCoreBuildProperties)
+
+target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktran2)
+
 
 # Set the header files
 install (TARGETS ${SASKTRAN_STUB_NAME}
@@ -275,56 +308,39 @@ set(sasktran_links
 		${SASKTRANIF_NAME}
 		${NXBASE_NAME}
 		${NXNETCDFIO_NAME}
-		${netCDF_LIBRARIES}
-		${Boost_LIBRARIES}
-		${HDF5_LIBRARY}
-		yaml-cpp
 )
 
 target_link_libraries(${SASKTRAN_CORE_NAME}
+		PUBLIC
 	${sasktran_links}
 	)
 target_link_libraries(sasktran_tests
+		PUBLIC
 		${sasktran_links}
 		)
 
 if(WIN32)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_win_links})
-	target_link_libraries(sasktran_tests ${sasktran_win_links})
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_win_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_win_links})
 elseif(LINUX)
-	find_package(BLAS REQUIRED)
-	find_package(LAPACK REQUIRED)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_unix_links})
-	target_link_libraries(sasktran_tests ${sasktran_unix_links})
-
-	# Set static linking
-	# target_link_libraries(${SASKTRAN_CORE_NAME} -static-libgcc -static-libstdc++)
-
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_unix_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_unix_links})
 elseif(APPLE)
-	find_package(BLAS REQUIRED)
-	find_package(LAPACK REQUIRED)
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-	target_link_libraries(sasktran_tests ${BLAS_LIBRARIES} ${LAPACK_LIBRARIES})
-
-	target_link_libraries(${SASKTRAN_CORE_NAME} ${sasktran_darwin_links})
-	target_link_libraries(sasktran_tests ${sasktran_darwin_links})
+	target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC ${sasktran_darwin_links})
+	target_link_libraries(sasktran_tests PUBLIC ${sasktran_darwin_links})
 endif()
-
 
 # Some special logic to support both CATCH2 version 2 and 3 for now
 find_package(Catch2 2 CONFIG QUIET)
 
 if(Catch2_FOUND)
 	# Found Catch2 Version 2
-	target_link_libraries(sasktran_tests Catch2::Catch2)
+	target_link_libraries(sasktran_tests PUBLIC Catch2::Catch2)
 else()
 	# Look for Catch2 Version 3
 	message("Could not find Catch2 Version 2, Looking for Version 3")
 	find_package(Catch2 3 CONFIG REQUIRED)
-	target_link_libraries(sasktran_tests Catch2::Catch2WithMain)
+	target_link_libraries(sasktran_tests PUBLIC Catch2::Catch2WithMain)
 	target_compile_definitions(sasktran_tests PUBLIC SKTRAN_CATCH2_VERSION3)
 endif()
 

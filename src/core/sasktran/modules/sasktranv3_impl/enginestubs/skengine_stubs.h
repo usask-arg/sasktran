@@ -276,6 +276,132 @@ public:
 };
 
 
+class ISKEngine_Stub_DO: public ISKEngine_Stub
+{
+private:
+    enum class TrackedCalls : unsigned int {
+        AtmosphericSpecies = 0,
+        AtmosphericState = 1,
+        SunPosition = 2,
+        Wavelengths = 3,
+        BRDF = 4,
+        LinesOfSight = 5,
+        Initialize = 6,
+        WFAltitudes = 7,
+        SIZE = 8
+    };
+
+    sktran_do_detail::SASKTRANAtmosphereInterface		m_opticalstate;
+    SKTRAN_LineOfSightArray_V21				m_linesofsight;
+    std::vector<double>						m_wavelen;
+    nx2dArray<double>						m_lostransmissionstorage;
+    nx2dArray<double>                       m_odstorage;
+    nx2dArray<double>                       m_ssastorage;
+    nx2dArray<double>						m_radiance;
+    std::vector<ISKStokesVector>            m_stokesvector;
+    nxVector								m_solar_position;
+
+    SKTRAN_DO_UserSpec					    m_userspec;
+
+    bool m_force_single_reference_point;
+    bool m_albedo_wf_included;
+
+    bool m_return_los_diagnostics;
+    bool m_return_rts_diagnostics;
+
+    bool m_output_optical_depths;
+
+    int m_num_threads;
+    int m_num_stokes;
+
+    int m_wl_batches;
+
+    std::vector<std::vector<sktran_do_detail::LOSDiagnostics>>	m_los_diagnostics;
+    std::vector<std::vector<sktran_do_detail::RTSDiagnostics>>	m_rts_diagnostics;
+    std::vector<skOpticalProperties*> m_wf_optical_properties;
+
+    std::vector<CLIMATOLOGY_HANDLE> m_wf_handles;
+    std::vector<double> m_wf_altitudes;
+    std::vector<double> m_wf_widths_low;
+    std::vector<double> m_wf_widths_high;
+
+    //index [wav][los][species][altitude]
+    std::unique_ptr<double[]> m_wf_storage;
+
+    // indexing: [wav [, los [, species [, altitude]]]]
+    // support slicing with ':' character
+
+    std::vector<bool> m_registered_calls;
+    std::vector<bool> m_required_calls;
+
+
+    std::map<std::string, std::function<void(double)> > m_scalar_set_functions;
+    std::map<std::string, std::function<void(const double*, int)> > m_vector_set_functions;
+    std::map<std::string, std::function<void(nxUnknown*)> > m_object_set_functions;
+    std::map<std::string, std::function<void(const char*)> > m_string_set_functions;
+    std::map<std::string, std::function<void(int w_idx, int l_idx)> > m_vector_get_functions;
+    std::map<std::string, std::function<void(int w_idx, int l_idx, double* value)> > m_scalar_get_functions;
+    std::vector<double> m_getpropertybuffer;
+
+private:
+    void makeScalarSetFunctions();
+    void makeStringSetFunctions();
+    void makeVectorSetFunctions();
+    void makeObjectSetFunctions();
+    void makeVectorGetFunctions();
+    void makeScalarGetFunctions();
+    void parseGetProperty(const std::string& input, std::string& prop, int& wav_index, int& los_index);
+
+    template<class TMap, class ...TArgs>
+    bool setter(const char* raw_property_name, TMap& setter_map, TArgs&&... args) {
+        try {
+            // make property name lowercase
+            std::string property_name(raw_property_name);
+            auto it = setter_map.find(property_name);
+
+            // search for the function
+            if(it == setter_map.end()) {
+                throw sktran_do_detail::InvalidConfiguration("Unknown property: " + property_name);
+            } else {
+                it->second(std::forward<TArgs>(args)...);
+            }
+        }
+        catch(const std::exception& e) {
+            nxLog::Record(NXLOG_ERROR, e.what());
+            return false;
+        }
+        return true;
+    }
+
+public:
+    ISKEngine_Stub_DO();
+    virtual ~ISKEngine_Stub_DO() override;
+
+    // ISK Interface
+    virtual bool AddLineOfSight(double mjd, const nxVector& observer, const nxVector& lookvector, int* losindex) override;
+    virtual bool AddSpecies(const CLIMATOLOGY_HANDLE& species, ISKClimatology_Stub* climatology, ISKOpticalProperty_Stub* opticalproperty) override;
+    virtual bool AddEmission(const EMISSION_HANDLE& species, ISKEmission_Stub*    emission) override;
+
+    virtual bool SetAtmosphericState(ISKClimatology_Stub* climatology) override;
+    virtual bool SetAlbedo(double albedo) override;
+    virtual bool SetPolarizationMode(int polarizationmode) override;
+    virtual bool SetWavelengths(const double* wavelen, int numwavelen) override;
+    virtual bool SetBRDF(ISKBrdf_Stub* brdf) override;
+
+    virtual bool InitializeModel() override;
+    virtual bool CalculateRadiance(const double**		  radiance, int* numwavelens, int* numlinesofsight) override;
+    virtual bool CalculateStokesVector(const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight) override;
+    virtual bool GetWeightingFunctions(const double**          wf, int* numwavel, int* numlinesofsight, int* numwf) override;
+
+    virtual bool SetPropertyScalar(const char* propertyname, double value) override;
+    virtual bool SetPropertyArray(const char* propertyname, const double* value, int numpoints) override;
+    virtual bool SetPropertyObject(const char* propertyname, nxUnknown* object) override;
+    virtual bool SetPropertyString(const char* propertyname, const char* str) override;
+    virtual bool GetProperty(const char* propertyname, const double** value, int* numpoints) override;
+};
+
+
+
 /*-----------------------------------------------------------------------------
  *					class ISKGeodetic_Stub_std						2014- 5- 7*/
 /** A stub for the ISKCgeodetic class

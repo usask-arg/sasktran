@@ -86,7 +86,7 @@ set(nxbase_math_src
     module/math/data_analysis/runningstraightlinefit.cxx
 )
 
-if(WIN32)
+if(false)
     set(nxbase_la_src 
         module/math/linearalgebra/lapackblas.cxx
         module/math/linearalgebra/matrix.cxx
@@ -128,6 +128,8 @@ add_library(${NXBASE_NAME} ${nxbase_core_src}
         ${nxbase_math_src}
         ${nxbase_la_src}
         )
+
+target_link_libraries(${NXBASE_NAME} PUBLIC sasktranCoreBuildProperties)
 
 install(DIRECTORY "."
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXBASE_NAME}

@@ -24,7 +24,7 @@ if(WIN32)
     set(skclimatology_platform_src)
 else()
     set(skclimatology_platform_src
-            ../../../fortran_libraries/msis90/sources/msise90.for
+            ../fortran_libraries/msis90/sources/msise90.for
     )
 endif()
 
@@ -32,6 +32,8 @@ set(CMAKE_Fortran_FLAGS "-std=legacy -fPIC -fdefault-real-8 -fdefault-double-8 -
 
 # Build the library
 add_library(${SKCLIMATOLOGY_NAME} ${skclimatology_src} ${skclimatology_platform_src})
+
+target_link_libraries(${SKCLIMATOLOGY_NAME} PUBLIC sasktranCoreBuildProperties)
 
 install (TARGETS ${SKCLIMATOLOGY_NAME}
         EXPORT ${EXPORT_NAME}

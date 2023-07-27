@@ -1,4 +1,4 @@
-cmake_minimum_required      (VERSION 3.16)                                                          # Version 3.16 provides support for pre-compiled headers
+cmake_minimum_required(VERSION 3.20.0)
 include                     (CMakePackageConfigHelpers )                                            # Provids function/macro write_basic_package_version_file
 
 set(CMAKE_VERBOSE_MAKEFILE ON)
@@ -8,7 +8,7 @@ if(UNIX AND NOT APPLE)
 endif()
 
 if(UNIX)
-    add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment")
+    add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment -Wno-deprecated-declarations -Wno-psabi")
 endif()
 
 execute_process(COMMAND git describe --tags
@@ -27,45 +27,32 @@ project (sasktran-core VERSION ${SASKTRAN_CORE_VERSION})
 
 # Fortran library settings, windows we add a link directory, linux we build it
 if(WIN32)
-    link_directories(${CMAKE_SOURCE_DIR}/fortran_libraries/lib/Windows_x64/)
+    link_directories(${CMAKE_SOURCE_DIR}/src/core/fortran_libraries/lib/Windows_x64/)
 else()
     enable_language(Fortran)
 endif()
 
-set (CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 17)
+
+if(APPLE)
+    # This is nominally a windows definition but for some reason BOOST < 1.8.3 has problems on clang without this?
+    add_compile_definitions(_HAS_AUTO_PTR_ETC=0)
+endif()
+
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
 # Try to find boost 1.6 or greater
 set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
-find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread)
+find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread log)
 
 # Try to find OpenMP
 find_package(OpenMP REQUIRED)
 
-# Look for NetCDF, yaml-cpp, and HDF5
-find_package(netCDF REQUIRED CONFIG)
 
-find_package(yaml-cpp CONFIG REQUIRED)
-
-# hdf5 is annoying because sometimes it doesn't bundle the config
-# First try to find config HDF5
-find_package(hdf5 CONFIG)
-
-if(NOT hdf5_FOUND)
-    # Try to find the module instead and fail if we can't
-    find_package(HDF5 REQUIRED)
-    set(HDF5_LIBRARY HDF5::HDF5)
-else()
-    # we found the hdf5 config, but even this does not seem to define proper variables so we have to look for targets
-    if(TARGET hdf5::hdf5-static)
-        set(HDF5_LIBRARY hdf5::hdf5-static)
-    elseif(TARGET hdf5)
-        set(HDF5_LIBRARY hdf5)
-    else()
-        message(ERROR "Could not determine hdf5 target")
-    endif()
-endif()
+find_package(Eigen3 REQUIRED)
 
 # add the additional compiler flags
 set (CMAKE_CXX_FLAGS " ${CompilerFlags} ${OpenMP_CXX_FLAGS} ${CMAKE_CXX_FLAGS}")
@@ -79,81 +66,72 @@ set (STATIC_LIB_INSTALL_DIR lib)
 set (INCLUDE_INSTALL_DIR include)
 set (EXPORT_NAME sasktran-coreTargets)
 
-# Platform independent including
-include_directories(
-    ${CMAKE_SOURCE_DIR}/src/core/base
-    ${CMAKE_SOURCE_DIR}/src/core/sasktran
-    ${CMAKE_SOURCE_DIR}/src/core/base/nxbase
-    ${CMAKE_SOURCE_DIR}/src/core/sasktranif/includes
-    ${CMAKE_SOURCE_DIR}/src/core/base/nxhdf/nxnetcdfio
-    ${CMAKE_SOURCE_DIR}/src/core/skopticalproperties
-    ${CMAKE_SOURCE_DIR}/src/core/skclimatology
 
+# Add an interface target for storing build properties common to all sasktran modules
+add_library(sasktranBuildProperties INTERFACE)
 
-    ${Boost_INCLUDE_DIRS}
-    ${YAML_CPP_INCLUDE_DIR}
-    ${netCDF_INCLUDE_DIR}
-)
+target_link_libraries(sasktranBuildProperties INTERFACE OpenMP::OpenMP_CXX)
+target_link_libraries(sasktranBuildProperties INTERFACE Eigen3::Eigen)
+target_link_libraries(sasktranBuildProperties INTERFACE
+        Boost::system
+        Boost::regex
+        Boost::timer
+        Boost::log
+        Boost::filesystem
+        Boost::random
+        Boost::thread
+        )
 
-# Platform definitions
-if(WIN32)
-    add_definitions(-DNOMINMAX)
-    add_definitions(-D_CRT_SECURE_NO_WARNINGS)
+# -------- LAPACK FINDING -----------
+# We support multiple blas vendors, but these can require some funny options
+set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
+        "Sets the BLAS/LAPACK vendor. See https://cmake.org/cmake/help/latest/module/FindBLAS.html#blas-lapack-vendors.")
+set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple)
+
+if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
+    set(BLA_STATIC FALSE)
+    set(BLA_SIZEOF_INTEGER 4)
+elseif(SKTRAN_BLAS_VENDOR MATCHES "Apple")
+    set(BLA_STATIC TRUE)
+    set(BLA_SIZEOF_INTEGER 4)
+    target_include_directories(sasktranBuildProperties INTERFACE /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers)
+    target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_ACCELERATE)
 else()
-    add_definitions(-DBOOST_STACKTRACE_GNU_SOURCE_NOT_REQUIRED)
+    # have to set this on unix even when using static openblas because of a cmake fortran bug
+    set(BLA_STATIC FALSE)
+    set(BLA_SIZEOF_INTEGER 4)
 endif()
-
-# Platform library names 
-if(WIN32)
-    set(CMAKE_RELEASE_POSTFIX _Release)
-    set(CMAKE_DEBUG_POSTFIX _Debug)
-endif()
-set(NXBASE_NAME nxbase)
-set(NXNETCDFIO_NAME nxnetcdfio)
-
-set(SASKTRANIF_NAME sasktranif)
-set(SKCLIMATOLOGY_NAME skclimatology21)
-set(SKOPTICALPROPERTIES_NAME skopticalproperties21)
-set(SASKTRAN_BASE_NAME sktran_base)
-
-set(SASKTRAN_CORE_NAME _sasktran_core_internals)
-set(SASKTRAN_STUB_NAME sktran_stubs)
-
-set ( SKTRAN_TIR_NAME   "sktran_tir_engine")
-
-write_basic_package_version_file( "sasktran-coreconfigVersion.cmake"
-        VERSION ${sasktran-core_VERSION}
-        COMPATIBILITY SameMajorVersion
+set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
+set(CMAKE_FIND_LIBRARY_PREFIXES "" lib)  # openblas include a "lib" prefix in it's names
+find_package(BLAS REQUIRED)
+find_package(LAPACK REQUIRED)
+target_link_libraries(sasktranBuildProperties INTERFACE BLAS::BLAS LAPACK::LAPACK)
+target_compile_definitions(sasktranBuildProperties INTERFACE
+        $<$<AND:$<PLATFORM_ID:Windows>,$<STREQUAL:${BLA_VENDOR},OpenBLAS>>:__WIN64__>   # for compatibility with Eigen/src/misc/blas.h
         )
 
+if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
+    find_path(LAPACKE_H_INCLUDE_DIR mkl_lapacke.h REQUIRED)  # include directory for <lapacke.h>
+    target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
+    target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_MKL)
+else()
+    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
+    find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
+    target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR})
 
-# Add subprojects
-add_subdirectory (src/core/base)
-add_subdirectory (src/core/sasktranif)
-add_subdirectory (src/core/skclimatology)
-add_subdirectory (src/core/skopticalproperties)
-add_subdirectory (src/core/sasktran)
-add_subdirectory (fortran_libraries)
+    if(WIN32)
+        # OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
+        target_compile_options(sasktranBuildProperties INTERFACE /wd4190)
+    endif()
 
-install(EXPORT sasktran-coreTargets
-        FILE sasktran-coreTargets.cmake
-        NAMESPACE sasktran-core::
-        DESTINATION lib/cmake/sasktran-core
-        )
-
-install( FILES "sasktran-coreConfig.cmake" DESTINATION lib/cmake/sasktran-core)
-
-if(WIN32)
-    # Bundle the fortran libraries along with the installed libraries
-    install(DIRECTORY "fortran_libraries/lib/Windows_x64/"
-            DESTINATION lib
-            FILES_MATCHING
-            PATTERN "*.dll"
-            )
-
-    install(DIRECTORY "fortran_libraries/lib/Windows_x64/"
-            DESTINATION lib
-            FILES_MATCHING
-            PATTERN "*.lib"
-            )
 endif()
+
+# -------- END LAPACK FINDING -------
+
+install (TARGETS sasktranBuildProperties
+        EXPORT ${EXPORT_NAME}
+        LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+        INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
+
+add_subdirectory (src/sasktran2)
+add_subdirectory (src/core)

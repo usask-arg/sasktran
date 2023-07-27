@@ -69,7 +69,7 @@ include_dirs      =[  r'../src/core/sasktranif/includes',                       
                       ] +  cplus_include_path
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
-    library_dirs      =[ r'..\fortran_libraries\lib\Windows_x64',
+    library_dirs      =[ r'..\src\core\fortran_libraries\lib\Windows_x64',
                     ] +  cplus_library_path
     libraries         =['sasktranif_Release','User32','Advapi32','Ole32','OleAut32','nxbase_Release', 'yaml-cpp', 'bcrypt']
     extra_compile_args=['/MD']
@@ -145,23 +145,28 @@ if sys.platform =='win32':                                                      
 
     dllnames = glob.glob(  os.path.join( 'sasktran_core','_sasktran_core_internals.dll') )
     dllname = os.path.basename(dllnames[0])                                                                                    # This file is built before calling setup.py by the SasktranCoreComponents/buildarglibraries.bat
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\wiscombemie.dll',        r'sasktran_core\wiscombemie.dll')
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\tmatrixrandomep.dll',    r'sasktran_core\tmatrixrandomep.dll')
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\msis90e.dll',            r'sasktran_core\msis90e.dll')
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\hitran_tips.dll',        r'sasktran_core\hitran_tips.dll')
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\netlib.dll',             r'sasktran_core\netlib.dll')
-    copyfile( r'..\fortran_libraries\lib\Windows_x64\blaslapack.dll',         r'sasktran_core\blaslapack.dll')
+    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\wiscombemie.dll',        r'sasktran_core\wiscombemie.dll')
+    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\tmatrixrandomep.dll',    r'sasktran_core\tmatrixrandomep.dll')
+    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\msis90e.dll',            r'sasktran_core\msis90e.dll')
+    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\hitran_tips.dll',        r'sasktran_core\hitran_tips.dll')
+    copyfile( r'..\src\core\fortran_libraries\lib\Windows_x64\netlib.dll',             r'sasktran_core\netlib.dll')
 
     package_data  = {'sasktran_core': [ 'wiscombemie.dll',                             # these are necessary DLL's for the windows build
                                          'tmatrixrandomep.dll',
                                          'msis90e.dll',
                                          'hitran_tips.dll',
                                          'netlib.dll',
-                                         'blaslapack.dll',
                                          dllname,
                                          'sasktran_core_firsttime.sktran'               # this file tells sasktran_core that it is the firsttime it is loaded. This will trigger initialization of the module.
                                        ]
                      }
+
+    if os.environ.get('SKTRAN_BLAS_BUNDLE', None) is not None:
+        bundled_blas_library = Path(os.environ.get('SKTRAN_BLAS_BUNDLE', None))
+        copyfile(bundled_blas_library.as_posix(), r'sasktran_core/' + bundled_blas_library.stem + bundled_blas_library.suffix)
+
+        package_data['sasktran_core'].append(bundled_blas_library.stem + bundled_blas_library.suffix)
+
     print('Copying completed')
 
 else:

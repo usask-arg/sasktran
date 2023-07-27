@@ -28,7 +28,7 @@
 		#else
 			#pragma comment( lib, "nxbase_linearalgebra_Release")
 		#endif
-		#pragma comment( lib, "blaslapack")
+		//#pragma comment( lib, "blaslapack")
 	#endif
 	#pragma message("Including the Fortran LAPACK libraries (nxbase_linearalgebra.lib and Fortran dll library blaslapack) into this project")
 

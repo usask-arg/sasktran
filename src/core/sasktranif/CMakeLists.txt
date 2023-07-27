@@ -17,6 +17,9 @@ set(sasktranif_src
 # Build the library
 add_library(${SASKTRANIF_NAME} ${sasktranif_src})
 
+target_link_libraries(${SASKTRANIF_NAME} PUBLIC sasktranCoreBuildProperties)
+
+
 set(sasktranif_headers
         includes/climatology_handles.h
         includes/sasktran_interfaces.h

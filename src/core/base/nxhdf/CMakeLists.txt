@@ -16,6 +16,9 @@ set(nxnetcdfio_src
 # Build the library
 add_library(${NXNETCDFIO_NAME} ${nxnetcdfio_src})
 
+target_link_libraries(${NXNETCDFIO_NAME} PUBLIC sasktranCoreBuildProperties)
+
+
 install(DIRECTORY "nxnetcdfio"
         DESTINATION ${INCLUDE_INSTALL_DIR}/${NXNETCDFIO_NAME}
         FILES_MATCHING
