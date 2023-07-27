@@ -59,6 +59,7 @@ Specific Engine Information
 
    sasktran_hr
    tir/index
+   do/index
 
 Indices and tables
 ==================

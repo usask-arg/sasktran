@@ -12,3 +12,4 @@ Examples
    examples/hr_examples
    examples/mc_examples
    examples/tir_examples
+   examples/do_examples
