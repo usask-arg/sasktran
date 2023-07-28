@@ -197,8 +197,7 @@ set(sasktran_test_src
 	Application/TestInstallation/test_mcamf.cpp 
 	Application/TestInstallation/test_msisatomico.cpp 
 	Application/TestInstallation/test_o2_o2.cpp 
-	Application/TestInstallation/test_polarization.cpp 
-	Application/TestInstallation/test_so2.cpp 
+	Application/TestInstallation/test_so2.cpp
 	Application/TestInstallation/testdelaunaysphere.cpp 
 	Application/TestInstallation/testscattermatrices.cpp 
 )
