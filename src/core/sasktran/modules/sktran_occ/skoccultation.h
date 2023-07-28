@@ -1,4 +1,4 @@
-#include "sasktranv21.h"
+#include "modules/sktran_so/sasktranv21_internals.h"
 #include "include/sktran_occ_internals.h"
 #include "include/sktran_curvedrays_ace.h"
 #include "../sktran_common/sktran_common.h"

@@ -7,7 +7,6 @@ set(skclimatology_src
     sources/skclimatology_labow.cxx
     sources/skclimatology_one.cxx 
     sources/skclimatology_pratmo.cpp
-    sources/skclimatology_textfiledbase.cxx 
     sources/skclimatology_userdefined_latlon_table.cpp
     sources/skclimatology_userdefinedplane.cpp
     sources/skclimatology_userdefinedtable.cxx 

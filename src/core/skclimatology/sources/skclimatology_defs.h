@@ -163,7 +163,6 @@ class skClimatology : public nxUnknown
 #include "skclimatology_userdefinedtable.h"
 #include "skclimatology_userdefined_latlon_table.h"
 #include "skclimatology_userdefinedplane.h"
-#include "skclimatology_textfiledbase.h"
 #include "skclimatology_zero.h"
 #include "skclimatology_one.h"
 #include "skclimatology_msis90.h"

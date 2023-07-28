@@ -40,7 +40,6 @@ bool ConfigureSasktranIFEntries( const char* dllname, bool createentries)
 	bool	ok1;
 	bool	ok = true;
 
-	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/SO",										dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/HR",										dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/MC",										dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Engines/OCC",										dllname, createentries); ok = ok && ok1;
