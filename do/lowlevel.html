@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; SASKTRAN 1.8.0 documentation</title>
+  <title>Overview &mdash; SASKTRAN 1.8.1 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -39,7 +39,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.0
+                1.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -122,13 +122,13 @@ Legendre coefficients.  Constructing these quantities requires significantly mor
 for advanced users who are experienced in radiative transfer.</p>
 <p>The input to the low-level interface is four structures:</p>
 <ul class="simple">
-<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">sktran_disco.lowlevel.Atmosphere</span></code> object which defines the layer optical depths, single scatter albedos, legendre coefficients, and other aspects to do with the layering.</p></li>
-<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">sktran_disco.lowlevel.Config</span></code> object which sets some configuration settings</p></li>
-<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">sktran_disco.lowlevel.ViewingGeometry</span></code> object which specifies the viewing geometry</p></li>
-<li><p>Optionally a <code class="xref py py-class docutils literal notranslate"><span class="pre">sktran_disco.lowlevel.WeightingFunctions</span></code> object to specify which quantities to calculate derivatives with respect to.</p></li>
+<li><p>An <a class="reference internal" href="api.html#sasktran.disco.lowlevel.Atmosphere" title="sasktran.disco.lowlevel.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.disco.lowlevel.Atmosphere</span></code></a> object which defines the layer optical depths, single scatter albedos, legendre coefficients, and other aspects to do with the layering.</p></li>
+<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.disco.lowlevel.Config</span></code> object which sets some configuration settings</p></li>
+<li><p>An <code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.disco.lowlevel.ViewingGeometry</span></code> object which specifies the viewing geometry</p></li>
+<li><p>Optionally a <code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.disco.lowlevel.WeightingFunctions</span></code> object to specify which quantities to calculate derivatives with respect to.</p></li>
 </ul>
 <p>Radiative transfer is performed through a single function call,
-<code class="xref py py-meth docutils literal notranslate"><span class="pre">sktran_disco.lowlevel.calculate()</span></code>. We have found that the notation and definitions of various
+<code class="xref py py-meth docutils literal notranslate"><span class="pre">sasktran.disco.lowlevel.calculate()</span></code>. We have found that the notation and definitions of various
 radiative transfer quantities are rarely consistent, and as such the following sections
 briefly outline
 the theory of the discrete ordinates technique with a focus on how to define the necessary inputs

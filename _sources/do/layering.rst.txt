@@ -6,13 +6,13 @@ The discrete ordinates method (and by extension, SASKTRAN-DO) represents the atm
 homogenous layers.  Each layer is characterized by the vertical optical depth, single scattering albedo, and
 Legendre coefficients of the phase function expansion.  If you are familiar with "pure scattering" radiative transfer
 models such as DISORT or LIDORT these are the input quantities you may be used to, however SASKTRAN-DO operates
-with a higher level interface (see http://arg.usask.ca/docs/sasktran/).  This page describes internally how SASKTRAN-DO
+with a higher level interface.  This page describes internally how SASKTRAN-DO
 interprets the input it is provided.
 
 The Altitude Grid
 -----------------
 We can think of the primary input to SASKTRAN-DO being number density of a variety of species on a fixed altitude grid.
-The altitude grid object is set through the :meth:`sktran_disco.interface.EngineDO.alt_grid` method of the engine,
+The altitude grid object is set through the :meth:`sasktran.EngineDO.alt_grid` method of the engine,
 with the default being a linearly spaced grid from 0 km to 100 km with a spacing of 0.5 km.  Any climatology
 you provide to the atmospheric state will be sampled at this altitude grid.  If you are using user defined climatology
 objects we recommend matching the altitude grid in those objects to the altitude grid in the engine, although
@@ -27,8 +27,8 @@ While inputs are specified on an altitude grid, internally the discrete ordinate
 As previously mentioned, the layer properties are calculated by integrating the atmospheric state over the layer boundaries,
 but there are multiple ways to determine how the layer boundaries themselves are determined.  SASKTRAN-DO
 provides multiple options to do this, which method is preferred can be application dependent.  The two properties that
-primarily influence the layer construction are :meth:`sktran_disco.interface.EngineDO.num_layers`, which
-controls the total number of homogeneous layers, and :meth:`sktran_disco.interface.EngineDO.layer_construction` which
+primarily influence the layer construction are :meth:`sasktran.EngineDO.num_layers`, which
+controls the total number of homogeneous layers, and :meth:`sasktran.EngineDO.layer_construction` which
 controls the technique to determine the layer boundaries.
 
 Uniform Pressure Layers

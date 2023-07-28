@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Index &mdash; SASKTRAN 1.8.0 documentation</title>
+  <title>Index &mdash; SASKTRAN 1.8.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -34,7 +34,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.0
+                1.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -150,8 +150,12 @@
 </li>
       <li><a href="emission.html#sasktran.ABandEmission">ABandEmission (class in sasktran)</a>
 </li>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.adaptive_integration">adaptive_integration (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.adaptive_integration">adaptive_integration (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.adaptive_integration">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
       <li><a href="brdf.html#sasktran.LinearCombination.add_kernel">add_kernel() (sasktran.LinearCombination method)</a>
 </li>
       <li>
@@ -165,14 +169,18 @@
 </li>
       <li><a href="engine.html#sasktran.EngineMC.air_mass_factor_shells">air_mass_factor_shells (sasktran.EngineMC property)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="engine.html#sasktran.EngineMC.air_mass_factor_species">air_mass_factor_species (sasktran.EngineMC property)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="do/api.html#sasktran.disco.lowlevel.Atmosphere.albedo">albedo (sasktran.disco.lowlevel.Atmosphere property)</a>
 </li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.alt_grid">alt_grid (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.alt_grid">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
       <li><a href="geodetic.html#sasktran.Geodetic.altitude">altitude (sasktran.Geodetic property)</a>
 </li>
       <li><a href="geodetic.html#sasktran.Geodetic.altitude_intercepts">altitude_intercepts() (sasktran.Geodetic method)</a>
@@ -189,6 +197,8 @@
 
       <ul>
         <li><a href="engine.html#sasktran.EngineHR.atmosphere_dimensions">(sasktran.EngineHR property)</a>
+</li>
+        <li><a href="engine.html#sasktran.EngineTIR.atmosphere_dimensions">(sasktran.EngineTIR property)</a>
 </li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.atmosphere_dimensions">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
@@ -233,11 +243,15 @@
       <li><a href="engine.html#sasktran.Engine.calculate_radiance">calculate_radiance() (sasktran.Engine method)</a>
 
       <ul>
+        <li><a href="engine.html#sasktran.EngineDO.calculate_radiance">(sasktran.EngineDO method)</a>
+</li>
         <li><a href="engine.html#sasktran.EngineHR.calculate_radiance">(sasktran.EngineHR method)</a>
 </li>
         <li><a href="engine.html#sasktran.EngineHRSSApprox.calculate_radiance">(sasktran.EngineHRSSApprox method)</a>
 </li>
         <li><a href="engine.html#sasktran.EngineMC.calculate_radiance">(sasktran.EngineMC method)</a>
+</li>
+        <li><a href="engine.html#sasktran.EngineTIR.calculate_radiance">(sasktran.EngineTIR method)</a>
 </li>
       </ul></li>
       <li><a href="engine.html#sasktran.EngineHR.cell_optical_depths">cell_optical_depths() (sasktran.EngineHR method)</a>
@@ -347,10 +361,18 @@
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.do_temperature_wf">do_temperature_wf (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.do_temperature_wf">do_temperature_wf (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.do_temperature_wf">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.do_vmr_wf">do_vmr_wf (sasktran.tir.engine.EngineTIR attribute)</a>
+      </ul></li>
+      <li><a href="engine.html#sasktran.EngineTIR.do_vmr_wf">do_vmr_wf (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.do_vmr_wf">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -369,6 +391,8 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="engine.html#sasktran.EngineDO">EngineDO (class in sasktran)</a>
+</li>
       <li><a href="engine.html#sasktran.EngineHR">EngineHR (class in sasktran)</a>
 </li>
       <li><a href="engine.html#sasktran.EngineHRSSApprox">EngineHRSSApprox (class in sasktran)</a>
@@ -377,7 +401,7 @@
 </li>
       <li><a href="engine.html#sasktran.EngineOCC">EngineOCC (class in sasktran)</a>
 </li>
-      <li><a href="engine.html#sasktran.EngineSO">EngineSO (class in sasktran)</a>
+      <li><a href="engine.html#sasktran.EngineTIR">EngineTIR (class in sasktran)</a>
 </li>
   </ul></td>
 </tr></table>
@@ -434,20 +458,26 @@
         <li><a href="climatology.html#sasktran.GloSSAC.get_parameter">(sasktran.GloSSAC method)</a>
 </li>
       </ul></li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="climatology.html#sasktran.GloSSAC">GloSSAC (class in sasktran)</a>
 </li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sasktran_hr.html#sasktran.EngineHR.grid_spacing">grid_spacing (sasktran.EngineHR attribute)</a>
 
       <ul>
         <li><a href="engine.html#sasktran.EngineHR.grid_spacing">(sasktran.EngineHR property)</a>
 </li>
+        <li><a href="engine.html#sasktran.EngineTIR.grid_spacing">(sasktran.EngineTIR property)</a>
+</li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.grid_spacing">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
       </ul></li>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.ground_emissivity">ground_emissivity (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.ground_emissivity">ground_emissivity (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.ground_emissivity">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
       <li><a href="lines_of_sight.html#sasktran.LineOfSight.ground_intersection">ground_intersection() (sasktran.LineOfSight method)</a>
 </li>
       <li>
@@ -528,19 +558,27 @@
       <li><a href="do/api.html#sasktran.disco.lowlevel.Atmosphere.layer_boundary_altitudes">layer_boundary_altitudes (sasktran.disco.lowlevel.Atmosphere property)</a>
 </li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.layer_construction">layer_construction (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.layer_construction">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
       <li><a href="brdf.html#sasktran.LiDenseKernel">LiDenseKernel (class in sasktran)</a>
 </li>
       <li><a href="brdf.html#sasktran.LiKernel">LiKernel (class in sasktran)</a>
 </li>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.linear_extinction">linear_extinction (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.linear_extinction">linear_extinction (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.linear_extinction">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
       <li><a href="brdf.html#sasktran.LinearCombination">LinearCombination (class in sasktran)</a>
-</li>
-      <li><a href="lines_of_sight.html#sasktran.LineOfSight">LineOfSight (class in sasktran)</a>
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
+      <li><a href="lines_of_sight.html#sasktran.LineOfSight">LineOfSight (class in sasktran)</a>
+</li>
       <li><a href="geometry.html#sasktran.Geometry.lines_of_sight">lines_of_sight (sasktran.Geometry property)</a>
 
       <ul>
@@ -577,6 +615,8 @@
       <li><a href="engine.html#sasktran.EngineMC.max_optical_depth_of_cell">max_optical_depth_of_cell (sasktran.EngineMC property)</a>
 
       <ul>
+        <li><a href="engine.html#sasktran.EngineTIR.max_optical_depth_of_cell">(sasktran.EngineTIR property)</a>
+</li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
       </ul></li>
@@ -597,8 +637,12 @@
 </li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell">min_extinction_ratio_of_cell (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.min_extinction_ratio_of_cell">min_extinction_ratio_of_cell (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
       <li><a href="engine.html#sasktran.EngineMC.min_fraction_higher_order">min_fraction_higher_order (sasktran.EngineMC property)</a>
 </li>
       <li><a href="engine.html#sasktran.EngineMC.min_fraction_higher_raman_order">min_fraction_higher_raman_order (sasktran.EngineMC property)</a>
@@ -631,13 +675,15 @@
       <li><a href="optical_property.html#sasktran.NO2Vandaele1998">NO2Vandaele1998 (class in sasktran)</a>
 </li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_brdf_quadrature_terms">num_brdf_quadrature_terms (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.num_brdf_quadrature_terms">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
       <li><a href="sasktran_hr.html#sasktran.EngineHR.num_diffuse_profiles">num_diffuse_profiles (sasktran.EngineHR attribute)</a>
 
       <ul>
         <li><a href="engine.html#sasktran.EngineHR.num_diffuse_profiles">(sasktran.EngineHR property)</a>
-</li>
-        <li><a href="engine.html#sasktran.EngineSO.num_diffuse_profiles">(sasktran.EngineSO property)</a>
 </li>
       </ul></li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_layers">num_layers (sasktran.disco.interface.EngineDO attribute)</a>
@@ -651,25 +697,39 @@
 </li>
         <li><a href="engine.html#sasktran.EngineMC.num_orders_of_scatter">(sasktran.EngineMC property)</a>
 </li>
-        <li><a href="engine.html#sasktran.EngineSO.num_orders_of_scatter">(sasktran.EngineSO property)</a>
+      </ul></li>
+      <li><a href="engine.html#sasktran.EngineMC.num_ray_tracing_shells">num_ray_tracing_shells (sasktran.EngineMC property)</a>
+</li>
+      <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_spherical_sza">num_spherical_sza (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.num_spherical_sza">(sasktran.EngineDO property)</a>
 </li>
       </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="engine.html#sasktran.EngineMC.num_ray_tracing_shells">num_ray_tracing_shells (sasktran.EngineMC property)</a>
-</li>
-      <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_spherical_sza">num_spherical_sza (sasktran.disco.interface.EngineDO attribute)</a>
-</li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_stokes">num_stokes (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.num_stokes">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_streams">num_streams (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.num_streams">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.num_threads">num_threads (sasktran.disco.interface.EngineDO attribute)</a>
 
       <ul>
+        <li><a href="engine.html#sasktran.EngineDO.num_threads">(sasktran.EngineDO property)</a>
+</li>
         <li><a href="sasktran_hr.html#sasktran.EngineHR.num_threads">(sasktran.EngineHR attribute)</a>
 </li>
         <li><a href="engine.html#sasktran.EngineHR.num_threads">(sasktran.EngineHR property)</a>
+</li>
+        <li><a href="engine.html#sasktran.EngineTIR.num_threads">(sasktran.EngineTIR property)</a>
 </li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.num_threads">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
@@ -803,16 +863,18 @@
       </ul></li>
       <li><a href="brdf.html#sasktran.BRDF.reflectance">reflectance() (sasktran.BRDF method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sasktran_hr.html#sasktran.EngineHR.refraction">refraction (sasktran.EngineHR attribute)</a>
 
       <ul>
         <li><a href="engine.html#sasktran.EngineHR.refraction">(sasktran.EngineHR property)</a>
 </li>
+        <li><a href="engine.html#sasktran.EngineTIR.refraction">(sasktran.EngineTIR property)</a>
+</li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.refraction">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="brdf.html#sasktran.LinearCombination.remove_kernel">remove_kernel() (sasktran.LinearCombination method)</a>
 </li>
       <li><a href="atmosphere.html#sasktran.Atmosphere.remove_species">remove_species() (sasktran.Atmosphere method)</a>
@@ -925,6 +987,8 @@
 </li>
         <li><a href="engine.html#sasktran.EngineMC.surface_elevation">(sasktran.EngineMC property)</a>
 </li>
+        <li><a href="engine.html#sasktran.EngineTIR.surface_elevation">(sasktran.EngineTIR property)</a>
+</li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.surface_elevation">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
       </ul></li>
@@ -956,8 +1020,6 @@
 </li>
       <li><a href="stokes_vector.html#sasktran.StokesVector.to_new_basis">to_new_basis() (sasktran.StokesVector method)</a>
 </li>
-  </ul></td>
-  <td style="width: 33%; vertical-align: top;"><ul>
       <li>
     TOAHeight
 
@@ -965,12 +1027,16 @@
         <li><a href="tir/properties.html#cmdoption-arg-TOAHeight">command line option</a>
 </li>
       </ul></li>
+  </ul></td>
+  <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="sasktran_hr.html#sasktran.EngineHR.top_of_atmosphere_altitude">top_of_atmosphere_altitude (sasktran.EngineHR attribute)</a>
 
       <ul>
         <li><a href="engine.html#sasktran.EngineHR.top_of_atmosphere_altitude">(sasktran.EngineHR property)</a>
 </li>
         <li><a href="engine.html#sasktran.EngineMC.top_of_atmosphere_altitude">(sasktran.EngineMC property)</a>
+</li>
+        <li><a href="engine.html#sasktran.EngineTIR.top_of_atmosphere_altitude">(sasktran.EngineTIR property)</a>
 </li>
         <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
@@ -983,8 +1049,12 @@
 <h2 id="U">U</h2>
 <table style="width: 100%" class="indextable genindextable"><tr>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.use_cached_cross_sections">use_cached_cross_sections (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="engine.html#sasktran.EngineTIR.use_cached_cross_sections">use_cached_cross_sections (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.use_cached_cross_sections">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
+      </ul></li>
       <li><a href="engine.html#sasktran.EngineHR.use_solartable_for_singlescatter">use_solartable_for_singlescatter (sasktran.EngineHR property)</a>
 </li>
       <li>
@@ -1008,66 +1078,26 @@
         <li><a href="tir/properties.html#cmdoption-arg-UseLinearExtinction">command line option</a>
 </li>
       </ul></li>
-      <li><a href="engine.html#sasktran.EngineSO.userdefined_diffuse_heights">userdefined_diffuse_heights (sasktran.EngineSO property)</a>
-</li>
-      <li><a href="engine.html#sasktran.EngineSO.userdefined_diffuse_incoming_azimuth_angles">userdefined_diffuse_incoming_azimuth_angles (sasktran.EngineSO property)</a>
-</li>
-      <li><a href="engine.html#sasktran.EngineSO.userdefined_diffuse_incoming_resolution">userdefined_diffuse_incoming_resolution (sasktran.EngineSO property)</a>
-</li>
-      <li><a href="engine.html#sasktran.EngineSO.userdefined_diffuse_incoming_zenith_angles">userdefined_diffuse_incoming_zenith_angles (sasktran.EngineSO property)</a>
-</li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_ground_altitude">userdefined_ground_altitude (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_ground_altitude">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_lines_of_sight_from_tangent_alt">userdefined_lines_of_sight_from_tangent_alt (sasktran.EngineOCC property)</a>
 </li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_lower_bound_altitude">userdefined_lower_bound_altitude (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_lower_bound_altitude">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_reference_point">userdefined_reference_point (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_reference_point">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_reference_point_target_altitude">userdefined_reference_point_target_altitude (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_reference_point_target_altitude">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_reference_point_target_range">userdefined_reference_point_target_range (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_reference_point_target_range">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_shells">userdefined_shells (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_shells">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_sun">userdefined_sun (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_sun">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="engine.html#sasktran.EngineOCC.userdefined_upper_bound_altitude">userdefined_upper_bound_altitude (sasktran.EngineOCC property)</a>
-
-      <ul>
-        <li><a href="engine.html#sasktran.EngineSO.userdefined_upper_bound_altitude">(sasktran.EngineSO property)</a>
 </li>
-      </ul></li>
       <li><a href="optical_property.html#sasktran.UserDefinedAbsorptionPressure">UserDefinedAbsorptionPressure (class in sasktran)</a>
 </li>
       <li><a href="optical_property.html#sasktran.UserDefinedScatterConstantHeight">UserDefinedScatterConstantHeight (class in sasktran)</a>
@@ -1097,7 +1127,11 @@
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
       <li><a href="do/api.html#sasktran.disco.interface.EngineDO.viewing_mode">viewing_mode (sasktran.disco.interface.EngineDO attribute)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineDO.viewing_mode">(sasktran.EngineDO property)</a>
 </li>
+      </ul></li>
   </ul></td>
 </tr></table>
 
@@ -1119,15 +1153,27 @@
 </li>
       </ul></li>
       <li><a href="engine.html#sasktran.Engine.wavelengths">wavelengths (sasktran.Engine property)</a>
+
+      <ul>
+        <li><a href="engine.html#sasktran.EngineTIR.wavelengths">(sasktran.EngineTIR property)</a>
 </li>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.wf_heights">wf_heights (sasktran.tir.engine.EngineTIR attribute)</a>
+      </ul></li>
+      <li><a href="engine.html#sasktran.EngineTIR.wf_heights">wf_heights (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.wf_heights">(sasktran.tir.engine.EngineTIR attribute)</a>
 </li>
-      <li><a href="atmosphere.html#sasktran.Atmosphere.wf_species">wf_species (sasktran.Atmosphere property)</a>
-</li>
+      </ul></li>
   </ul></td>
   <td style="width: 33%; vertical-align: top;"><ul>
-      <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.wf_widths">wf_widths (sasktran.tir.engine.EngineTIR attribute)</a>
+      <li><a href="atmosphere.html#sasktran.Atmosphere.wf_species">wf_species (sasktran.Atmosphere property)</a>
 </li>
+      <li><a href="engine.html#sasktran.EngineTIR.wf_widths">wf_widths (sasktran.EngineTIR property)</a>
+
+      <ul>
+        <li><a href="tir/sasktran_tir.html#sasktran.tir.engine.EngineTIR.wf_widths">(sasktran.tir.engine.EngineTIR attribute)</a>
+</li>
+      </ul></li>
       <li>
     WFHeights
 

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The SASKTRAN Radiative Transfer Framework &mdash; SASKTRAN 1.8.0 documentation</title>
+  <title>The SASKTRAN Radiative Transfer Framework &mdash; SASKTRAN 1.8.1 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -36,7 +36,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.0
+                1.8.1
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -97,9 +97,9 @@ Originally designed for use with the OSIRIS instrument (<a class="reference exte
 evolved to be applicable to a large variety of applications.  SASKTRAN is a full framework and not just a radiative
 transfer model, as such it contains databases or interfaces to standard climatologies and species optical properties.
 It also contains multiple methods to solve the radiative transfer equation that we call <cite>engines</cite>, each one of which has a
-specific domain that it is applicable to.  The primary two engines are <code class="docutils literal notranslate"><span class="pre">SASKTRAN-HR</span></code> which is a fully spherical
-scattering model and contained within this package, and <code class="docutils literal notranslate"><span class="pre">SASKTRAN-DO</span></code> which is a discrete ordinates model suitable for
-nadir viewing applications.  More information on <code class="docutils literal notranslate"><span class="pre">SASKTRAN-DO</span></code> can be found at <a class="reference external" href="https://arg.usask.ca/docs/sasktran_do/">https://arg.usask.ca/docs/sasktran_do/</a>.</p>
+specific domain that it is applicable to.  The primary engines are <code class="docutils literal notranslate"><span class="pre">SASKTRAN-HR</span></code> which is a fully spherical
+scattering model, and <code class="docutils literal notranslate"><span class="pre">SASKTRAN-DO</span></code> which is a discrete ordinates model suitable for nadir viewing applications,
+and <code class="docutils literal notranslate"><span class="pre">SASKTRAN_TIR</span></code> which is a spherical thermal infrared model suitable in the absence of scattering.</p>
 <section id="development">
 <h2>Development<a class="headerlink" href="#development" title="Permalink to this heading">¶</a></h2>
 <p>The SASKTRAN code is open-source and is in active development at <a class="reference external" href="https://github.com/usask-arg/sasktran">https://github.com/usask-arg/sasktran</a></p>
@@ -182,20 +182,21 @@ the following publications are acknowledged:</p>
 </ul>
 </li>
 <li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.8.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.7.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.7.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.6.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.5.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.4.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.3.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.1.2</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.1.1</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.1.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">1.0.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">0.2.0</a></li>
-<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">0.1.3</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id2">1.8.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id3">1.8.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id4">1.7.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id5">1.7.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id6">1.6.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id7">1.5.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id8">1.4.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id9">1.3.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id10">1.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id11">1.1.2</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id12">1.1.1</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id13">1.1.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id14">1.0.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id15">0.2.0</a></li>
+<li class="toctree-l2"><a class="reference internal" href="changelog.html#id16">0.1.3</a></li>
 </ul>
 </li>
 </ul>

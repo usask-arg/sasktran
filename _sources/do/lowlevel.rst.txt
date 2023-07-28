@@ -12,13 +12,13 @@ for advanced users who are experienced in radiative transfer.
 
 The input to the low-level interface is four structures:
 
-- An :class:`sktran_disco.lowlevel.Atmosphere` object which defines the layer optical depths, single scatter albedos, legendre coefficients, and other aspects to do with the layering.
-- An :class:`sktran_disco.lowlevel.Config` object which sets some configuration settings
-- An :class:`sktran_disco.lowlevel.ViewingGeometry` object which specifies the viewing geometry
-- Optionally a :class:`sktran_disco.lowlevel.WeightingFunctions` object to specify which quantities to calculate derivatives with respect to.
+- An :class:`sasktran.disco.lowlevel.Atmosphere` object which defines the layer optical depths, single scatter albedos, legendre coefficients, and other aspects to do with the layering.
+- An :class:`sasktran.disco.lowlevel.Config` object which sets some configuration settings
+- An :class:`sasktran.disco.lowlevel.ViewingGeometry` object which specifies the viewing geometry
+- Optionally a :class:`sasktran.disco.lowlevel.WeightingFunctions` object to specify which quantities to calculate derivatives with respect to.
 
 Radiative transfer is performed through a single function call,
-:meth:`sktran_disco.lowlevel.calculate`. We have found that the notation and definitions of various
+:meth:`sasktran.disco.lowlevel.calculate`. We have found that the notation and definitions of various
 radiative transfer quantities are rarely consistent, and as such the following sections
 briefly outline
 the theory of the discrete ordinates technique with a focus on how to define the necessary inputs

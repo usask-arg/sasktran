@@ -65,8 +65,7 @@ Disadvantages
 
 SASKTRAN-DO
 ===========
-SASKTRAN-DO is a discrete ordinates solver based upon the Lidort technique.
-SASKTRAN-DO must be installed separately and can be found at https://arg.usask.ca/docs/sasktran_do/
+SASKTRAN-DO is a discrete ordinates solver based upon the VLIDORT technique.
 
 Suitable For
 ^^^^^^^^^^^^

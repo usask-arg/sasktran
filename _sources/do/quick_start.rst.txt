@@ -122,7 +122,7 @@ Configuring Weighting Functions
 Internally, SASKTRAN-DO ingests atmospheric parameters (number density, optical properties) on an altitude grid.
 We then integrate the atmospheric parameters over each internal layer to obtain the layer quantities.  Weighting
 functions are returned back with respect to the altitude grid, not the layer quantities.  The altitude grid
-can be accessed and set through the :meth:`sktran_disco.interface.EngineDO.alt_grid` method.  When requesting
+can be accessed and set through the :meth:`sasktran.disco.interface.EngineDO.alt_grid` method.  When requesting
 weighting functions it is always recommended to use the `output_format='xarray'` option which is the default.
 
 
