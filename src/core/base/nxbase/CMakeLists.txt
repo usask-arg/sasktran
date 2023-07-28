@@ -27,7 +27,6 @@ set(nxbase_core_src
     module/sktran_core/sktran_grid_definition.cpp
     module/science/geodesy/timestmp.cxx
     module/science/geodesy/timestmp_consts.cxx
-    module/CommonUnits/commonphysicalunits.cxx
 )
 
 set(nxbase_geodesy_src
