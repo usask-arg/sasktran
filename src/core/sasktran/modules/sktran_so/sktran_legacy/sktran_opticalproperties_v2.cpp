@@ -458,7 +458,7 @@ double SKTRAN_TableOpticalProperties_1D_Height::ScatteringExtinctionPerCM( const
 
 bool SKTRAN_TableOpticalProperties_1D_Height::ConfigureGeometry( const SKTRAN_SpecsInternal_Base* aspecs )
 {
-
+    return true;
 }
 
 
