@@ -53,10 +53,20 @@ highlights of the engine are:
 Additional Documentation
     For additional documentation and options see: https://arg.usask.ca/docs/SasktranIF/hr.html.
 
-SASKTRAN-DISCO
---------------
-SASKTRAN Disco is a radiative transfer engine similar to the well known DISORT and LIDORT
-radiative transfer algorithms. Full documentation can be found at https://arg.usask.ca/docs/sasktran_do/.
+SASKTRAN-DO
+-----------
+SASKTRAN-DO is a radiative transfer engine similar to the well known DISORT and (V)LIDORT
+radiative transfer algorithms.
+
+.. autoclass:: sasktran.EngineDO
+
+
+SASKTRAN-TIR
+------------
+SASKTRAN-TIR is a spherical radiative transfer engine designed for the thermal infrared regime where scattering
+is negligible.
+
+.. autoclass:: sasktran.EngineTIR
 
 SASKTRAN-OCC
 -------------
@@ -73,14 +83,6 @@ SASKTRAN-MC
 SASKTRAN MC is a fully spherical Monte Carlo radiative transfer engine, primarily used as a slow but accurate calibration for HR. It contains additional features as well, namely air mass factor calculation and rotational Raman scattering.
 
 .. autoclass:: sasktran.EngineMC
-
-SASKTRAN-SO
--------------
-An older successive order engine written for limb viewing radiative transfer calculations. This was the first engine
-written for sasktran and it still works although it is no longer actively maintained. It has been superceded by the HR
-engine which has all of the SO functionality.
-
-.. autoclass:: sasktran.EngineSO
 
 See Also
 --------

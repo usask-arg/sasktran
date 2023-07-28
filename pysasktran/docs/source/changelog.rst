@@ -3,9 +3,15 @@
 Changelog
 *********
 
+1.8.1
+=====
+* Re-release to fix documentation bugs
+* No code changes
+
 1.8.0
 =====
 * SASKTRAN-TIR is now a part of the main sasktran package instead of an extension module
+* SASKTRAN-DO is now part of the main sasktran package instead of an extension module
 
 1.7.1
 =====

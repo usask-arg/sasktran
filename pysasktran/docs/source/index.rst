@@ -10,9 +10,9 @@ Originally designed for use with the OSIRIS instrument (https://research-groups.
 evolved to be applicable to a large variety of applications.  SASKTRAN is a full framework and not just a radiative
 transfer model, as such it contains databases or interfaces to standard climatologies and species optical properties.
 It also contains multiple methods to solve the radiative transfer equation that we call `engines`, each one of which has a
-specific domain that it is applicable to.  The primary two engines are ``SASKTRAN-HR`` which is a fully spherical
-scattering model and contained within this package, and ``SASKTRAN-DO`` which is a discrete ordinates model suitable for
-nadir viewing applications.  More information on ``SASKTRAN-DO`` can be found at https://arg.usask.ca/docs/sasktran_do/.
+specific domain that it is applicable to.  The primary engines are ``SASKTRAN-HR`` which is a fully spherical
+scattering model, and ``SASKTRAN-DO`` which is a discrete ordinates model suitable for nadir viewing applications,
+and ``SASKTRAN_TIR`` which is a spherical thermal infrared model suitable in the absence of scattering.
 
 Development
 -----------
