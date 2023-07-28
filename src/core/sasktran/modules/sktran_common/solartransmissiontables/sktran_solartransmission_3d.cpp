@@ -293,7 +293,7 @@ bool SKTRAN_SolarTransmission_3D::PrefillTable()
 				nxVector dirvector(raydirection.X(), raydirection.Y(), raydirection.Z());
 
 				cosszavector.push_back(quadlocation.CosSZA());
-				altitudevector.push_back(max(quadlocation.Altitude(), CoordinatesPtr()->GroundAltitude()));
+				altitudevector.push_back(std::max(quadlocation.Altitude(), CoordinatesPtr()->GroundAltitude()));
 				opticaldepthvector.push_back(rays[rayidx]->OpticalDepthArray()[quadidx]);
 				deflectionvector.push_back(dirvector.AngleTo(nxVector(0, 0, 1)));
 			}

@@ -54,7 +54,7 @@ double SKTRAN_MCObserverManager::TransitionProb( size_t startIdx, size_t endIdx 
 size_t SKTRAN_MCObserverManager::DrawRandomLOS ( double rand ) const
 {
 	double resultd = m_los.NumRays() * rand;
-	size_t result  = min(size_t(std::floor( resultd )), m_los.NumRays()-1);
+	size_t result  = std::min(size_t(std::floor( resultd )), m_los.NumRays()-1);
 	return result;
 }
 

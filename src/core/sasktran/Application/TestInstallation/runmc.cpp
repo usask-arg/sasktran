@@ -3,6 +3,8 @@
 #include<algorithm>
 #include <boost/timer/timer.hpp>
 
+#include <stdlib.h>
+
  //   {
 	//nxLogConsole	thelog;
 	//std::timer::auto_cpu_timer t;
@@ -514,7 +516,7 @@ bool ProfilerMC::runMC( nx2dArray<double>& retrad, nx2dArray<skRTStokesVector>* 
         ok = ok && engine_mc.GetTimingData( timing );
 		
 		//hr_engine.CalculateSecondOrderRadiance(&hr_radiance_temp, wavelen[i],2,&opticalstate );
-		for(size_t losidx = 0; losidx < min(radiance_mc.size(),radiance.XSize()); losidx++ )
+		for(size_t losidx = 0; losidx < std::min(radiance_mc.size(),radiance.XSize()); losidx++ )
 		{
 			radiance.At(losidx,0/*wavidx*/) = radiance_mc[losidx];
 			//printf("%u:\t%1.10e\n", m_runctr++, radiance_mc[losidx]);
@@ -524,7 +526,7 @@ bool ProfilerMC::runMC( nx2dArray<double>& retrad, nx2dArray<skRTStokesVector>* 
 		if(NULL!=retsvec){
 			//ok = ok && engine_mc.GetStokesVectors(radiance_vec);
 			retsvec->SetSize(radiance_vec.size(),4);
-			for(size_t losidx = 0; losidx < min(radiance_mc.size(),radiance.XSize()); ++losidx){
+			for(size_t losidx = 0; losidx < std::min(radiance_mc.size(),radiance.XSize()); ++losidx){
 				retsvec->At(losidx,0) = radiance_vec[losidx];
 			}
 		}
@@ -564,19 +566,19 @@ int ProfilerMC::SuggestNumDiffuseProfiles() const
 	
 	int dpszahiidx;
 	for(dpszahiidx=0; dpszahiidx<numdpszas && dpszas[dpszahiidx]<=m_szas[m_szaidx]; ++dpszahiidx);
-	int dpszaloidx = max(dpszahiidx-1, 0);
+	int dpszaloidx = std::max(dpszahiidx-1, 0);
 	int dpsaahiidx;
 	for(dpsaahiidx=0; dpsaahiidx<numdpsaas && dpsaas[dpsaahiidx]<=m_saas[m_saaidx]; ++dpsaahiidx);
-	int dpsaaloidx = max(dpsaahiidx-1, 0);
+	int dpsaaloidx = std::max(dpsaahiidx-1, 0);
 
 	int numdps = 1;
-	numdps = max( numdps, dptable[ dpszaloidx*numdpsaas + dpsaaloidx ] );
-	numdps = max( numdps, dptable[ dpszaloidx*numdpsaas + dpsaahiidx ] );
-	numdps = max( numdps, dptable[ dpszahiidx*numdpsaas + dpsaaloidx ] );
-	numdps = max( numdps, dptable[ dpszahiidx*numdpsaas + dpsaahiidx ] );
+	numdps = std::max( numdps, dptable[ dpszaloidx*numdpsaas + dpsaaloidx ] );
+	numdps = std::max( numdps, dptable[ dpszaloidx*numdpsaas + dpsaahiidx ] );
+	numdps = std::max( numdps, dptable[ dpszahiidx*numdpsaas + dpsaaloidx ] );
+	numdps = std::max( numdps, dptable[ dpszahiidx*numdpsaas + dpsaahiidx ] );
 	if( (numdps%2) == 0) numdps += 1;
 
-	numdps = min(numdps, numdps_hardmax);
+	numdps = std::min(numdps, numdps_hardmax);
 
 	int retval = 3+0*numdps;
 	//std::printf(" %d", retval );
@@ -685,7 +687,7 @@ bool ProfilerMC::runHR( nx2dArray<double>& retrad, nx2dArray<skRTStokesVector>* 
         ok = ok && engine_hr.CalculateRadiance(&radiance_hr, m_wavs[wavidx], m_maxOrderScatter, &opticalstate, vecptr );
 		
 		//hr_engine.CalculateSecondOrderRadiance(&hr_radiance_temp, wavelen[i],2,&opticalstate );
-		for(size_t losidx = 0; losidx < min(radiance_hr.size(),radiance.XSize()); losidx++ )
+		for(size_t losidx = 0; losidx < std::min(radiance_hr.size(),radiance.XSize()); losidx++ )
 		{
 			radiance.At(losidx,0/*wavidx*/) = radiance_hr[losidx];
 			//printf("%u:\t%1.10e\n", m_runctr++, radiance_mc[losidx]);
@@ -694,7 +696,7 @@ bool ProfilerMC::runHR( nx2dArray<double>& retrad, nx2dArray<skRTStokesVector>* 
 		if( ok && nullptr!=vecptr && nullptr!=retsvec )
         {
 			retsvec->SetSize(vecptr->size(),4);
-			for(size_t losidx = 0; losidx < min(radiance_hr.size(),radiance.XSize()); ++losidx){
+			for(size_t losidx = 0; losidx < std::min(radiance_hr.size(),radiance.XSize()); ++losidx){
 				retsvec->At(losidx,0) = vecptr->at(losidx);
 			}
 		}
@@ -777,8 +779,8 @@ int ProfilerMC::main( std::vector<nx2dArray<double>>& retrad,  std::vector<nx2dA
 
 	if(deleteFileMode){
 		printf("Confirm, twice, that you want to delete data.\n");
-		system("pause");
-		system("pause");
+        system("pause");
+        system("pause");
 	}
 
     for( m_albidx = 0; m_albidx < m_albs.size(); m_albidx++ )

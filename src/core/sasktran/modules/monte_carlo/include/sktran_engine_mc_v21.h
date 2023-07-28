@@ -95,7 +95,7 @@ class SKTRAN_Engine_MC_V21 : public SKTRAN_Engine_Base
 		nx2dArray<double>							m_secondaryMeasurementVariances;
 
 		nx2dArray<skRTStokesVector>                 m_svecs;
-		vector<size_t>								m_numPhotons;
+		std::vector<size_t>							m_numPhotons;
 		double                                      m_targetStd;
 		double										m_minimumRelativeWeight;
 		size_t										m_maxNumScatters;

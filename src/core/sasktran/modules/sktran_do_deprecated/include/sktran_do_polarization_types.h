@@ -77,7 +77,7 @@ namespace sktran_do_detail {
                     m_zeta = -1;
                 }
             }
-            m_lmin = max(std::abs(int(m_m)), std::abs(int(m_n)));
+            m_lmin = std::max(std::abs(int(m_m)), std::abs(int(m_n)));
             m_recurrence_start_factor = recurrence_start_factor();
         };
 

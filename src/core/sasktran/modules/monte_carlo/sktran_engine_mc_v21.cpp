@@ -701,7 +701,7 @@ bool SKTRAN_Engine_MC_V21::MonteCarloMultiScatter(size_t losIdx){
 	const int numPhotonsInt = (int)m_numPhotons[std::min(losIdx,m_numPhotons.size()-1)];	    // omp needs this number to be an integer
 	//const int chunkSize( (int) ComputeChunkSize(losIdx));  // omp needs this to be constant
     //const int chunkSize = 500;
-	const int minNumRaysPerThread = min( 300, (int)(numPhotonsInt/m_internalNumThreads ) );
+	const int minNumRaysPerThread = std::min( 300, (int)(numPhotonsInt/m_internalNumThreads ) );
 
 	SKTRAN_MCScatterOperatorContainer scatterOpContainer(m_scatterop);
 
@@ -711,7 +711,7 @@ bool SKTRAN_Engine_MC_V21::MonteCarloMultiScatter(size_t losIdx){
 	radianceLogger.SetChunkSize(m_chunkSize);
 	SKTRAN_MCVarianceLogger           varianceLogger; varianceLogger.SetNumThreads(m_internalNumThreads);
 
-	size_t minNumRays = min( 300, numPhotonsInt/m_internalNumThreads );
+	size_t minNumRays = std::min( 300, numPhotonsInt/m_internalNumThreads );
 
 	double debugDistance = 0.0;
 	//debugDistance = -1.0 * mother->GeometryRay()->GetObserver().Magnitude() * ( mother->GeometryRay()->GetObserver().UnitVector() & mother->GeometryRay()->LookVector() ); // tobs

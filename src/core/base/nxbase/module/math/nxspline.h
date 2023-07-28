@@ -233,31 +233,3 @@ class nxPiecewiseLinear
 		void				Clear					()															{ ReleaseResources();}
 		bool				IsDefined				()  const													{ return m_numcoefs > 0;}
 };
-
-
-/*-----------------------------------------------------------------------------
- *					nxPolynomial		2007-7-23*/
-/** \ingroup Math_fitting
- *	A class for handling polynomials functions.
- **/
-/*---------------------------------------------------------------------------*/
-
-class nxPolynomial
-{
-	private:
-		nx1dArray<double>			m_coeffs;				// !< The array of coefficients, highest power of x first
-
-	public:
-									nxPolynomial			();
-								   ~nxPolynomial			();
-	   bool							SetCoeffs				( nxArrayLinear<double>& coeffs);
-	   bool							SetLinear				( double m, double c );
-	   bool							SetQuadratic			( double a, double b, double c );
-	   bool							SetCoeffsFromPolyFit	( const nxArrayLinear<double>& user_x, const nxArrayLinear<double>& user_y, int norder );
-	   const nx1dArray<double>&		Coeffs					() { return m_coeffs;}
-	   bool							Evaluate				( nxArrayLinear<double>& x, nxArrayLinear<double>*  y );
-	   bool							Evaluate				( double x, double* y );
-	   void							Erase					() { m_coeffs.erase();} 
-	   size_t						NumCoeffs				() { return m_coeffs.size();}
-
-};

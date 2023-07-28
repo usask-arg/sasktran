@@ -51,7 +51,7 @@ bool SKTRAN_OpticalPropertiesIntegrator_Adaptive::CalculateRayScalarTransmission
 		double kstart = raystorage->ExtinctionAtCellStart( cellindex );
 		double kend   = raystorage->ExtinctionAtCellStart( endquadpt );
 
-		while( opticaldepthcell > m_maxopticaldepth && min(kstart, kend) / max(kstart, kend) < m_maxextinctiongradient && opticaldepthbuffer < m_maxrayopticaldepthtosplit)
+		while( opticaldepthcell > m_maxopticaldepth && std::min(kstart, kend) / std::max(kstart, kend) < m_maxextinctiongradient && opticaldepthbuffer < m_maxrayopticaldepthtosplit)
 		{
 			raystorage->SplitCell(cellindex);
 
@@ -115,7 +115,7 @@ bool SKTRAN_OpticalPropertiesIntegrator_Adaptive::CalculateRayScalarTransmission
 		
 		// we want to add a new point if the gradient of the extinction is large, and the optical depth
 		// has an appreciable effect on radiance
-		while( min(kstart, kend) / max(kstart, kend) < m_maxextinctiongradient && opticaldepthcell > m_maxopticaldepth && opticaldepthbuffer < m_maxrayopticaldepthtosplit )
+		while( std::min(kstart, kend) / std::max(kstart, kend) < m_maxextinctiongradient && opticaldepthcell > m_maxopticaldepth && opticaldepthbuffer < m_maxrayopticaldepthtosplit )
 		{
 			raystorage->SplitCell(cellindex);
 			cacheEP = cache;	// Need to start at previous segment's start point

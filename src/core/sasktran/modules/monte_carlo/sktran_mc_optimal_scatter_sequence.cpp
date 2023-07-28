@@ -47,7 +47,7 @@ SKTRAN_OptimalScatterSequenceManager_Base::~SKTRAN_OptimalScatterSequenceManager
 bool SKTRAN_OptimalScatterSequenceManager_Base::SetMaxOrder(size_t hardmax)
 {
 	m_hardMax = hardmax; 
-	m_numDistinctOrders = min(hardmax, m_numDistinctOrders); 
+	m_numDistinctOrders = std::min(hardmax, m_numDistinctOrders);
 	return true;
 }
 
@@ -212,7 +212,7 @@ bool SKTRAN_OptimalScatterSequenceManager_Uniform::SortSamples(const size_t & os
 		{
 			rSums.rad2SumCov[cidx++] += rSums.radBuffer[i].I() * rSums.radBuffer[j].I();
 		}
-		cidx += m_numDistinctOrders - max(maxOrder, i + 1);
+		cidx += m_numDistinctOrders - std::max(maxOrder, i + 1);
 	}
 
 	for (size_t i = 0; i < m_numDistinctOrders; i++) rSums.radBuffer[i].SetTo(0.0);
@@ -291,7 +291,7 @@ bool SKTRAN_OptimalScatterSequenceManager_Uniform::CalculateVarianceContribution
 			{
 				if (rSums.numSamples[cidx] > 0) runningCov += 2.0 * (rSums.rad2SumCov[covidx] - (rSums.radSum[idx].I()*(1.0 / rSums.numSamples[idx]) * rSums.radSum[cidx].I())) * pow((double)rSums.numSamples[cidx], -1.0) *  pow((double)rSums.numSamples[idx], -1.0);
 			}
-			var[idx - 1] = sqrt(max(runningVar + runningCov, 0.0)); // Assign to variance vector
+			var[idx - 1] = sqrt(std::max(runningVar + runningCov, 0.0)); // Assign to variance vector
 		}
 		//var.back() = sqrt(m_oinfo[MC_NUMDISTINCTORDERS-1].variance + (runningCov*m_oinfo[MC_NUMDISTINCTORDERS-1].variance/m_oinfo[MC_NUMDISTINCTORDERS-2].variance) );	// Estimate cov amongst higher orders as prop to var
 		for (size_t idx = 0;idx < m_numDistinctOrders - 2; ++idx) {
@@ -886,7 +886,7 @@ bool SKTRAN_OptimalScatterSequenceManager_OptimizedInelastic::CalculateVarianceC
 		{
 			w[wIdx] += 2.0 * rSums.covEstimate[covIdx] * rSums.numSamples[lowIdx];
 		}
-		w[wIdx] = sqrt(max(w[wIdx], 0.0));
+		w[wIdx] = sqrt(std::max(w[wIdx], 0.0));
 	}
 
 	double sum = 0.0;
@@ -1854,7 +1854,7 @@ bool SKTRAN_OptimalScatterSequenceManager_OptimizedSecondary::SubmitSample(const
 
 	bool ok = true;
 	size_t subSeqIdx = m_seqToSubSeqIdx[ossIdx]; // index of the beginning of the group in m_subSeq containing all sub-sequence of the sequence with index ossIdx
-	subSeqIdx += min(order, m_numDistinctOrders) - 1; // the group is sorted by order; order > m_numDistinctOrders should only occur when ossIdx has no Raman scatters
+	subSeqIdx += std::min(order, m_numDistinctOrders) - 1; // the group is sorted by order; order > m_numDistinctOrders should only occur when ossIdx has no Raman scatters
 	size_t subVarIdx = m_subSeqToSubVarIdx[subSeqIdx]; 
 	size_t varIdx = m_subVar[subVarIdx];
 	size_t bufferIdx = m_subVarToBufferIdx[subVarIdx];
@@ -1935,7 +1935,7 @@ bool SKTRAN_OptimalScatterSequenceManager_OptimizedSecondary::CalculateVarianceC
 			//}
 			//printf("covIdx %zd %s-%s\n", covIdx, PrintSequence(m_covToLowerVarIdx[covIdx], false).c_str(), PrintSequence(m_covToUpperVarIdx[covIdx], false).c_str());
 		}
-		w[wIdx] = sqrt(max(w[wIdx], 0.0));
+		w[wIdx] = sqrt(std::max(w[wIdx], 0.0));
 	}
 
 	double sum = 0.0;

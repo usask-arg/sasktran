@@ -143,7 +143,7 @@ bool SKTRAN_MCAirMassFactorCalculator_Base::FindScatterPoint(const SKTRAN_RayOpt
 	ok = ok && idx < storage->NumCells();
 
 	if (ok) numCells = idx + 1;
-	if (ok) finalCellWeight = max(0.0, min(1.0, diffProjected / cellLength));
+	if (ok) finalCellWeight = std::max(0.0, std::min(1.0, diffProjected / cellLength));
 	if (!ok) nxLog::Record(NXLOG_ERROR, "SKTRAN_MCAirMassFactorCalculator_Base::ScatterPointIndex, Error finding the scatter point on the ray.");
 	return ok;
 }

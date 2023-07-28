@@ -707,7 +707,7 @@ SKTRAN_PhaseMat_MIMSNC&  SKTRAN_PhaseMat_MIMSNC::LMultBy ( const SKTRAN_PhaseMat
 SKTRAN_PhaseMat_MIMSNC& SKTRAN_PhaseMat_MIMSNC::operator +=( const SKTRAN_PhaseMat_MIMSNC& other)
 {
 	auto oit = other.m_p.cbegin();
-	for_each( m_p.begin(), m_p.end(), [&oit]( SKRTFLOAT& pelem ) { pelem += *oit; ++oit;} );
+	std::for_each( m_p.begin(), m_p.end(), [&oit]( SKRTFLOAT& pelem ) { pelem += *oit; ++oit;} );
 	return *this;
 }
 
@@ -746,7 +746,7 @@ SKTRAN_PhaseMat_MIMSNC SKTRAN_PhaseMat_MIMSNC::operator + ( const SKTRAN_PhaseMa
 	SKTRAN_PhaseMat_MIMSNC	answer;
 	auto pit =       m_p.cbegin();
 	auto oit = other.m_p.cbegin();
-	for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, &oit]( SKRTFLOAT& pelem ) { pelem = *pit + *oit; ++pit, ++oit;} );
+	std::for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, &oit]( SKRTFLOAT& pelem ) { pelem = *pit + *oit; ++pit, ++oit;} );
 	return answer;
 }
 
@@ -755,7 +755,7 @@ SKTRAN_PhaseMat_MIMSNC SKTRAN_PhaseMat_MIMSNC::operator - ( const SKTRAN_PhaseMa
 	SKTRAN_PhaseMat_MIMSNC	answer;
 	auto pit =       m_p.cbegin();
 	auto oit = other.m_p.cbegin();
-	for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, &oit]( SKRTFLOAT& pelem ) { pelem = *pit - *oit; ++pit, ++oit;} );
+	std::for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, &oit]( SKRTFLOAT& pelem ) { pelem = *pit - *oit; ++pit, ++oit;} );
 	return answer;
 }
 
@@ -765,7 +765,7 @@ SKTRAN_PhaseMat_MIMSNC SKTRAN_PhaseMat_MIMSNC::operator * ( double value ) const
 	SKTRAN_PhaseMat_MIMSNC	answer;
 	SKRTFLOAT val = (SKRTFLOAT) value;
 	auto pit =       m_p.cbegin();
-	for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, val]( SKRTFLOAT& pelem ) { pelem = *pit * val; ++pit;} );
+	std::for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, val]( SKRTFLOAT& pelem ) { pelem = *pit * val; ++pit;} );
 	return answer;
 }
 
@@ -775,7 +775,7 @@ SKTRAN_PhaseMat_MIMSNC SKTRAN_PhaseMat_MIMSNC::operator * ( float value ) const
 	SKTRAN_PhaseMat_MIMSNC	answer;
 	SKRTFLOAT val = (SKRTFLOAT) value;
 	auto pit =       m_p.cbegin();
-	for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, val]( SKRTFLOAT& pelem ) { pelem = *pit * val;} );
+	std::for_each( answer.m_p.begin(), answer.m_p.end(), [&pit, val]( SKRTFLOAT& pelem ) { pelem = *pit * val;} );
 	return answer;
 }
 
@@ -783,14 +783,14 @@ SKTRAN_PhaseMat_MIMSNC SKTRAN_PhaseMat_MIMSNC::operator * ( float value ) const
 SKTRAN_PhaseMat_MIMSNC& SKTRAN_PhaseMat_MIMSNC::operator *= ( double value)
 {
 	SKRTFLOAT val=(SKRTFLOAT)value;
-	for_each( m_p.begin(), m_p.end(), [val]( SKRTFLOAT& pelem ) { pelem *= val;} );
+	std::for_each( m_p.begin(), m_p.end(), [val]( SKRTFLOAT& pelem ) { pelem *= val;} );
 	return *this;
 }
 
 SKTRAN_PhaseMat_MIMSNC& SKTRAN_PhaseMat_MIMSNC::operator *= ( float value)
 {
 	SKRTFLOAT val=(SKRTFLOAT)value;
-	for_each( m_p.begin(), m_p.end(), [val]( SKRTFLOAT& pelem ) { pelem *= val;} );
+	std::for_each( m_p.begin(), m_p.end(), [val]( SKRTFLOAT& pelem ) { pelem *= val;} );
 	return *this;
 }
 

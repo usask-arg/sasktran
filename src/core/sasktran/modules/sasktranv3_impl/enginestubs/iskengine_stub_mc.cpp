@@ -906,8 +906,8 @@ bool ISKEngine_Stub_MC::MakeVectorSetFunctions( )
 		{
 			bool ok = true;
 
-			vector<double> pvec (precisions, precisions + n);
-			vector<size_t> nphotons; nphotons.resize(n);
+			std::vector<double> pvec (precisions, precisions + n);
+			std::vector<size_t> nphotons; nphotons.resize(n);
 			std::transform(pvec.begin(), pvec.end(), nphotons.begin(), [](double d) { return (size_t)(1.0/(d*d));});
 			m_specs.SetNumPhotonsPerLOS( nphotons );
 			return ok;
