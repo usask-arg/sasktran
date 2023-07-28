@@ -7,7 +7,6 @@
 
 #include "sktran_hr_outgoingsphereobject.h"
 #include "sktran_hr_debug.h"
-#include "sktran_hr_sparse_mv.h"
 
 #include "sktran_hr_definitions.h"
 
@@ -35,7 +34,6 @@
 #include "sktran_hr_thread_manager.h"
 
 #include "sktran_hr_diffuse_second_order_source.h"
-//#include "sktran_hr_diffuse_table_base.h"
 #include "sktran_hr_diffuse_point.h"
 #include "sktran_hr_diffuse_table_cpu_etacalculator.h"
 #include "sktran_hr_diffuse_table_cpu_avalues.h"

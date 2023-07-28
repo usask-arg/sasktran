@@ -42,24 +42,6 @@ class SKTRAN_Short_Test_Base
 
 
 /*---------------------------------------------------------------------------
- *                      Class SKTRAN_SO_Test                      2020-01-31 */
-/** **/
-/*---------------------------------------------------------------------------*/
-
-class SKTRAN_Short_Test_SO : public SKTRAN_Short_Test_Base
-{
-	private:
-		virtual bool									Scatter						( nx2dArray<double>& radiance, size_t scattorder ) override;
-		virtual bool									MakeSpecs					() override { return true;}
-		virtual bool									LoadHardCodedValues			( nx2dArray<double>& sk_hardcode ) override;
-		virtual const char*								Name						() const override  { return "SO"; }
-
-	public:
-														SKTRAN_Short_Test_SO		(double errortolerance = 1.0E-5):SKTRAN_Short_Test_Base(errortolerance) {}
-		virtual										   ~SKTRAN_Short_Test_SO		() {}
-};	
-
-/*---------------------------------------------------------------------------
  *                      Class SKTRAN_HR_Test                      2020-01-31 */
 /** **/
 /*---------------------------------------------------------------------------*/
@@ -123,7 +105,6 @@ class SKTRAN_Short_Test
 		bool											m_doHR;						// if true then do the limb tests
 		SKTRAN_Short_Test_MC							m_mc;
 		SKTRAN_Short_Test_HR							m_hr;
-		SKTRAN_Short_Test_SO							m_so;
 
 	public:
 														SKTRAN_Short_Test			();

@@ -205,89 +205,6 @@ bool SKTRAN_Short_Test_Base::MakeWavelengths()
 
 
 
-
-
-/*-----------------------------------------------------------------------------
- *					SKTRAN_Short_Test::SO_Scatter		2014-4-7*/
-/** **/
-/*---------------------------------------------------------------------------*/
-
-bool SKTRAN_Short_Test_SO::Scatter( nx2dArray<double>& radiance, size_t scattorder)
-{
-	bool								ok = true;
-	bool								ok1;
-	SKTRANSO_Engine						sk_engine;
-	std::vector<SKTRAN_StokesScalar>    sk_radiance_temp;
-	SKTRANSO_SpecificationsUser_Legacy	specs;
-
-	ok = radiance.SetSize( m_linesofsight.NumRays(), m_wavelen.size() );
-	sk_radiance_temp.resize( m_linesofsight.NumRays() );
-	ok =       specs.RayTracingRegionManagerVar()->SetSun( m_sun );
-//	nxLog::Record(NXLOG_INFO, "SO engine, manually setting the reference point");
-//	ok = ok && specs.RayTracingRegionManagerVar()->SetReferencePoint( refpt_lat, refpt_lng, 13000.00531, refpt_mjd);
-	ok = ok && sk_engine.ConfigureModel( specs, m_linesofsight, 0 );
-	if (ok) 
-	{
-		for( size_t i = 0; i < m_wavelen.size(); i++ )
-		{
-			ok1 = sk_engine.CalculateRadiance(&sk_radiance_temp, m_wavelen[i], scattorder, &m_opticalstate );
-			ok = ok && ok1;
-			if (ok1)
-			{
-				for(size_t j = 0; j < sk_radiance_temp.size(); j++ )
-				{
-					radiance.At(j,i) = sk_radiance_temp[j];
-				}
-			}
-		}
-		if (!ok)
-		{
-			nxLog::Record(NXLOG_WARNING, "SKTRAN_Short_Test::SK_Scatter, There were errors executing the SO model. This should be investigated in more detail.");
-		}
-	}
-	else
-	{
-		radiance.SetTo(0.0);
-	}
-//	constant->Release();
-
-	return ok;
-}
-
-/*---------------------------------------------------------------------------
- *              SKTRAN_SO_Test::LoadHardCodedValues               2020-01-31 */
-/** **/
-/*---------------------------------------------------------------------------*/
-
-bool SKTRAN_Short_Test_SO::LoadHardCodedValues( nx2dArray<double>& hardcode )
-{
-	bool ok = true;
-
-//	double sk[] = {5.59302137193130740000e-002, 4.53945744483397330000e-002, 3.63453985682106600000e-002, 2.88606538380996870000e-002, // value up to 2014-04-09 when we changed the reference point.
-//		           1.56204991275871900000e-001, 1.55406181420614130000e-001, 1.54388738993338490000e-001, 1.52742455013541500000e-001
-//	};
-
-//	double sk[] = { 5.59295463625489390000e-002, 4.53941413755959700000e-002, 3.63450536251532370000e-002, 2.88602386573365290000e-002, // value up to 2014-04-25. We changed the Optical Depth calculation slightly (log interpolation)
-//		            1.56201032577993810000e-001, 1.55402284783359820000e-001, 1.54384919486783710000e-001, 1.52738739987130360000e-001 // and added class SKTRAN_OpticalDepthCalculator_LinearWithHeight
-//				  };
-
-//	double sk[] = { 5.5929492587380752e-002, 4.5394134011231074e-002, 3.6344926288203204e-002, 2.8860140151075492e-002, 
-//                  1.5620630748881476e-001, 1.5540986348877422e-001, 1.5439496363372210e-001, 1.5275003182725944e-001 
-//				  };
-//	double sk[] = { 5.5929532498582978e-002, 4.5394165861633799e-002, 3.6344951363493173e-002, 2.8860159724705476e-002, 
-//					1.5620641329954427e-001, 1.5540996746847890e-001, 1.5439506551899074e-001, 1.5275013104914448e-001 
-//	};
-    double sk[] = {	5.592953249960555540e-02,  4.539416586245335894e-02,  3.634495136413441740e-02,  2.886015972520749456e-02,
-                    1.562064132993446763e-01,  1.554099674683107335e-01,  1.543950655188154608e-01,  1.527501310489597364e-01,
-                  };
-
-	hardcode = nx2dArray<double>(4,2,sk);
-
-	return ok;
-}
-
-
-
 /*---------------------------------------------------------------------------
  *                  SKTRAN_HR_Test::MakeHRSpecs                   2020-01-31 */
 /** **/
@@ -644,7 +561,6 @@ bool SKTRAN_Short_Test::RunTests( bool doso, bool dohr, bool domc, double errort
 	{
 		switch  (i)
 		{
-		case 0 : shorttest = doso ? new SKTRAN_Short_Test_SO(errortolerance) : nullptr; break;
 		case 1 : shorttest = dohr ? new SKTRAN_Short_Test_HR(errortolerance) : nullptr; break;
 		case 2 : shorttest = domc ? new SKTRAN_Short_Test_MC(errortolerance) : nullptr; break;
 		};

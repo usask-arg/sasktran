@@ -30,12 +30,6 @@ extern bool test_msisatomicO();
 double g_errortolerance = 1.0E-4;
 
 
-TEST_CASE( "Standard SO Test ", "[SO]" )
-{
-	SKTRAN_Short_Test_SO	so(g_errortolerance);
-    REQUIRE( so.RunStandardTest() );
-}
-
 TEST_CASE( "Standard HR Test ", "[HR]" )
 {
 	SKTRAN_Short_Test_HR	hr(g_errortolerance);
