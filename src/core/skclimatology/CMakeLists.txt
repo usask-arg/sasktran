@@ -14,10 +14,6 @@ set(skclimatology_src
     sources/skclimatology_usertablespline.cxx 
     sources/skclimatology_zero.cxx 
     sources/skclimatology_linearcombo.cxx
-    sources/skmoderadius/skmoderadius_filedecoder.cxx 
-    sources/skmoderadius/skmoderadius_filenamedecoder.cxx 
-    sources/skmoderadius/skmoderadius_worldmap.cxx 
-    sources/skmoderadius/sknetcdf_netcdf4.cxx
 )
 
 if(WIN32)

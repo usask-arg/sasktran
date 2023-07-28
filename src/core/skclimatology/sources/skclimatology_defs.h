@@ -170,4 +170,3 @@ class skClimatology : public nxUnknown
 #include "skclimatology_labowozone.h"
 #include "skclimatology_pratmo.h"
 #include "skclimatology_linearcombo.h"
-#include "skmoderadius/skosirismoderadius.h"
