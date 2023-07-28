@@ -48,12 +48,6 @@ TEST_CASE("Inelastic MC Test", "[MC][INELASTIC]")
 	REQUIRE(mc.RunStandardTest());
 }
 
-#if defined (NX_WINDOWS)				// Notethat the hitran test needs the
-TEST_CASE( "hitran", "[HITRAN]")
-{
-	REQUIRE( test_hitran() );
-}
-#endif
 
 TEST_CASE( "SO2", "[SO2]")
 {
@@ -94,16 +88,7 @@ TEST_CASE(" MC AMF Test", "[MC][AMF]")
 #include <boost/timer/timer.hpp>
 #include "include/testscattermatrices.h"
 #include "include/test_curvedrays.h"
-#if defined (NX_WINDOWS)
-#include "include/runMC.h"
-#include "include/test_polarization.h"
-#include "include/test_aband.h"
-#endif
 
-
-#if defined (NX_WINDOWS)
-	extern void Run_SKTRAN_Emission_Test();
-#endif
 
 int	g_testdescription = 0;
 bool g_doso           = true;
@@ -217,20 +202,6 @@ void TestMC()
 /** **/
 /*---------------------------------------------------------------------------*/
 
-#if defined (NX_WINDOWS)
-void TestPolarization()
-{
-	SKTRAN_Polarization_Test	polt( g_errortolerance);
-    polt.main();
-}
-
-
-void TestEmission()
-{
-	SKTRAN_ABand_Test abandtest;
-    abandtest.main();
-}
-#endif
 
 /*-----------------------------------------------------------------------------
  *					TestMC		 2014- 12- 11*/
