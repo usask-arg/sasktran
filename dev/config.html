@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Configuration &mdash; SASKTRAN 0+untagged.1.g2fb30b9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="API Reference" href="api_reference.html" />
+    <link rel="prev" title="Producing the Coulsen Tables with the Low-Level Interface" href="examples/disco/lowlevel/coulsen.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+untagged.1.g2fb30b9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Configuration</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#databases">Databases</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#pratmo">PRATMO</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hitran">HITRAN</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#key-reference">Key Reference</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#hitran-directory">hitran_directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#hitran-cache">hitran_cache</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#baum-directory">baum_directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#pratmo-directory">pratmo_directory</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#glossac-file">glossac_file</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Configuration</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/config.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="configuration">
+<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h1>
+<p>Some settings, particularly the location of large databases, are stored in a global configuration file.  The
+location of this file on your system can be found by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">user_config_file_location</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The file is a standard <cite>yaml</cite> format file that can be edited with any text editor.  The format of the file is
+<cite>key: value</cite>, you will probably have to create the file the first time.</p>
+<section id="databases">
+<h2>Databases<a class="headerlink" href="#databases" title="Permalink to this heading">¶</a></h2>
+<p>Several databases can be downloaded using functions within the <cite>sasktran</cite> package.  Note that after downloading
+any of these databases it might be necessary to restart the interpreter for the settings to take effect.</p>
+<section id="pratmo">
+<h3>PRATMO<a class="headerlink" href="#pratmo" title="Permalink to this heading">¶</a></h3>
+<p>The <a class="reference internal" href="climatology.html#sasktran.Pratmo" title="sasktran.Pratmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Pratmo</span></code></a> climatology object requires a ~50 mb file to be downloaded to use which can be done
+by running:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">sk</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">download_pratmo</span><span class="p">()</span>
+</pre></div>
+</div>
+</section>
+<section id="hitran">
+<h3>HITRAN<a class="headerlink" href="#hitran" title="Permalink to this heading">¶</a></h3>
+<p>In order to use HITRAN you must download a large (few gb) database with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">sk</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">download_hitran</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>This might take upwards of 20 minutes.</p>
+</section>
+</section>
+<section id="key-reference">
+<h2>Key Reference<a class="headerlink" href="#key-reference" title="Permalink to this heading">¶</a></h2>
+<section id="hitran-directory">
+<h3>hitran_directory<a class="headerlink" href="#hitran-directory" title="Permalink to this heading">¶</a></h3>
+<p>Location of the HITRAN 2016 database.  Necessary to use the <a class="reference internal" href="optical_property.html#sasktran.HITRANChemical" title="sasktran.HITRANChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.HITRANChemical</span></code></a> object. Folder
+should contain <cite>By-Molecules</cite> and <cite>Global_Data</cite> directories which contains the database.  The standard value for this key on the
+University of Saskatchewan network is <cite>\\utls\SasktranFiles\hitranhapi</cite></p>
+</section>
+<section id="hitran-cache">
+<h3>hitran_cache<a class="headerlink" href="#hitran-cache" title="Permalink to this heading">¶</a></h3>
+<p>Location of a HITRAN cache folder.  Should be set by default, but can be changed to a different location
+if desired.</p>
+</section>
+<section id="baum-directory">
+<h3>baum_directory<a class="headerlink" href="#baum-directory" title="Permalink to this heading">¶</a></h3>
+<p>Location of the Baum 2014 ice crystal optical property database.  Necessary to use the <a class="reference internal" href="optical_property.html#sasktran.BaumIceCrystal" title="sasktran.BaumIceCrystal"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.BaumIceCrystal</span></code></a>
+object.  Folder should contain the file <cite>GeneralHabitMixture_SeverelyRough_AllWavelengths_FullPhaseMatrix.nc</cite>. The
+standard value for this key on the University of Saskatchewan network is <cite>\\utls\SasktranFiles\BaumIceCrystals</cite></p>
+</section>
+<section id="pratmo-directory">
+<h3>pratmo_directory<a class="headerlink" href="#pratmo-directory" title="Permalink to this heading">¶</a></h3>
+<p>Location of a folder containing a climatology based upon the Pratmo photochemical box model.
+Necessary to use the <a class="reference internal" href="climatology.html#sasktran.Pratmo" title="sasktran.Pratmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Pratmo</span></code></a> climatology object.  This file can be directly downloaded with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">sk</span><span class="o">.</span><span class="n">config</span><span class="o">.</span><span class="n">download_pratmo</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>which will automatically download the file and place it in an appropriate user location.  If you run this command
+it is not necessary to set this key.</p>
+</section>
+<section id="glossac-file">
+<h3>glossac_file<a class="headerlink" href="#glossac-file" title="Permalink to this heading">¶</a></h3>
+<p>Full path to a NetCDF file containing the GloSSAC climatology.  Necessary to use the
+<a class="reference internal" href="climatology.html#sasktran.GloSSAC" title="sasktran.GloSSAC"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.GloSSAC</span></code></a> climatology object.</p>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="examples/disco/lowlevel/coulsen.html" class="btn btn-neutral float-left" title="Producing the Coulsen Tables with the Low-Level Interface" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="api_reference.html" class="btn btn-neutral float-right" title="API Reference" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

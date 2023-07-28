@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Specifying the Atmosphere &mdash; SASKTRAN 0+untagged.1.g2fb30b9 documentation</title>
+      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+        <script src="_static/doctools.js"></script>
+        <script src="_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Constructing the Geometry" href="constructing_geometry.html" />
+    <link rel="prev" title="Quickstart Guide" href="quickstart.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+untagged.1.g2fb30b9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Specifying the Atmosphere</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#climatologies">Climatologies</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-climatologies">Available Climatologies</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#optical-properties">Optical Properties</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-optical-properties">Available Optical Properties</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#the-species-object">The Species Object</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#the-atmospheric-state">The Atmospheric State</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#brdf">BRDF</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#available-brdf-s">Available BRDF’s</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#kernel-based-brdf-s">Kernel Based BRDF’s</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#available-kernels">Available Kernels</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Specifying the Atmosphere</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/constructing_atmosphere.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="specifying-the-atmosphere">
+<span id="constructing-atmosphere"></span><h1>Specifying the Atmosphere<a class="headerlink" href="#specifying-the-atmosphere" title="Permalink to this heading">¶</a></h1>
+<p>One of the most important and complicated steps in constructing a radiative transfer calculation is
+building a representation of the atmosphere.   To perform a radiative transfer calculation, a few things are needed:</p>
+<ul class="simple">
+<li><p>A set of constituent molecules which make up the atmosphere.  For each of these molecules we need to know the amount
+of the molecule, specified with <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a>, and the scattering/absorption cross sections,
+specified as a <a class="reference internal" href="optical_property.html#sasktran.OpticalProperty" title="sasktran.OpticalProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.OpticalProperty</span></code></a>.  The combination of these two objects is a
+<a class="reference internal" href="species.html#sasktran.Species" title="sasktran.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Species</span></code></a>.</p></li>
+<li><p>A <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a> that provides the pressure and temperature profiles of the atmosphere, this is
+often referred to as the atmospheric state.  These
+profiles are used when calculating cross sections of the atmospheric constitutents.  By default this is
+<a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.MSIS90</span></code></a></p></li>
+<li><p>A <a class="reference internal" href="brdf.html#sasktran.BRDF" title="sasktran.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.BRDF</span></code></a> object which describes the reflectance of the surface of the Earth.  This could be as
+simple as a constant number between 0–1 indicating a Lambertian surface.</p></li>
+</ul>
+<p>All of these things are combined together with the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Atmosphere</span></code></a> class which is the input
+to the radiative transfer model.</p>
+<section id="climatologies">
+<h2>Climatologies<a class="headerlink" href="#climatologies" title="Permalink to this heading">¶</a></h2>
+<p>A <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a> object is essentially a lookup table of profiles
+where the tables keys are quantities name. A grid (altitude and potentially geographic)
+definition is also associated.</p>
+<p>Users can defined their own user defined climatologies using the
+<a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined" title="sasktran.ClimatologyUserDefined"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined</span></code></a> class. Some climatologies that we use a lot are built
+into SASKTRAN (see <cite>Useful Climatology Shorthands</cite>).</p>
+<section id="available-climatologies">
+<h3>Available Climatologies<a class="headerlink" href="#available-climatologies" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined" title="sasktran.ClimatologyUserDefined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined</span></code></a>(altitudes, ...)</p></td>
+<td><p>A special climatology which handles user defined values.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined2D" title="sasktran.ClimatologyUserDefined2D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined2D</span></code></a>(...)</p></td>
+<td><p>A two dimensional user defined climatology in altitude and angle within a user specified plane.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined3D" title="sasktran.ClimatologyUserDefined3D"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined3D</span></code></a>(lats, ...)</p></td>
+<td><p>A user defined climatology class for profiles which have a geographic dependence.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="climatology.html#sasktran.Labow" title="sasktran.Labow"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Labow</span></code></a>()</p></td>
+<td><p>The Labow volume mixing ratio climatology of ozone.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="climatology.html#sasktran.Pratmo" title="sasktran.Pratmo"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Pratmo</span></code></a>()</p></td>
+<td><p>A climatology for the NO2 number density based upon the Prather photo-chemical box model.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.MSIS90</span></code></a>([include_o2, includes, ...])</p></td>
+<td><p>A climatology that implements the MSIS-90 atmospheric model, (Hedin 1991).</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="climatology.html#sasktran.GloSSAC" title="sasktran.GloSSAC"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.GloSSAC</span></code></a>([wavelength_nm, extend])</p></td>
+<td><p>The global stratospheric aerosol extinction climatology at 8 wavelengths from 386-3400nm that spans from 1979-2016 and incorporates data from numerous satellite datasets.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="optical-properties">
+<h2>Optical Properties<a class="headerlink" href="#optical-properties" title="Permalink to this heading">¶</a></h2>
+<section id="available-optical-properties">
+<h3>Available Optical Properties<a class="headerlink" href="#available-optical-properties" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.Rayleigh" title="sasktran.Rayleigh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Rayleigh</span></code></a>()</p></td>
+<td><p>An optical property object that provides Rayleigh molecular scattering in dry-air.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="optical_property.html#sasktran.O3DBM" title="sasktran.O3DBM"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.O3DBM</span></code></a>()</p></td>
+<td><p>Tabulated high resolution cross-sections of O3 measured by Daumont, Brion and Malicet in the early 1990’s [1].</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.O3OSIRISRes" title="sasktran.O3OSIRISRes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.O3OSIRISRes</span></code></a>()</p></td>
+<td><p><p>&quot;</p>
+</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="optical_property.html#sasktran.NO2Vandaele1998" title="sasktran.NO2Vandaele1998"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.NO2Vandaele1998</span></code></a>()</p></td>
+<td><p>Calculates the absorption cross section of NO2 molecules from 230 nm to 1000 nm at 220 K to 294 K following [1]</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.NO2OSIRISRes" title="sasktran.NO2OSIRISRes"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.NO2OSIRISRes</span></code></a>()</p></td>
+<td><p>Calculates the absorption cross section of NO2 molecules from 230 nm to 795 nm and 221K to 293K.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="optical_property.html#sasktran.HITRANChemical" title="sasktran.HITRANChemical"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.HITRANChemical</span></code></a>(chemical_name[, ...])</p></td>
+<td><p>Calculates the optical absorption and extinction of various atmospheric molecules using the Voigt line-shape and the HITRAN spectral line database.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.MieAerosol" title="sasktran.MieAerosol"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.MieAerosol</span></code></a>(...)</p></td>
+<td><p>Specialized OpticalProperty which supports Mie Aerosol calculations.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="optical_property.html#sasktran.OpticalPropertyConvolved" title="sasktran.OpticalPropertyConvolved"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.OpticalPropertyConvolved</span></code></a>(...[, ...])</p></td>
+<td><p>Generic optical property container that is applicable to a wide variety of optical properties.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.UserDefinedAbsorptionPressure" title="sasktran.UserDefinedAbsorptionPressure"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.UserDefinedAbsorptionPressure</span></code></a>(...)</p></td>
+<td><p>A user defined absorption optical property that is a function of temperature, pressure, wavelength, and VMR of a secondary species that broadens the profile.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="optical_property.html#sasktran.BaumIceCrystal" title="sasktran.BaumIceCrystal"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.BaumIceCrystal</span></code></a>(effective_size_microns)</p></td>
+<td><p>Scattering non-spherical ice crystals based upon the database from Baum.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.SO2Vandaele2009" title="sasktran.SO2Vandaele2009"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.SO2Vandaele2009</span></code></a>()</p></td>
+<td><p>Calculates the absorption cross section of SO2 molecules from 227 nm to 420 nm at 298 K, 318 K, 338 K, and 358 K following [1] and [2].</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="the-species-object">
+<h2>The Species Object<a class="headerlink" href="#the-species-object" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="species.html#sasktran.Species" title="sasktran.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> class is a combination of a <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a>
+and <a class="reference internal" href="optical_property.html#sasktran.OpticalProperty" title="sasktran.OpticalProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpticalProperty</span></code></a>,
+linking them together.  In most cases creating the Species is as simple as:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">ozone_species</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">climatology</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">(),</span> <span class="n">optical_property</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">O3DBM</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>The Species object can then be added to the Atmosphere object through:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;ozone&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">ozone_species</span>
+</pre></div>
+</div>
+<p>However, there can be issues with this simple approach if the <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> used
+supports multiple species.  For example, trying:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">msis</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">(</span><span class="kc">True</span><span class="p">)</span>
+
+<span class="n">air</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">climatology</span><span class="o">=</span><span class="n">msis</span><span class="p">,</span> <span class="n">optical_property</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">())</span>
+</pre></div>
+</div>
+<p>will raise the error <cite>ValueError: Could not automatically infer the species key, use species= one of [‘SKCLIMATOLOGY_PRESSURE_PA’, ‘SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3’, ‘SKCLIMATOLOGY_TEMPERATURE_K’, ‘SKCLIMATOLOGY_O2_CM3’]</cite>
+this is because the <cite>msis</cite> object supports multiple atmospheric constituents, and which one was intended to be used
+could not automatically be determined.  Here we need to do:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">air</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">climatology</span><span class="o">=</span><span class="n">msis</span><span class="p">,</span> <span class="n">optical_property</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">(),</span> <span class="n">species</span><span class="o">=</span><span class="s1">&#39;SKCLIMATOLOGY_AIRNUMBERDENSITY_CM3&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>this species can then be added to the Atmosphere object in the same way:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;air&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">air</span>
+</pre></div>
+</div>
+</section>
+<section id="the-atmospheric-state">
+<h2>The Atmospheric State<a class="headerlink" href="#the-atmospheric-state" title="Permalink to this heading">¶</a></h2>
+<p>The atmospheric state is a special <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> which supports both pressure
+and temperature.  These pressure and temperature profiles are used to calculate the cross sections of the
+atmospheric constituents, they are not used to define Rayleigh scattering within the atmosphere, that is done with
+a separate Climatology and OpticalProperty.</p>
+<p>By default the atmospheric state is set to the <a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-class docutils literal notranslate"><span class="pre">MSIS90</span></code></a> climatology, however it can
+be changed through:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+
+<span class="n">atmosphere</span><span class="o">.</span><span class="n">atmospheric_state</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">()</span> <span class="c1"># Default</span>
+</pre></div>
+</div>
+<p>The atmospheric state climatology must support the two keys:</p>
+<ul class="simple">
+<li><p>‘SKCLIMATOLOGY_PRESSURE_PA’</p></li>
+<li><p>‘SKCLIMATOLOGY_TEMPERATURE_K’</p></li>
+</ul>
+<p>Thus if you are trying to set the atmospheric state as a <code class="xref py py-class docutils literal notranslate"><span class="pre">UserDefinedClimatology</span></code>
+it is necessary that both of these keys are supported.</p>
+</section>
+<section id="brdf">
+<h2>BRDF<a class="headerlink" href="#brdf" title="Permalink to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="brdf.html#sasktran.BRDF" title="sasktran.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a> object controls the surface reflectance inside the radiative transfer model.
+This could be as simple as a scalar which represents an isotropically reflecting Lambertian surface:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+
+<span class="n">atmosphere</span><span class="o">.</span><span class="n">brdf</span> <span class="o">=</span> <span class="mf">0.3</span>
+</pre></div>
+</div>
+<p>There are also many available special BRDF’s:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Kokhanovsky</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="available-brdf-s">
+<h3>Available BRDF’s<a class="headerlink" href="#available-brdf-s" title="Permalink to this heading">¶</a></h3>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.Lambertian" title="sasktran.Lambertian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Lambertian</span></code></a>(albedo)</p></td>
+<td><p>Class which implements a Lambertian Bidirectional Reflectance Distribution Function.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.Kokhanovsky" title="sasktran.Kokhanovsky"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Kokhanovsky</span></code></a>([L, M])</p></td>
+<td><p>Implementation of the snow BRDF from Kokhanovsky 2012.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.Roujean" title="sasktran.Roujean"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Roujean</span></code></a>(surface[, spectral_region])</p></td>
+<td><p>Implementation of the BRDF from Roujean 1992 for heterogenous surfaces.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.CoxMunk" title="sasktran.CoxMunk"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.CoxMunk</span></code></a>([wind_speed, water_index])</p></td>
+<td><p>Implementation of the water BRDF based on Cox and Munk 1954 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.Rahman" title="sasktran.Rahman"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Rahman</span></code></a>(rho0, theta, k)</p></td>
+<td><p>Implementation of the Semiempirical Rahman BRDF based on Rahman 1993 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.Hapke" title="sasktran.Hapke"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Hapke</span></code></a>(omega, delta, b0)</p></td>
+<td><p>Implementation of a vegetation BRDF based on Hapke 2012 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.MODIS" title="sasktran.MODIS"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.MODIS</span></code></a>(f_iso, f_vol, f_geo)</p></td>
+<td><p>Implementation of the Ross-thick Li-sparse-reciprocal BRDF used in MODIS' Albedo/BRDF product.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="kernel-based-brdf-s">
+<h3>Kernel Based BRDF’s<a class="headerlink" href="#kernel-based-brdf-s" title="Permalink to this heading">¶</a></h3>
+<p>For advanced users it is possible to combine multiple BRDF Kernels together to create a hybrid BRDF object.
+The main class which enables this is the <a class="reference internal" href="brdf.html#sasktran.LinearCombination" title="sasktran.LinearCombination"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearCombination</span></code></a> object.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LinearCombination</span><span class="p">()</span>
+
+<span class="n">brdf</span><span class="o">.</span><span class="n">kernels</span> <span class="o">=</span> <span class="p">[</span><span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="mf">0.3</span><span class="p">),</span> <span class="n">sk</span><span class="o">.</span><span class="n">RoujeanKernel</span><span class="p">()]</span>
+</pre></div>
+</div>
+<section id="available-kernels">
+<h4>Available Kernels<a class="headerlink" href="#available-kernels" title="Permalink to this heading">¶</a></h4>
+<table class="autosummary longtable docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.RoujeanKernel" title="sasktran.RoujeanKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.RoujeanKernel</span></code></a>()</p></td>
+<td><p>Implements the Roujean kernel from Roujean 1992 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.LiKernel" title="sasktran.LiKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.LiKernel</span></code></a>(name, crown_shape, ...)</p></td>
+<td><p>Base class for Li kernels from Wanner 1995 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.LiSparseKernel" title="sasktran.LiSparseKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.LiSparseKernel</span></code></a>([crown_shape, ...])</p></td>
+<td><p>The Li-sparse kernel models sparse canopy where mutual shadowing can be ignored.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.LiSparseReciprocalKernel" title="sasktran.LiSparseReciprocalKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.LiSparseReciprocalKernel</span></code></a>([...])</p></td>
+<td><p>The Li-sparse-reciprocal kernel is a variation on the Li-sparse kernel which allows the incident/viewing angles to be swapped without changing the BRDF's value (reciprocal) - See the MODIS Albedo/BRDF ATBD.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.LiDenseKernel" title="sasktran.LiDenseKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.LiDenseKernel</span></code></a>([crown_shape, ...])</p></td>
+<td><p>The Li-dense kernel models dense canopy where mutual shadowing cannot be ignored.</p></td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="brdf.html#sasktran.RossThinKernel" title="sasktran.RossThinKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.RossThinKernel</span></code></a>()</p></td>
+<td><p>The Ross-thin kernel models canopies with a small leaf area index (LAI) - see Wanner 1995 and Spurr 2002.</p></td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.RossThickKernel" title="sasktran.RossThickKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.RossThickKernel</span></code></a>()</p></td>
+<td><p>The Ross-thick kernel models canopies with a large leaf area index (LAI) - see Wanner 1995 and Spurr 2002.</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="quickstart.html" class="btn btn-neutral float-left" title="Quickstart Guide" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="constructing_geometry.html" class="btn btn-neutral float-right" title="Constructing the Geometry" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

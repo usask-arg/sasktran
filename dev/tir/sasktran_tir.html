@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" >
+<head>
+  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The TIR Engine &mdash; SASKTRAN 0+untagged.1.g2fb30b9 documentation</title>
+      <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+      <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
+    <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+        <script src="../_static/doctools.js"></script>
+        <script src="../_static/sphinx_highlight.js"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Weighting Functions" href="weighting_functions.html" />
+    <link rel="prev" title="SASKTRAN Thermal InfraRed Engine" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                0+untagged.1.g2fb30b9
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SASKTRAN Thermal InfraRed Engine</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">The TIR Engine</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#weighting-functions">Weighting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#shape-of-wf">Shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#engine-options">Engine Options</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#id1">Weighting Functions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#integration">Integration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#geometry-and-atmosphere">Geometry and Atmosphere</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#performance">Performance</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hitran.html">HITRAN Optical Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html">Full Property List</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+      <li class="breadcrumb-item active">The TIR Engine</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tir/sasktran_tir.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="the-tir-engine">
+<span id="sasktran-tir"></span><h1>The TIR Engine<a class="headerlink" href="#the-tir-engine" title="Permalink to this heading">¶</a></h1>
+<p>The <code class="docutils literal notranslate"><span class="pre">TIR</span></code> engine solves the radiative transfer equation in the thermal infra-region on a true spherical Earth.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <code class="docutils literal notranslate"><span class="pre">TIR</span></code> model should be used with caution for:</p>
+<ul class="simple">
+<li><p>Extremely optical thick conditions like clouds. The code does not handle the large optical depths very well.</p></li>
+<li><p>Nadir geometries. They are supported but the surface emission is a simple black body emitter with scalar emissivity.</p></li>
+</ul>
+</div>
+<p>SASKTRAN-TIR is a radiative transfer model designed for limb viewing applications in the thermal infrared spectral region.
+It is recommended to use this model for applications where the radiative source at the target wavelengths is dominated by thermal emissions, meaning that the contribution from solar scattering can be ignored.
+Typically, this occurs for wavelengths larger than 5000 nm.
+Nadir viewing is also supported where the surface is modeled as a black body with a constant user-specified emissivity.</p>
+<dl class="simple">
+<dt>Features</dt><dd><ul class="simple">
+<li><p>Scalar radiative transfer computations for Limb and Nadir lines of sight</p></li>
+<li><p>Scalar weighting functions computations for species’ number density</p></li>
+<li><p>Supports refractive ray tracing</p></li>
+<li><p>Supports varying temperature and atmospheric properties along the line of sight</p></li>
+</ul>
+</dd>
+<dt>Limitations</dt><dd><ul class="simple">
+<li><p>Basic black body surface model used in Nadir geometries</p></li>
+<li><p>Currently this is no support for non-LTE effects, continuum absorption, and line-mixing</p></li>
+</ul>
+</dd>
+</dl>
+<section id="weighting-functions">
+<h2>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Permalink to this heading">¶</a></h2>
+<p>SASKTRAN-TIR supports the same weighting function interface as SASKTRAN-HR, and supports multiple-species weighting
+functions with a similar interface to SASKTRAN-Disco.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard atmosphere configuration</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;o3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">HITRANChemical</span><span class="p">(</span><span class="s1">&#39;O3&#39;</span><span class="p">),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;no2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">HITRANChemical</span><span class="p">(</span><span class="s1">&#39;NO2&#39;</span><span class="p">),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Pratmo</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">wf_species</span> <span class="o">=</span> <span class="s1">&#39;o3&#39;</span>            <span class="c1"># single species syntax</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">wf_species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;no2&#39;</span><span class="p">,</span> <span class="s1">&#39;o3&#39;</span><span class="p">]</span>   <span class="c1"># multiple species syntax</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate radiance and weighting functions</span>
+<span class="n">rad</span><span class="p">,</span> <span class="n">wf</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>To compute temperature weighting functions:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">do_temperature_wf</span> <span class="o">=</span> <span class="kc">True</span>
+</pre></div>
+</div>
+<section id="shape-of-wf">
+<h3>Shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code><a class="headerlink" href="#shape-of-wf" title="Permalink to this heading">¶</a></h3>
+<dl class="simple">
+<dt>Length definitions for this section</dt><dd><p><code class="docutils literal notranslate"><span class="pre">lwav</span> <span class="pre">=</span> <span class="pre">len(engine.wavelengths)</span></code>
+<code class="docutils literal notranslate"><span class="pre">llos</span> <span class="pre">=</span> <span class="pre">len(geometry.lines_of_sight)</span></code>
+<code class="docutils literal notranslate"><span class="pre">lwfs</span> <span class="pre">=</span> <span class="pre">len(atmosphere.wf_species)</span></code>
+<code class="docutils literal notranslate"><span class="pre">lwfa</span> <span class="pre">=</span> <span class="pre">len(weighting</span> <span class="pre">function</span> <span class="pre">altitudes)</span></code></p>
+</dd>
+</dl>
+<p>The shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code> depends on the syntax you used to specify the weighting functions. If you used the single species
+syntax to specify <code class="docutils literal notranslate"><span class="pre">atmosphere.wf_species</span></code> then the shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code> is <code class="docutils literal notranslate"><span class="pre">(lwav,</span> <span class="pre">llos,</span> <span class="pre">lwfa)</span></code>. If you used the
+multiple species syntax then the shape is <code class="docutils literal notranslate"><span class="pre">(lwav,</span> <span class="pre">llos,</span> <span class="pre">lwfs,</span> <span class="pre">lwfa)</span></code>.</p>
+</section>
+</section>
+<section id="engine-options">
+<h2>Engine Options<a class="headerlink" href="#engine-options" title="Permalink to this heading">¶</a></h2>
+<section id="id1">
+<h3>Weighting Functions<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.wf_heights">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_heights</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_heights" title="Permalink to this definition">¶</a></dt>
+<dd><p>Heights, in meters, to compute analytic weighting functions at.</p>
+<p><strong>Default:</strong> <code class="docutils literal notranslate"><span class="pre">np.linspace(500,</span> <span class="pre">99500,</span> <span class="pre">100)</span></code>  # 500, 1500, 2500, …, 99500</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.wf_widths">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_widths</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_widths" title="Permalink to this definition">¶</a></dt>
+<dd><p>Weighting function widths. The weighting functions determine the effect of perturbing a species population at
+each height specified by <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> on the radiance. The property wf_widths species the vertical distance
+from each value in <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> to the height where the perturbation is zero. Therefore, <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> and <code class="docutils literal notranslate"><span class="pre">wf_widths</span></code>
+must have identical lengths.</p>
+<p>i.e. for a weighting function calculation at <code class="docutils literal notranslate"><span class="pre">wf_heights[i]</span></code>, the perturbation is maximum at <code class="docutils literal notranslate"><span class="pre">wf_heights[i]</span></code> and
+decreases linearly (with height) to 0 at <code class="docutils literal notranslate"><span class="pre">(wf_heights[i]</span> <span class="pre">-</span> <span class="pre">wf_widths[i])</span></code> and <code class="docutils literal notranslate"><span class="pre">(wf_heights[i]</span> <span class="pre">+</span> <span class="pre">wf_widths[i])</span></code>.</p>
+<p><strong>Default:</strong> <code class="docutils literal notranslate"><span class="pre">np.array([1000]</span> <span class="pre">*</span> <span class="pre">100)</span></code>  # sets a width of 1000 m at every height in wf_heights</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.do_vmr_wf">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_vmr_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_vmr_wf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the units of gas species weighting functions. The default setting configures weighting functions
+to be given in (radiance / number density) where number density has units of cm^-3.
+Setting this property to True tells the engine to calculate weighting functions with units of
+(radiance / VMR).</p>
+<p><strong>Default:</strong> False</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.do_temperature_wf">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_temperature_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_temperature_wf" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set this property to True to enable temperature weighting function calculations.</p>
+<p><strong>Default:</strong> False</p>
+</dd></dl>
+
+</section>
+<section id="integration">
+<h3>Integration<a class="headerlink" href="#integration" title="Permalink to this heading">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.adaptive_integration">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">adaptive_integration</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.adaptive_integration" title="Permalink to this definition">¶</a></dt>
+<dd><p>A boolean property that, if True, enables dynamic cell splitting during the radiative transfer integration.
+During the ray tracing process, the line of sight is split into cells based on the intersection of the line of
+sight with geometric shapes used to split the atmosphere into homogeneous layers. When the optical depth of a
+cell is computed, the cell is split if one or both of the following conditions are satisfied:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The optical depth of the cell exceeds the value specified by the property <code class="docutils literal notranslate"><span class="pre">max_optical_depth_of_cell</span></code></p></li>
+<li><p>The ratio of the smaller of the two values of extinction at the endpoints of the cell to the larger
+value is less than the property <code class="docutils literal notranslate"><span class="pre">min_extinction_ratio_of_cell</span></code></p></li>
+</ol>
+</div></blockquote>
+<p><strong>Default:</strong> True</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">max_optical_depth_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the maximum optical depth of a single cell is allowed to have before it is split into two cells, when
+adaptive integration is enabled. If the property <code class="docutils literal notranslate"><span class="pre">adaptive_integration</span></code> is set to False, this property has no
+effect.</p>
+<p><strong>Default:</strong> 0.1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">min_extinction_ratio_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell" title="Permalink to this definition">¶</a></dt>
+<dd><p>Set the minimum ratio between the extinction at the endpoints of single cell that is allowed before the cell
+is split, when adaptive integration is enabled. If the property <code class="docutils literal notranslate"><span class="pre">adaptive_integration</span></code> is set to False, this
+property has no effect. The ratio is calculated as the smaller of the two extinction values divided by the
+larger.</p>
+<p><strong>Default</strong> 0.9</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.linear_extinction">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">linear_extinction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.linear_extinction" title="Permalink to this definition">¶</a></dt>
+<dd><p>If this property is set to True, the engine calculates the optical depth of a cell by allowing the extinction
+to vary linearly with height, between the values at the endpoints of the cell. If this property is set to False,
+the extinction of a cell is constant, calculated as the average of the values at the endpoints.</p>
+<p><strong>Default:</strong> True</p>
+</dd></dl>
+
+</section>
+<section id="geometry-and-atmosphere">
+<h3>Geometry and Atmosphere<a class="headerlink" href="#geometry-and-atmosphere" title="Permalink to this heading">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.ground_emissivity">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">ground_emissivity</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.ground_emissivity" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the scalar emissivity of the surface of the Earth. If the line of sight ends at the ground, the emission
+from the Earth’s surface must be taken into account. In the TIR engine this emission is modelled as a
+black body with constant emissivity. For limb-viewing geometries this setting will have no effect as there are
+no scattering effects in the TIR engine.</p>
+<p><strong>Default:</strong> 1</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.refraction">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">refraction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.refraction" title="Permalink to this definition">¶</a></dt>
+<dd><p>If set to true, then refractive ray tracing is performed for the observer line of sight rays.</p>
+<p><strong>Default:</strong> false</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.surface_elevation">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">surface_elevation</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.surface_elevation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the surface elevation in meters.</p>
+<p><strong>Default:</strong> 0 m</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">top_of_atmosphere_altitude</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the altitude of the top of the atmosphere. Above this altitude it is assumed there is no atmosphere.
+Due to the assumption of local thermodynamic equilibrium within the Thermal InfraRed engine, increasing
+the value above 100000 m is not recommended because this simplification can not be used at higher altitudes.</p>
+<p><strong>Default:</strong> 100000 m</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.grid_spacing">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">grid_spacing</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.grid_spacing" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the vertical spacing of homogeneous atmosphere layers in [m].</p>
+<p><strong>Default:</strong> 1000 m</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.atmosphere_dimensions">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">atmosphere_dimensions</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.atmosphere_dimensions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Sets the number of dimensions for the atmosphere in the radiative transfer calculation.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input</p></th>
+<th class="head"><p>Setting</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>One-dimensional in altitude</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Two-dimensional in altitude and along
+along the line of sight</p></td>
+</tr>
+</tbody>
+</table>
+<p><strong>Default:</strong> 1</p>
+</dd></dl>
+
+</section>
+<section id="performance">
+<h3>Performance<a class="headerlink" href="#performance" title="Permalink to this heading">¶</a></h3>
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.num_threads">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">num_threads</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.num_threads" title="Permalink to this definition">¶</a></dt>
+<dd><p>Controls the number of threads to use when multithreading the radiative transfer calculation.  The default value
+of 0 indicates that the number of threads used will be equal to the number of available logical cores on
+the target machine.</p>
+<p>Setting this value to a lower number than the number of available cores can be useful when running a radiative
+transfer calculation in the background and the computer is too slow to multitask.</p>
+<p><strong>Default:</strong> 0</p>
+</dd></dl>
+
+<dl class="py attribute">
+<dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.use_cached_cross_sections">
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">use_cached_cross_sections</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.use_cached_cross_sections" title="Permalink to this definition">¶</a></dt>
+<dd><p>Designed to enable faster iterative radiance calculations, this setting instructs the TIR engine to compute
+cross sections using cached results. This can only be done if:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">calculate_radiance()</span></code> has been called at least once</p></li>
+<li><p>The only change to the engine object since the last call to <code class="docutils literal notranslate"><span class="pre">calculate_radiance()</span></code> is the number density
+climatology of one or more species in the atmosphere property. The optical properties used for these
+species must the same; if a new optical property is specified, the resulting radiance will be as though
+the old optical property were used.</p></li>
+<li><p>The species whose climatologies have been changed must also be set as the <code class="docutils literal notranslate"><span class="pre">wf_species</span></code> of the atmosphere
+property, i.e. only the species for which weighting functions are computed may have their climatologies
+changed</p></li>
+</ol>
+</div></blockquote>
+<p><strong>Default:</strong> True</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="SASKTRAN Thermal InfraRed Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="weighting_functions.html" class="btn btn-neutral float-right" title="Weighting Functions" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
