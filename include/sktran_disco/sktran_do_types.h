@@ -3,7 +3,7 @@
 #include <boost/container/map.hpp>
 
 #ifdef _WIN32
-const double M_PI      = 3.14159265358979323846264338327950288419716939937510582;
+	const double M_PI      = 3.14159265358979323846264338327950288419716939937510582;
 #endif
 
 // Absolute difference between the solar secant and an eigenvalue before a taylor expansion is used in the solution

@@ -174,6 +174,7 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_do.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_me.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
 		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
 
@@ -228,13 +229,14 @@ target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktranCoreBuildProperties)
 target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktranCoreBuildProperties)
 
 target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktran2)
+target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktran2)
 
 
 # Set the header files
-install (TARGETS ${SASKTRAN_STUB_NAME}
-		EXPORT ${EXPORT_NAME}
-		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
-		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRAN_BASE_NAME})
+#install (TARGETS ${SASKTRAN_STUB_NAME}
+#		EXPORT ${EXPORT_NAME}
+#		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+#		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR}/${SASKTRAN_BASE_NAME})
 
 
 add_executable(sasktran_tests ${sasktran_test_src})

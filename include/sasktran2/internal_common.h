@@ -9,7 +9,9 @@
 #include <iostream>
 #include <optional>
 
-#define EIGEN_DONT_PARALLELIZE
+#ifndef EIGEN_DONT_PARALLELIZE
+    #define EIGEN_DONT_PARALLELIZE
+#endif
 
 #define MINIMUM_SHELL_SIZE_M 0.0001
 

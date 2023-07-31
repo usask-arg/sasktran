@@ -82,6 +82,10 @@ target_link_libraries(sasktranBuildProperties INTERFACE
         Boost::thread
         )
 
+if(WIN32)
+target_compile_definitions(sasktranBuildProperties INTERFACE BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN7)
+endif()
+
 # -------- LAPACK FINDING -----------
 # We support multiple blas vendors, but these can require some funny options
 set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
