@@ -9,7 +9,6 @@ from .opticalproperty import O3DBM, O3OSIRISRes, NO2Vandaele1998, Rayleigh, Simp
 from .opticalproperty import O2O2Fally2000, O2O2HITRAN2016, O2O2Thalman2013, UserDefinedScatterConstantHeight
 from .engine import Engine, EngineHR, EngineHRSSApprox, EngineMC
 from .engine_occ import EngineOCC
-from .engine_so import EngineSO
 from .geodetic import Geodetic
 from .solarspectrum import SolarSpectrum
 from .brdf import BRDF, Lambertian, Roujean, Kokhanovsky, CoxMunk, Rahman, Hapke, MODIS

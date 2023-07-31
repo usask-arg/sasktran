@@ -339,7 +339,7 @@ bool ISKEngine_Stub_DO::CalculateRadiance(const double** radiance, int* numwavel
             int numinbatch = ceil(double(numwave) / double(wlbatches));
             for (int batch = 0; batch < wlbatches; batch++) {
                 int batchstart = batch * numinbatch;
-                int batchend = min(int(numwave), int((batch + 1) * numinbatch));
+                int batchend = std::min(int(numwave), int((batch + 1) * numinbatch));
 
                 std::vector<double> batchwv(batchend - batchstart);
                 for (int w = 0; w < batchwv.size(); ++w) {

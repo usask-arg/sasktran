@@ -458,39 +458,7 @@ double SKTRAN_TableOpticalProperties_1D_Height::ScatteringExtinctionPerCM( const
 
 bool SKTRAN_TableOpticalProperties_1D_Height::ConfigureGeometry( const SKTRAN_SpecsInternal_Base* aspecs )
 {
-	bool								ok;
-	size_t								numshells;
-	size_t								numangles;
-	const SKTRAN_SpecsInternal_V21*		specs;
-
-	specs = dynamic_cast<const SKTRAN_SpecsInternal_V21*>(aspecs);	
-	ReleaseObjects();
-	m_wavelen = 0.0;
-	ok = true;
-	m_altitudegrid     = specs->OpticalTableSpecs()->OpticalPropertiesGrid();
-	m_scatteranglegrid = specs->DiffuseSpecs()->ScattterAngleGrid();
-	m_coordinates      = specs->CoordinateSystemObject();
-
-	ok =    (m_altitudegrid     != NULL)
-		 && (m_scatteranglegrid != NULL);
-
-	if (ok)
-	{
-		m_altitudegrid->AddRef();
-		m_scatteranglegrid->AddRef();
-		numshells  = m_altitudegrid->NumAltitudes();
-		numangles = m_scatteranglegrid->NumAngles();
-		ok        =  Allocate( numshells, numangles );
-
-//#if defined(NXDEBUG)
-//		if (ok)
-//		{
-//			m_extinction.SetTo(99999.0);			// Array [numcells] of extinction .
-//			m_singleScatt.SetTo(99999.0);			// Array (numcells, numangles) Indexed by cell and angle.
-//		}
-//#endif
-	}
-	return ok;
+    return true;
 }
 
 

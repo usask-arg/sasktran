@@ -1218,7 +1218,7 @@ void SKTRAN_HR_Diffuse_Table_CPU::PrintMemReport() const
 	}
 
 	printf("num indices and weights: %u\n", (unsigned int)numindices);
-	printf("Press any key to continue...\n"); cin.get();
+	printf("Press any key to continue...\n"); std::cin.get();
 }
 
 //void SKTRAN_HR_Diffuse_Table_CPU::SetOrder( size_t order ) 

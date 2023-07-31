@@ -122,25 +122,6 @@ class ISKClimatology_Stub_UserDefined3D : public ISKClimatology_Stub_Base
 };
 
 
-/*-----------------------------------------------------------------------------
- *					ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600		2014-3-31*/
-/** **/
-/*---------------------------------------------------------------------------*/
-
-class ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600: public ISKClimatology_Stub_Base
-{
-	private:
-		skClimatology_OsirisAerosolModeRadiusV600*	m_climatologyv600;
-
-	private:
-		void								MakeSetFunctions();
-
-	public:
-											ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600( skClimatology_OsirisAerosolModeRadiusV600* climate);
-		virtual							   ~ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600() override;
-};
-
-
 
 /*-----------------------------------------------------------------------------
  *					ISKClimatology_Stub_UserDefinedTable		 2016- 9- 26*/

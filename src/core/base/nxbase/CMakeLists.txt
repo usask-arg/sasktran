@@ -1,5 +1,4 @@
 # nxbase source code
-include_directories(../lapack)
 
 set(nxbase_core_src
     module/system/strings/nxfuncs.cxx
@@ -28,7 +27,6 @@ set(nxbase_core_src
     module/sktran_core/sktran_grid_definition.cpp
     module/science/geodesy/timestmp.cxx
     module/science/geodesy/timestmp_consts.cxx
-    module/CommonUnits/commonphysicalunits.cxx
 )
 
 set(nxbase_geodesy_src
@@ -57,7 +55,6 @@ if (WIN32)
     )
 else()
     set(nxbase_platform_src
-            module/math/netlib/algama.f
     )
 endif(WIN32)
 
@@ -76,7 +73,6 @@ set(nxbase_math_src
     module/math/nxvector.cxx
     module/math/nxvector2d.cxx
     module/math/nxbase36.cxx
-    module/math/nxpolynomial.cxx
     module/math/arrays/nxdblarr.cxx
     module/math/arrays/nxarray_imp.cxx
     module/math/arrays/rankspecification.cxx
@@ -86,28 +82,6 @@ set(nxbase_math_src
     module/math/data_analysis/runningstraightlinefit.cxx
 )
 
-if(false)
-    set(nxbase_la_src 
-        module/math/linearalgebra/lapackblas.cxx
-        module/math/linearalgebra/matrix.cxx
-        module/math/linearalgebra/nxlapack.cxx
-        module/math/linearalgebra/nxlapack_dgels.cxx
-        ../lapack/blasinterface_upcase.cxx
-        ../lapack/lapackinterface_upcase.cxx
-    )
-else()
-    set(nxbase_la_src
-        module/math/linearalgebra/lapackblas.cxx
-        module/math/linearalgebra/matrix.cxx
-        module/math/linearalgebra/nxlapack.cxx
-        module/math/linearalgebra/nxlapack_dgels.cxx
-        ../lapack/blasinterface_lowcase.cxx
-        ../lapack/lapackinterface_lowcase.cxx
-    )
-
-endif(WIN32)
-
-
 
 set(nxbase_other_src
     module/system/unix/unix_com_clsid.cxx
@@ -115,8 +89,6 @@ set(nxbase_other_src
     module/system/unix/unix_com_emmulate.cxx
     module/system/unix/unix_com_registrykey.cxx
     module/system/automation/registerdll.cxx
-    module/math/netlib/nxnetlib.cxx
-    module/atombase/vectorutils.cpp
 )
 
 
@@ -126,7 +98,6 @@ add_library(${NXBASE_NAME} ${nxbase_core_src}
         ${nxbase_other_src}
         ${nxbase_geodesy_src}
         ${nxbase_math_src}
-        ${nxbase_la_src}
         )
 
 target_link_libraries(${NXBASE_NAME} PUBLIC sasktranCoreBuildProperties)

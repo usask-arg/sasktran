@@ -416,7 +416,7 @@ bool SKTRAN_TIR_Integrator::IntegrateRay(
 		// Adaptive integration
 		if (m_optinttype == OpticalPropertiesIntegratorTypeTIR::adaptive)
 		{
-			while (opticaldepthcell > m_maxopticaldepth && min(kstart, kend) / max(kstart, kend) < m_minextinctionratio)
+			while (opticaldepthcell > m_maxopticaldepth && std::min(kstart, kend) / std::max(kstart, kend) < m_minextinctionratio)
 			{
 				raystorage->SplitCell(cellidx);
 

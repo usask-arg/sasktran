@@ -298,12 +298,7 @@ extern "C" DLL_PUBLIC bool SKTRANIF_CreateEngine2( const char* userenginename, I
 	bool		ok = false;
 
 	enginename.MakeUpper();
-	if (enginename == "SO")
-	{
-		*engine = new ISKEngine_Stub_SO;
-		ok = (engine != nullptr);
-	}
-	else if (enginename == "HR")
+    if (enginename == "HR")
 	{
 		*engine = new ISKEngine_Stub_HR;
 		ok = (engine != nullptr);

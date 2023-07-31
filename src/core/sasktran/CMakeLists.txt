@@ -87,7 +87,6 @@ set(sasktran_hr_src
 	modules/sktran_highres/sktran_hr_linesofsighttable.cpp
 	modules/sktran_highres/sktran_hr_perturbation_absorption.cpp
 	modules/sktran_highres/sktran_hr_rayregionmanager.cpp
-	modules/sktran_highres/sktran_hr_sparse_mv.cpp
 	modules/sktran_highres/sktran_hr_specs_internal_core.cpp
 	modules/sktran_highres/sktran_hr_specs_internal_diffuse.cpp
 	modules/sktran_highres/sktran_hr_specs_internal_integrator.cpp
@@ -109,39 +108,8 @@ set(sasktran_hr_src
 )
 set(sasktran_so_src
     modules/sktran_so/jindex/sktran_jindex.cpp
-	modules/sktran_so/sktran_engine/sktran_diffusegroundpoint.cpp
-	modules/sktran_so/sktran_engine/sktran_diffusepointgeometry.cpp
-	modules/sktran_so/sktran_engine/sktran_diffusepointoptical.cpp
-	modules/sktran_so/sktran_engine/sktran_diffusepointstable.cpp
-	modules/sktran_so/sktran_engine/sktran_diffuseprofilegeometry.cpp
-	modules/sktran_so/sktran_engine/sktran_diffuseprofileopticalarray.cpp
-	modules/sktran_so/sktran_engine/sktran_diffuseprofileoptical.cpp
-	modules/sktran_so/sktran_engine/sktran_diffusescatteringmatrixgeometry.cpp
-	modules/sktran_so/sktran_engine/sktran_enginegeometry.cpp
-	modules/sktran_so/sktran_engine/sktran_groundpointtable.cpp
-	modules/sktran_so/sktran_engine/sktran_lineofsight.cpp
-	modules/sktran_so/sktran_engine/sktran_losgeometry_v2.cpp
-	modules/sktran_so/sktran_engine/sktran_lossinglescattable_v21.cpp
-	modules/sktran_so/sktran_engine/sktran_observerlineofsight.cpp
-	modules/sktran_so/sktran_engine/sktran_observerlinesofsightoptical.cpp
-	modules/sktran_so/sktran_engine/sktran_raytracingbase_v2.cpp
-	modules/sktran_so/sktran_engine/sktran_solartransmissionoptical_v21.cpp
-	modules/sktran_so/sktran_engine/sktran_solartransmission_v21.cpp
-	modules/sktran_so/sktran_engine/sktran_specsinternal.cpp
-	modules/sktran_so/sktran_engine/sktran_threadaction.cxx
-	modules/sktran_so/sktran_engine/sktran_thread.cxx
-	modules/sktran_so/sktran_engine/sktran_threadmanagerboost.cxx
-	modules/sktran_so/sktran_engine/sktran_threadmanager_openmp.cxx
-	modules/sktran_so/sktran_legacy/sktran_diffuseprofilemanager_v2.cpp
-	modules/sktran_so/sktran_legacy/sktran_emissionstable_1d.cpp
-	modules/sktran_so/sktran_legacy/sktran_gridspecifications_v2.cpp
-	modules/sktran_so/sktran_legacy/sktran_groundpointtable_uniform.cpp
 	modules/sktran_so/sktran_legacy/sktran_opticalproperties_v2.cpp
-	modules/sktran_so/sktran_legacy/sktran_quadrature_uniform.cpp
 	modules/sktran_so/sktran_legacy/sktran_raytracespecs_general.cpp
-	modules/sktran_so/sktran_legacy/sktran_solargeomcache_v2.cpp
-	modules/sktran_so/sktran_legacy/sktranspecificationsdiffuse_2dheightsza.cpp
-	modules/sktran_so/sktran_legacy/sktran_tableraylos_legacy.cpp
 )
 set(sasktran_occ_src
 	modules/sktran_occ/skoccult_engine.cpp 
@@ -204,7 +172,6 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_hr.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_mc.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
-	modules/sasktranv3_impl/enginestubs/iskengine_stub_so.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_do.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
@@ -218,13 +185,10 @@ set(sasktran_dll_src
 		)
 
 set(sasktran_test_src
-	Application/TestInstallation/compare_sktran_to_hr.cpp 
 	Application/TestInstallation/runmc.cpp
 	Application/TestInstallation/sasktran_unit_tests.cpp
-	Application/TestInstallation/short_emission_test.cpp
 	Application/TestInstallation/short_test_suite.cpp
 	Application/TestInstallation/simple_ray_test.cpp
-	Application/TestInstallation/test_aband.cpp
 	Application/TestInstallation/test_curvedrays.cpp
 	Application/TestInstallation/test_hitran.cpp
 	Application/TestInstallation/test_hr.cpp 
@@ -233,11 +197,9 @@ set(sasktran_test_src
 	Application/TestInstallation/test_mcamf.cpp 
 	Application/TestInstallation/test_msisatomico.cpp 
 	Application/TestInstallation/test_o2_o2.cpp 
-	Application/TestInstallation/test_polarization.cpp 
-	Application/TestInstallation/test_so2.cpp 
+	Application/TestInstallation/test_so2.cpp
 	Application/TestInstallation/testdelaunaysphere.cpp 
 	Application/TestInstallation/testscattermatrices.cpp 
-	Application/TestInstallation/testsinglescatter.cpp
 )
 
 # Build the library

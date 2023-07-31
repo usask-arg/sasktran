@@ -631,7 +631,7 @@ bool SKTRAN_HR_Specs_Internal_Core::CreateOffLOSDiffuseLocations( std::vector<HE
 
 	totaldist = (out - in).Magnitude();
 	look = (out - in).UnitVector();
-	fraction = 1.0 / max(numalonglos + 1 - includeEntry - includeExit, (size_t)1); // distance between los points
+	fraction = 1.0 / std::max(numalonglos + 1 - includeEntry - includeExit, (size_t)1); // distance between los points
 
 	locations.resize(numprofiles*numperp);
 	for (size_t idx = 0; idx < numalonglos; idx++)

@@ -213,7 +213,7 @@ class SKTRAN_Specifications_MC : public SKTRAN_Specifications_Base
 		double                                      GetSineSunApexAngle      () const { return m_sineSunApexAngle;        }
 		const std::vector<double>&                  GetMinFractionHigherOrder() const { return m_minFractionHigherOrder;  }
         double                                      GetSolarTableAltDelta    () const { return m_solarTableAltDelta;      }
-		bool                                        GetNumPhotonsPerLOS      ( vector<size_t>& vec ) const { vec.resize(m_numPhotonsPerLOS.size()); std::copy(m_numPhotonsPerLOS.begin(), m_numPhotonsPerLOS.end(), vec.begin()); return true;}
+		bool                                        GetNumPhotonsPerLOS      ( std::vector<size_t>& vec ) const { vec.resize(m_numPhotonsPerLOS.size()); std::copy(m_numPhotonsPerLOS.begin(), m_numPhotonsPerLOS.end(), vec.begin()); return true;}
         size_t										GetNumRayTracingAlts     () const { return m_numRayTracingAlts;       }
 		size_t										GetNumAMFCells           () const { if (m_amfshells == nullptr) return 0; else return m_amfshells->NumCells() - m_amfshells->ExtendedToGround() - m_amfshells->ExtendedToTOA();   }
 		size_t										GetNumOptPropAlts        () const { return m_numOptPropAlts;          }

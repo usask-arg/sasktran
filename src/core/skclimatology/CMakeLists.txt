@@ -7,17 +7,12 @@ set(skclimatology_src
     sources/skclimatology_labow.cxx
     sources/skclimatology_one.cxx 
     sources/skclimatology_pratmo.cpp
-    sources/skclimatology_textfiledbase.cxx 
     sources/skclimatology_userdefined_latlon_table.cpp
     sources/skclimatology_userdefinedplane.cpp
     sources/skclimatology_userdefinedtable.cxx 
     sources/skclimatology_usertablespline.cxx 
     sources/skclimatology_zero.cxx 
     sources/skclimatology_linearcombo.cxx
-    sources/skmoderadius/skmoderadius_filedecoder.cxx 
-    sources/skmoderadius/skmoderadius_filenamedecoder.cxx 
-    sources/skmoderadius/skmoderadius_worldmap.cxx 
-    sources/skmoderadius/sknetcdf_netcdf4.cxx
 )
 
 if(WIN32)

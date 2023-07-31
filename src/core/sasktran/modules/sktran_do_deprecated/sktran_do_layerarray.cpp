@@ -528,7 +528,7 @@ void sktran_do_detail::OpticalLayerArray<NSTOKES, CNSTR>::assignLegendreDerivati
 template<int NSTOKES, int CNSTR>
 void sktran_do_detail::OpticalLayerArray<NSTOKES, CNSTR>::assignLegendreDerivativeTest(std::vector<LegendreCoefficient<NSTOKES>>& d_legendre,
                                                                           const std::vector<double>& legendre) const {
-    for (uint l = 0; l < min((size_t)this->M_NSTR, legendre.size()); ++l)
+    for (uint l = 0; l < std::min((size_t)this->M_NSTR, legendre.size()); ++l)
     {
         d_legendre[l].a1 = legendre[l];
     }

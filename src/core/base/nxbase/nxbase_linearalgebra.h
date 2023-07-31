@@ -5,11 +5,6 @@
 #include "nxbase_core.h"
 #include "nxbase_math.h"
 
-//#include "module/math/linearalgebra/matrix.h"
-//#include <lapack.h>
-#include "module/math/linearalgebra/nxlapack.h"
-#include "module/math/linearalgebra/vectorhelperfuncs.h"
-
 
 #if defined(_MSC_VER)
 															// Include the intel math kernel library

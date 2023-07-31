@@ -10,7 +10,7 @@ static std::mutex	g_mutexlock;
 #endif
 
 extern "C" void  MIEV0  (	double*					XX,				// REAL
-							complex<double>*		CREFIN,			// COMPLEX
+							std::complex<double>*	CREFIN,			// COMPLEX
 							char*					PERFCT,			// LOGICAL
 							double*					MIMCUT,			// REAL
 							char*					ANYANG,			// LOGICAL
@@ -24,12 +24,12 @@ extern "C" void  MIEV0  (	double*					XX,				// REAL
 							double*					QSCA,			// REAL
 							double*					GQSC,			// REAL
 							double*					PMOM,			// REAL(0:MOMDIM,*)
-							complex<double>*		SFORW,			// COMPLEX
-							complex<double>*		SBACK,			// COMPLEX
-							complex<double>*		S1,				// COMPLEX (NUMANG))
-							complex<double>*		S2,				// COMPLEX (NUMANG)
-							complex<double>*		TFORW,			// COMPLEX (2)
-							complex<double>*		TBACK,			// COMPLEX (2)
+							std::complex<double>*		SFORW,			// COMPLEX
+							std::complex<double>*		SBACK,			// COMPLEX
+                            std::complex<double>*		S1,				// COMPLEX (NUMANG))
+                            std::complex<double>*		S2,				// COMPLEX (NUMANG)
+                            std::complex<double>*		TFORW,			// COMPLEX (2)
+                            std::complex<double>*		TBACK,			// COMPLEX (2)
 							double*					SPIKE );		// REAL
 
 
@@ -44,7 +44,7 @@ sk_MieSphericalWiscombeWrapper::sk_MieSphericalWiscombeWrapper()
 	m_radius  = 1.0E-04;						// Radius      = 1 micron by default = 10-4 cms
 	m_lambda   = 557.0E-07;						// wavelength  = 557 nm
 	UpdateXX();									// Update the m_xx field
-	m_refr    = complex<double>(1.33,0.000);	// The real part of the refractive index (real,imaginary)
+	m_refr    = std::complex<double>(1.33,0.000);	// The real part of the refractive index (real,imaginary)
 	m_perfect = false;;						// TRUE if the refractive index is infinite Wiscombe's PERFCT
 	m_mimcut  = 0.0;							// Value below which imaginary refractive index is 0.
 	m_anyang  = false;						// If TRUE then any angle can be placed in m_xmu. If FALSE then angles are mirror symmetric about 90
@@ -381,7 +381,7 @@ bool sk_MieSphericalWiscombeWrapper::Set_IsInfiniteRefractiveIndex	( bool val )
 
 bool sk_MieSphericalWiscombeWrapper::Set_RefractiveIndex( double ri_real, double ri_imag )
 {
-	complex<double>	val( ri_real, ri_imag);
+	std::complex<double>	val( ri_real, ri_imag);
 
 	SetDirty( m_refr != val );
 	m_refr = val;
@@ -637,8 +637,8 @@ double sk_MieSphericalWiscombeWrapper::Spike()
 bool sk_MieSphericalWiscombeWrapper::Get_ScatteringMatrixCoeffs( nx2dArray<double>* coeffmatrix )
 {
 	bool								ok;
-	complex<double>						S1;
-	complex<double>						S2;
+	std::complex<double>				S1;
+    std::complex<double>				S2;
 	double								s1sqr;
 	double								s2sqr;
 	double								s1x;

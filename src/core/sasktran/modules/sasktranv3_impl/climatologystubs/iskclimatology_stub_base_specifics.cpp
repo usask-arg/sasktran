@@ -370,55 +370,6 @@ void ISKClimatology_Stub_UserDefined3D::MakeSetFunctions( )
 
 
 
-
-
-
-
-
-
-/*-----------------------------------------------------------------------------
- *					ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600::Constructor		2014-3-31*/
-/** **/
-/*---------------------------------------------------------------------------*/
-
-ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600::ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600( skClimatology_OsirisAerosolModeRadiusV600* climate)
-													:ISKClimatology_Stub_Base(climate)
-{
-	m_climatologyv600 = climate;
-	MakeSetFunctions();
-}
-
-
-/*-----------------------------------------------------------------------------
- *					ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600:::ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600		2014-3-31*/
-/** **/
-/*---------------------------------------------------------------------------*/
-
-ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600::~ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600()
-{
-}
-
-
-/*-----------------------------------------------------------------------------
- *					ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600::MakeSetFunctions		2014-3-31*/
-/** **/
-/*---------------------------------------------------------------------------*/
-
-void ISKClimatology_Stub_OSIRISL2_AEROSOLMODERADIUS_V600::MakeSetFunctions( )
-{
-
-	AddSetScalarFunction("setisascendingnode",
-		[&,this](double value)
-		{
-			bool setascending;
-			
-			setascending = (value != 0.0);
-			m_climatologyv600->SetIsAscendingNode(setascending);
-			return true;
-		}
-	);
-}
-
 /*---------------------------------------------------------------------------
  * ISKClimatology_Stub_UserDefinedPlane::ISKClimatology_Stub_UserDefinedPlane2019-10-01 */
 /** **/

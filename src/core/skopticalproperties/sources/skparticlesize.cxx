@@ -1,4 +1,5 @@
 #include <skopticalproperties21.h>
+#include <boost/math/special_functions/gamma.hpp>
 
 
 
@@ -114,7 +115,7 @@ bool skRTParticleDist_2Gamma::SetDistributionParameters( double A, double B, dou
 		m_RBM3 = RB - 3.0;
 		m_AB   = RB  / m_A;
 		DLAB   = RBM2 * log(m_AB);
-	    DLGM   = nxnetlib::dlgama(&RBM2);			// Log (Gamma) function algama.f
+        DLGM   = lgamma(RBM2);
 		m_NORM = DLAB-DLGM;							// Get the normalization constant
 	}
 	return ok;
@@ -304,7 +305,7 @@ bool skRTParticleDist_3Gamma::SetDistributionParameters( double A, double B, dou
 	{
 		RAC   = (m_A + 1.0) / m_C;
 		RRAC  = RAC;
-		DLGN  = nxnetlib::dlgama(&RRAC);
+        DLGN  = lgamma(RRAC);
 		m_DLB = RAC * log(m_B) - DLGN;
 	}
 	return ok;
@@ -459,7 +460,7 @@ bool skRTParticleDist_BimodalGamma::SetDistributionParameters( double A, double 
 		m_RBM3  = 0.0;
 	}
 	RBM2    = RB - 2.0;
-    DLGM    = nxnetlib::dlgama(&RBM2);
+    DLGM    = lgamma(RBM2);
 	m_A1B   = RB / A;
 	m_A2B   = RB / C;
 	m_DLA1B = RBM2 * log(m_A1B) - DLGM;
@@ -719,7 +720,7 @@ double	skRTParticleDist_LogNormal::ModeWidth() const
  *
  *	See equation 7a of
  *  C. A. McLinden, J. C. McConnell, C. T. McElroy, and E. Griffioen, 1999:
- *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233–240.
+ *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233ï¿½240.
  *	doi: http://dx.doi.org/10.1175/1520-0469(1999)056<0233:OOSAUC>2.0.CO;2
  *
 **/
@@ -758,7 +759,7 @@ double skRTParticleDist_LogNormal::Reff() const
  *
  *	See equation 7b of
  *  C. A. McLinden, J. C. McConnell, C. T. McElroy, and E. Griffioen, 1999:
- *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233–240.
+ *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233ï¿½240.
  *	doi: http://dx.doi.org/10.1175/1520-0469(1999)056<0233:OOSAUC>2.0.CO;2
 **/
 /*---------------------------------------------------------------------------*/
@@ -780,7 +781,7 @@ double skRTParticleDist_LogNormal::Veff() const
  *
  *	See equation 11a of
  *  C. A. McLinden, J. C. McConnell, C. T. McElroy, and E. Griffioen, 1999:
- *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233–240.
+ *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233ï¿½240.
  *	doi: http://dx.doi.org/10.1175/1520-0469(1999)056<0233:OOSAUC>2.0.CO;2
  **/
 /*---------------------------------------------------------------------------*/
@@ -803,7 +804,7 @@ double skRTParticleDist_LogNormal::ASA_To_N(double asa_um2percm3) const
  *
  *	See equation 11a of
  *  C. A. McLinden, J. C. McConnell, C. T. McElroy, and E. Griffioen, 1999:
- *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233–240.
+ *	Observations of Stratospheric Aerosol Using CPFM Polarized Limb Radiances. J. Atmos. Sci., 56, 233ï¿½240.
  *	doi: http://dx.doi.org/10.1175/1520-0469(1999)056<0233:OOSAUC>2.0.CO;2
 **/
 /*---------------------------------------------------------------------------*/

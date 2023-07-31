@@ -149,8 +149,5 @@
 #include "nxbase.h"
 #include "nxbase_math.h"
 #include "nxbase_geodesy.h"
-#if defined(NX_WINDOWS)
-#include "dadcommon.h"
-#endif
 
 

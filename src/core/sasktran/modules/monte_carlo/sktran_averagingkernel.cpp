@@ -490,7 +490,7 @@ bool SKTRAN_PhotonLog_PhotonsOnLos::PrintKernel ( std::string filenameNoExtensio
         if(ok){
 		    for( int qidx=0; 0<m_vals.size() && qidx<m_vals[0].size(); ++qidx ){
 			    FILE * f;
-			    stringstream ss; ss << qidx;
+			    std::stringstream ss; ss << qidx;
 			    f = fopen( (filenameNoExtension+"_q" + ss.str() + ".txt").c_str(), "w" );
 			    for( int tidx=0; ok && nullptr!=f && tidx<m_vals.size(); ++tidx ){
 				    for( int pidx=0; pidx<m_vals[tidx][qidx].size(); ++pidx ){
@@ -921,7 +921,7 @@ bool SKTRAN_MCThreadRadianceLogger::DiscardRay()
 void SKTRAN_MCThreadRadianceLogger::SetMaxOrder( size_t hardmax )
 {
 	m_hardMaxOrder = hardmax;
-	m_oinfoMaxIndex = min(MC_NUMDISTINCTORDERS, m_hardMaxOrder) - 1;
+	m_oinfoMaxIndex = std::min(MC_NUMDISTINCTORDERS, m_hardMaxOrder) - 1;
 }
 
 void SKTRAN_MCThreadRadianceLogger::orderInfo::UpdateVar ( )
