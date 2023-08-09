@@ -27,7 +27,7 @@ namespace sasktran2::hr {
             // TODO: Should this be a reference cos_sza value rather than the middle calculated like this?
             // Maybe the mean tangent point should always be included?
             cos_sza_grid_values.resize(1);
-            cos_sza_grid_values.setConstant(m_geometry.coordinates().sun_unit().z());
+            cos_sza_grid_values.setConstant(m_geometry.coordinates().cos_sza_at_reference());
         }
 
         return sasktran2::grids::Grid(std::move(cos_sza_grid_values), sasktran2::grids::gridspacing::constant, sasktran2::grids::outofbounds::extend,

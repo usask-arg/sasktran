@@ -30,6 +30,10 @@ namespace sasktran2 {
         }
 
         m_atmosphere = &atmo;
+
+        if(atmo.num_deriv() == 0) {
+            m_calculate_derivatives = false;
+        }
     }
 
     template<int NSTOKES>

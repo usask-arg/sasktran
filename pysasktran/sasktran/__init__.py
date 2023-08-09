@@ -20,6 +20,7 @@ from .aband.model import ABandEmission
 from .mie import Mie, MieWiscombe
 from .tir.engine import EngineTIR
 from .disco.engine import EngineDO
+from .co.engine import EngineCO
 
 # Utility classes overtop of sasktranif objects
 from .lineofsight import LineOfSight

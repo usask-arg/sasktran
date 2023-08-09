@@ -4,7 +4,8 @@ add_library(sasktran2BuildProperties INTERFACE)
 
 # Set the include directories
 target_include_directories(sasktran2BuildProperties INTERFACE
-		${CMAKE_SOURCE_DIR}/include)
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+		$<INSTALL_INTERFACE:include>)
 
 # Add sub libraries
 add_library(sasktran2 
@@ -32,6 +33,7 @@ add_library(sasktran2
 			geometry/geometry1d.cpp
 			viewinggeometry/tangentaltitude.cpp
 		    viewinggeometry/groundviewing.cpp
+		    viewinggeometry/tangentaltitudesolar.cpp
 			raytracing/spherical_shell.cpp
 			raytracing/plane_parallel.cpp
 		    solar/solartransmissionexact.cpp
@@ -77,6 +79,12 @@ target_link_libraries(sasktran2 PUBLIC sasktran2BuildProperties sasktranBuildPro
 include(CTest)
 add_subdirectory(tests)
 
+install (TARGETS sasktran2BuildProperties
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
 
-# On install, copy sasktran2/include directory to install_directory/include
-install (DIRECTORY ${CMAKE_SOURCE_DIR}/include DESTINATION ${INCLUDE_INSTALL_DIR}/sasktran2)
+install (TARGETS sasktran2
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})

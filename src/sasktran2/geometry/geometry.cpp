@@ -16,6 +16,17 @@ namespace sasktran2 {
         m_sun_unit = cos_sza * m_z_unit + sqrt(1 - cos_sza*cos_sza) * sun_horiz;
     }
 
+    Coordinates::Coordinates(Eigen::Vector3d ref_point_unit, Eigen::Vector3d ref_plane_unit, Eigen::Vector3d sun_unit,
+                             double earth_radius, geometrytype geotype) :
+                             m_z_unit(ref_point_unit),
+                             m_x_unit(ref_plane_unit),
+                             m_y_unit(ref_point_unit.cross(ref_plane_unit).normalized()),
+                             m_sun_unit(sun_unit),
+                             m_geotype(geotype),
+                             m_earth_radius(earth_radius) {
+
+    }
+
     Eigen::Vector3d Coordinates::unit_vector_from_angles(double theta, double phi) const {
         // First calculate the unit vector in the primary tangent plane
         Eigen::AngleAxis<double> primary_transform(theta, m_y_unit);

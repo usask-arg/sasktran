@@ -43,7 +43,6 @@ namespace sasktran2::atmosphere {
         Surface m_surface;
         bool m_calculate_derivatives;
 
-        std::unique_ptr<AtmosphereGridStorageFull<NSTOKES>> m_storage_delta_scaled;
         AtmosphereGridStorageFull<NSTOKES>* m_storage_accessor;
     public:
         // Direct construction
@@ -63,8 +62,6 @@ namespace sasktran2::atmosphere {
 
         Surface& surface() { return m_surface;  }
         const Surface& surface() const { return m_surface; }
-
-        bool using_delta_scaling() const { return m_storage_accessor == m_storage_delta_scaled.get(); }
 
         int ssa_deriv_start_index() const { return (int)m_storage.total_extinction.rows();}
         int scat_deriv_start_index() const { return (int)m_storage.total_extinction.rows() * 2;}

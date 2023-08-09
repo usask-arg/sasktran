@@ -65,7 +65,7 @@ namespace sasktran2 {
         }
 
         int num_sza = m_config->num_do_sza();
-        double ref_cos_sza = m_geometry.coordinates().sun_unit().z();
+        double ref_cos_sza = m_geometry.coordinates().cos_sza_at_reference();
         Eigen::VectorXd sza_grid;
 
         if(num_sza == 1) {
@@ -84,6 +84,7 @@ namespace sasktran2 {
                                                                   sasktran2::grids::outofbounds::extend,
                                                                   sasktran2::grids::interpolation::linear);
         }
+
     }
 
 

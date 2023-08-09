@@ -9,6 +9,7 @@ add_executable(sasktran2_tests
     raytracing/test_spherical_shell.cpp
     raytracing/test_plane_parallel.cpp
     engine/test_engine_basic.cpp
+    engine/wf/test_wf_singlescatter_scalar.cpp
 
     engine/hr/test_hr_basic.cpp
 

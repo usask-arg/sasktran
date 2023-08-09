@@ -190,10 +190,10 @@ namespace sasktran2::solartransmission {
 
             // And SSA derivative factors
             for(auto& ele : m_thread_index_cache_one[threadidx]) {
-                start_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * start_phase.value;
+                start_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * start_phase.value / ssa_start;
             }
             for(auto& ele : m_thread_index_cache_two[threadidx]) {
-                end_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * end_phase.value;
+                end_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * end_phase.value / ssa_end;
             }
         }
 

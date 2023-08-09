@@ -916,12 +916,28 @@ void sasktran_disco::RTESolver<NSTOKES, CNSTR>::solveBVP(AEOrder m)
 
 	// We we failed then return immediately
 	if (errorcode != 0) {
-		if (errorcode < 0)
-			throw InternalRuntimeError("LAPACKE_dgbsv had an illegal argument in "
-				"sasktran_disco::RTESolver::SolveBVP");
-		else
-			throw InternalRuntimeError("LAPACKE_dgbsv couldn't solve BVP since "
-				"the coefficient matrix was singular.");
+		if (errorcode < 0) {
+            if (b.hasNaN()) {
+                BOOST_LOG_TRIVIAL(error) << "BVP RHS contains a nan";
+
+                for(int i = 0; i < b.size(); ++i) {
+                    if(isnan(b(i))) {
+                        BOOST_LOG_TRIVIAL(error) << "BVP RHS contains a nan in spot " << i;
+                    }
+                }
+            }
+            Eigen::Map<Eigen::VectorXd> matrix_map(mat.data(), mat.size());
+            if(matrix_map.hasNaN()) {
+                BOOST_LOG_TRIVIAL(error) << "BVP matrix contains a nan";
+            }
+
+            throw InternalRuntimeError("LAPACKE_dgbsv had an illegal argument in "
+                                       "sasktran_disco::RTESolver::SolveBVP");
+        }
+		else {
+            throw InternalRuntimeError("LAPACKE_dgbsv couldn't solve BVP since "
+                                       "the coefficient matrix was singular.");
+        }
 	}
 
 	// Copy solutions to general solutions

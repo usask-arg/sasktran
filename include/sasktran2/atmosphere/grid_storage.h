@@ -40,6 +40,8 @@ namespace sasktran2::atmosphere {
         void resize(int numgeo, int numlegendre) {
             // TODO: based on NSTOKES
             m_storage.resize(numlegendre, numgeo);
+
+            m_storage.setZero();
         }
 
         void resize_derivative(int numgeo, int legendre, int numderiv, int derivstart) {
@@ -115,12 +117,14 @@ namespace sasktran2::atmosphere {
     public:
         Eigen::MatrixXd ssa;                // location, wavel
         Eigen::MatrixXd total_extinction;   // location, wavel
+        Eigen::MatrixXd f;                  // location, wavel, (Delta scaling factor)
 
         std::vector<PhaseStorage<NSTOKES>> phase;
     public:
         AtmosphereGridStorageFull(int nwavel, int nlocation, int numlegendre) {
             ssa.resize(nlocation, nwavel);
             total_extinction.resize(nlocation, nwavel);
+            f.resize(nlocation, nwavel);
             phase.resize(nwavel);
 
             for(auto& p : phase) {

@@ -114,13 +114,36 @@ namespace sasktran2 {
          */
         int num_do_streams() const { return m_ndostreams; }
 
-        /** Sets the number of DO streams to use in the calculation.  Only used if the multiple scatter source is
-         * set to discrete_ordinates
+        /** Sets the number of DO streams to use in the calculation.  Only used when multiple scatter is activated.
+         *  Applies to both the DO and HR multiple scattering sources.
          *
          * @param nstr
          */
         void set_num_do_streams(int nstr)  { m_ndostreams = nstr;}
 
+        /**
+         *
+         * @return The number of legendre moments to include in the single scatter calculation
+         */
+        int num_singlescatter_moments() const { return m_nsinglescatter_moments; }
+
+         /**
+          *
+          * @param moments The number of legendre moments to use in the single scatter calculation
+          */
+        void set_num_singlescatter_moments(int moments) { m_nsinglescatter_moments = moments; }
+
+        /**
+         *
+         * @return True if delta-m scaling is enabled
+         */
+        bool apply_delta_scaling() const { return m_apply_delta_scaling; }
+
+        /**
+         *
+         * @param scale Set to true to enable delta scaling
+         */
+        void set_apply_delta_scaling(bool scale) { m_apply_delta_scaling = scale; }
 
         /**
          *
@@ -135,6 +158,9 @@ namespace sasktran2 {
          * @param nsza
          */
         void set_num_do_sza(int nsza) { m_ndosza = nsza; }
+
+        bool wf_enabled() const { return m_enable_wfs; }
+        void set_wf_enabled(bool enable) { m_enable_wfs = enable; }
 
 
         int num_do_spherical_iterations() const { return m_ndosphericaliterations; }
@@ -159,10 +185,16 @@ namespace sasktran2 {
         int m_ndosza;
         int m_ndosphericaliterations;
 
+        int m_nsinglescatter_moments;
+
         int m_hr_nincoming;
         int m_hr_noutgoing;
 
         int m_hr_nspherical_iterations;
+
+        bool m_apply_delta_scaling;
+
+        bool m_enable_wfs;
 
 
         SingleScatterSource m_single_scatter_source;

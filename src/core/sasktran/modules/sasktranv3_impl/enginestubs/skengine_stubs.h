@@ -112,10 +112,36 @@ class ISKEngine_Stub_HR : public ISKEngine_Stub
 class ISKEngine_Stub_ME : public ISKEngine_Stub
 {
 private:
-	std::unique_ptr<Sasktran2Interface> m_engine;
+    bool m_geometry_is_configured;
+    int m_nstokes;
+    std::vector<double> m_wavelengths;
+    Eigen::VectorXd m_altitude_grid;
+    nxGeodetic m_geodetic;
+
+    SKTRAN_LineOfSightArray_V21	m_linesofsight;
+    std::unique_ptr<Sasktran2Interface> m_engine;
+    std::unique_ptr<sasktran2::viewinggeometry::ViewingGeometryContainer> m_viewing_rays;
+    std::unique_ptr<sasktran2::Geometry1D> m_geometry;
+    sasktran2::Config m_config;
+    sktran_me::ReferencePointEstimator m_refpoint_estimator;
+    sktran_me::GeometryConstructor m_geometry_constructor;
+    sktran_me::AtmosphereInterface m_atmosphere_interface;
+    sktran_me::WFHandler m_wfhandler;
+
+    std::unique_ptr<sktran_me::AtmosphereConstructorBase> m_atmosphere_constructor;
+
+    std::unique_ptr<nxVector> m_manual_sun;
+
+    bool									MakeScalarSetFunctions();
+    bool									MakeVectorSetFunctions();
+    bool									MakeObjectSetFunctions();
+    bool									MakeVectorGetFunctions();
+    bool									MakeScalarGetFunctions();
+    bool									MakeStringSetFunctions();
+
 
 public:
-	ISKEngine_Stub_ME() {};
+	ISKEngine_Stub_ME();
 	virtual 			   ~ISKEngine_Stub_ME() {};
 	virtual nxUnknown* RawObjectPointer() { return nullptr; } // engines cannot be accessed
 	virtual bool			AddLineOfSight(double mjd, const nxVector& observer, const nxVector& lookvector, int* losindex) override;

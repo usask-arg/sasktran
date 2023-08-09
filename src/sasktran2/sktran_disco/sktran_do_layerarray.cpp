@@ -208,12 +208,12 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
         double ssa_bot = atmosphere.storage().ssa(bot_atmosphere_idx, wavelidx);
         double ssa_top = atmosphere.storage().ssa(top_atmosphere_idx, wavelidx);
 
+        double f_bot = atmosphere.storage().f(bot_atmosphere_idx, wavelidx);
+        double f_top = atmosphere.storage().f(top_atmosphere_idx, wavelidx);
+
         double od = (kbot + ktop) / 2 * layer_dh;
         double ssa = (ssa_bot * kbot + ssa_top * ktop) / (kbot + ktop);
-        double f = 0;
-
-        od *= 1 - ssa * f;
-        ssa *= (1 - f) / (1 - ssa*f);
+        double f = (ssa_bot * kbot*f_bot + ssa_top * ktop*f_top) / (kbot*ssa_bot + ktop*ssa_top);
 
         // Copy the legendre coefficients to a new vector
         std::unique_ptr<VectorDim1<sasktran_disco::LegendreCoefficient<NSTOKES>>> lephasef(new VectorDim1<sasktran_disco::LegendreCoefficient<NSTOKES>>);
@@ -227,14 +227,14 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
 
             if constexpr (NSTOKES == 1) {
                 double avg_p = (kbot*ssa_bot*phase(k, bot_atmosphere_idx) + ktop*ssa_top*phase(k, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
-                temp.a1 = (avg_p - f * (2*k+1)) / (1-f);
+                temp.a1 = avg_p - f * (2*k+1) / (1-f);
             } else if constexpr (NSTOKES == 3) {
                 auto stokes_seq = Eigen::seq(k*4, (k+1)*4 - 1);
                 Eigen::Vector<double, 4> avg_p = (kbot*ssa_bot*phase(stokes_seq, bot_atmosphere_idx) + ktop*ssa_top*phase(stokes_seq, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
-                temp.a1 = (avg_p(0) - f * (2*k+1)) / (1-f);
-                temp.a2 = (avg_p(1) - f * (2*k+1)) / (1-f);
-                temp.a3 = (avg_p(2) - f * (2*k+1)) / (1-f);
-                temp.b1 = -1*(avg_p(3) - f * (2*k+1)) / (1-f); // TODO: Check
+                temp.a1 = avg_p(0) - f * (2*k+1) / (1-f);
+                temp.a2 = avg_p(1) - f * (2*k+1) / (1-f);
+                temp.a3 = avg_p(2) - f * (2*k+1) / (1-f);
+                temp.b1 = -1*(avg_p(3) - f * (2*k+1) / (1-f)); // TODO: Check
             } else {
 
             }
@@ -653,6 +653,10 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
 
     bool compute_deriv = m_input_derivatives.numDerivative() > 0;
 
+    // Sometimes we can get OD's so large that exp(-od) = 0, in which case we can't do log(exp(-od)) to recover od so we have
+    // to store OD temporarily
+    double od_temp;
+
     if(compute_deriv) {
         for(auto& layer : m_layers) {
             layer->ceiling_beam_transmittance().resize(m_input_derivatives.numDerivative(), false);
@@ -662,6 +666,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
 
             if (layer->index() == 0) {
                 layer->ceiling_beam_transmittance().value = 1;
+                od_temp = 0;
                 layer->ceiling_beam_transmittance().deriv.setZero();
             } else {
                 layer->ceiling_beam_transmittance().value = m_layers[layer->index() - 1]->floor_beam_transmittance().value;
@@ -679,7 +684,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
 
 
             layer->dual_average_secant().value =
-                    (layer->floor_beam_transmittance().value + std::log(layer->ceiling_beam_transmittance().value)) /
+                    (layer->floor_beam_transmittance().value - od_temp) /
                     layer->dual_thickness().value;
 
             layer->dual_average_secant().deriv = (layer->floor_beam_transmittance().deriv + layer->ceiling_beam_transmittance().deriv / layer->ceiling_beam_transmittance().value) / layer->dual_thickness().value;
@@ -689,6 +694,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
                 layer->dual_average_secant().deriv(seq) -= layer->dual_thickness().deriv / layer->dual_thickness().value * layer->dual_average_secant().value;
             }
 
+            od_temp = layer->floor_beam_transmittance().value;
             layer->floor_beam_transmittance().value = std::exp(-layer->floor_beam_transmittance().value);
             layer->floor_beam_transmittance().deriv = layer->floor_beam_transmittance().value * -1 * layer->floor_beam_transmittance().deriv;
         }
@@ -698,6 +704,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
 
             if (layer->index() == 0) {
                 layer->ceiling_beam_transmittance().value = 1;
+                od_temp = 0;
             } else {
                 layer->ceiling_beam_transmittance().value = m_layers[layer->index() - 1]->floor_beam_transmittance().value;
             }
@@ -706,38 +713,13 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
                 layer->floor_beam_transmittance().value += m_chapman_factors(layer->index(), p) * dual_thickness.value;
             }
             layer->dual_average_secant().value =
-                    (layer->floor_beam_transmittance().value + std::log(layer->ceiling_beam_transmittance().value)) /
+                    (layer->floor_beam_transmittance().value - od_temp) /
                     layer->dual_thickness().value;
 
+            od_temp = layer->floor_beam_transmittance().value;
             layer->floor_beam_transmittance().value = std::exp(-layer->floor_beam_transmittance().value);
         }
     }
-
-
-    /*
-
-    Dual<double> transmission_od_bottom(m_input_derivatives.numDerivative());
-    Dual<double> transmission_od_top(m_input_derivatives.numDerivative());
-
-
-    // Then calculate the dual of the PS transmission factors
-    for (auto& layer : m_layers) {
-        // For all layers above/equal to the layer
-        transmission_od_bottom.value = 0.0;
-        transmission_od_bottom.deriv.setZero();
-        for (LayerIndex p = 0; p <= layer->index(); ++p) {
-            const auto& dual_thickness = m_layers[p]->dual_thickness();
-            transmission_od_bottom.value += m_chapman_factors(layer->index(), p) * dual_thickness.value;
-            if (dual_thickness.deriv.size() > 0) {
-                const auto seq = Eigen::seq(dual_thickness.layer_start, dual_thickness.layer_start + dual_thickness.deriv.size() - 1);
-                transmission_od_bottom.deriv(seq) += m_chapman_factors(layer->index(), p) * dual_thickness.deriv;
-            }
-        }
-        layer->configurePseudoSpherical(transmission_od_top, transmission_od_bottom);
-        transmission_od_top = transmission_od_bottom;
-    }
-     */
-
 
 }
 

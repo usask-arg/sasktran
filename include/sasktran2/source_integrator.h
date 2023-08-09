@@ -39,6 +39,12 @@ namespace sasktran2 {
          */
         SourceIntegrator(bool calculate_derivatives);
 
+        /**
+         *
+         * @param enable True if the source integrator should calculate derivatives
+         */
+        void set_calculate_derivatives(bool enable) { m_calculate_derivatives = enable; }
+
         /** Initializes the geometry of the source integrator
          *
          * @param traced_rays Vector of traced rays
