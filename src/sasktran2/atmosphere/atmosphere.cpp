@@ -35,9 +35,12 @@ namespace sasktran2::atmosphere {
             stokes_stack = 4;
         }
 
+        m_storage.applied_f_location = order * stokes_stack;
+        m_storage.applied_f_order = order;
+
         // First copy the requested order into the f storage
         for(int w = 0; w < m_storage.phase.size(); ++w) {
-            m_storage.f(Eigen::all, w) = m_storage.phase[w].storage()(order * stokes_stack, Eigen::all) / (2*order + 1);
+            m_storage.f(Eigen::all, w) = m_storage.phase[w].storage()(m_storage.applied_f_location, Eigen::all) / (2*order + 1);
         }
 
         // Now scale k* = (1-wf) k
@@ -50,6 +53,16 @@ namespace sasktran2::atmosphere {
         // Note that this is the scaling for single scatter TMS correction, we still have to subtract f/1-f for multiple scatter
         for(int w = 0; w < m_storage.phase.size(); ++w) {
             m_storage.phase[w].storage().array().rowwise() /= (1 - m_storage.f(Eigen::all, w).transpose().array());
+
+            // Also have to scale the derivatives
+            for(int d = 0; d < m_storage.phase[w].num_deriv(); ++d) {
+                // Set the f derivative
+                m_storage.phase[w].f_deriv_storage(d).array() = m_storage.phase[w].deriv_storage(d)(m_storage.applied_f_location, Eigen::all).array() / (2*order + 1);
+
+                // db* = db / 1-f + (b*) * df / (1-f)
+                m_storage.phase[w].deriv_storage(d).array() += m_storage.phase[w].storage().array().rowwise() * (m_storage.phase[w].f_deriv_storage(d).array().transpose());
+                m_storage.phase[w].deriv_storage(d).array().rowwise() /= (1 - m_storage.f(Eigen::all, w).transpose().array());
+            }
         }
     }
 

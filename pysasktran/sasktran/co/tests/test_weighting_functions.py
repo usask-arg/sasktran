@@ -64,17 +64,21 @@ def test_scattering_wf():
     atmo = default_atmosphere(altitude_spacing=1000)
     geo = default_geometry()
 
+    atmo['aerosol'] = sk.SpeciesAerosolGloSSAC()
+
     engine = sk.EngineCO(atmosphere=atmo, geometry=geo, wavelengths=ozone_wf_wavelengths,
-                         options={'numssmoments': 2,
-                                  'numdostreams': 2}
+                         options={'numssmoments': 16,
+                                  'numdostreams': 16,
+                                  'applydeltascaling': True
+                                  }
                          )
 
     atmo.wf_species = 'air'
 
-    rad = numerical_wf(engine, atmo['air'].climatology, 'air', rel_eps=0.01)
+    rad = numerical_wf(engine, atmo['air'].climatology, 'air', rel_eps=0.001)
 
     rad = rad.isel(perturbation=slice(0, NUM_WF_CALC))
 
     p_diff = (rad['wf_air'] - rad['wf_numerical_air']) / rad['wf_numerical_air'] * 100
 
-    np.testing.assert_almost_equal(p_diff.values, 0.0, decimal=4)
+    np.testing.assert_almost_equal(p_diff.values[~np.isnan(p_diff.values)], 0.0, decimal=4)

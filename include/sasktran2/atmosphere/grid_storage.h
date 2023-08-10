@@ -18,6 +18,7 @@ namespace sasktran2::atmosphere {
         Eigen::MatrixXd m_storage; // (leg coeff (stacked for polarized), geometry location)
 
         std::vector<Eigen::MatrixXd> m_derivatives; // (leg coeff (stacked for polarized), geometry location)
+        std::vector<Eigen::VectorXd> m_f_derivatives; // (geometry location) derivative of the delta scale factor
 
         int m_scatderivstart;
     public:
@@ -35,7 +36,9 @@ namespace sasktran2::atmosphere {
         Eigen::MatrixXd& storage() { return m_storage; }
 
         const Eigen::MatrixXd& deriv_storage(int derivindex) const { return m_derivatives[derivindex]; }
+        const Eigen::VectorXd& f_deriv_storage(int derivindex) const { return m_f_derivatives[derivindex]; }
         Eigen::MatrixXd& deriv_storage(int derivindex) { return m_derivatives[derivindex]; }
+        Eigen::VectorXd& f_deriv_storage(int derivindex) { return m_f_derivatives[derivindex]; }
 
         void resize(int numgeo, int numlegendre) {
             // TODO: based on NSTOKES
@@ -47,10 +50,17 @@ namespace sasktran2::atmosphere {
         void resize_derivative(int numgeo, int legendre, int numderiv, int derivstart) {
             // TODO: based on NSTOKES
             m_derivatives.resize(numderiv);
+            m_f_derivatives.resize(numderiv);
 
             for(auto& deriv : m_derivatives) {
                 deriv.resize(legendre, numgeo);
             }
+
+            for(auto& deriv : m_f_derivatives) {
+                deriv.resize(numgeo);
+                deriv.setZero();
+            }
+
             m_scatderivstart = derivstart;
         }
     };
@@ -119,6 +129,9 @@ namespace sasktran2::atmosphere {
         Eigen::MatrixXd total_extinction;   // location, wavel
         Eigen::MatrixXd f;                  // location, wavel, (Delta scaling factor)
 
+        int applied_f_order;                // Order of the delta_m scaling
+        int applied_f_location;             // Index to the phase moment that defines the legendre scaling f
+
         std::vector<PhaseStorage<NSTOKES>> phase;
     public:
         AtmosphereGridStorageFull(int nwavel, int nlocation, int numlegendre) {
@@ -137,6 +150,9 @@ namespace sasktran2::atmosphere {
 
             ssa.setZero();
             total_extinction.setZero();
+
+            applied_f_location = -1;
+            applied_f_order = -1;
         }
     };
 }

@@ -140,9 +140,6 @@ namespace sktran_me {
 
         m_output = std::make_unique<sktran_me::OutputSKIF<NSTOKES>>(m_wf_handler, m_species_quantities, atmosphere->storage(), m_species_guid);
 
-
-        // TODO: Species scattering derivatives
-
         // For each species add in the extinctions
         // Temporarily store scattering extinction in SSA
         for(int i = 0; i < m_species_quantities.size(); ++i) {
@@ -169,8 +166,26 @@ namespace sktran_me {
         // sktran_co wants extinction in /m
         atmosphere->storage().total_extinction.array() *= 100;
 
+        // Set the species scattering derivatives
+        m_wf_handler.set_scattering_information(m_atmo_interface, m_species_guid);
+
+        for(int w = 0; w < wavelengths.size(); ++w) {
+            atmosphere->storage().phase[w].resize_derivative(geometry.size(), numorder, m_wf_handler.num_scattering_derivatives(), atmosphere->scat_deriv_start_index());
+
+            int scat_deriv_index = 0;
+            for(int i = 0; i < m_wf_handler.num_wf_types(); ++i) {
+                if(m_wf_handler.scattering_index(i) >= 0) {
+                    // Have a scattering derivative
+                    atmosphere->storage().phase[w].deriv_storage(m_wf_handler.scattering_index(i)) = m_species_quantities[m_wf_handler.species_index(i)].phase[w].storage() - atmosphere->storage().phase[w].storage();
+                }
+            }
+
+        }
+
         if(config.apply_delta_scaling()) {
             atmosphere->apply_delta_m_scaling(config.num_do_streams());
+        } else {
+            atmosphere->storage().f.setZero();
         }
 
     }

@@ -67,6 +67,26 @@ namespace sktran_me {
                     // Get an extra dssa contribution on dI/dk* from the scaling
                     m_wf(deriv_start) = (dk*dk_scaled_by_dk - f*dssa*k)*radiance.deriv(0, j) + dssa*dssa_scaled_by_dssa*radiance.deriv(0, j + num_geo);
 
+                    if(m_wf_handler.scattering_index(i) >= 0) {
+                        // Have a scattering derivative
+                        double scat_factor = dk * spec_quantities.ssa(j, wavelidx) / (ssa * k);
+
+                        // Derivatives from the change in legendre coefficients
+                        m_wf(deriv_start) += radiance.deriv(0, j + (2 + m_wf_handler.scattering_index(i))*num_geo) * scat_factor;
+
+                        if(m_total_quantities.applied_f_order > 0) {
+                            // Have delta scaling
+                            // Extra derivatives from the change in f
+                            double d_f = m_total_quantities.phase[wavelidx].f_deriv_storage(m_wf_handler.scattering_index(i))(j) * scat_factor;
+
+                            // Change in k* due to a change in f
+                            m_wf(deriv_start) -= d_f*ssa*k*radiance.deriv(0, j);
+
+                            // Change in ssa* due to a change in f
+                            m_wf(deriv_start) += d_f*(ssa / (1-ssa*f)) * (m_total_quantities.ssa(j, wavelidx) - 1) * radiance.deriv(0, j + num_geo);
+                        }
+                    }
+
                     ++deriv_start;
                 }
             }

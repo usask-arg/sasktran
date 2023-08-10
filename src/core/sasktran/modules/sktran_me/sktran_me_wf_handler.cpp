@@ -1,4 +1,5 @@
 #include "include/sktran_me_internals.h"
+#include "include/sktran_me_atmosphere_interface.h"
 
 namespace sktran_me {
     void WFHandler::set_from_strings(const std::vector<std::string> &wf_handles) {
@@ -15,9 +16,34 @@ namespace sktran_me {
                 m_wf_guids[i] = *handle;
                 m_wf_types[i] = wftype::NumberDensity;
             }
-
         }
+    }
 
+    void WFHandler::set_scattering_information(AtmosphereInterface &atmo_interface,
+                                               const std::vector<GUID>& species_guids
+                                               ) {
+        m_num_scatterers = 0;
+
+        m_species_index_map.resize(m_wf_types.size());
+        m_scattering_map.resize(m_wf_types.size());
+
+        for(int i = 0; i < m_wf_types.size(); ++i) {
+            // TODO: Optical property derivatives
+
+            if(m_wf_types[i] == WFHandler::wftype::NumberDensity) {
+                auto it = std::find(std::begin(species_guids), std::end(species_guids), m_wf_guids[i]);
+                int species_index = std::distance(std::begin(species_guids), it);
+
+                m_species_index_map[i] = species_index;
+
+                if(atmo_interface.species()[species_index].ParticleOpticalProps()->IsScatterer()) {
+                    m_scattering_map[i] = m_num_scatterers;
+                    ++m_num_scatterers;
+                } else {
+                    m_scattering_map[i] = -1;
+                }
+            }
+        }
     }
 
     bool WFHandler::calculating_wf() const {
