@@ -4,6 +4,7 @@ namespace sktran_me {
     class GeometryConstructor {
     private:
         GEODETIC_INSTANT m_refpt;
+        Eigen::Vector3d m_geographic_sun;
         ReferencePointEstimator m_refpt_estimator;
 
         void add_limb_viewing_los(const sasktran2::Geometry1D& geometry,

@@ -677,12 +677,10 @@ bool sk_MieSphericalWiscombeWrapper::Get_LegendreCoefficients(nx2dArray<double>*
 	legendrecoeff->SetSize(4, Get_MaxLegendreMoment());
 	for (int i = 0; i < Get_MaxLegendreMoment(); i++)
 	{
-		legendrecoeff->At(0, i) = 0.5 * (m_pmom.At(i, 0) + m_pmom.At(i, 1));
-
-		// TODO: Implement polarized legendre moments
-		legendrecoeff->At(1, i) = 0.0;
-		legendrecoeff->At(2, i) = 0.0;
-		legendrecoeff->At(3, i) = 0.0;
+		legendrecoeff->At(0, i) = 0.5 * (m_pmom.At(i, 0) + m_pmom.At(i, 1)); // p11
+		legendrecoeff->At(1, i) = 0.5 * (m_pmom.At(i, 0) - m_pmom.At(i, 1)); // p12
+		legendrecoeff->At(2, i) = 2 * m_pmom.At(i, 2); // p33
+		legendrecoeff->At(3, i) = -2 * m_pmom.At(i, 3); // p34;
 	}
 	return true;
 }

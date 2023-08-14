@@ -423,7 +423,6 @@ namespace sasktran2::hr {
 
         for(int rayidx = 0; rayidx < m_incoming_traced_rays.size(); ++rayidx) {
             temp_result.value.setZero();
-            // m_integrator.integrate(temp_result, m_initial_sources, wavelidx, rayidx, threadidx);
 
             m_integrator.integrate_and_emplace_accumulation_triplets(temp_result, m_initial_sources, wavelidx, rayidx, threadidx,
                                                                      m_diffuse_source_weights,

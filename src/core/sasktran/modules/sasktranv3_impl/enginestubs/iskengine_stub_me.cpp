@@ -10,6 +10,8 @@ ISKEngine_Stub_ME::ISKEngine_Stub_ME() {
         m_altitude_grid(i) = i * 1000;
     }
 
+    m_geodetic.SelectGeoid(m_geodetic.WGS84);
+
     MakeScalarSetFunctions();
     MakeVectorSetFunctions();
     MakeObjectSetFunctions();
@@ -44,6 +46,17 @@ bool ISKEngine_Stub_ME::MakeScalarSetFunctions() {
                          [&, this](double d ) {
                              int specifier = (int) ceil(d - 0.5);
                              bool ok = true;
+
+                             return ok;
+                         }
+    );
+
+    AddSetScalarFunction("nstokes",
+                         [&, this](double d ) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             m_nstokes = specifier;
 
                              return ok;
                          }
@@ -201,6 +214,40 @@ bool ISKEngine_Stub_ME::MakeVectorGetFunctions() {
                           }
     );
 
+    AddGetVectorFunction("ssa",
+                          [&, this]( int wavelindex )
+                          {
+                              auto& atmosphere = dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->atmosphere();
+
+                              int num_grid = atmosphere.storage().ssa.rows();
+
+                              m_getpropertybuffer.resize(num_grid);
+
+                              for(int i = 0; i < num_grid; ++i) {
+                                  m_getpropertybuffer[i] = atmosphere.storage().ssa(i, wavelindex);
+                              }
+
+                            return true;
+                          }
+    );
+
+    AddGetVectorFunction("extinction",
+                         [&, this]( int wavelindex )
+                         {
+                             auto& atmosphere = dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->atmosphere();
+
+                             int num_grid = atmosphere.storage().total_extinction.rows();
+
+                             m_getpropertybuffer.resize(num_grid);
+
+                             for(int i = 0; i < num_grid; ++i) {
+                                 m_getpropertybuffer[i] = atmosphere.storage().total_extinction(i, wavelindex);
+                             }
+
+                             return true;
+                         }
+    );
+
     return true;
 
 }
@@ -340,7 +387,6 @@ bool ISKEngine_Stub_ME::InitializeModel() {
 bool ISKEngine_Stub_ME::CalculateRadiance(const double** radiance, int* numwavelens, int* numlinesofsight) {
     // Create the internal engine object, atmosphere, and do the calculation
     if(m_nstokes == 1) {
-        std::unique_ptr<sasktran2::atmosphere::Atmosphere<1>> atmosphere;
         m_atmosphere_constructor = std::make_unique<sktran_me::AtmosphereConstructor<1>>(m_atmosphere_interface, m_wfhandler);
 
         // Construction of atmosphere/output
@@ -348,13 +394,12 @@ bool ISKEngine_Stub_ME::CalculateRadiance(const double** radiance, int* numwavel
                                                                                                                         m_config,
                                                                                                                         *m_viewing_rays,
                                                                                                                         m_geometry_constructor.reference_point(),
-                                                                                                                        m_wavelengths,
-                                                                                                                        atmosphere);
+                                                                                                                        m_wavelengths);
 
 
-        dynamic_cast<Sasktran2<1>*>(m_engine.get())->calculate_radiance(*atmosphere, dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->output());
+        dynamic_cast<Sasktran2<1>*>(m_engine.get())->calculate_radiance(dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->atmosphere(),
+                                                                        dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->output());
     } else if (m_nstokes == 3) {
-        std::unique_ptr<sasktran2::atmosphere::Atmosphere<3>> atmosphere;
         m_atmosphere_constructor = std::make_unique<sktran_me::AtmosphereConstructor<3>>(m_atmosphere_interface, m_wfhandler);
 
         // Construction of atmosphere/output
@@ -362,10 +407,10 @@ bool ISKEngine_Stub_ME::CalculateRadiance(const double** radiance, int* numwavel
                                                                                                                         m_config,
                                                                                                                         *m_viewing_rays,
                                                                                                                         m_geometry_constructor.reference_point(),
-                                                                                                                        m_wavelengths,
-                                                                                                                        atmosphere);
+                                                                                                                        m_wavelengths);
 
-        dynamic_cast<Sasktran2<3>*>(m_engine.get())->calculate_radiance(*atmosphere, dynamic_cast<sktran_me::AtmosphereConstructor<3>*>(m_atmosphere_constructor.get())->output());
+        dynamic_cast<Sasktran2<3>*>(m_engine.get())->calculate_radiance(dynamic_cast<sktran_me::AtmosphereConstructor<3>*>(m_atmosphere_constructor.get())->atmosphere(),
+                                                                        dynamic_cast<sktran_me::AtmosphereConstructor<3>*>(m_atmosphere_constructor.get())->output());
     } else {
         // Should be unreachable
         BOOST_LOG_TRIVIAL(error) << "m_nstokes is not 1 or 3";

@@ -18,6 +18,7 @@ class EngineCO(sk.Engine):
 
         self._model_parameters = dict()
         self._wf_shape = None
+        self._nstokes = 1
 
     def _initialize_model(self):
         super()._initialize_model()
@@ -68,6 +69,10 @@ class EngineCO(sk.Engine):
 
     @wrap_skif_functionfail
     def calculate_radiance(self, output_format='numpy', full_stokes_vector=False, stokes_orientation='geographic'):
+        self._stokes_stack = self._nstokes
+        if full_stokes_vector:
+            raise ValueError('EngineCO does not support full_stokes_vector=True in calculate radiance, instead set engine.nstokes=3')
+
         rad = super().calculate_radiance(output_format=output_format, full_stokes_vector=full_stokes_vector,
                                          stokes_orientation=stokes_orientation)
 
@@ -81,3 +86,13 @@ class EngineCO(sk.Engine):
                 rad['wf_' + self.atmosphere.wf_species] = (['wavelength', 'los', 'perturbation'], wf[:, :, 0, :])
 
         return rad
+
+
+    @property
+    def nstokes(self) -> int:
+        return self._nstokes
+
+    @nstokes.setter
+    def nstokes(self, ns: int):
+        self._nstokes = ns
+        self._options['nstokes'] = self._nstokes

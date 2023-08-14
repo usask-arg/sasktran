@@ -55,12 +55,17 @@ namespace sktran_me {
         Eigen::Vector3d look(los->Look().X(), los->Look().Y(), los->Look().Z());
 
         sasktran2::Location loc;
-        loc.position = tangent_point;
+        nxVector west, south, up;
+        geodetic.GetGeodeticWestSouthUp(&west, &south, &up);
+
+        loc.position = Eigen::Vector3d(up.X(), up.Y(), up.Z());
 
         double csz;
         double rel_az;
 
-        sasktran2::raytracing::calculate_csz_saz(geometry.coordinates().sun_unit(), loc, look, csz, rel_az);
+        sasktran2::raytracing::calculate_csz_saz(m_geographic_sun, loc, look, csz, rel_az);
+
+
 
         viewing_geo->observer_rays().emplace_back(
                 std::make_unique<sasktran2::viewinggeometry::TangentAltitudeSolar>(tangent_altitude,
@@ -84,6 +89,8 @@ namespace sktran_me {
                                                     std::unique_ptr<sasktran2::Geometry1D> &geometry,
                                                     const nxVector& sun_unit
                                                     ) {
+        m_geographic_sun = Eigen::Vector3d(sun_unit.X(), sun_unit.Y(), sun_unit.Z());
+
         m_refpt_estimator.estimate_reference_point(linesofsight, m_refpt);
 
         // Use the geodetic to construct the local coordinate system
@@ -93,11 +100,10 @@ namespace sktran_me {
         nxVector west, south, up;
         geodetic.GetGeodeticWestSouthUp(&west, &south, &up);
 
-        Eigen::Vector3d ref_pt_unit(up.X(), up.Y(), up.Z());
-        Eigen::Vector3d ref_plane_unit(south.X(), south.Y(), south.Z());
-        Eigen::Vector3d sun_unitv(sun_unit.X(), sun_unit.Y(), sun_unit.Z());
-
-        sasktran2::Coordinates coords(ref_pt_unit, ref_plane_unit, sun_unitv, earth_radius);
+        // Get the cos_sza at the reference point, set SAA=0 mostly for stokes basis reasons
+        // This means that rel_az is contained entirely in the LOS azimuth
+        double cos_sza = sun_unit & up;
+        sasktran2::Coordinates coords(cos_sza, 0, earth_radius);
 
         Eigen::VectorXd grid_values = altitude_grid;
 

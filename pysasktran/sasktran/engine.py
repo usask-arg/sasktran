@@ -38,6 +38,8 @@ class Engine(object):
         self._options = LowercaseKeyDictWithCallback(options) if options is not None else LowercaseKeyDictWithCallback()
         self._options.add_modified_callback(self._set_needs_reconfigure)
 
+        self._stokes_stack = 1
+
     def __getstate__(self):
         state = {k: v for k, v in self.__dict__.items() if k != '_iskengine'}
         return state
@@ -208,12 +210,23 @@ class Engine(object):
                                   coords={'wavelength': self.wavelengths,
                                           'xyz': ['x', 'y', 'z']})
             else:
-                data = xr.Dataset({'radiance': (['wavelength', 'los'], data),
-                                   'mjd': (['los'], mjds),
-                                   'los_vector': (['los', 'xyz'], los_vectors),
-                                   'observer_position': (['los', 'xyz'], obs_positions)},
-                                  coords={'wavelength': self.wavelengths,
-                                          'xyz': ['x', 'y', 'z']})
+                if self._stokes_stack > 1:
+                    data.resize((len(self._wavelengths), len(self.geometry.lines_of_sight), self._stokes_stack))
+                    data = xr.Dataset({'radiance': (['wavelength', 'los', 'stokes'], data),
+                                       'mjd': (['los'], mjds),
+                                       'los_vector': (['los', 'xyz'], los_vectors),
+                                       'observer_position': (['los', 'xyz'], obs_positions)},
+                                      coords={'wavelength': self.wavelengths,
+                                              'xyz': ['x', 'y', 'z'],
+                                              'stokes': ['I', 'Q', 'U', 'V'][:self._stokes_stack]
+                                              })
+                else:
+                    data = xr.Dataset({'radiance': (['wavelength', 'los'], data),
+                                       'mjd': (['los'], mjds),
+                                       'los_vector': (['los', 'xyz'], los_vectors),
+                                       'observer_position': (['los', 'xyz'], obs_positions)},
+                                      coords={'wavelength': self.wavelengths,
+                                              'xyz': ['x', 'y', 'z']})
 
             return data
         else:

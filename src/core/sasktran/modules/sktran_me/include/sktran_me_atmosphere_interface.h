@@ -112,6 +112,7 @@ namespace sktran_me {
         std::vector<GUID> m_species_guid;
 
         std::unique_ptr<sktran_me::OutputSKIF<NSTOKES>> m_output;
+        std::unique_ptr<sasktran2::atmosphere::Atmosphere<NSTOKES>> m_atmosphere;
 
         int m_nwavel;
         int m_nlos;
@@ -122,13 +123,14 @@ namespace sktran_me {
                                          const sasktran2::Config& config,
                                          const sasktran2::viewinggeometry::ViewingGeometryContainer& viewing_geo,
                                          const GEODETIC_INSTANT& refpt,
-                                         const std::vector<double>& wavelengths,
-                                         std::unique_ptr<sasktran2::atmosphere::Atmosphere<NSTOKES>>& atmosphere
+                                         const std::vector<double>& wavelengths
                                          );
 
         void assign_output_radiance(const double** radiance, int* numwavelens, int* numlinesofsight) override;
         void assign_wf_buffer(const double** wf) override;
 
         sasktran2::Output<NSTOKES>& output() { return *m_output; }
+        sasktran2::atmosphere::Atmosphere<NSTOKES>& atmosphere() { return *m_atmosphere; }
+
     };
 }

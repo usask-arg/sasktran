@@ -234,7 +234,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                 temp.a1 = avg_p(0) - f * (2*k+1) / (1-f);
                 temp.a2 = avg_p(1) - f * (2*k+1) / (1-f);
                 temp.a3 = avg_p(2) - f * (2*k+1) / (1-f);
-                temp.b1 = -1*(avg_p(3) - f * (2*k+1) / (1-f)); // TODO: Check
+                temp.b1 = -(avg_p(3) - f * (2*k+1) / (1-f)); // TODO: Check
             } else {
 
             }
@@ -253,6 +253,57 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
         ceiling_depth = floor_depth;
     }
     m_chapman_factors = geometry_layers.chapman_factors();
+
+    if (atmosphere.num_deriv() > 0) {
+        int numderiv = atmosphere.num_deriv();
+        int num_atmo_grid = (int)atmosphere.storage().total_extinction.rows();
+
+        if (!m_input_derivatives.is_geometry_configured()) {
+            // Construct the matrix that maps atmosphere extinction to layer quantities
+            // TODO: In the future we will construct this matrix elsewhere, probably in geometry layers, and then use it
+            // to construct both the atmosphere and the derivatives
+            Eigen::MatrixXd atmosphere_mapping(this->M_NLYR, num_atmo_grid);
+            atmosphere_mapping.setZero();
+
+            for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
+                int top_atmosphere_idx = (int)atmosphere.storage().total_extinction.rows() - p - 1;
+                int bot_atmosphere_idx = top_atmosphere_idx - 1;
+
+                atmosphere_mapping(p, top_atmosphere_idx) = 0.5;
+                atmosphere_mapping(p, bot_atmosphere_idx) = 0.5;
+            }
+
+            // Now avg_k in layers = atmosphere_mapping @ atmosphere_extinction
+            for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
+                LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
+                LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
+
+                // Go through the atmosphere mapping and add non-zero elements
+                for(int i = 0; i < num_atmo_grid; ++i) {
+                    if(atmosphere_mapping(p, i) > 0) {
+                        auto& ptrb_layer = layer(p);
+
+                        // TODO: layer width in here?
+                        deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) / (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
+                        deriv_ext.extinctions.emplace_back(1);
+
+                        deriv_ssa.group_and_triangle_fraction.emplace_back(i + num_atmo_grid, atmosphere_mapping(p, i));
+                        deriv_ssa.extinctions.emplace_back(1);
+                    }
+                }
+            }
+        }
+
+        for(int i = 0; i < this->M_NLYR; ++i) {
+            LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.layerDerivatives()[2*i];
+            LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.layerDerivatives()[2*i + 1];
+
+            deriv_ext.d_optical_depth = 1;
+
+            deriv_ssa.d_SSA = 1;
+        }
+
+    }
 
     // Post configure the layers, PS beam transmittances and derivative calculations
     for (auto& layer : m_layers) {
