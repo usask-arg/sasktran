@@ -5,7 +5,7 @@ import numpy as np
 
 def test_all_multiscatter():
     for atm_scenario in range(1, 2):
-        for geo_scenario in range(0, 9):
+        for geo_scenario in range(8, 9):
             scen = load_scenario(geo_scenario, atm_scenario, 0, 1, 16, altitude_spacing=1000)
 
             engine = sk.EngineCO(atmosphere=scen['atmo'], geometry=scen['geo'], wavelengths=scen['wavelengths'],

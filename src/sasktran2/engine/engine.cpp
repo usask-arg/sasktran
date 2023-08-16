@@ -40,38 +40,19 @@ void Sasktran2<NSTOKES>::construct_source_terms() {
                         std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, 2>>(*m_geometry, *m_raytracer)
                 );
             } else {
-                if(m_config.num_do_spherical_iterations() == 0) {
-                    m_source_terms.emplace_back(
-                            std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                    );
-                } else {
-                    m_source_terms.emplace_back(
-                            std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                    );
-                }
-            }
-        } else {
-            if(m_config.num_do_spherical_iterations() == 0) {
                 m_source_terms.emplace_back(
                         std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
                 );
-            } else {
-                m_source_terms.emplace_back(
-                        std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                );
             }
-        }
-        #else
-        if(m_config.num_do_spherical_iterations() == 0) {
+        } else {
             m_source_terms.emplace_back(
                     std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
             );
-        } else {
-            m_source_terms.emplace_back(
-                    std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry,
-                                                                                                 *m_raytracer)
-            );
         }
+        #else
+        m_source_terms.emplace_back(
+                std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
+        );
 
         #endif
 

@@ -111,6 +111,7 @@
 #include "sktran_disco/sktran_do_pconfig.h"
 #include "sktran_disco/sktran_do_opticallayer.h"
 #include "sktran_disco/sktran_do_geometrylayerarray.h"
+#include "sktran_disco/sktran_do_postprocessing.h"
 #include "sktran_disco/sktran_do_layerarray.h"
 #include "sktran_disco/sktran_do_rte.h"
 

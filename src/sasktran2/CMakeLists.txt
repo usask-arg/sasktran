@@ -66,13 +66,12 @@ add_library(sasktran2
 			sktran_disco/sktran_do_surface.cpp
 			sktran_disco/sktran_do_testing.cpp
 			sktran_disco/sktran_do_types.cpp
-		sktran_disco/source_term/do_source_legendrestorage.cpp
-		sktran_disco/source_term/do_source_diffuse_storage.cpp
-        sktran_disco/source_term/do_source.cpp
-		sktran_disco/source_term/do_source_exact_pp.cpp
-		sktran_disco/source_term/do_source_interpolated_pp.cpp
-		sktran_disco/source_term/do_source_spherical_corrected.cpp
-		sktran_disco/sktran_do_dll_expose.cpp)
+		    sktran_disco/sktran_do_postprocessing.cpp
+			sktran_disco/source_term/do_source_legendrestorage.cpp
+			sktran_disco/source_term/do_source_diffuse_storage.cpp
+        	sktran_disco/source_term/do_source.cpp
+			sktran_disco/source_term/do_source_interpolated_pp.cpp
+			sktran_disco/sktran_do_dll_expose.cpp)
 
 target_link_libraries(sasktran2 PUBLIC sasktran2BuildProperties sasktranBuildProperties)
 

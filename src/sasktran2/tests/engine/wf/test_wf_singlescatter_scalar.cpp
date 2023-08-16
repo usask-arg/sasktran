@@ -79,6 +79,8 @@ TEST_CASE("Verify SSA WF", "[sasktran2][engine][wf]") {
     // Construct the config
     sasktran2::Config config;
 
+    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
+
     // Make the engine
     Sasktran2<1> engine(config, &geo, viewing_geometry);
 

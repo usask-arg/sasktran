@@ -60,6 +60,7 @@ namespace sasktran_disco {
     template <int NSTOKES, int CNSTR=-1>
     struct LayerCache {
         LayerDual<double>						    dual_thickness;
+        LayerDual<double>                           dual_ssa;
         Dual<double>								average_secant;
         Dual<double>								dual_bt_floor;
         Dual<double>								dual_bt_ceiling;

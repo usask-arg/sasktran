@@ -226,6 +226,10 @@ namespace sasktran_disco
 			return m_dual_thickness;
 		}
 
+        inline const LayerDual<double>& dual_ssa() const {
+            return m_dual_ssa;
+        }
+
 		inline const Dual<double>& dual_average_secant() const {
 			return m_average_secant;
 		}
@@ -302,6 +306,7 @@ namespace sasktran_disco
 		std::vector<LayerSolution<NSTOKES, CNSTR>>&	m_solutions;
 		const InputDerivatives<NSTOKES>&			m_input_derivs;
 		LayerDual<double>&						    m_dual_thickness;
+        LayerDual<double>&                          m_dual_ssa;
 		Dual<double>&								m_average_secant;
 		Dual<double>&								m_dual_bt_floor;
 		Dual<double>&								m_dual_bt_ceiling;

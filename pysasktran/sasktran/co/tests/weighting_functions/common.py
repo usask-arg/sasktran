@@ -25,7 +25,7 @@ def numerical_wf(engine: sk.EngineCO, climatology: sk.ClimatologyUserDefined, sp
     return start_rad
 
 
-def validate_wf(analytic, numerical):
+def validate_wf(analytic, numerical, decimal=6):
 
     max_by_alt = np.abs(analytic).max(dim='perturbation')
 
@@ -33,4 +33,4 @@ def validate_wf(analytic, numerical):
 
     rel_diff = (analytic - numerical) / max_by_alt
 
-    np.testing.assert_array_almost_equal(rel_diff, 0)
+    np.testing.assert_array_almost_equal(rel_diff, 0, decimal=decimal)

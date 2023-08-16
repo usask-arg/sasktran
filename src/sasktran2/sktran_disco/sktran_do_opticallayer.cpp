@@ -24,6 +24,7 @@ sasktran_disco::OpticalLayer<NSTOKES, CNSTR>
         m_triple_product_holder_1(m_layercache.triple_product_holder_2),
         m_triple_product(m_layercache.triple_product),
         m_dual_thickness(m_layercache.dual_thickness),
+        m_dual_ssa(m_layercache.dual_ssa),
         m_average_secant(m_layercache.average_secant),
         m_dual_bt_ceiling(m_layercache.dual_bt_ceiling),
         m_dual_bt_floor(m_layercache.dual_bt_floor) {
@@ -96,6 +97,7 @@ sasktran_disco::OpticalLayer<NSTOKES, CNSTR>
     m_triple_product_holder_1(m_layercache.triple_product_holder_2),
     m_triple_product(m_layercache.triple_product),
     m_dual_thickness(m_layercache.dual_thickness),
+    m_dual_ssa(m_layercache.dual_ssa),
     m_average_secant(m_layercache.average_secant),
     m_dual_bt_ceiling(m_layercache.dual_bt_ceiling),
     m_dual_bt_floor(m_layercache.dual_bt_floor)
@@ -116,10 +118,16 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::configureDerivative() {
 	m_dual_thickness.layer_index = M_INDEX;
 	m_dual_thickness.layer_start = (uint)m_input_derivs.layerStartIndex(M_INDEX);
 
+    m_dual_ssa.resize(m_input_derivs.numDerivativeLayer(M_INDEX));
+    m_dual_ssa.layer_index = M_INDEX;
+    m_dual_ssa.layer_start = (uint)m_input_derivs.layerStartIndex(M_INDEX);
+
 	m_dual_thickness.value = M_OPTICAL_THICKNESS;
+    m_dual_ssa.value = M_SSA;
 	for (uint i = 0; i < m_input_derivs.numDerivativeLayer(M_INDEX); ++i) {
 		m_dual_thickness.deriv(i) = m_input_derivs.layerDerivatives()[m_dual_thickness.layer_start + i].d_optical_depth;
-	}
+        m_dual_ssa.deriv(i) = m_input_derivs.layerDerivatives()[m_dual_ssa.layer_start + i].d_SSA;
+    }
 
     LayerIndex p = index();
     uint numderiv = (uint)m_input_derivs.numDerivativeLayer(p);

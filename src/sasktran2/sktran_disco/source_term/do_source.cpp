@@ -87,6 +87,35 @@ namespace sasktran2 {
 
     }
 
+    template<int NSTOKES, int CNSTR>
+    void DOSource<NSTOKES, CNSTR>::construct_los_location_interpolator(const std::vector<sasktran2::raytracing::TracedRay>& rays) {
+        m_los_source_weights.resize(rays.size());
+
+        std::vector<std::pair<int, double>> temp_location_storage;
+        std::vector<std::pair<int, double>> temp_direction_storage;
+
+        int num_location, num_direction;
+
+        Eigen::Vector3d rotated_los;
+
+        sasktran2::Location temp_location;
+
+        for (int rayidx = 0; rayidx < rays.size(); ++rayidx) {
+            auto &ray_interpolator = m_los_source_weights[rayidx];
+            const auto &ray = rays[rayidx];
+
+            ray_interpolator.resize(ray.layers.size());
+
+            for (int layeridx = 0; layeridx < ray.layers.size(); ++layeridx) {
+                const auto &layer = ray.layers[layeridx];
+
+                temp_location.position = (layer.entrance.position + layer.exit.position) / 2.0;
+
+                m_geometry.assign_interpolation_weights(temp_location, ray_interpolator[layeridx]);
+
+            }
+        }
+    }
 
     template <int NSTOKES, int CNSTR>
     void DOSource<NSTOKES, CNSTR>::initialize_geometry(const std::vector<sasktran2::raytracing::TracedRay> &los_rays) {
@@ -115,6 +144,8 @@ namespace sasktran2 {
             m_thread_storage[thidx].postprocessing_cache.resize(m_geometry.altitude_grid().grid().size() - 1);
             m_thread_storage[thidx].legendre_phase_container.resize(m_config->num_do_streams());
         }
+
+        construct_los_location_interpolator(los_rays);
     }
 
     template <int NSTOKES, int CNSTR>

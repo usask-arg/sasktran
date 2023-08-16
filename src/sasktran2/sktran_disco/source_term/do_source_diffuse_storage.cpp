@@ -34,10 +34,6 @@ namespace sasktran2 {
 
         for(auto& storage: m_storage) {
             // TODO: Derivative
-            for(int s = 0; s < NSTOKES; ++s) {
-                storage.source_terms[s].resize((int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size(), 0, true);
-                storage.singlescatter_source_terms[s].resize((int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size(), 0, true);
-            }
             storage.source_terms_linear.resize((int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES, 0, true);
 
             storage.phase_storage.resize(m_cos_angle_grid->grid().size(), do_config.nstr());
@@ -45,6 +41,18 @@ namespace sasktran2 {
                 storage.phase_storage[i].fill(m_cos_angle_grid->grid()(i));
             }
             storage.phase_container.resize(config.num_do_streams());
+        }
+    }
+
+    template <int NSTOKES, int CNSTR>
+    void DOSourceDiffuseStorage<NSTOKES, CNSTR>::initialize_atmosphere(
+            const sasktran2::atmosphere::Atmosphere<NSTOKES> &atmo) {
+        // TODO: This seems like the wrong place to do this, but I'm not sure where else it should go
+
+        int numderiv = atmo.num_deriv();
+
+        for(auto& storage : m_storage) {
+            storage.source_terms_linear.deriv.resize(storage.source_terms_linear.value_size(), numderiv);
         }
     }
 
@@ -72,9 +80,9 @@ namespace sasktran2 {
 
                 for(int s = 0; s < NSTOKES; ++s) {
                     if(include_azimuth_weights) {
-                        sparsevec[s].resize(m_storage[0].source_terms[s].value.size());
+                        sparsevec[s].resize(m_storage[0].source_terms_linear.value.size());
                     } else {
-                        sparsevec[s].resize(m_storage[0].source_terms[s].value.size() / m_num_azi);
+                        sparsevec[s].resize(m_storage[0].source_terms_linear.value.size() / m_num_azi);
                     }
                 }
 
@@ -102,9 +110,9 @@ namespace sasktran2 {
                                     } else if constexpr (NSTOKES == 3) {
                                         double sin_azi_factor = sin(k * (EIGEN_PI - azi));
 
-                                        sparsevec[0].coeffRef(index) = azi_factor * weight;
-                                        sparsevec[1].coeffRef(index) = azi_factor * weight;
-                                        sparsevec[2].coeffRef(index) = sin_azi_factor * weight;
+                                        sparsevec[0].coeffRef(index*NSTOKES) = azi_factor * weight;
+                                        sparsevec[1].coeffRef(index*NSTOKES + 1) = azi_factor * weight;
+                                        sparsevec[2].coeffRef(index*NSTOKES + 2) = sin_azi_factor * weight;
                                     }
                                 }
                             } else {
@@ -113,10 +121,9 @@ namespace sasktran2 {
                                 if constexpr (NSTOKES == 1) {
                                     sparsevec[0].coeffRef(index) = weight;
                                 } else if constexpr (NSTOKES == 3) {
-
-                                    sparsevec[0].coeffRef(index) = weight;
-                                    sparsevec[1].coeffRef(index) = weight;
-                                    sparsevec[2].coeffRef(index) = weight;
+                                    sparsevec[0].coeffRef(index*NSTOKES) = weight;
+                                    sparsevec[1].coeffRef(index*NSTOKES + 1) = weight;
+                                    sparsevec[2].coeffRef(index*NSTOKES + 2) = weight;
                                 }
                             }
 
@@ -258,7 +265,22 @@ namespace sasktran2 {
 
         auto& storage = m_storage[thread_idx];
 
+        // Storage for derivatives of Y_plus and Y_minus,
+        // TODO: Move these to cache
+        std::vector<Eigen::Map<Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>>> Y_plus_deriv;
+        std::vector<Eigen::Map<Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>>> Y_minus_deriv;
+
+        const auto& input_derivatives = optical_layer.inputDerivatives();
+
+        // TODO: Move to cache
+        Eigen::Matrix<double, -1, NSTOKES> temp_deriv(input_derivatives.numDerivative(), NSTOKES);
+
+
+
         for(int lidx = 0; lidx < m_altitude_grid->grid().size(); ++lidx) {
+            Y_minus_deriv.clear();
+            Y_plus_deriv.clear();
+
             auto* layer = &optical_layer.layer((int)m_altitude_grid->grid().size() - lidx - 1);
             sasktran_disco::LayerIndex p = layer->index();
             double altitude = m_altitude_grid->grid()(lidx);
@@ -268,9 +290,8 @@ namespace sasktran2 {
             const auto& transmission = layer->dual_beamTransmittance(sasktran_disco::Location::CEILING, optical_layer.inputDerivatives());
 
             const auto& average_secant = layer->dual_average_secant();
-            const auto& ssa = layer->ssa();
+            const auto& ssa = layer->dual_ssa();
             const sasktran_disco::LayerDual<double>& dual_thickness = layer->dual_thickness();
-
 
             auto& cache = thread_storage.postprocessing_cache[p];
             sasktran_disco::uint numderiv = (sasktran_disco::uint)optical_layer.inputDerivatives().numDerivativeLayer(p);
@@ -294,8 +315,6 @@ namespace sasktran2 {
             auto& Dp = cache.Dp;
 
             auto& Q = cache.Q;
-            auto& Qtemp = cache.Qtemp;
-            auto& temp = cache.temp;
 
             const auto& dual_L = solution.boundary.L_coeffs;
             const auto& dual_M = solution.boundary.M_coeffs;
@@ -305,6 +324,17 @@ namespace sasktran2 {
             MatrixView Y_plus_matrix(Y_plus.value.data(), NSTOKES, m_config.num_do_streams()/2 *NSTOKES);
             MatrixView Y_minus_matrix(Y_minus.value.data(), NSTOKES, m_config.num_do_streams()/2 * NSTOKES);
 
+            // Allocate memory for Y_plus/Y_minus derivative maps
+            Y_plus_deriv.reserve(numderiv);
+            Y_minus_deriv.reserve(numderiv);
+
+            for(sasktran_disco::uint k = 0; k < numderiv; ++k) {
+                Y_plus_deriv.emplace_back(&Y_plus.deriv(k, 0), NSTOKES, m_config.num_do_streams() / 2 * NSTOKES,
+                                          Eigen::InnerStride<>(numderiv));
+                Y_minus_deriv.emplace_back(&Y_minus.deriv(k, 0), NSTOKES, m_config.num_do_streams() / 2 * NSTOKES,
+                                           Eigen::InnerStride<>(numderiv));
+            }
+
             ConstMatrixView homog_plus_matrix(solution.value.dual_homog_plus().value.data(), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 *NSTOKES);
             ConstMatrixView homog_minus_matrix(solution.value.dual_homog_minus().value.data(), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 *NSTOKES);
 
@@ -312,9 +342,9 @@ namespace sasktran2 {
                 int sourceidx = linear_storage_index(aidx, lidx, szaidx, m);
 
                 for(int s = 0; s < NSTOKES; ++s) {
-                    storage.source_terms[s].value(sourceidx) = 0.0;
                     storage.source_terms_linear.value(sourceidx*NSTOKES + s) = 0.0;
                 }
+                temp_deriv.setZero();
 
                 storage.phase_storage[aidx].set_phase_container(storage.phase_container, m);
 
@@ -324,17 +354,6 @@ namespace sasktran2 {
 
                 layer->vectordual_scatPhaseF(m, storage.phase_container, optical_layer.inputDerivatives(), dual_lpsum_minus, dual_lpsum_plus);
 
-                layer->singleScatST(m, storage.phase_container, Qtemp, temp);
-
-
-                if constexpr (NSTOKES == 1 ) {
-                    storage.singlescatter_source_terms[0].value(sourceidx) = Qtemp.value;
-                } else {
-                    for(int s = 0; s < NSTOKES; ++s) {
-                        storage.singlescatter_source_terms[s].value(sourceidx) = Qtemp.value(s);
-                    }
-                }
-
                 // dual_lpsum_plus and minus are now linearly storage of N * NSTOKES * NSTOKES, have to multiply the blocks by
                 // the weights
                 for(int i = 0; i < this->m_config.num_do_streams()/2; ++i) {
@@ -342,6 +361,9 @@ namespace sasktran2 {
                         int linearindex = i*NSTOKES*NSTOKES + j;
                         dual_lpsum_minus.value(linearindex) *= thread_storage.sza_calculators[0].persistent_config->quadrature_weights()->at(i);
                         dual_lpsum_plus.value(linearindex) *= thread_storage.sza_calculators[0].persistent_config->quadrature_weights()->at(i);
+
+                        dual_lpsum_minus.deriv(Eigen::all, linearindex) *= thread_storage.sza_calculators[0].persistent_config->quadrature_weights()->at(i);
+                        dual_lpsum_plus.deriv(Eigen::all, linearindex) *= thread_storage.sza_calculators[0].persistent_config->quadrature_weights()->at(i);
                     }
                 }
 
@@ -351,28 +373,122 @@ namespace sasktran2 {
                 Y_plus_matrix.noalias() = lpsum_plus_matrix * homog_plus_matrix + lpsum_minus_matrix * homog_minus_matrix;
                 Y_minus_matrix.noalias() = lpsum_plus_matrix * homog_minus_matrix + lpsum_minus_matrix * homog_plus_matrix;
 
+                // Calculate derivatives of Y_plus/Y_minus
+                for(sasktran_disco::uint k = 0; k < numderiv; ++k) {
+                    Eigen::Map<const Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>> lpsum_plus_deriv(
+                            &dual_lpsum_plus.deriv(k, 0), NSTOKES, m_config.num_do_streams()/2 * NSTOKES, Eigen::InnerStride<>(numderiv));
+
+                    Eigen::Map<const Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>> lpsum_minus_deriv(
+                            &dual_lpsum_minus.deriv(k, 0), NSTOKES, m_config.num_do_streams()/2 * NSTOKES, Eigen::InnerStride<>(numderiv));
+
+                    Eigen::Map<const Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>> homog_minus_deriv(
+                            &solution.value.dual_homog_minus().deriv(k, 0), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 * NSTOKES, Eigen::InnerStride<>(numderiv));
+
+                    Eigen::Map<const Eigen::MatrixXd, 0, Eigen::InnerStride<Eigen::Dynamic>> homog_plus_deriv(
+                            &solution.value.dual_homog_plus().deriv(k, 0), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 * NSTOKES, Eigen::InnerStride<>(numderiv));
+
+                    Y_plus_deriv[k].noalias() = lpsum_plus_deriv * homog_plus_matrix + lpsum_plus_matrix * homog_plus_deriv +
+                                                lpsum_minus_deriv * homog_minus_matrix + lpsum_minus_matrix * homog_minus_deriv;
+
+                    Y_minus_deriv[k].noalias() = lpsum_plus_deriv * homog_minus_matrix + lpsum_plus_matrix * homog_minus_deriv +
+                                                 lpsum_minus_deriv * homog_plus_matrix + lpsum_minus_matrix * homog_plus_deriv;
+                }
+
                 for (int i = 0; i < m_config.num_do_streams() / 2 * NSTOKES; ++i) {
                     const auto& eigval = solution.value.dual_eigval();
 
-                    hp.value = std::exp(-1.0*eigval.value(i) * layer->dual_thickness().value * layer_fraction);
-                    hm.value = std::exp(-eigval.value(i) * (layer->dual_thickness().value - layer->dual_thickness().value * layer_fraction));
+                    sasktran_disco::postprocessing::h_plus_sampled(layer->dual_thickness(),
+                                                                   eigval,
+                                                                   i,
+                                                                   layer_fraction,
+                                                                   hp);
+
+                    sasktran_disco::postprocessing::h_minus_sampled(layer->dual_thickness(),
+                                                                    eigval,
+                                                                    i,
+                                                                    layer_fraction,
+                                                                    hm);
 
                     for(int s = 0; s < NSTOKES; ++s) {
-                        storage.source_terms[s].value(sourceidx) += Y_plus_matrix(s, i) * hp.value * dual_L.value(i);
-                        storage.source_terms[s].value(sourceidx) += Y_minus_matrix(s, i) * hm.value * dual_M.value(i);
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_plus_matrix(s, i) * hp.value * dual_L.value(i);
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_minus_matrix(s, i) * hm.value * dual_M.value(i);
 
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_plus_matrix(s, i) * hp.value * dual_L.value(i) / ssa;
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_minus_matrix(s, i) * hm.value * dual_M.value(i) / ssa;
+                        // Y_plus/Y_minus and hp/hm only have layer derivatives, but dual_L/dual_M are dense derivatives
+
+                        // Start with the dense ones
+                        temp_deriv(Eigen::all, s) += dual_L.deriv(Eigen::all, i) * Y_plus_matrix(s, i) * hp.value;
+                        temp_deriv(Eigen::all, s) += dual_M.deriv(Eigen::all, i) * Y_minus_matrix(s, i) * hm.value;
+
+                        // And add in the layer derivatives
+                        for(int k = 0; k < numderiv; ++k) {
+                            // For Yplus/Yminus
+                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * hp.value * dual_L.value(i);
+                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * hm.value * dual_M.value(i);
+
+                            // for Hp, Hm
+                            temp_deriv(k + layerStart, s) += hp.deriv(k) * Y_plus_matrix(s, i) * dual_L.value(i);
+                            temp_deriv(k + layerStart, s) += hm.deriv(k) * Y_minus_matrix(s, i) * dual_M.value(i);
+                        }
 
                     }
 
-                    Dp.value = transmission.value / (eigval.value(i) + average_secant.value) * (exp(-x*average_secant.value) - exp(-dual_thickness.value * average_secant.value) * exp(-(dual_thickness.value - x) * eigval.value(i)));
-                    Dm.value = transmission.value / (average_secant.value - eigval.value(i)) * (exp(-x*eigval.value(i)) - exp(-x*average_secant.value));
+                    sasktran_disco::postprocessing::d_minus_sampled(layer->dual_thickness(),
+                                                                    eigval,
+                                                                    i,
+                                                                    layer_fraction,
+                                                                    transmission,
+                                                                    average_secant,
+                                                                    layerStart,
+                                                                    Dm);
+
+                    sasktran_disco::postprocessing::d_plus_sampled(layer->dual_thickness(),
+                                                                   eigval,
+                                                                   i,
+                                                                   layer_fraction,
+                                                                   transmission,
+                                                                   average_secant,
+                                                                   layerStart,
+                                                                   Dp);
 
                     for(int s = 0; s < NSTOKES; ++s) {
-                        storage.source_terms[s].value(sourceidx) += dual_Aplus.value(i) * Y_plus_matrix(s, i) * Dm.value + dual_Aminus.value(i) * Y_minus_matrix(s, i) * Dp.value;
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += (dual_Aplus.value(i) * Y_plus_matrix(s, i) * Dm.value + dual_Aminus.value(i) * Y_minus_matrix(s, i) * Dp.value);
 
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += (dual_Aplus.value(i) * Y_plus_matrix(s, i) * Dm.value + dual_Aminus.value(i) * Y_minus_matrix(s, i) * Dp.value) / ssa;
+                        // Dp/Dm has dense derivatives, the others are small
+
+                        // Start with the dense ones
+                        temp_deriv(Eigen::all, s) += Dm.deriv * dual_Aplus.value(i) * Y_plus_matrix(s, i);
+                        temp_deriv(Eigen::all, s) += Dp.deriv * dual_Aminus.value(i) * Y_minus_matrix(s, i);
+
+                        // And add in the layer derivatives
+                        for(int k = 0; k < numderiv; ++k) {
+                            // For Yplus/Yminus
+                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * Dm.value * dual_Aplus.value(i);
+                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * Dp.value * dual_Aminus.value(i);
+
+                            // for Aplus/Aminu
+                            temp_deriv(k + layerStart, s) += dual_Aplus.deriv(k, i) * Y_plus_matrix(s, i) * Dm.value;
+                            temp_deriv(k + layerStart, s) += dual_Aminus.deriv(k, i) * Y_minus_matrix(s, i) * Dp.value;
+                        }
+
+                    }
+                }
+
+                // Now we have to divide out SSA from the source since we opt to multiply by actual SSA later on
+                for(int s = 0; s < NSTOKES; ++s) {
+                    int index = sourceidx*NSTOKES + s;
+
+                    storage.source_terms_linear.value(index) /= ssa.value;
+
+                    for(int k = 0; k < numderiv; ++k) {
+                        temp_deriv(k + layerStart, s) = temp_deriv(k + layerStart, s) / ssa.value - ssa.deriv(k) * storage.source_terms_linear.value(index) / ssa.value;
+                    }
+
+                    // And we also have to translate the temporary layer DO derivatives to atmosphere derivatives
+                    storage.source_terms_linear.deriv(index, Eigen::all).setZero();
+                    for(int k = 0; k < numtotalderiv; ++k) {
+                        for(const std::pair<sasktran_disco::uint, double>& group_fraction : input_derivatives.layerDerivatives()[k].group_and_triangle_fraction) {
+                            storage.source_terms_linear.deriv(index, group_fraction.first) += group_fraction.second * temp_deriv(k, s);
+                        }
                     }
                 }
             }

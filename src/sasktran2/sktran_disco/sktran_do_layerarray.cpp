@@ -212,7 +212,9 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
         double f_top = atmosphere.storage().f(top_atmosphere_idx, wavelidx);
 
         double od = (kbot + ktop) / 2 * layer_dh;
-        double ssa = (ssa_bot * kbot + ssa_top * ktop) / (kbot + ktop);
+        //double ssa = (ssa_bot * kbot + ssa_top * ktop) / (kbot + ktop);
+        double ssa = (ssa_bot + ssa_top) / 2;
+
         double f = (ssa_bot * kbot*f_bot + ssa_top * ktop*f_top) / (kbot*ssa_bot + ktop*ssa_top);
 
         // Copy the legendre coefficients to a new vector
@@ -278,13 +280,15 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                 LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
                 LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
 
+                deriv_ext.d_optical_depth = 1;
+                deriv_ssa.d_SSA = 1;
+
                 // Go through the atmosphere mapping and add non-zero elements
                 for(int i = 0; i < num_atmo_grid; ++i) {
                     if(atmosphere_mapping(p, i) > 0) {
                         auto& ptrb_layer = layer(p);
 
-                        // TODO: layer width in here?
-                        deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) / (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
+                        deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) * (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
                         deriv_ext.extinctions.emplace_back(1);
 
                         deriv_ssa.group_and_triangle_fraction.emplace_back(i + num_atmo_grid, atmosphere_mapping(p, i));
@@ -292,17 +296,9 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                     }
                 }
             }
+            m_input_derivatives.set_geometry_configured();
+            m_input_derivatives.sort(this->M_NLYR);
         }
-
-        for(int i = 0; i < this->M_NLYR; ++i) {
-            LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.layerDerivatives()[2*i];
-            LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.layerDerivatives()[2*i + 1];
-
-            deriv_ext.d_optical_depth = 1;
-
-            deriv_ssa.d_SSA = 1;
-        }
-
     }
 
     // Post configure the layers, PS beam transmittances and derivative calculations
