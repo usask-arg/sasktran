@@ -212,8 +212,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
         double f_top = atmosphere.storage().f(top_atmosphere_idx, wavelidx);
 
         double od = (kbot + ktop) / 2 * layer_dh;
-        //double ssa = (ssa_bot * kbot + ssa_top * ktop) / (kbot + ktop);
-        double ssa = (ssa_bot + ssa_top) / 2;
+        double ssa = (ssa_bot * kbot + ssa_top * ktop) / (kbot + ktop);
 
         double f = (ssa_bot * kbot*f_bot + ssa_top * ktop*f_top) / (kbot*ssa_bot + ktop*ssa_top);
 
@@ -288,16 +287,57 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                     if(atmosphere_mapping(p, i) > 0) {
                         auto& ptrb_layer = layer(p);
 
+                        // How d atmosphere k influences layer od
                         deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) * (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
                         deriv_ext.extinctions.emplace_back(1);
 
+                        // How d atmosphere ssa influences layer ssa
                         deriv_ssa.group_and_triangle_fraction.emplace_back(i + num_atmo_grid, atmosphere_mapping(p, i));
+                        deriv_ssa.extinctions.emplace_back(1);
+
+                        // How d atmosphere k influences layer ssa
+                        deriv_ssa.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i));
                         deriv_ssa.extinctions.emplace_back(1);
                     }
                 }
             }
             m_input_derivatives.set_geometry_configured();
             m_input_derivatives.sort(this->M_NLYR);
+        }
+
+        // Go through the derivatives and reassign a few things
+        for(int k = 0; k < m_input_derivatives.numDerivative(); ++k) {
+            LayerInputDerivative<NSTOKES>& deriv = m_input_derivatives.layerDerivatives()[k];
+            const OpticalLayer<NSTOKES, CNSTR>* layer = m_layers[deriv.layer_index].get();
+
+            // Have to check what kind of derivative this is
+            if(deriv.d_optical_depth > 0) {
+                // OD derivative, don't have to do anything here
+            } else if (deriv.d_SSA > 0) {
+                // SSA derivative
+
+                for(int l = 0; l < deriv.group_and_triangle_fraction.size(); ++l) {
+                    auto& group = deriv.group_and_triangle_fraction[l];
+                    auto& extinction = deriv.extinctions[l];
+
+                    if(group.first >= num_atmo_grid) {
+                        // Layer SSA contribution to dI/d atmosphere SSA, these are equal to the relative fraction of
+                        // extinction contributions
+
+                        int atmo_index = group.first - num_atmo_grid;
+
+                        extinction = atmosphere.storage().total_extinction(atmo_index, wavelidx) / layer->totalExt();
+                    } else {
+                        // This is layer SSA contribution to dI/d atmosphere k,
+                        int atmo_index = group.first;
+
+                        extinction = (atmosphere.storage().ssa(atmo_index, wavelidx) - layer->ssa()) / layer->totalExt();
+                    }
+                }
+
+            } else {
+                // Scattering derivative
+            }
         }
     }
 

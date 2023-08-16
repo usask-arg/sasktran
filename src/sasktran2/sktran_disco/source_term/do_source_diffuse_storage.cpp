@@ -480,14 +480,18 @@ namespace sasktran2 {
                     storage.source_terms_linear.value(index) /= ssa.value;
 
                     for(int k = 0; k < numderiv; ++k) {
-                        temp_deriv(k + layerStart, s) = temp_deriv(k + layerStart, s) / ssa.value - ssa.deriv(k) * storage.source_terms_linear.value(index) / ssa.value;
+                        temp_deriv(k + layerStart, s) -= ssa.deriv(k) * storage.source_terms_linear.value(index);
                     }
+                    temp_deriv(Eigen::all, s) /= ssa.value;
 
                     // And we also have to translate the temporary layer DO derivatives to atmosphere derivatives
                     storage.source_terms_linear.deriv(index, Eigen::all).setZero();
                     for(int k = 0; k < numtotalderiv; ++k) {
-                        for(const std::pair<sasktran_disco::uint, double>& group_fraction : input_derivatives.layerDerivatives()[k].group_and_triangle_fraction) {
-                            storage.source_terms_linear.deriv(index, group_fraction.first) += group_fraction.second * temp_deriv(k, s);
+                        for(int l = 0; l < input_derivatives.layerDerivatives()[k].group_and_triangle_fraction.size(); ++l) {
+                            const std::pair<sasktran_disco::uint, double>& group_fraction = input_derivatives.layerDerivatives()[k].group_and_triangle_fraction[l];
+                            const auto& extinction = input_derivatives.layerDerivatives()[k].extinctions[l];
+
+                            storage.source_terms_linear.deriv(index, group_fraction.first) += group_fraction.second * temp_deriv(k, s) * extinction;
                         }
                     }
                 }

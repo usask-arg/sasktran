@@ -71,7 +71,6 @@ namespace sasktran2 {
 
         double source_factor = (1-exp(-shell_od.od));
 
-
         for(int s = 0; s < NSTOKES; ++s) {
             // Need some temporaries
             double source_value = (*m_source_interpolator_view)[losidx][layeridx][s].dot(m_diffuse_storage->linear_source(threadidx).value);
