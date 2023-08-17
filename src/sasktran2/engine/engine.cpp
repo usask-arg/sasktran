@@ -23,6 +23,14 @@ void Sasktran2<NSTOKES>::construct_source_terms() {
         m_los_source_terms.push_back(m_source_terms[m_source_terms.size() - 1].get());
     }
 
+    if(m_config.single_scatter_source() == sasktran2::Config::SingleScatterSource::solartable) {
+        m_source_terms.emplace_back(
+                std::make_unique<sasktran2::solartransmission::SingleScatterSource<sasktran2::solartransmission::SolarTransmissionTable, NSTOKES>>(*m_geometry, *m_raytracer)
+        );
+
+        m_los_source_terms.push_back(m_source_terms[m_source_terms.size() - 1].get());
+    }
+
     if(m_config.occultation_source() == sasktran2::Config::OccultationSource::standard) {
         m_source_terms.emplace_back(
                 std::make_unique<sasktran2::solartransmission::OccultationSource<NSTOKES>>()

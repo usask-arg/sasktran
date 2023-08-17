@@ -7,6 +7,7 @@ namespace sasktran2 {
         m_ndostreams(16),
         m_enable_wfs(true),
         m_apply_delta_scaling(true),
+        m_wf_precision(WeightingFunctionPrecision::full),
         m_nsinglescatter_moments(16),
         m_ndosza(1),
         m_ndosphericaliterations(0),

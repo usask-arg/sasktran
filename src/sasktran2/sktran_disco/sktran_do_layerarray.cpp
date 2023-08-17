@@ -174,7 +174,8 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
         const std::vector<LineOfSight>& los,
         std::unique_ptr<BRDF_Base> brdf,
         const GeometryLayerArray<NSTOKES, CNSTR> &geometry_layers,
-        const sasktran2::atmosphere::Atmosphere<NSTOKES> &atmosphere
+        const sasktran2::atmosphere::Atmosphere<NSTOKES> &atmosphere,
+        const sasktran2::Config& sk_config
         ) : OpticalLayerArrayROP<NSTOKES>(config),
         m_direct_toa(this->M_SOLAR_DIRECT_INTENSITY),
         m_config(config),
@@ -229,8 +230,6 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
             if constexpr (NSTOKES == 1) {
                 double avg_p = (kbot*ssa_bot*phase(k, bot_atmosphere_idx) + ktop*ssa_top*phase(k, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
 
-                // avg_p = (phase(k, bot_atmosphere_idx) + phase(k, top_atmosphere_idx)) / 2;
-
                 temp.a1 = avg_p - f * (2*k+1) / (1-f);
             } else if constexpr (NSTOKES == 3) {
                 auto stokes_seq = Eigen::seq(k*4, (k+1)*4 - 1);
@@ -258,7 +257,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
     }
     m_chapman_factors = geometry_layers.chapman_factors();
 
-    if (atmosphere.num_deriv() > 0) {
+    if (atmosphere.num_deriv() > 0 && sk_config.wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
         int numderiv = atmosphere.num_deriv();
         int num_atmo_grid = (int)atmosphere.storage().total_extinction.rows();
         int num_scattering_groups = atmosphere.num_scattering_deriv_groups();
@@ -269,8 +268,6 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
             // to construct both the atmosphere and the derivatives
             Eigen::MatrixXd atmosphere_mapping(this->M_NLYR, num_atmo_grid);
             atmosphere_mapping.setZero();
-
-            //
 
             for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
                 int top_atmosphere_idx = (int)atmosphere.storage().total_extinction.rows() - p - 1;
@@ -283,12 +280,6 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
             // Now avg_k in layers = atmosphere_mapping @ atmosphere_extinction
             for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
                 auto& ptrb_layer = layer(p);
-
-                LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
-                LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
-
-                deriv_ext.d_optical_depth = 1;
-                deriv_ssa.d_SSA = 1;
 
                 // Go through the atmosphere mapping and add non-zero elements for SSA/ext
                 for(int scatidx = 0; scatidx < num_scattering_groups; ++scatidx) {
@@ -310,6 +301,12 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                         }
                     }
                 }
+
+                LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
+                LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
+
+                deriv_ext.d_optical_depth = 1;
+                deriv_ssa.d_SSA = 1;
                 // Go through the atmosphere mapping and add non-zero elements for SSA/ext
                 for(int i = 0; i < num_atmo_grid; ++i) {
                     if(atmosphere_mapping(p, i) > 0) {
@@ -797,6 +794,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
     // Sometimes we can get OD's so large that exp(-od) = 0, in which case we can't do log(exp(-od)) to recover od so we have
     // to store OD temporarily
     double od_temp;
+    Eigen::VectorXd d_temp;
 
     if(compute_deriv) {
         for(auto& layer : m_layers) {
@@ -809,6 +807,8 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
                 layer->ceiling_beam_transmittance().value = 1;
                 od_temp = 0;
                 layer->ceiling_beam_transmittance().deriv.setZero();
+
+                d_temp = layer->ceiling_beam_transmittance().deriv;
             } else {
                 layer->ceiling_beam_transmittance().value = m_layers[layer->index() - 1]->floor_beam_transmittance().value;
                 layer->ceiling_beam_transmittance().deriv = m_layers[layer->index() - 1]->floor_beam_transmittance().deriv;
@@ -828,7 +828,7 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
                     (layer->floor_beam_transmittance().value - od_temp) /
                     layer->dual_thickness().value;
 
-            layer->dual_average_secant().deriv = (layer->floor_beam_transmittance().deriv + layer->ceiling_beam_transmittance().deriv / layer->ceiling_beam_transmittance().value) / layer->dual_thickness().value;
+            layer->dual_average_secant().deriv = (layer->floor_beam_transmittance().deriv + d_temp) / layer->dual_thickness().value;
             const auto seq = Eigen::seq(layer->dual_thickness().layer_start, layer->dual_thickness().layer_start + layer->dual_thickness().deriv.size() - 1);
 
             if (layer->dual_thickness().deriv.size() > 0) {
@@ -837,6 +837,8 @@ void sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::configureTransmission()
 
             od_temp = layer->floor_beam_transmittance().value;
             layer->floor_beam_transmittance().value = std::exp(-layer->floor_beam_transmittance().value);
+
+            d_temp = -1 * layer->floor_beam_transmittance().deriv;
             layer->floor_beam_transmittance().deriv = layer->floor_beam_transmittance().value * -1 * layer->floor_beam_transmittance().deriv;
         }
     } else {

@@ -109,6 +109,8 @@ namespace sasktran2 {
         std::unique_ptr<sasktran2::grids::Grid> m_cos_angle_grid;
         const sasktran2::grids::Grid& m_sza_grid;
 
+        Eigen::VectorX<bool> m_need_to_calculate_map; // [source idx]
+
         std::vector<Eigen::MatrixXd> m_scattering_matrix_stream_angles;
         std::vector<Eigen::MatrixXd> m_scattering_matrix_interpolation_angles;
 
@@ -278,8 +280,10 @@ namespace sasktran2 {
                                            const sasktran2::raytracing::RayTracerBase& raytracer);
 
         virtual void calculate(int wavelidx, int threadidx);
-        virtual void initialize_geometry(const std::vector<sasktran2::raytracing::TracedRay>& los_rays);
-        virtual void initialize_atmosphere(const sasktran2::atmosphere::Atmosphere<NSTOKES>& atmosphere);
+        virtual void initialize_geometry(const std::vector<sasktran2::raytracing::TracedRay>& los_rays) override;
+        virtual void initialize_atmosphere(const sasktran2::atmosphere::Atmosphere<NSTOKES>& atmosphere) override;
+        virtual void initialize_config(const sasktran2::Config& config) override;
+
 
         void integrated_source(int wavelidx,  int losidx, int layeridx, int threadidx, const sasktran2::raytracing::SphericalLayer& layer,
                                const sasktran2::SparseODDualView& shell_od,

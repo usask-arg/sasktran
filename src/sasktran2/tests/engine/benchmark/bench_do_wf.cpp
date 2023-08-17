@@ -21,7 +21,7 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
     sasktran2::Geometry1D geo(std::move(coords), std::move(grid));
 
     // Construct the Atmosphere
-    int nwavel = 10;
+    int nwavel = 100;
     sasktran2::atmosphere::AtmosphereGridStorageFull<1> storage(nwavel, geo.size(), 16);
     sasktran2::atmosphere::Surface surface;
 
@@ -61,6 +61,7 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
         atmo.storage().total_extinction(Eigen::all, i) = Eigen::Map<Eigen::MatrixXd>(&extinction[0], 101, 1);
 
         atmo.storage().phase[i].storage().setZero();
+        //atmo.storage().phase[i].resize_derivative(101, 16, 1, 202);
 
         atmo.storage().phase[i].storage()(0, Eigen::all).setConstant(1);
         atmo.storage().phase[i].storage()(2, Eigen::all).setConstant(0.5);
@@ -79,6 +80,9 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
 
     // Construct the config
     sasktran2::Config config;
+
+    config.set_num_do_streams(2);
+    config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::reduced);
 
     config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
 

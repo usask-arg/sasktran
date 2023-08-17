@@ -28,6 +28,8 @@ namespace sasktran2 {
          *
          *  'discrete_ordinates' Uses the discrete ordinates method to calculate the multiple scatter source.
          *
+         *  'hr' Uses a successive orders of scattering method to calculate the multiple scatter source.
+         *
          *  'none' Removes the multiple scatter source from the calculation.
          *
          */
@@ -35,6 +37,24 @@ namespace sasktran2 {
             discrete_ordinates,
             hr,
             none
+        };
+
+        /** Enum that determines the accuracy of the weighting function solution within the model.  The exact effect
+         *  of each level is determined primarily by the source functions included, however as a rough rule of thumb:
+         *
+         *  'full` Includes all effects of the weighting function calculation so that the weighting function is exact
+         *         to machine precision
+         *
+         *  'reduced' Allows source terms to neglect hard to calculate weighting function contributions to improve computational speed.
+         *
+         *
+         *  'limited' Includes only core effects of the weighting function, typically just direct line of sight terms and no multiple scatter
+         *
+         */
+        enum class WeightingFunctionPrecision {
+            full,
+            reduced,
+            limited
         };
 
         /** Enum determining the type of occulation source to include within the model.
@@ -178,6 +198,9 @@ namespace sasktran2 {
         bool initialize_hr_with_do() const { return m_initialize_hr_with_do_solution; }
         void set_initialize_hr_with_do(bool init) { m_initialize_hr_with_do_solution = init; }
 
+        WeightingFunctionPrecision wf_precision() const { return m_wf_precision; }
+        void set_wf_precision(WeightingFunctionPrecision precision) { m_wf_precision = precision; }
+
     private:
         int m_nthreads;
         int m_nstokes;
@@ -200,6 +223,8 @@ namespace sasktran2 {
         SingleScatterSource m_single_scatter_source;
         MultipleScatterSource m_multiple_scatter_source;
         OccultationSource m_occultation_source;
+
+        WeightingFunctionPrecision m_wf_precision;
 
         bool m_initialize_hr_with_do_solution;
 	};

@@ -32,9 +32,10 @@ namespace sasktran2 {
 
         m_storage.resize(config.num_threads());
 
+        int num_source_points = (int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
         for(auto& storage: m_storage) {
             // TODO: Derivative
-            storage.source_terms_linear.resize((int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES, 0, true);
+            storage.source_terms_linear.resize(num_source_points, 0, true);
 
             storage.phase_storage.resize(m_cos_angle_grid->grid().size(), do_config.nstr());
             for(int i = 0; i < storage.phase_storage.size(); ++i) {
@@ -42,6 +43,9 @@ namespace sasktran2 {
             }
             storage.phase_container.resize(config.num_do_streams());
         }
+
+        m_need_to_calculate_map.resize(num_source_points);
+        m_need_to_calculate_map.setConstant(false);
     }
 
     template <int NSTOKES, int CNSTR>
@@ -105,6 +109,8 @@ namespace sasktran2 {
                                     double azi_factor = cos(k * azi);
                                     int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], k);
 
+                                    m_need_to_calculate_map[index] = true;
+
                                     if constexpr (NSTOKES == 1) {
                                         sparsevec[0].coeffRef(index) = azi_factor * weight;
                                     } else if constexpr (NSTOKES == 3) {
@@ -117,6 +123,8 @@ namespace sasktran2 {
                                 }
                             } else {
                                 int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], 0);
+
+                                m_need_to_calculate_map[index] = true;
 
                                 if constexpr (NSTOKES == 1) {
                                     sparsevec[0].coeffRef(index) = weight;
@@ -276,7 +284,6 @@ namespace sasktran2 {
         Eigen::Matrix<double, -1, NSTOKES> temp_deriv(input_derivatives.numDerivative(), NSTOKES);
 
 
-
         for(int lidx = 0; lidx < m_altitude_grid->grid().size(); ++lidx) {
             Y_minus_deriv.clear();
             Y_plus_deriv.clear();
@@ -340,6 +347,10 @@ namespace sasktran2 {
 
             for(int aidx = 0; aidx < m_cos_angle_grid->grid().size(); ++aidx) {
                 int sourceidx = linear_storage_index(aidx, lidx, szaidx, m);
+
+                if(!m_need_to_calculate_map[sourceidx]) {
+                    continue;
+                }
 
                 for(int s = 0; s < NSTOKES; ++s) {
                     storage.source_terms_linear.value(sourceidx*NSTOKES + s) = 0.0;
@@ -485,7 +496,9 @@ namespace sasktran2 {
                     temp_deriv(Eigen::all, s) /= ssa.value;
 
                     // And we also have to translate the temporary layer DO derivatives to atmosphere derivatives
-                    storage.source_terms_linear.deriv(index, Eigen::all).setZero();
+                    if(numtotalderiv > 0) {
+                        storage.source_terms_linear.deriv(index, Eigen::all).setZero();
+                    }
                     for(int k = 0; k < numtotalderiv; ++k) {
                         for(int l = 0; l < input_derivatives.layerDerivatives()[k].group_and_triangle_fraction.size(); ++l) {
                             const std::pair<sasktran_disco::uint, double>& group_fraction = input_derivatives.layerDerivatives()[k].group_and_triangle_fraction[l];

@@ -49,7 +49,8 @@ namespace sasktran_disco
                           const std::vector<LineOfSight>& los,
                           std::unique_ptr<BRDF_Base> brdf,
                           const GeometryLayerArray<NSTOKES, CNSTR>& geometry_layers,
-                          const sasktran2::atmosphere::Atmosphere<NSTOKES>& atmosphere
+                          const sasktran2::atmosphere::Atmosphere<NSTOKES>& atmosphere,
+                          const sasktran2::Config& sk_config
         );
 
 		// Configures a the array for a test. This just skips pulling physical 

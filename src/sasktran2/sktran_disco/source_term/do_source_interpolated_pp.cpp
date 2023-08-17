@@ -50,6 +50,11 @@ namespace sasktran2 {
         m_diffuse_storage->initialize_atmosphere(atmosphere);
     }
 
+    template<int NSTOKES, int CNSTR>
+    void DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::initialize_config(const sasktran2::Config &config) {
+        DOSource<NSTOKES, CNSTR>::initialize_config(config);
+    }
+
     template <int NSTOKES, int CNSTR>
     void DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::integrated_source(int wavelidx, int losidx, int layeridx, int threadidx,
                                                      const sasktran2::raytracing::SphericalLayer &layer,
@@ -77,22 +82,24 @@ namespace sasktran2 {
 
             source.value(s) += omega * source_factor * source_value;
 
-            // Now we need dJ/dthickness
-            for(auto it = shell_od.deriv_iter; it; ++it) {
-                source.deriv(s, it.index()) += it.value() * (1 - source_factor) * source_value * omega;
-            }
+            if(m_atmosphere->num_deriv() > 0) {
+                // Now we need dJ/dthickness
+                for(auto it = shell_od.deriv_iter; it; ++it) {
+                    source.deriv(s, it.index()) += it.value() * (1 - source_factor) * source_value * omega;
+                }
 
-            // And dJ/dssa
-            for(auto& ele : interpolator) {
-                source.deriv(s, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * source_factor * source_value;
-            }
+                // And dJ/dssa
+                for(auto& ele : interpolator) {
+                    source.deriv(s, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * source_factor * source_value;
+                }
 
-            // Then our source derivatives
-            for(int k = 0; k < m_diffuse_storage->linear_source(threadidx).derivative_size(); ++k) {
-                // Account for dJ/dx
-                double deriv_value = (*m_source_interpolator_view)[losidx][layeridx][s].dot(m_diffuse_storage->linear_source(threadidx).deriv(Eigen::all, k));
-
-                source.deriv(s, k) +=  omega * source_factor * deriv_value;
+                if(this->m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                    // The derivatives are omega * source_factor * (interpolator @ source_deriv_storage)
+                    // This seems to be the fastest way to do the calculation
+                    for(auto it = Eigen::SparseVector<double>::InnerIterator((*m_source_interpolator_view)[losidx][layeridx][s]); it; ++it) {
+                        source.deriv(s, Eigen::all) += omega * source_factor * it.value() * m_diffuse_storage->linear_source(threadidx).deriv(it.index(), Eigen::all);
+                    }
+                }
             }
         }
     }

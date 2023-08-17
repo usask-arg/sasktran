@@ -31,6 +31,8 @@ namespace sasktran2::solartransmission {
 
     template<typename S, int NSTOKES>
     void SingleScatterSource<S, NSTOKES>::initialize_config(const sasktran2::Config &config) {
+        m_config = &config;
+
         this->m_solar_transmission.initialize_config(config);
 
         // Set up storage for each thread
@@ -179,13 +181,19 @@ namespace sasktran2::solartransmission {
         phase_interp.scatter(m_atmosphere->storage().phase[wavelidx], m_thread_index_cache_two[threadidx], end_phase);
 
         if(calculate_derivative) {
-            // Have to apply the solar transmission derivative factors
-            for(Eigen::SparseMatrix<double, Eigen::RowMajor>::InnerIterator it(m_geometry_sparse, entrance_index); it; ++it) {
-                start_phase.deriv(Eigen::all, it.index()) -= it.value() * start_phase.value;
-            }
+            if constexpr (std::is_same_v<S, SolarTransmissionExact>) {
+                if (m_config->wf_precision() != sasktran2::Config::WeightingFunctionPrecision::limited) {
+                    // Have to apply the solar transmission derivative factors
+                    for (Eigen::SparseMatrix<double, Eigen::RowMajor>::InnerIterator it(m_geometry_sparse,
+                                                                                        entrance_index); it; ++it) {
+                        start_phase.deriv(Eigen::all, it.index()) -= it.value() * start_phase.value;
+                    }
 
-            for(Eigen::SparseMatrix<double, Eigen::RowMajor>::InnerIterator it(m_geometry_sparse, exit_index); it; ++it) {
-                end_phase.deriv(Eigen::all, it.index()) -= it.value() * end_phase.value;
+                    for (Eigen::SparseMatrix<double, Eigen::RowMajor>::InnerIterator it(m_geometry_sparse,
+                                                                                        exit_index); it; ++it) {
+                        end_phase.deriv(Eigen::all, it.index()) -= it.value() * end_phase.value;
+                    }
+                }
             }
 
             // And SSA derivative factors

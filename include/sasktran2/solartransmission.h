@@ -108,6 +108,7 @@ namespace sasktran2::solartransmission {
         mutable std::vector<sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES>> m_end_source_cache;
 
         const Geometry1D& m_geometry;
+        const sasktran2::Config* m_config;
 
         const std::vector<sasktran2::raytracing::TracedRay>* m_los_rays;
 

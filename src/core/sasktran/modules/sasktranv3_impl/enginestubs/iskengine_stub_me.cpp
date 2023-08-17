@@ -110,6 +110,40 @@ bool ISKEngine_Stub_ME::MakeScalarSetFunctions() {
                          }
     );
 
+    AddSetScalarFunction("wfprecision",
+                         [&, this](double d ) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             if(specifier == 0) {
+                                 m_config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::full);
+                             } else if (specifier == 1) {
+                                 m_config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::reduced);
+                             } else if (specifier == 2) {
+                                 m_config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::limited);
+                             }
+
+                             return ok;
+                         }
+    );
+
+    AddSetScalarFunction("singlescattersource",
+                         [&, this](double d ) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             if(specifier == 0) {
+                                 m_config.set_single_scatter_source(sasktran2::Config::SingleScatterSource::exact);
+                             } else if (specifier == 1) {
+                                 m_config.set_single_scatter_source(sasktran2::Config::SingleScatterSource::solartable);
+                             } else if (specifier == 2) {
+                                 m_config.set_single_scatter_source(sasktran2::Config::SingleScatterSource::none);
+                             }
+
+                             return ok;
+                         }
+    );
+
     AddSetScalarFunction("applydeltascaling",
                          [&, this](double d ) {
                              int specifier = (int) ceil(d - 0.5);

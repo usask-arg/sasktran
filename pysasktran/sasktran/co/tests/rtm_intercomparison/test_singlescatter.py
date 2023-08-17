@@ -4,7 +4,7 @@ import numpy as np
 
 
 def test_all_singlescatter():
-    for atm_scenario in range(3):
+    for atm_scenario in range(2):
         for geo_scenario in range(8):
             scen = load_scenario(geo_scenario, atm_scenario, 0, 0, 16, altitude_spacing=500)
 

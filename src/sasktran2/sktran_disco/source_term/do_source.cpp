@@ -35,7 +35,8 @@ namespace sasktran2 {
                     m_do_los,
                     std::move(brdf),
                     *solver.geometry_layers,
-                    *m_atmosphere
+                    *m_atmosphere,
+                    *m_config
                     );
 
             sasktran_disco::RTESolver<NSTOKES, CNSTR> rte(*solver.persistent_config, optical_layer);

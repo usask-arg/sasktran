@@ -229,6 +229,7 @@ TEST_CASE("Basic Calculation", "[sasktran2][engine]") {
         atmo.storage().phase[i].storage()(2, Eigen::all).setConstant(0.5);
     }
 
+    atmo.storage().f.setZero();
     atmo.storage().ssa.setConstant(1.0);
 
     // Construct the Viewing rays
