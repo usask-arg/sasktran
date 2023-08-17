@@ -38,7 +38,7 @@ def test_absorption_wf(delta_scale):
     validate_wf(rad['wf_o3'], rad['wf_numerical_o3'], decimal=5)
 
 
-@pytest.mark.parametrize('delta_scale', [False, False], ids=['Delta Scale True', 'Delta Scale False'])
+@pytest.mark.parametrize('delta_scale', [True, False], ids=['Delta Scale True', 'Delta Scale False'])
 def test_scattering_wf_one_scatterer(delta_scale):
     """
     Verifies that the weighting function for scattering is equal to a numerical calculation to 7 decimal places
@@ -80,9 +80,16 @@ def test_scattering_wf_multiple_scatterer(delta_scale):
 
     geo = default_geometry()
 
+    if delta_scale:
+        ns = 2
+    else:
+        ns = 4
+
     engine = sk.EngineCO(atmosphere=atmo, geometry=geo, wavelengths=ozone_wf_wavelengths,
-                         options={'numssmoments': 2,
-                                  'numdostreams': 2,
+                         options={
+                                  'msmode': 1,
+                                  'numssmoments': ns,
+                                  'numdostreams': ns,
                                   'applydeltascaling': delta_scale
                                   }
                          )

@@ -228,6 +228,9 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
 
             if constexpr (NSTOKES == 1) {
                 double avg_p = (kbot*ssa_bot*phase(k, bot_atmosphere_idx) + ktop*ssa_top*phase(k, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
+
+                // avg_p = (phase(k, bot_atmosphere_idx) + phase(k, top_atmosphere_idx)) / 2;
+
                 temp.a1 = avg_p - f * (2*k+1) / (1-f);
             } else if constexpr (NSTOKES == 3) {
                 auto stokes_seq = Eigen::seq(k*4, (k+1)*4 - 1);
@@ -258,6 +261,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
     if (atmosphere.num_deriv() > 0) {
         int numderiv = atmosphere.num_deriv();
         int num_atmo_grid = (int)atmosphere.storage().total_extinction.rows();
+        int num_scattering_groups = atmosphere.num_scattering_deriv_groups();
 
         if (!m_input_derivatives.is_geometry_configured()) {
             // Construct the matrix that maps atmosphere extinction to layer quantities
@@ -265,6 +269,8 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
             // to construct both the atmosphere and the derivatives
             Eigen::MatrixXd atmosphere_mapping(this->M_NLYR, num_atmo_grid);
             atmosphere_mapping.setZero();
+
+            //
 
             for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
                 int top_atmosphere_idx = (int)atmosphere.storage().total_extinction.rows() - p - 1;
@@ -276,16 +282,37 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
 
             // Now avg_k in layers = atmosphere_mapping @ atmosphere_extinction
             for(LayerIndex p = 0; p < this->M_NLYR; ++p) {
+                auto& ptrb_layer = layer(p);
+
                 LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
                 LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
 
                 deriv_ext.d_optical_depth = 1;
                 deriv_ssa.d_SSA = 1;
 
-                // Go through the atmosphere mapping and add non-zero elements
+                // Go through the atmosphere mapping and add non-zero elements for SSA/ext
+                for(int scatidx = 0; scatidx < num_scattering_groups; ++scatidx) {
+                    LayerInputDerivative<NSTOKES>& deriv_scat = m_input_derivatives.addDerivative(this->M_NSTR, p);
+
+                    for(int i = 0; i < num_atmo_grid; ++i) {
+                        if(atmosphere_mapping(p, i) > 0) {
+                            // How d atmosphere legendre influences layer legendre
+                            deriv_scat.group_and_triangle_fraction.emplace_back(atmosphere.scat_deriv_start_index() + num_atmo_grid*scatidx + i, atmosphere_mapping(p, i));
+                            deriv_scat.extinctions.emplace_back(1);
+
+                            // How d atmosphere ssa influences layer legendre?
+                            //deriv_scat.group_and_triangle_fraction.emplace_back(atmosphere.ssa_deriv_start_index() + i, atmosphere_mapping(p, i));
+                            //deriv_scat.extinctions.emplace_back(1);
+
+                            // How d atmosphere k influences layer legendre?
+                            //deriv_scat.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i));
+                            //deriv_scat.extinctions.emplace_back(1);
+                        }
+                    }
+                }
+                // Go through the atmosphere mapping and add non-zero elements for SSA/ext
                 for(int i = 0; i < num_atmo_grid; ++i) {
                     if(atmosphere_mapping(p, i) > 0) {
-                        auto& ptrb_layer = layer(p);
 
                         // How d atmosphere k influences layer od
                         deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) * (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
@@ -337,6 +364,33 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
 
             } else {
                 // Scattering derivative
+                for(int l = 0; l < deriv.group_and_triangle_fraction.size(); ++l) {
+                    auto& group = deriv.group_and_triangle_fraction[l];
+                    auto& extinction = deriv.extinctions[l];
+
+                    if(group.first >= 2*num_atmo_grid) {
+                        // Layer legendre contribution to dI / d atmosphere legendre
+                        int group_index = (group.first - 2*num_atmo_grid) / int(num_atmo_grid);
+                        int atmo_index = group.first % num_atmo_grid;
+
+                        double f = atmosphere.storage().f(atmo_index, wavelidx);
+
+                        for(int l = 0; l < (int)this->M_NSTR; ++l) {
+                            deriv.d_legendre_coeff[l].a1 = atmosphere.storage().phase[wavelidx].deriv_storage(
+                                    group_index)(l, atmo_index);
+
+                            if(atmosphere.storage().applied_f_order > 0) {
+                                deriv.d_legendre_coeff[l].a1 += -(2*l+1) / (1-f) / (1-f) * atmosphere.storage().phase[wavelidx].f_deriv_storage(group_index)(atmo_index);
+                            }
+                        }
+
+                        extinction = atmosphere.storage().ssa(atmo_index, wavelidx) * atmosphere.storage().total_extinction(atmo_index, wavelidx) / layer->scatExt();
+                    } else if(group.first >= num_atmo_grid) {
+                        // Layer legendre contribution to dI / dssa ?
+                    } else {
+                        // Layer legendre contribution to dI / dk ?
+                    }
+                }
             }
         }
     }

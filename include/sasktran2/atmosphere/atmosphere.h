@@ -69,5 +69,6 @@ namespace sasktran2::atmosphere {
 
         int num_wavel() const { return (int)m_storage.total_extinction.cols();}
         int num_deriv() const;
+        int num_scattering_deriv_groups() const { return m_storage.phase[0].num_deriv(); }
     };
 }

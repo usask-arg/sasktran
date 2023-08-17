@@ -3,8 +3,9 @@
 #include <sasktran2.h>
 #include <omp.h>
 
+#ifdef SKTRAN_CATCH2_VERSION3
 
-TEST_CASE("Verify SSA WF", "[sasktran2][engine][wf]") {
+TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
     omp_set_num_threads(1);
     // Construct the geometry
     sasktran2::Coordinates coords(0, sasktran2::math::PiOver2, 6372000, sasktran2::geometrytype::spherical);
@@ -20,7 +21,7 @@ TEST_CASE("Verify SSA WF", "[sasktran2][engine][wf]") {
     sasktran2::Geometry1D geo(std::move(coords), std::move(grid));
 
     // Construct the Atmosphere
-    int nwavel = 1;
+    int nwavel = 10;
     sasktran2::atmosphere::AtmosphereGridStorageFull<1> storage(nwavel, geo.size(), 16);
     sasktran2::atmosphere::Surface surface;
 
@@ -57,12 +58,12 @@ TEST_CASE("Verify SSA WF", "[sasktran2][engine][wf]") {
                                     3.75879135e-11};
 
     for(int i = 0; i < nwavel; ++i) {
-    atmo.storage().total_extinction(Eigen::all, i) = Eigen::Map<Eigen::MatrixXd>(&extinction[0], 101, 1);
+        atmo.storage().total_extinction(Eigen::all, i) = Eigen::Map<Eigen::MatrixXd>(&extinction[0], 101, 1);
 
-    atmo.storage().phase[i].storage().setZero();
+        atmo.storage().phase[i].storage().setZero();
 
-    atmo.storage().phase[i].storage()(0, Eigen::all).setConstant(1);
-    atmo.storage().phase[i].storage()(2, Eigen::all).setConstant(0.5);
+        atmo.storage().phase[i].storage()(0, Eigen::all).setConstant(1);
+        atmo.storage().phase[i].storage()(2, Eigen::all).setConstant(0.5);
     }
 
     atmo.storage().ssa.setConstant(0.3);
@@ -79,36 +80,13 @@ TEST_CASE("Verify SSA WF", "[sasktran2][engine][wf]") {
     // Construct the config
     sasktran2::Config config;
 
+    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
+
     // Make the engine
     Sasktran2<1> engine(config, &geo, viewing_geometry);
 
     sasktran2::OutputIdealDense<1> output, output_perturb_above, output_perturb_below;
     engine.calculate_radiance(atmo, output);
-
-    double dssa = 0.0001;
-    for(int i = 0; i < geo.size(); ++i) {
-        // Perturb SSA, calculate derivative
-
-        atmo.storage().ssa(i, 0) += dssa;
-
-        engine.calculate_radiance(atmo, output_perturb_above);
-        atmo.storage().ssa(i, 0) -= 2*dssa;
-
-        engine.calculate_radiance(atmo, output_perturb_below);
-        atmo.storage().ssa(i, 0) += dssa;
-
-        // We will have nlos wf's to check
-        for(int j = 0; j < nlos; ++j) {
-            double numeric_wf = (output_perturb_above.radiance().value(j) - output_perturb_below.radiance().value(j)) / (2*dssa);
-            double analytic_wf = output.radiance().deriv(j, i + geo.size());
-
-            if(fabs(analytic_wf) < 1e-10) {
-                REQUIRE(fabs(numeric_wf - analytic_wf) < 1e-10);
-            } else {
-                REQUIRE(fabs((numeric_wf - analytic_wf) / analytic_wf) < 1e-4);
-            }
-
-        }
-    }
-
 }
+
+#endif
