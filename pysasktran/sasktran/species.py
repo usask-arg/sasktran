@@ -245,12 +245,14 @@ class SpeciesBaumIceCloud(Species):
     name : str, optional
         Name of the species, only necessary to change if you want a different name or want to add multiple ice cloud
         layers.
+    use_delta_eddington : bool, optional
+        True if the delta-eddington reduction should be applied to the cloud optical property
     """
     def __init__(self, particlesize_microns: float, cloud_top_m: float,
                  cloud_width_fwhm_m: float, vertical_optical_depth: float,
                  vertical_optical_depth_wavel_nm: float, altitude_resolution_m: float=10, num_sigma: int=5,
-                 name='icecloud'):
-        optical_property = sk.BaumIceCrystal(particlesize_microns)
+                 name='icecloud', use_delta_eddington=True):
+        optical_property = sk.BaumIceCrystal(particlesize_microns, use_delta_eddington=use_delta_eddington)
 
         cloud_sigma = cloud_width_fwhm_m / (2 * np.sqrt(2 * np.log(2)))
 

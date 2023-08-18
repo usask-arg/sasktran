@@ -419,6 +419,8 @@ bool ISKEngine_Stub_ME::InitializeModel() {
 
 
 bool ISKEngine_Stub_ME::CalculateRadiance(const double** radiance, int* numwavelens, int* numlinesofsight) {
+    omp_set_num_threads(m_config.num_threads());
+
     // Create the internal engine object, atmosphere, and do the calculation
     if(m_nstokes == 1) {
         m_atmosphere_constructor = std::make_unique<sktran_me::AtmosphereConstructor<1>>(m_atmosphere_interface, m_wfhandler);
@@ -429,7 +431,6 @@ bool ISKEngine_Stub_ME::CalculateRadiance(const double** radiance, int* numwavel
                                                                                                                         *m_viewing_rays,
                                                                                                                         m_geometry_constructor.reference_point(),
                                                                                                                         m_wavelengths);
-
 
         dynamic_cast<Sasktran2<1>*>(m_engine.get())->calculate_radiance(dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->atmosphere(),
                                                                         dynamic_cast<sktran_me::AtmosphereConstructor<1>*>(m_atmosphere_constructor.get())->output());

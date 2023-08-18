@@ -321,7 +321,7 @@ bool skOpticalProperties_BaumIceCrystals2014::LegendreCoefficientsP11(double wav
 		opticalmaxcoeff = std::min(internalmoments.size(), (size_t)usermaxcoeff);
 		for (size_t idx = 0; idx < opticalmaxcoeff; idx++)
 		{
-			coeff[idx] = internalmoments[idx];
+			coeff[idx] = internalmoments[idx] / (2*idx + 1);
 		}
 		return true;
 	}

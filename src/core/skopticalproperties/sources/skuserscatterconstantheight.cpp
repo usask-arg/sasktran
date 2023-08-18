@@ -21,6 +21,14 @@ bool skOpticalProperties_UserDefinedScatterConstantHeight::CalculateCrossSection
 bool skOpticalProperties_UserDefinedScatterConstantHeight::CalculatePhaseMatrix(double wavenumber, double cosscatterangle, skRTPhaseMatrix* phasematrix) {
 	phasematrix->SetTo(0.0);
 
+    std::pair<double, size_t> cosscatterandindex;
+    cosscatterandindex.first = cosscatterangle;
+
+    double temp;
+    CalculateP11(wavenumber, cosscatterandindex, temp);
+
+    phasematrix->At(1, 1) = temp;
+
 	return true;
 }
 bool skOpticalProperties_UserDefinedScatterConstantHeight::CalculateP11(double wavenumber, std::pair<double, size_t> cosscatterandindex, double& p11) {

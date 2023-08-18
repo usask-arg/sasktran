@@ -107,7 +107,15 @@ namespace sktran_me {
 
         Eigen::VectorXd grid_values = altitude_grid;
 
-        sasktran2::grids::AltitudeGrid grid = sasktran2::grids::AltitudeGrid(std::move(grid_values), sasktran2::grids::gridspacing::constant,
+        // Check if the altitude grid is uniform
+        sasktran2::grids::gridspacing spacing;
+        if((grid_values(Eigen::seq(1, Eigen::last)) - grid_values(Eigen::seq(0, Eigen::last-1))).isApproxToConstant(grid_values(1) - grid_values(0))) {
+            spacing = sasktran2::grids::gridspacing::constant;
+        } else {
+            spacing = sasktran2::grids::gridspacing::variable;
+        }
+
+        sasktran2::grids::AltitudeGrid grid = sasktran2::grids::AltitudeGrid(std::move(grid_values), spacing,
                                                                              sasktran2::grids::outofbounds::extend,
                                                                              sasktran2::grids::interpolation::linear);
 
