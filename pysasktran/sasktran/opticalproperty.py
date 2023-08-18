@@ -348,8 +348,6 @@ class UserDefinedScatterConstantHeight(OpticalProperty):
             scaling_subtract = np.zeros_like(lm_a1)
             order_truncation = lm_a1.size[0]
 
-
-
         total_xs = xs_scat + xs_abs
         omega = xs_scat / (xs_scat + xs_abs)
 
@@ -363,11 +361,10 @@ class UserDefinedScatterConstantHeight(OpticalProperty):
         if legendre_moments is not None:
             self.skif_object().SetProperty('legendremoments', legendre_moments)
 
-
         if lm_a1 is not None:
             self.skif_object().SetProperty('legendremomentsa1', (lm_a1[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
-        #TODO: Check these polarized scalings
+        # TODO: Check these polarized scalings
         if lm_a2 is not None:
             self.skif_object().SetProperty('legendremomentsa2', (lm_a2[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 

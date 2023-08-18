@@ -87,7 +87,6 @@ class EngineCO(sk.Engine):
 
         return rad
 
-
     @property
     def nstokes(self) -> int:
         return self._nstokes

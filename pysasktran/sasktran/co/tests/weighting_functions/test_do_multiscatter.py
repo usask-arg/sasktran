@@ -86,8 +86,7 @@ def test_scattering_wf_multiple_scatterer(delta_scale):
         ns = 4
 
     engine = sk.EngineCO(atmosphere=atmo, geometry=geo, wavelengths=ozone_wf_wavelengths,
-                         options={
-                                  'msmode': 1,
+                         options={'msmode': 1,
                                   'numssmoments': ns,
                                   'numdostreams': ns,
                                   'applydeltascaling': delta_scale

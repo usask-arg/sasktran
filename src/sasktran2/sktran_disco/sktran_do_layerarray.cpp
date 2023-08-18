@@ -303,10 +303,8 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                 }
 
                 LayerInputDerivative<NSTOKES>& deriv_ext = m_input_derivatives.addDerivative(this->M_NSTR, p);
-                LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
 
                 deriv_ext.d_optical_depth = 1;
-                deriv_ssa.d_SSA = 1;
                 // Go through the atmosphere mapping and add non-zero elements for SSA/ext
                 for(int i = 0; i < num_atmo_grid; ++i) {
                     if(atmosphere_mapping(p, i) > 0) {
@@ -314,7 +312,14 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                         // How d atmosphere k influences layer od
                         deriv_ext.group_and_triangle_fraction.emplace_back(i, atmosphere_mapping(p, i) * (ptrb_layer.altitude(Location::CEILING) - ptrb_layer.altitude(Location::FLOOR)));
                         deriv_ext.extinctions.emplace_back(1);
+                    }
+                }
 
+                LayerInputDerivative<NSTOKES>& deriv_ssa = m_input_derivatives.addDerivative(this->M_NSTR, p);
+                deriv_ssa.d_SSA = 1;
+                // Go through the atmosphere mapping and add non-zero elements for SSA/ext
+                for(int i = 0; i < num_atmo_grid; ++i) {
+                    if(atmosphere_mapping(p, i) > 0) {
                         // How d atmosphere ssa influences layer ssa
                         deriv_ssa.group_and_triangle_fraction.emplace_back(i + num_atmo_grid, atmosphere_mapping(p, i));
                         deriv_ssa.extinctions.emplace_back(1);
@@ -324,6 +329,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                         deriv_ssa.extinctions.emplace_back(1);
                     }
                 }
+
             }
             m_input_derivatives.set_geometry_configured();
             m_input_derivatives.sort(this->M_NLYR);

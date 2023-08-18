@@ -87,7 +87,7 @@ jobs:
         run: |
           python -m pip install -r pysasktran/requirements.txt
           python -m pip install sasktran --no-index -f wheelhouse/
-          python -m pip install pytest xarray scipy
+          python -m pip install pytest xarray scipy zenodo_get
       
       - name: Import SASKTRAN
         run: |

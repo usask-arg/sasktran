@@ -24,4 +24,4 @@ def test_all_singlescatter():
 
             max_error = np.max(np.abs(p_diff.flatten()))
 
-            assert(max_error < 0.35)
+            assert (max_error < 0.35)

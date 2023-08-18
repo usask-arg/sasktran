@@ -9,3 +9,4 @@ dependencies:
   - scipy
   - pip:
     - pytest-cov
+    - zenodo_get
