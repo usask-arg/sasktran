@@ -116,7 +116,7 @@ class TestEngineMC(unittest.TestCase):
         engine_output = engine.calculate_radiance()
         hardcodeMC = np.array([
             [6.40424550e-05, 9.00499796e-05, 7.17287790e-05, 6.05102733e-05],
-             [-3.56414296e-05, -9.05337267e-05, -3.17113375e-05, -5.91545520e-05]
+            [-3.56414296e-05, -9.05337267e-05, -3.17113375e-05, -5.91545520e-05]
         ])
         diff = np.abs((engine_output.ring_spectrum - hardcodeMC) / hardcodeMC)
         maxdiff = np.max(diff)
