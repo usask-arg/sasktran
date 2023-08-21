@@ -228,9 +228,10 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
             auto& temp = (*lephasef)[k];
 
             if constexpr (NSTOKES == 1) {
-                double avg_p = (kbot*ssa_bot*phase(k, bot_atmosphere_idx) + ktop*ssa_top*phase(k, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
+                double avg_p = (kbot*ssa_bot*(phase(k, bot_atmosphere_idx) - f_bot * (2*k+1) / (1-f_bot)) +
+                        ktop*ssa_top*(phase(k, top_atmosphere_idx) - f_top * (2*k+1) / (1-f_top))) / (kbot*ssa_bot + ktop*ssa_top);
 
-                temp.a1 = avg_p - f * (2*k+1) / (1-f);
+                temp.a1 = avg_p;
             } else if constexpr (NSTOKES == 3) {
                 auto stokes_seq = Eigen::seq(k*4, (k+1)*4 - 1);
                 Eigen::Vector<double, 4> avg_p = (kbot*ssa_bot*phase(stokes_seq, bot_atmosphere_idx) + ktop*ssa_top*phase(stokes_seq, top_atmosphere_idx)) / (kbot*ssa_bot + ktop*ssa_top);
