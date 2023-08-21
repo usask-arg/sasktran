@@ -211,7 +211,7 @@ bool skOpticalProperties_BaumIceCrystals2014::CalculatePhaseMatrix( double waven
 	bool	ok;
 
 	angle = nxmath::acosd( cosscatterangle );
-	ok    = m_icecrystalsdb.InterpolatePhaseMatrix( w, m_current_De, angle, phasematrix);
+	ok    = m_icecrystalsdb.InterpolatePhaseMatrix(w, m_current_De, angle, phasematrix);
 	if (!ok)
 	{
 		nxLog::Record(NXLOG_WARNING,"skOpticalProperties_BaumIceCrystals2014::CalculatePhaseMatrix, error fetching phase matrix data for wavelenghth = %g, De = %g", (double)w, (double)m_current_De);
@@ -316,12 +316,12 @@ bool skOpticalProperties_BaumIceCrystals2014::LegendreCoefficientsP11(double wav
 	{
 		std::vector<double> internalmoments;
 
-		m_icecrystalsdb.InterpolateLegendre(wavenumber, m_current_De, internalmoments);
+		m_icecrystalsdb.InterpolateLegendre( 1e7 / wavenumber, m_current_De, internalmoments);
 
 		opticalmaxcoeff = std::min(internalmoments.size(), (size_t)usermaxcoeff);
 		for (size_t idx = 0; idx < opticalmaxcoeff; idx++)
 		{
-			coeff[idx] = internalmoments[idx] / (2*idx + 1);
+			coeff[idx] = internalmoments[idx];
 		}
 		return true;
 	}

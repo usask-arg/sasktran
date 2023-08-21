@@ -346,7 +346,7 @@ class UserDefinedScatterConstantHeight(OpticalProperty):
         else:
             f = np.zeros_like(wavelengths)
             scaling_subtract = np.zeros_like(lm_a1)
-            order_truncation = lm_a1.size[0]
+            order_truncation = lm_a1.shape[0]
 
         total_xs = xs_scat + xs_abs
         omega = xs_scat / (xs_scat + xs_abs)
