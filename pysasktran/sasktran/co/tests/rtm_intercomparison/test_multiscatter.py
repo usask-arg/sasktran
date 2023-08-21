@@ -11,7 +11,6 @@ def test_all_multiscatter():
             engine = sk.EngineCO(atmosphere=scen['atmo'], geometry=scen['geo'], wavelengths=scen['wavelengths'],
                                  options={'msmode': 1,
                                           'altitudegrid': scen['altitudes'],
-                                          'numthreads': 8,
                                           'applydeltascaling': False
                                           }
                                  )
