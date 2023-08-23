@@ -5,6 +5,7 @@
 namespace sasktran2 {
     enum dualstorage {
         dense,
+        denseRowMajor,
         sparse,
         sparseview
     };
@@ -31,8 +32,10 @@ namespace sasktran2 {
 	class Dual {
 	private:
         using DerivStorage = typename std::conditional<DerivStorageE==dualstorage::dense,
-                Eigen::Matrix<T, CSIZE, -1>, typename std::conditional<DerivStorageE==dualstorage::sparse,
-                Eigen::SparseMatrix<T>, Eigen::SparseMatrix<T>>::type>::type;
+                Eigen::Matrix<T, CSIZE, -1>, typename std::conditional<DerivStorageE==dualstorage::denseRowMajor,
+                Eigen::Matrix<T, CSIZE, -1, Eigen::RowMajor>,
+                typename std::conditional<DerivStorageE==dualstorage::sparse,
+                Eigen::SparseMatrix<T>, Eigen::SparseMatrix<T>>::type>::type>::type;
 
 	public:
         Eigen::Vector<T, CSIZE> value; /**< values */

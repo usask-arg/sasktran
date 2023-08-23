@@ -24,7 +24,7 @@ from .co.engine import EngineCO
 
 # Utility classes overtop of sasktranif objects
 from .lineofsight import LineOfSight
-from .species import Species, SpeciesAerosol, SpeciesAerosolGloSSAC, SpeciesBaumIceCloud
+from .species import Species, SpeciesAerosol, SpeciesAerosolGloSSAC, SpeciesBaumIceCloud, SpeciesGaussianHeight
 from .stokesvector import StokesVector
 
 from .handles import standard_handles

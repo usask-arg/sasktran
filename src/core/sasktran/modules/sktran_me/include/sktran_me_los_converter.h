@@ -12,6 +12,12 @@ namespace sktran_me {
                                   const SKTRAN_LineOfSightEntry_V2* los,
                                   std::unique_ptr<sasktran2::viewinggeometry::ViewingGeometryContainer> &viewing_geo) const;
 
+        void add_ground_viewing_los(const sasktran2::Geometry1D& geometry,
+                                    nxGeodetic& geodetic,
+                                    const SKTRAN_LineOfSightEntry_V2* los,
+                                    std::unique_ptr<sasktran2::viewinggeometry::ViewingGeometryContainer> &viewing_geo
+                                    ) const;
+
         void not_implemented_error(const std::string& type) const;
 
         void construct_viewing_geometry(const sasktran2::Geometry1D& geometry,

@@ -171,6 +171,7 @@ namespace sasktran2::hr {
         phase_matrix.setZero();
 
         // Interpolate legendre coefficient to the location we are at
+        // TODO: Delta scaling
         for(int l = 0; l < m_legendre_scat_mats.size(); ++l) {
             double leg_coeff = 0.0;
 
@@ -191,6 +192,7 @@ namespace sasktran2::hr {
         phase_matrix.setZero();
 
         // Interpolate legendre coefficient to the location we are at
+        // TODO: Delta scaling
         for(int l = 0; l < m_legendre_scat_mats.size(); ++l) {
             std::array<double, 4> leg_coeff({0, 0, 0, 0});
 
@@ -198,11 +200,13 @@ namespace sasktran2::hr {
                 for(int i = 0; i < 4; ++i) {
                     leg_coeff[i] += ele.second * (phase.storage()(l*4 + i, ele.first));
 
+                    #ifdef SASKTRAN_DEBUG_ASSERTS
                     if(leg_coeff[i] != leg_coeff[i]) {
                         BOOST_LOG_TRIVIAL(error) << l << " " << i << " " << ele.second << " " << ele.first << " " << (phase.storage()(l*4 + i, ele.first));
                         BOOST_LOG_TRIVIAL(error) << phase.storage()(Eigen::all, ele.first);
 
                     }
+                    #endif
                 }
             }
             for(int i = 0; i < 4; ++i) {

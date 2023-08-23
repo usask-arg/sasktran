@@ -98,7 +98,7 @@ namespace sasktran2 {
     class DOSourceDiffuseStorage {
     private:
         struct DOSourceDiffuseThreadStorage {
-            sasktran2::Dual<double, sasktran2::dualstorage::dense> source_terms_linear; // [nstokes, angle, layer, sza, azi]
+            sasktran2::Dual<double, sasktran2::dualstorage::denseRowMajor> source_terms_linear; // [nstokes, angle, layer, sza, azi]
             std::vector<sasktran2::LegendrePhaseStorage<NSTOKES, CNSTR>> phase_storage;
             std::vector<sasktran_disco::LegendrePhaseContainer<NSTOKES>> phase_container;
         };
@@ -136,7 +136,7 @@ namespace sasktran2 {
                                 int szaidx,
                                 int thread_idx);
 
-        const sasktran2::Dual<double, sasktran2::dualstorage::dense>& linear_source(int threadidx) const { return m_storage[threadidx].source_terms_linear;}
+        const sasktran2::Dual<double, sasktran2::dualstorage::denseRowMajor>& linear_source(int threadidx) const { return m_storage[threadidx].source_terms_linear;}
 
         void initialize_atmosphere(const sasktran2::atmosphere::Atmosphere<NSTOKES>& atmo);
 

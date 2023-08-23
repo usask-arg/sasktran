@@ -61,7 +61,7 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
         atmo.storage().total_extinction(Eigen::all, i) = Eigen::Map<Eigen::MatrixXd>(&extinction[0], 101, 1);
 
         atmo.storage().phase[i].storage().setZero();
-        //atmo.storage().phase[i].resize_derivative(101, 16, 1, 202);
+        atmo.storage().phase[i].resize_derivative(101, 16, 1, 202);
 
         atmo.storage().phase[i].storage()(0, Eigen::all).setConstant(1);
         atmo.storage().phase[i].storage()(2, Eigen::all).setConstant(0.5);
@@ -81,10 +81,11 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
     // Construct the config
     sasktran2::Config config;
 
-    config.set_num_do_streams(2);
-    config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::reduced);
+    config.set_num_do_streams(8);
+    config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::full);
 
-    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
+    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::hr);
+    config.set_initialize_hr_with_do(true);
 
     // Make the engine
     Sasktran2<1> engine(config, &geo, viewing_geometry);

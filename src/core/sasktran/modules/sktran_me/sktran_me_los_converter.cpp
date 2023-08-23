@@ -20,7 +20,7 @@ namespace sktran_me {
                     add_limb_viewing_los(geometry, geodetic, entry, viewing_geo);
                     break;
                 case SKTRAN_LineOfSightEntry_V2::SKTRAN_VIEWING_TYPE_INSPACE_LOOKINGATNADIR:
-                    not_implemented_error("SKTRAN_VIEWING_TYPE_INSPACE_LOOKINGATNADIR");
+                    add_ground_viewing_los(geometry, geodetic, entry, viewing_geo);
                     break;
                 case SKTRAN_LineOfSightEntry_V2::SKTRAN_VIEWING_TYPE_INATMOS_LOOKINGATSPACE:
                     not_implemented_error("SKTRAN_VIEWING_TYPE_INATMOS_LOOKINGATSPACE");
@@ -75,6 +75,39 @@ namespace sktran_me {
         );
 
 
+    }
+
+    void GeometryConstructor::add_ground_viewing_los(const sasktran2::Geometry1D &geometry, nxGeodetic &geodetic,
+                                                     const SKTRAN_LineOfSightEntry_V2 *los,
+                                                     std::unique_ptr<sasktran2::viewinggeometry::ViewingGeometryContainer> &viewing_geo) const {
+        // Get the ground intersection of the LOS
+        nxVector entry, exit;
+        // TODO: What altitude to use here?
+        geodetic.GetShellHeightLocation(0.0, los->Observer(), los->Look(), &entry, &exit);
+
+        Eigen::Vector3d look(los->Look().X(), los->Look().Y(), los->Look().Z());
+
+        geodetic.FromGeocentricVector(entry);
+
+        sasktran2::Location loc;
+        nxVector west, south, up;
+        geodetic.GetGeodeticWestSouthUp(&west, &south, &up);
+
+        loc.position = Eigen::Vector3d(up.X(), up.Y(), up.Z());
+
+        double csz;
+        double rel_az;
+
+        sasktran2::raytracing::calculate_csz_saz(m_geographic_sun, loc, look, csz, rel_az);
+
+        double viewing_zenith = los->Look() & up;
+
+        viewing_geo->observer_rays().emplace_back(
+                std::make_unique<sasktran2::viewinggeometry::GroundViewingSolar>(csz,
+                                                                                 rel_az,
+                                                                                 viewing_zenith,
+                                                                                 geometry.altitude_grid().grid()(Eigen::last) + 1000)
+        );
     }
 
     void GeometryConstructor::not_implemented_error(const std::string& type) const {

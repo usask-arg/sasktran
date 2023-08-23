@@ -40,7 +40,7 @@ namespace sasktran2::hr {
 
         Eigen::VectorXd alt_values = (m_geometry.altitude_grid().grid()(Eigen::seq(0, Eigen::last - 1)) + m_geometry.altitude_grid().grid()(Eigen::seq(1, Eigen::last))) / 2.0;
 
-        alt_values.setLinSpaced(20, 500, 80000);
+        // alt_values.setLinSpaced(20, 500, 80000);
 
         return sasktran2::grids::AltitudeGrid(std::move(alt_values),sasktran2::grids::gridspacing::constant, sasktran2::grids::outofbounds::extend,
                                                         sasktran2::grids::interpolation::linear);
@@ -344,36 +344,48 @@ namespace sasktran2::hr {
 
         Eigen::VectorXd old_outgoing_vals;
 
+        if(m_config->initialize_hr_with_do()) {
+            m_thread_storage[threadidx].m_outgoing_sources.value = m_do_to_diffuse_outgoing_interpolator * m_do_source->storage().linear_source(threadidx).value;
+
+            if(m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                m_thread_storage[threadidx].m_outgoing_sources.deriv = m_do_to_diffuse_outgoing_interpolator * m_do_source->storage().linear_source(threadidx).deriv;
+            }
+        }
+
         for(int spher_iter = 0; spher_iter < m_config->num_hr_spherical_iterations(); ++spher_iter) {
             // Apply the scattering matrices
+            if(spher_iter == 0 && m_config->initialize_hr_with_do()) {
+                // Apply the accumulation matrix
+                storage.m_incoming_radiances.value = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
+            } else {
+                storage.m_incoming_radiances.value = storage.m_firstorder_radiances.value;
+            }
 
             old_outgoing_vals = m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES));
 
-            if(spher_iter > 0 || !m_config->initialize_hr_with_do()) {
-                for(int i = 0; i < m_diffuse_points.size(); ++i) {
-                    const auto& point = m_diffuse_points[i];
+            for(int i = 0; i < m_diffuse_points.size(); ++i) {
+                const auto& point = m_diffuse_points[i];
 
-                    auto incoming_seq = Eigen::seq(m_diffuse_incoming_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_incoming_index_map[i] + point->num_incoming()) - 1);
-                    auto outgoing_seq = Eigen::seq(m_diffuse_outgoing_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_outgoing_index_map[i] + point->num_outgoing()) - 1);
+                auto incoming_seq = Eigen::seq(m_diffuse_incoming_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_incoming_index_map[i] + point->num_incoming()) - 1);
+                auto outgoing_seq = Eigen::seq(m_diffuse_outgoing_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_outgoing_index_map[i] + point->num_outgoing()) - 1);
 
-                    storage.m_outgoing_sources.value(outgoing_seq) = storage.point_scattering_matrices[i] * storage.m_incoming_radiances.value(incoming_seq);
+                storage.m_outgoing_sources.value(outgoing_seq) = storage.point_scattering_matrices[i] * storage.m_incoming_radiances.value(incoming_seq);
 
-                    #ifdef SASKTRAN_DEBUG_ASSERTS
-                    if(storage.m_outgoing_sources.value(outgoing_seq).hasNaN()) {
-                        BOOST_LOG_TRIVIAL(error) << "NaN in outgoing point: " << i;
-                    }
-                    #endif
+                #ifdef SASKTRAN_DEBUG_ASSERTS
+                if(storage.m_outgoing_sources.value(outgoing_seq).hasNaN()) {
+                    BOOST_LOG_TRIVIAL(error) << "NaN in outgoing point: " << i;
                 }
-            } else {
-                m_thread_storage[threadidx].m_outgoing_sources.value = m_do_to_diffuse_outgoing_interpolator * m_do_source->storage().linear_source(threadidx).value;
+                #endif
             }
 
-            if(spher_iter > 0) {
-                double max_change_factor = (m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES)).array() / old_outgoing_vals.array() - 1).abs().maxCoeff();
-            }
+            double max_change_factor = (m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES)).array() / old_outgoing_vals.array() - 1).abs().maxCoeff();
 
-            // Apply the accumulation matrix
-            storage.m_incoming_radiances.value = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
+            if(m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                for(int k = 0; k < storage.m_outgoing_sources.deriv.cols(); ++k) {
+                    storage.m_outgoing_sources.deriv(Eigen::all, k).array() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
+                }
+                //storage.m_outgoing_sources.deriv.array().colwise() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
+            }
         }
 
 
@@ -470,13 +482,32 @@ namespace sasktran2::hr {
             omega += m_atmosphere->storage().ssa(index_weight.first, wavelidx) * index_weight.second;
         }
 
-        double source_factor = omega * (1 - exp(-1*shell_od.od));
+        double source_factor = (1 - exp(-1*shell_od.od));
 
         for(int i = 0; i < interpolator.second.size(); ++i) {
             auto& index_weight = interpolator.second[i];
 
             for(int s = 0; s < NSTOKES; ++s) {
-                source.value(s) += source_factor * storage.m_outgoing_sources.value(index_weight.first*NSTOKES + s) * index_weight.second;
+                double source_value = storage.m_outgoing_sources.value(index_weight.first*NSTOKES + s) * index_weight.second;
+
+                source.value(s) += omega * source_factor * source_value;
+
+                if(m_atmosphere->num_deriv() > 0) {
+                    // Now we need dJ/dthickness
+                    for (auto it = shell_od.deriv_iter; it; ++it) {
+                        source.deriv(s, it.index()) += it.value() * (1 - source_factor) * source_value * omega;
+                    }
+
+                    // And dJ/dssa
+                    for (auto &ele: interpolator.first) {
+                        source.deriv(s, m_atmosphere->ssa_deriv_start_index() + ele.first) +=
+                                ele.second * source_factor * source_value;
+                    }
+
+                    if (this->m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                        source.deriv(s, Eigen::all) += omega * source_factor * index_weight.second * storage.m_outgoing_sources.deriv(index_weight.first*NSTOKES + s, Eigen::all);
+                    }
+                }
             }
         }
 
