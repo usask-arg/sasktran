@@ -90,11 +90,13 @@ namespace sasktran2 {
          * @param saa Solar azimuth angle in [radians]
          * @param earth_radius Earth radius in [m]
          * @param geotype Type of geometry (spherical or plane parallel) defaults to spherical
+         * @param force_sun_z Set to true to force the sun unit vector to be (0, 0, 1)
          */
         Coordinates(double cos_sza,
                     double saa,
                     double earth_radius,
-                    geometrytype geotype=geometrytype::spherical
+                    geometrytype geotype=geometrytype::spherical,
+                    bool force_sun_z=false
                  );
 
         /** Constructs the coordinates by manually specifying the unit vectors for the reference point and planes.

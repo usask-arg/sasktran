@@ -21,6 +21,11 @@ namespace sasktran2::hr {
         Eigen::SparseMatrix<double, Eigen::RowMajor> accumulation_matrix; /** incoming_radiance = accumulation_matrix @ outgoing_sources */
     };
 
+    struct RaySourceInterpolationWeights {
+        std::vector<std::pair<std::vector<std::pair<int, double>>, std::vector<std::pair<int, double>>>> interior_weights;
+        std::pair<std::vector<std::pair<int, double>>, std::vector<std::pair<int, double>>> ground_weights;
+    };
+
     /** An implementation of the successive orders of scattering technique.  We call this HR mostly for historic
      *  reasons.
      *

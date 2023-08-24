@@ -170,7 +170,9 @@ namespace sasktran2::grids {
         virtual int num_ground_points() const = 0;
 
         virtual Eigen::Vector3d grid_location(const sasktran2::Coordinates& coords, int location_index) const = 0;
+        virtual Eigen::Vector3d ground_location(const sasktran2::Coordinates& coords, int ground_index) const = 0;
         virtual void interior_interpolation_weights(const sasktran2::Coordinates& coords, const sasktran2::Location& location, std::vector<std::pair<int, double>>& weights, int& num_interp) = 0;
+        virtual void ground_interpolation_weights(const sasktran2::Coordinates& coords, const sasktran2::Location& location, std::vector<std::pair<int, double>>& weights, int& num_interp) const = 0;
     };
 
 
@@ -179,6 +181,7 @@ namespace sasktran2::grids {
         const Grid m_cos_sza_grid;
 
         int interior_linear_index(int alt_index, int sza_index);
+        int ground_linear_index(int sza_index) const;
     public:
         AltitudeSZASourceLocationInterpolator(AltitudeGrid&& altitude_grid,
                                               Grid&& cos_sza_grid);
@@ -186,9 +189,11 @@ namespace sasktran2::grids {
         int num_interior_points() const override;
         int num_ground_points() const override;
 
-        Eigen::Vector3d grid_location(const sasktran2::Coordinates& coords, int location_index) const;
-        void interior_interpolation_weights(const sasktran2::Coordinates& coords, const sasktran2::Location& location, std::vector<std::pair<int, double>>& weights, int& num_interp);
+        Eigen::Vector3d grid_location(const sasktran2::Coordinates& coords, int location_index) const override;
+        Eigen::Vector3d ground_location(const sasktran2::Coordinates& coords, int ground_index) const override;
 
+        void interior_interpolation_weights(const sasktran2::Coordinates& coords, const sasktran2::Location& location, std::vector<std::pair<int, double>>& weights, int& num_interp) override;
+        void ground_interpolation_weights(const sasktran2::Coordinates& coords, const sasktran2::Location& location, std::vector<std::pair<int, double>>& weights, int& num_interp) const override;
     };
 
 

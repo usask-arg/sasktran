@@ -23,6 +23,8 @@ namespace sasktran2::solartransmission {
         // Construct the matrix that calculates OD on the solar transmission table locations
         // i.e. solar_od_on_grid = matrix @ extinction
         m_geometry_matrix.resize(m_location_interpolator->num_interior_points(), m_geometry.size());
+        m_geometry_matrix.setZero();
+
         m_ground_hit_flag.resize(m_location_interpolator->num_interior_points());
 
         sasktran2::viewinggeometry::ViewingRay ray_to_sun;
@@ -41,6 +43,7 @@ namespace sasktran2::solartransmission {
 
             if(!traced_ray.ground_is_hit) {
                 assign_dense_matrix_column(i, traced_ray, m_geometry, m_geometry_matrix, index_weights);
+                m_ground_hit_flag[i] = false;
             } else {
                 m_ground_hit_flag[i] = true;
             }

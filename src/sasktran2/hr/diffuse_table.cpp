@@ -1,5 +1,6 @@
 #include <sasktran2/hr/diffuse_source.h>
 #include <sasktran2/math/unitsphere.h>
+#include <sasktran2/math/scattering.h>
 #include <sasktran2/solartransmission.h>
 #include <sasktran2/do_source.h>
 
@@ -24,7 +25,6 @@ namespace sasktran2::hr {
         if(m_config->num_do_sza() > 1) {
             cos_sza_grid_values.setLinSpaced(m_config->num_do_sza(), min_cos_sza, max_cos_sza);
         } else {
-            // TODO: Should this be a reference cos_sza value rather than the middle calculated like this?
             // Maybe the mean tangent point should always be included?
             cos_sza_grid_values.resize(1);
             cos_sza_grid_values.setConstant(m_geometry.coordinates().cos_sza_at_reference());
@@ -40,8 +40,6 @@ namespace sasktran2::hr {
 
         Eigen::VectorXd alt_values = (m_geometry.altitude_grid().grid()(Eigen::seq(0, Eigen::last - 1)) + m_geometry.altitude_grid().grid()(Eigen::seq(1, Eigen::last))) / 2.0;
 
-        // alt_values.setLinSpaced(20, 500, 80000);
-
         return sasktran2::grids::AltitudeGrid(std::move(alt_values),sasktran2::grids::gridspacing::constant, sasktran2::grids::outofbounds::extend,
                                                         sasktran2::grids::interpolation::linear);
     }
@@ -49,27 +47,46 @@ namespace sasktran2::hr {
     template<int NSTOKES>
     void DiffuseTable<NSTOKES>::construct_diffuse_points() {
         // Create the sphere pairs
-        m_unit_sphere_pairs.resize(1);
+        // One for the atmosphere points and one for each of the ground points for now
+
+        int num_interior_spheres = 1;
+        m_unit_sphere_pairs.resize(num_interior_spheres + m_location_interpolator->num_ground_points());
 
         // TODO: Get npoints from config, figure out if we want to use more than one type of sphere
-        // TODO: How to get number of legendre coefficients?
         m_unit_sphere_pairs[0] = std::make_unique<sasktran2::hr::IncomingOutgoingSpherePair<NSTOKES>>(
                 m_config->num_do_streams(),
                 std::move(std::make_unique<sasktran2::math::LebedevSphere>(m_config->num_hr_incoming())),
                 std::move(std::make_unique<sasktran2::math::LebedevSphere>(m_config->num_hr_outgoing())));
 
+        // TODO: Same number of streams for the ground term? probably... to be figured out when BRDF is implemented
+        for(int i = 0; i < m_location_interpolator->num_ground_points(); ++i) {
+            Eigen::Vector3d location = m_location_interpolator->ground_location(m_geometry.coordinates(), i);
 
-        m_diffuse_points.resize(m_location_interpolator->num_interior_points());
+            m_unit_sphere_pairs[num_interior_spheres + i] = std::make_unique<sasktran2::hr::IncomingOutgoingSpherePair<NSTOKES>>(
+                    m_config->num_do_streams(),
+                    std::make_unique<sasktran2::math::UnitSphereGround>(std::move(std::make_unique<sasktran2::math::LebedevSphere>(m_config->num_hr_incoming())), location),
+                    std::make_unique<sasktran2::math::UnitSphereGround>(std::move(std::make_unique<sasktran2::math::LebedevSphere>(m_config->num_hr_outgoing())), location));
+        }
+
+
+        m_diffuse_points.resize(m_location_interpolator->num_interior_points() + m_location_interpolator->num_ground_points());
 
         sasktran2::Location loc;
 
-        for(int i = 0; i < m_diffuse_points.size(); ++i) {
+        for(int i = 0; i < m_location_interpolator->num_interior_points(); ++i) {
             auto& point = m_diffuse_points[i];
 
             loc.position = m_location_interpolator->grid_location(m_geometry.coordinates(), i);
 
             point = std::make_unique<sasktran2::hr::DiffusePoint<NSTOKES>>(*m_unit_sphere_pairs[0], loc);
+        }
 
+        for(int i = 0; i < m_location_interpolator->num_ground_points(); ++i) {
+            auto& point = m_diffuse_points[i + m_location_interpolator->num_interior_points()];
+
+            loc.position = m_location_interpolator->ground_location(m_geometry.coordinates(), i);
+
+            point = std::make_unique<sasktran2::hr::DiffusePoint<NSTOKES>>(*m_unit_sphere_pairs[i + num_interior_spheres], loc);
         }
 
         // Construct interpolators to the diffuse point locations
@@ -211,37 +228,9 @@ namespace sasktran2::hr {
     Eigen::Vector3d DiffuseTable<NSTOKES>::rotate_unit_vector(const Eigen::Vector3d &vector,
                                                    const Eigen::Vector3d &initial_position,
                                                    const Eigen::Vector3d &new_position) const {
-        /*
+        // Reconstruct the interpolation location based on relative azimuth/zenith angles
         sasktran2::Location temp;
         temp.position = initial_position;
-
-        double csz_initial, saa_initial, csz_end, saa_end, saa_test, csz_test;
-        sasktran2::raytracing::calculate_csz_saz(m_geometry.coordinates().sun_unit(), temp, -1*vector, csz_initial, saa_initial);
-
-        double angle = acos(initial_position.normalized().dot(new_position.normalized()));
-
-        Eigen::Vector3d axis = initial_position.cross(new_position);
-
-        Eigen::AngleAxis<double> rot_transform(angle, axis.normalized());
-
-        temp.position = new_position;
-
-        sasktran2::raytracing::calculate_csz_saz(m_geometry.coordinates().sun_unit(), temp, -1*rot_transform.matrix() * vector, csz_end, saa_end);
-
-        Eigen::AngleAxis<double> azi_transform(-1*(saa_initial - saa_end), new_position.normalized());
-
-        sasktran2::raytracing::calculate_csz_saz(m_geometry.coordinates().sun_unit(), temp, -1*azi_transform.matrix() * rot_transform.matrix() * vector, csz_test, saa_test);
-
-        if(abs(saa_test - saa_initial) > 1e-6) {
-            BOOST_LOG_TRIVIAL(warning) << "csz_initial: " << csz_initial << "saa_initial: " << saa_initial << " csz_after:" << csz_test << " saa_after:" << saa_test;
-        }
-
-        return azi_transform.matrix() * rot_transform.matrix() * vector;
-         */
-
-        sasktran2::Location temp;
-        temp.position = initial_position;
-
         double csz_initial, saa_initial;
         sasktran2::raytracing::calculate_csz_saz(m_geometry.coordinates().sun_unit(), temp, vector, csz_initial, saa_initial);
 
@@ -320,7 +309,7 @@ namespace sasktran2::hr {
     void DiffuseTable<NSTOKES>::generate_scattering_matrices(int wavelidx, int threadidx) {
         auto& storage = m_thread_storage[threadidx];
 
-        for(int i = 0; i < m_diffuse_points.size(); ++i) {
+        for(int i = 0; i < m_location_interpolator->num_interior_points(); ++i) {
             const auto& point = m_diffuse_points[i];
 
             point->sphere_pair().calculate_scattering_matrix(m_atmosphere->storage().phase[wavelidx],
@@ -328,14 +317,21 @@ namespace sasktran2::hr {
                                                              storage.point_scattering_matrices[i].data()
                                                              );
         }
+
+        for(int i = 0; i < m_location_interpolator->num_ground_points(); ++i) {
+            const auto& point = m_diffuse_points[i + m_location_interpolator->num_interior_points()];
+
+            point->sphere_pair().calculate_ground_scattering_matrix(m_atmosphere->surface(),
+                                                                    m_diffuse_point_interpolation_weights[i],
+                                                                    wavelidx,
+                                                                    storage.point_scattering_matrices[i].data()
+                                                                    );
+        }
     }
 
     template<int NSTOKES>
     void DiffuseTable<NSTOKES>::generate_accumulation_matrix(int wavelidx, int threadidx) {
         auto& matrix = m_thread_storage[threadidx].accumulation_matrix;
-
-
-
     }
 
     template<int NSTOKES>
@@ -354,11 +350,15 @@ namespace sasktran2::hr {
 
         for(int spher_iter = 0; spher_iter < m_config->num_hr_spherical_iterations(); ++spher_iter) {
             // Apply the scattering matrices
-            if(spher_iter == 0 && m_config->initialize_hr_with_do()) {
-                // Apply the accumulation matrix
-                storage.m_incoming_radiances.value = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
+            if(spher_iter == 0) {
+                if(m_config->initialize_hr_with_do()) {
+                    // Apply the accumulation matrix
+                    storage.m_incoming_radiances.value = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
+                } else {
+                    storage.m_incoming_radiances.value = storage.m_firstorder_radiances.value;
+                }
             } else {
-                storage.m_incoming_radiances.value = storage.m_firstorder_radiances.value;
+                storage.m_incoming_radiances.value.noalias() = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
             }
 
             old_outgoing_vals = m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES));
@@ -369,7 +369,7 @@ namespace sasktran2::hr {
                 auto incoming_seq = Eigen::seq(m_diffuse_incoming_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_incoming_index_map[i] + point->num_incoming()) - 1);
                 auto outgoing_seq = Eigen::seq(m_diffuse_outgoing_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_outgoing_index_map[i] + point->num_outgoing()) - 1);
 
-                storage.m_outgoing_sources.value(outgoing_seq) = storage.point_scattering_matrices[i] * storage.m_incoming_radiances.value(incoming_seq);
+                storage.m_outgoing_sources.value(outgoing_seq).noalias() = storage.point_scattering_matrices[i] * storage.m_incoming_radiances.value(incoming_seq);
 
                 #ifdef SASKTRAN_DEBUG_ASSERTS
                 if(storage.m_outgoing_sources.value(outgoing_seq).hasNaN()) {
@@ -380,11 +380,8 @@ namespace sasktran2::hr {
 
             double max_change_factor = (m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES)).array() / old_outgoing_vals.array() - 1).abs().maxCoeff();
 
-            if(m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
-                for(int k = 0; k < storage.m_outgoing_sources.deriv.cols(); ++k) {
-                    storage.m_outgoing_sources.deriv(Eigen::all, k).array() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
-                }
-                //storage.m_outgoing_sources.deriv.array().colwise() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
+            if(m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full && m_config->initialize_hr_with_do()) {
+                storage.m_outgoing_sources.deriv.array().colwise() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
             }
         }
 
@@ -504,7 +501,7 @@ namespace sasktran2::hr {
                                 ele.second * source_factor * source_value;
                     }
 
-                    if (this->m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                    if (this->m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full && m_config->initialize_hr_with_do()) {
                         source.deriv(s, Eigen::all) += omega * source_factor * index_weight.second * storage.m_outgoing_sources.deriv(index_weight.first*NSTOKES + s, Eigen::all);
                     }
                 }
@@ -516,7 +513,7 @@ namespace sasktran2::hr {
     template<int NSTOKES>
     void DiffuseTable<NSTOKES>::end_of_ray_source(int wavelidx, int losidx, int threadidx,
                                                   sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
-
+        // TODO: Only necessary for nadir viewing ground?
     }
 
     template class DiffuseTable<1>;

@@ -49,6 +49,20 @@ def rtm_atmosphere(anc_data, albedo_scen, atmo_scen):
                                     {'SKCLIMATOLOGY_LOGNORMAL_MODERADIUS_MICRONS': np.ones_like(altitudes) * 0.08,
                                      'SKCLIMATOLOGY_LOGNORMAL_MODEWIDTH': np.ones_like(altitudes) * 1.6}, 'H2SO4')
 
+        f = '/Users/dannyz/Downloads/mie_sulfate_strat.nc'
+        ds = xr.open_dataset(f)
+        opt_prop = sk.UserDefinedScatterConstantHeight(ds.wavelength.values,
+                                                       ds.xs_scattering.values,
+                                                       ds.xs_absorption.values,
+                                                       lm_a1=ds.lm_a1.values.T,
+                                                       lm_a2=ds.lm_a2.values.T,
+                                                       lm_a3=ds.lm_a3.values.T,
+                                                       lm_a4=ds.lm_a4.values.T,
+                                                       lm_b1=ds.lm_b1.values.T,
+                                                       lm_b2=ds.lm_b2.values.T)
+
+        species._optical_property = opt_prop
+
         atmo['aerosol'] = species
 
     if albedo_scen == 0:

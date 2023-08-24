@@ -1,4 +1,6 @@
 #include "include/sktran_me_internals.h"
+#include <sasktran2/math/trig.h>
+
 
 namespace sktran_me {
     void GeometryConstructor::construct_viewing_geometry(const sasktran2::Geometry1D& geometry,
@@ -105,7 +107,7 @@ namespace sktran_me {
         viewing_geo->observer_rays().emplace_back(
                 std::make_unique<sasktran2::viewinggeometry::GroundViewingSolar>(csz,
                                                                                  rel_az,
-                                                                                 viewing_zenith,
+                                                                                 -1*viewing_zenith,
                                                                                  geometry.altitude_grid().grid()(Eigen::last) + 1000)
         );
     }
@@ -136,7 +138,7 @@ namespace sktran_me {
         // Get the cos_sza at the reference point, set SAA=0 mostly for stokes basis reasons
         // This means that rel_az is contained entirely in the LOS azimuth
         double cos_sza = sun_unit & up;
-        sasktran2::Coordinates coords(cos_sza, 0, earth_radius);
+        sasktran2::Coordinates coords(cos_sza, 0, earth_radius, sasktran2::geometrytype::spherical, true);
 
         Eigen::VectorXd grid_values = altitude_grid;
 

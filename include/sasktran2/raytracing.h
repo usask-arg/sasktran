@@ -1,5 +1,6 @@
 #pragma once
 #include <sasktran2/internal_common.h>
+#include <sasktran2/math/scattering.h>
 
 #include <sasktran2/geometry.h>
 #include <sasktran2/viewinggeometry.h>
@@ -89,10 +90,11 @@ namespace sasktran2::raytracing {
 
         csz = local_up.dot(sun_unit);
 
-        Eigen::Vector3d los_projected = look_away - local_up * (look_away.dot(local_up));
-        Eigen::Vector3d sun_projceted = sun_unit - local_up * (sun_unit.dot(local_up));
+        Eigen::Vector3d los_projected = (look_away - local_up * (look_away.dot(local_up))).normalized();
+        Eigen::Vector3d sun_projceted = (sun_unit - local_up * (sun_unit.dot(local_up))).normalized();
 
-        double proj = sun_projceted.normalized().dot(los_projected.normalized());
+        /*
+        double proj = sun_projceted.dot(los_projected);
 
         if (proj > 1) {
             proj = 1;
@@ -100,8 +102,17 @@ namespace sasktran2::raytracing {
         else if (proj < -1) {
             proj = -1;
         }
-
+        // TODO: Check this, is this right?
+        
         saa = -1*acos(proj);
+         */
+        
+        // Take sun to by the x axis, then the y axis is up cross sun
+        Eigen::Vector3d y_axis = local_up.cross(sun_projceted);
+
+        // put -1 since these are look away
+        saa = atan2(y_axis.dot(los_projected), sun_projceted.dot(los_projected));
+
     }
 
     /** Populates a layer with the solar parameters

@@ -18,6 +18,7 @@ add_library(sasktran2
 
 		    unitsphere/lebedev_autogen.cpp
 		    unitsphere/lebedev.cpp
+		    unitsphere/unitsphere_ground.cpp
 
 			grids/grid.cpp
 			grids/source_location_interpolator.cpp
