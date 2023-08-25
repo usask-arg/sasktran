@@ -32,9 +32,13 @@ namespace sasktran2 {
 
         m_storage.resize(config.num_threads());
 
-        int num_source_points = (int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
+        m_ground_start = (int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
+
+        int num_ground_points = (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
+
+        int num_source_points = m_ground_start + num_ground_points;
+
         for(auto& storage: m_storage) {
-            // TODO: Derivative
             storage.source_terms_linear.resize(num_source_points, 0, true);
 
             storage.phase_storage.resize(m_cos_angle_grid->grid().size(), do_config.nstr());
@@ -146,6 +150,7 @@ namespace sasktran2 {
     template <int NSTOKES, int CNSTR>
     void DOSourceDiffuseStorage<NSTOKES, CNSTR>::create_location_source_interpolator(
             const std::vector<Eigen::Vector3d> &locations, const std::vector<Eigen::Vector3d> &directions,
+            const std::vector<bool>& ground_hit_flag,
             Eigen::SparseMatrix<double, Eigen::RowMajor> &interpolator) const {
 
         interpolator.resize(locations.size()*NSTOKES, m_storage[0].source_terms_linear.value_size());
@@ -173,93 +178,196 @@ namespace sasktran2 {
             double cos_angle = temp.cos_zenith_angle(-1*direction);
             double altitude = temp.radius() - earth_radius;
 
-            m_altitude_grid->calculate_interpolation_weights(altitude, alt_index, alt_weight, num_alt_contrib);
-            m_cos_angle_grid->calculate_interpolation_weights(cos_angle, angle_index, angle_weight, num_angle_contrib);
+
             m_sza_grid.calculate_interpolation_weights(csz, sza_index, sza_weight, num_sza_contrib);
+            if(!ground_hit_flag[i]) {
+                // Interior point, interpolate in angle and altitude
+                m_altitude_grid->calculate_interpolation_weights(altitude, alt_index, alt_weight, num_alt_contrib);
+                m_cos_angle_grid->calculate_interpolation_weights(cos_angle, angle_index, angle_weight, num_angle_contrib);
+                for(int szaidx = 0; szaidx < num_sza_contrib; ++szaidx) {
+                    for (int altidx = 0; altidx < num_alt_contrib; ++altidx) {
+                        for (int angleidx = 0; angleidx < num_angle_contrib; ++angleidx) {
+                            double weight = alt_weight[altidx] * angle_weight[angleidx] * sza_weight[szaidx];
 
-            for(int szaidx = 0; szaidx < num_sza_contrib; ++szaidx) {
-                for (int altidx = 0; altidx < num_alt_contrib; ++altidx) {
-                    for (int angleidx = 0; angleidx < num_angle_contrib; ++angleidx) {
-                        double weight = alt_weight[altidx] * angle_weight[angleidx] * sza_weight[szaidx];
+                            for (int k = 0; k < m_num_azi; ++k) {
+                                double azi_factor = cos(k * saa);
+                                int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], k);
 
-                        for (int k = 0; k < m_num_azi; ++k) {
-                            double azi_factor = cos(k * saa);
-                            int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], k);
+                                if constexpr (NSTOKES == 1) {
+                                    tripletList.emplace_back(T(i, index, azi_factor * weight));
+                                } else if constexpr (NSTOKES == 3) {
+                                    double sin_azi_factor = sin(k * (EIGEN_PI - saa));
 
-                            if constexpr (NSTOKES == 1) {
-                                tripletList.emplace_back(T(i, index, azi_factor * weight));
-                            } else if constexpr (NSTOKES == 3) {
-                                double sin_azi_factor = sin(k * (EIGEN_PI - saa));
-
-                                tripletList.emplace_back(T(i*NSTOKES, index*NSTOKES, azi_factor * weight));
-                                tripletList.emplace_back(T(i*NSTOKES + 1, index*NSTOKES + 1, azi_factor * weight));
-                                tripletList.emplace_back(T(i*NSTOKES + 2, index*NSTOKES + 2, sin_azi_factor * weight));
+                                    tripletList.emplace_back(T(i*NSTOKES, index*NSTOKES, azi_factor * weight));
+                                    tripletList.emplace_back(T(i*NSTOKES + 1, index*NSTOKES + 1, azi_factor * weight));
+                                    tripletList.emplace_back(T(i*NSTOKES + 2, index*NSTOKES + 2, sin_azi_factor * weight));
+                                }
                             }
                         }
                     }
                 }
+            } else {
+                // Ground point, just have to interpolate in SZA and only use m=0
+                // TODO: CHange when move away from non-lambertian
+                for(int szaidx = 0; szaidx < num_sza_contrib; ++szaidx) {
+                    double weight = sza_weight[szaidx];
+                    int index = ground_storage_index(0, sza_index[szaidx], 0);
+
+                    if constexpr (NSTOKES == 1) {
+                        tripletList.emplace_back(T(i, index, weight));
+                    } else if constexpr (NSTOKES == 3) {
+                        tripletList.emplace_back(T(i*NSTOKES, index*NSTOKES, weight));
+                        tripletList.emplace_back(T(i*NSTOKES + 1, index*NSTOKES + 1, weight));
+                        tripletList.emplace_back(T(i*NSTOKES + 2, index*NSTOKES + 2, weight));
+                    }
+                }
             }
-
-
         }
         interpolator.setFromTriplets(tripletList.begin(), tripletList.end());
-    }
-
-    template <int NSTOKES, int CNSTR>
-    void DOSourceDiffuseStorage<NSTOKES, CNSTR>::generate_scattering_matrices(const sasktran_disco::PersistentConfiguration<NSTOKES, CNSTR>& do_config) {
-        int num_interp_angles = (int)m_cos_angle_grid->grid().size();
-        int num_stream_angles = m_config.num_do_streams() / 2;
-
-        m_scattering_matrix_interpolation_angles.resize(m_num_azi, Eigen::MatrixXd(NSTOKES * num_interp_angles, NSTOKES));
-        m_scattering_matrix_stream_angles.resize(m_num_azi, Eigen::MatrixXd(NSTOKES * num_stream_angles, NSTOKES));
-
-        // Fill the scattering matrix
-        for(int m = 0; m < m_num_azi; ++m) {
-            for(int i = 0; i < num_interp_angles; ++i) {
-                if constexpr (NSTOKES == 1) {
-                    m_scattering_matrix_interpolation_angles[m](i, 0) = m_storage[0].phase_storage[i].storage(0, m);
-                }
-
-                if constexpr (NSTOKES == 3) {
-                    int start = i*NSTOKES;
-                    // Fill an NSTOKES, NSTOKES block of the matrix
-                    m_scattering_matrix_interpolation_angles[m](start, 0) = m_storage[0].phase_storage[i].storage(0, m);
-                    m_scattering_matrix_interpolation_angles[m](start+1, 1) = m_storage[0].phase_storage[i].storage(1, m);
-                    m_scattering_matrix_interpolation_angles[m](start+2, 2) = m_storage[0].phase_storage[i].storage(1, m);
-
-                    m_scattering_matrix_interpolation_angles[m](start+1, 2) = -m_storage[0].phase_storage[i].storage(2, m);
-                    m_scattering_matrix_interpolation_angles[m](start+2, 1) = -m_storage[0].phase_storage[i].storage(2, m);
-                }
-            }
-        }
-
-        LegendrePhaseStorage<NSTOKES, CNSTR> temp_storage(m_config.num_do_streams());
-        for(int i = 0; i < num_stream_angles; ++i) {
-            temp_storage.fill(do_config.quadrature_cos_angle()->at(i));
-
-            for(int m = 0; m < m_num_azi; ++m) {
-                if constexpr (NSTOKES == 1) {
-                    m_scattering_matrix_stream_angles[m](i, 0) = temp_storage.storage(0, m);
-                }
-
-                if constexpr (NSTOKES == 3) {
-                    int start = i*NSTOKES;
-                    // Fill an NSTOKES, NSTOKES block of the matrix
-                    m_scattering_matrix_stream_angles[m](start, 0) = temp_storage.storage(0, m);
-                    m_scattering_matrix_stream_angles[m](start+1, 1) = temp_storage.storage(1, m);
-                    m_scattering_matrix_stream_angles[m](start+2, 2) = temp_storage.storage(1, m);
-
-                    m_scattering_matrix_stream_angles[m](start+1, 2) = -temp_storage.storage(2, m);
-                    m_scattering_matrix_stream_angles[m](start+2, 1) = -temp_storage.storage(2, m);
-                }
-            }
-        }
     }
 
     template <int NSTOKES, int CNSTR>
     int DOSourceDiffuseStorage<NSTOKES, CNSTR>::linear_storage_index(int angleidx, int layeridx, int szaidx,
                                                                      int aziidx) const {
         return angleidx + (int)m_cos_angle_grid->grid().size() * layeridx + (int)m_cos_angle_grid->grid().size() * (int)m_altitude_grid->grid().size() * szaidx + (int)m_cos_angle_grid->grid().size() * (int)m_altitude_grid->grid().size() * (int)m_sza_grid.grid().size() * aziidx;
+    }
+
+    template<int NSTOKES, int CNSTR>
+    int DOSourceDiffuseStorage<NSTOKES, CNSTR>::ground_storage_index(int angleidx, int szaidx, int aziidx) const {
+        return angleidx  + (int)m_cos_angle_grid->grid().size()  * szaidx + (int)m_cos_angle_grid->grid().size() * (int)m_sza_grid.grid().size() * aziidx + m_ground_start;
+    }
+
+    template<int NSTOKES, int CNSTR>
+    void DOSourceDiffuseStorage<NSTOKES, CNSTR>::accumulate_ground_sources(
+            sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR> &optical_layer, sasktran_disco::AEOrder m,
+            sasktran2::DOSourceThreadStorage<NSTOKES, CNSTR> &thread_storage, int szaidx, int thread_idx) {
+        // Here we evaluate the upwelling term at the surface.  Note that the sign convention switches compared to
+        // the standard sign convention.  +<->- on W and Z
+
+        // TODO: This entire function needs to change when switching to non-lambertian BRDF
+        // Have to loop over outgoing angles, apply azimuthal factors, and get expansion coefficients
+        if(m > 0) {
+            return;
+        }
+        const sasktran_disco::uint N = m_config.num_do_streams() / 2;
+
+        const auto& layer = optical_layer.bottom();
+        const auto& solution = layer.solution(m);
+        const auto& input_deriv = optical_layer.inputDerivatives();
+        int layerStart = (int)input_deriv.layerStartIndex(layer.index());
+        int numLayerDeriv = (int)input_deriv.numDerivativeLayer(layer.index());
+
+        sasktran_disco::Radiance<NSTOKES> diffuse_contrib((int)input_deriv.numDerivative()), direct_contrib((int)input_deriv.numDerivative());
+        diffuse_contrib.setzero();
+        diffuse_contrib.setzero();
+
+        direct_contrib.setzero();
+        direct_contrib.setzero();
+
+        // TODO: This is wrong but for lambertian albedo it doesn't matter
+        // We should really be using some other function
+        auto& rho = optical_layer.albedo(m).streamBDRFromStreams(0);
+
+        // Construct the Dual quantity for the layer transmittance
+        sasktran_disco::Dual<double> beam_transmittance = layer.dual_beamTransmittance(sasktran_disco::Location::FLOOR, input_deriv);
+        sasktran_disco::Dual<double> stream_transmittance;
+
+        for(sasktran_disco::StreamIndex i = 0; i < N * NSTOKES; ++i) {
+            sasktran_disco::LayerDual<double> dual_rho((sasktran_disco::uint)input_deriv.numDerivativeLayer(layer.index()), layer.index(), (sasktran_disco::uint)input_deriv.layerStartIndex(layer.index()));
+            // TODO: something is definitely wrong here, but it might be fine for scalar surface reflection...
+            int s1 = i % NSTOKES;
+            if( i % NSTOKES != 0) {
+                dual_rho.value = 0.0;
+                dual_rho.deriv.setZero();
+            } else {
+                dual_rho.value = rho[i/NSTOKES + N];
+
+                for (sasktran_disco::uint j = 0; j < input_deriv.numDerivativeLayer(layer.index()); ++j) {
+                    dual_rho.deriv(j) = input_deriv.layerDerivatives()[input_deriv.layerStartIndex(layer.index()) + j].d_albedo * sasktran_disco::kronDelta(m, 0);
+                }
+            }
+
+            sasktran_disco::Radiance<NSTOKES> stream_contrib((int)input_deriv.numDerivative());
+            if constexpr(NSTOKES == 1) {
+                stream_contrib.value = solution.value.dual_Gplus_bottom().value(i);
+            } else {
+                stream_contrib.value(s1) = solution.value.dual_Gplus_bottom().value(i);
+            }
+
+            stream_contrib.deriv(Eigen::all, s1) = solution.value.dual_Gplus_bottom().deriv(Eigen::all, i);
+
+            // Positive homogeneous solutions
+            for(sasktran_disco::uint j = 0; j < N * NSTOKES; ++j) {
+                stream_transmittance = layer.dual_streamTransmittance(sasktran_disco::Location::INSIDE, m, j, input_deriv);
+                sasktran_disco::uint homogIndex = j*N*NSTOKES + i;
+
+                if constexpr(NSTOKES == 1) {
+                    stream_contrib.value += solution.boundary.L_coeffs.value(j) * solution.value.dual_homog_plus().value(homogIndex) * stream_transmittance.value;
+                } else {
+                    stream_contrib.value(s1) += solution.boundary.L_coeffs.value(j) * solution.value.dual_homog_plus().value(homogIndex) * stream_transmittance.value;
+                }
+
+                // LCoeffs have full derivatives, for some reason stream transmittance is a full dual even though it should be layer?
+                for(sasktran_disco::uint k = 0; k < input_deriv.numDerivative(); ++k) {
+                    stream_contrib.deriv(k, s1) += solution.boundary.L_coeffs.deriv(k, j) * solution.value.dual_homog_plus().value(homogIndex) * stream_transmittance.value;
+                    stream_contrib.deriv(k, s1) += solution.boundary.L_coeffs.value(j) * solution.value.dual_homog_plus().value(homogIndex) * stream_transmittance.deriv(k);
+                }
+                // Homog only have layer derivs
+                for(int k = 0; k < numLayerDeriv; ++k) {
+                    stream_contrib.deriv(k + layerStart, s1) += solution.boundary.L_coeffs.value(j) * solution.value.dual_homog_plus().deriv(k, homogIndex) * stream_transmittance.value;
+                }
+
+                if constexpr(NSTOKES == 1) {
+                    stream_contrib.value += solution.boundary.M_coeffs.value(j) * solution.value.dual_homog_minus().value(homogIndex);
+                } else {
+                    stream_contrib.value(s1) += solution.boundary.M_coeffs.value(j) * solution.value.dual_homog_minus().value(homogIndex);
+                }
+
+                // MCoeffs have full derivatives
+                for(sasktran_disco::uint k = 0; k < input_deriv.numDerivative(); ++k) {
+                    stream_contrib.deriv(k, s1) += solution.boundary.M_coeffs.deriv(k, j) * solution.value.dual_homog_minus().value(homogIndex);
+                }
+                // Homog only have layer derivs
+                for(int k = 0; k < numLayerDeriv; ++k) {
+                    stream_contrib.deriv(k + layerStart, s1) += solution.boundary.M_coeffs.value(j) * solution.value.dual_homog_minus().deriv(k, homogIndex);
+                }
+            }
+            // Add stream i contribution
+            double factor = (1.0 + sasktran_disco::kronDelta(m, 0)) * (*thread_storage.sza_calculators[0].persistent_config->quadrature_cos_angle())[i/NSTOKES] * (*thread_storage.sza_calculators[0].persistent_config->quadrature_weights())[i/NSTOKES];
+
+            if constexpr(NSTOKES == 1) {
+                diffuse_contrib.value += factor * stream_contrib.value * dual_rho.value;
+            } else {
+                diffuse_contrib.value(s1) += factor * stream_contrib.value(s1) * dual_rho.value;
+            }
+
+            // stream_contrib has full derivatives
+            for(sasktran_disco::uint k = 0; k < input_deriv.numDerivative(); ++k) {
+                diffuse_contrib.deriv(k, s1) += factor * stream_contrib.deriv(k, s1) * dual_rho.value;
+            }
+            // rho only have layer derivs
+            for(int k = 0; k < numLayerDeriv; ++k) {
+                if constexpr(NSTOKES == 1) {
+                    diffuse_contrib.deriv(k + layerStart) += factor * stream_contrib.value * dual_rho.deriv(k);
+                } else {
+                    diffuse_contrib.deriv(k + layerStart, s1) += factor * stream_contrib.value(s1) * dual_rho.deriv(k);
+                }
+            }
+
+        }
+
+        // Always use 0 angle index to store the lambertian scattering result
+        // TODO: Derivative propagation
+        int source_index = ground_storage_index(0, szaidx, m);
+        auto& storage = m_storage[thread_idx];
+
+        if constexpr (NSTOKES == 3) {
+            for(int s = 0; s < NSTOKES; ++s) {
+                storage.source_terms_linear.value(source_index*NSTOKES + s) = diffuse_contrib.value(s);
+            }
+        } else {
+            storage.source_terms_linear.value(source_index) = diffuse_contrib.value;
+        }
     }
 
     template <int NSTOKES, int CNSTR>
@@ -270,6 +378,7 @@ namespace sasktran2 {
             int szaidx,
             int thread_idx
     ) {
+        accumulate_ground_sources(optical_layer, m, thread_storage, szaidx, thread_idx);
 
         auto& storage = m_storage[thread_idx];
 

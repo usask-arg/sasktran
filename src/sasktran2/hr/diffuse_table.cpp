@@ -86,6 +86,9 @@ namespace sasktran2::hr {
 
             loc.position = m_location_interpolator->ground_location(m_geometry.coordinates(), i);
 
+            // Add 0.01m to the ground location to avoid rounding errors
+            loc.position += loc.position.normalized() * 0.01;
+
             point = std::make_unique<sasktran2::hr::DiffusePoint<NSTOKES>>(*m_unit_sphere_pairs[i + num_interior_spheres], loc);
         }
 
@@ -166,21 +169,29 @@ namespace sasktran2::hr {
 
         generate_source_interpolation_weights(los_rays, m_los_source_weights, temp);
 
-        // Have to create a vector of all locations and directions
-        std::vector<Eigen::Vector3d> locations, directions;
-
-        for(int i = 0; i < m_diffuse_points.size(); ++i) {
-            const auto& point = m_diffuse_points[i];
-
-            for(int j = 0; j < point->num_outgoing(); ++j) {
-                locations.push_back(point->location().position);
-                directions.push_back(point->sphere_pair().outgoing_sphere().get_quad_position(j));
-            }
-        }
-
         if(m_config->initialize_hr_with_do()) {
+            // Have to create a vector of all locations and directions
+            std::vector<Eigen::Vector3d> locations, directions;
+            std::vector<bool> ground_point;
+
+            for(int i = 0; i < m_diffuse_points.size(); ++i) {
+                const auto& point = m_diffuse_points[i];
+
+                for(int j = 0; j < point->num_outgoing(); ++j) {
+                    locations.push_back(point->location().position);
+                    directions.push_back(point->sphere_pair().outgoing_sphere().get_quad_position(j));
+
+                    if(i < m_location_interpolator->num_interior_points()) {
+                        ground_point.push_back(false);
+                    } else {
+                        ground_point.push_back(true);
+                    }
+                }
+            }
+
             m_do_source->storage().create_location_source_interpolator(locations,
                                                                        directions,
+                                                                       ground_point,
                                                                        m_do_to_diffuse_outgoing_interpolator);
         }
 
@@ -259,12 +270,12 @@ namespace sasktran2::hr {
             auto& ray_interpolator = interpolator[rayidx];
             const auto& ray = rays[rayidx];
 
-            ray_interpolator.resize(ray.layers.size());
+            ray_interpolator.interior_weights.resize(ray.layers.size());
 
             for(int layeridx = 0; layeridx < ray.layers.size(); ++layeridx) {
                 const auto& layer = ray.layers[layeridx];
-                auto& layer_interpolator = ray_interpolator[layeridx].second;
-                auto& atmosphere_interpolator = ray_interpolator[layeridx].first;
+                auto& layer_interpolator = ray_interpolator.interior_weights[layeridx].second;
+                auto& atmosphere_interpolator = ray_interpolator.interior_weights[layeridx].first;
 
                 temp_location.position = (layer.entrance.position + layer.exit.position) / 2.0;
 
@@ -302,6 +313,38 @@ namespace sasktran2::hr {
                 total_num_weights += num_location * num_direction;
             }
 
+            ray_interpolator.ground_is_hit = ray.ground_is_hit;
+            if(ray_interpolator.ground_is_hit) {
+                const auto& layer = ray.layers[0];
+
+                temp_location.position = layer.exit.position;
+
+                m_location_interpolator->ground_interpolation_weights(m_geometry.coordinates(),
+                                                                      temp_location,
+                                                                      temp_location_storage,
+                                                                      num_location
+                                                                      );
+
+                for(int locidx = 0; locidx < num_location; ++locidx) {
+                    const auto& contributing_point = m_diffuse_points[temp_location_storage[locidx].first];
+
+                    // Multiply by -1 to get the propagation direction
+                    rotated_los = rotate_unit_vector(-1*layer.average_look_away, temp_location.position, contributing_point->location().position);
+
+                    contributing_point->sphere_pair().outgoing_sphere().interpolate(rotated_los,
+                                                                                    temp_direction_storage,
+                                                                                    num_direction);
+
+                    for(int diridx = 0; diridx < num_direction; ++diridx) {
+                        ray_interpolator.ground_weights.emplace_back(std::make_pair(m_diffuse_outgoing_index_map[temp_location_storage[locidx].first] + temp_direction_storage[diridx].first,
+                                                                       temp_location_storage[locidx].second * temp_direction_storage[diridx].second
+                        ));
+                    }
+
+                }
+
+            }
+
         }
     }
 
@@ -321,10 +364,12 @@ namespace sasktran2::hr {
         for(int i = 0; i < m_location_interpolator->num_ground_points(); ++i) {
             const auto& point = m_diffuse_points[i + m_location_interpolator->num_interior_points()];
 
+
             point->sphere_pair().calculate_ground_scattering_matrix(m_atmosphere->surface(),
-                                                                    m_diffuse_point_interpolation_weights[i],
+                                                                    m_diffuse_point_interpolation_weights[i + m_location_interpolator->num_interior_points()],
+                                                                    point->location(),
                                                                     wavelidx,
-                                                                    storage.point_scattering_matrices[i].data()
+                                                                    storage.point_scattering_matrices[i + m_location_interpolator->num_interior_points()].data()
                                                                     );
         }
     }
@@ -470,7 +515,7 @@ namespace sasktran2::hr {
                                                   sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
         auto& storage = m_thread_storage[threadidx];
 
-        auto& interpolator = m_los_source_weights[losidx][layeridx];
+        auto& interpolator = m_los_source_weights[losidx].interior_weights[layeridx];
 
         // Start by calculating ssa at the source point
         double omega = 0;

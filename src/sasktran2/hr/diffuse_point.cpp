@@ -220,6 +220,7 @@ namespace sasktran2::hr {
     template<int NSTOKES>
     void IncomingOutgoingSpherePair<NSTOKES>::calculate_ground_scattering_matrix(
             const sasktran2::atmosphere::Surface &surface, const std::vector<std::pair<int, double>> &index_weights,
+            const sasktran2::Location& loc,
             int wavelidx, double *phase_storage_location) const {
         Eigen::Map<Eigen::MatrixXd> phase_matrix(phase_storage_location, m_legendre_scat_mats[0][0].rows(), m_legendre_scat_mats[0][0].cols());
 
@@ -227,9 +228,20 @@ namespace sasktran2::hr {
 
         double albedo = surface.albedo()[wavelidx];
 
-        // scattering matrix elements are just albedo/pi
+        // scattering matrix elements are albedo/pi * cos(theta),
+        // but quadrature is sut up for 4pi normalization so we multiply this by 4pi
 
-        phase_matrix.setConstant(albedo / EIGEN_PI);
+        phase_matrix.setZero();
+
+
+        // right now just lambertian, so only scalar
+        for(int i = 0; i < phase_matrix.cols(); i += NSTOKES) {
+            double cos_theta = loc.cos_zenith_angle(m_incoming_sphere->get_quad_position(i/NSTOKES));
+
+            for(int j = 0; j < phase_matrix.rows(); j += NSTOKES) {
+                phase_matrix(j, i) = 4*albedo * cos_theta * m_incoming_sphere->quadrature_weight(i/NSTOKES);
+            }
+        }
     }
 
     template<int NSTOKES>

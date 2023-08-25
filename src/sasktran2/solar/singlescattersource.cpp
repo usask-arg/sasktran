@@ -64,6 +64,27 @@ namespace sasktran2::solartransmission {
 
     template<typename S, int NSTOKES>
     void SingleScatterSource<S, NSTOKES>::end_of_ray_source(int wavelidx, int losidx, int threadidx, sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
+        // TODO: BRDF
+
+        if(m_los_rays->at(losidx).ground_is_hit) {
+            double albedo = m_atmosphere->surface().albedo()[wavelidx];
+
+            // Single scatter ground source is solar_trans * cos(th) * albedo / pi
+            int exit_index = m_index_map[losidx][0];
+
+            double solar_od = m_solar_trans[threadidx][exit_index];
+
+            if(m_ground_hit_flag[exit_index]) {
+                solar_od = 9999;
+            }
+
+            double cos_theta = m_los_rays->at(losidx).layers[0].exit.cos_zenith_angle(m_geometry.coordinates().sun_unit());
+
+            // TODO: Linearization
+            double source_value = std::exp(-solar_od) * albedo * cos_theta / EIGEN_PI;
+
+            source.value(0) += source_value;
+        }
     }
 
     template<typename S, int NSTOKES>

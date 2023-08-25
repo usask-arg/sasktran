@@ -34,6 +34,7 @@ namespace sasktran2::math {
         const Eigen::Vector3d m_location;
 
         std::vector<int> m_contributing_map;
+        std::vector<int> m_reverse_contributing_map;
         std::vector<bool> m_is_full_sphere_looking_up;
 
     public:

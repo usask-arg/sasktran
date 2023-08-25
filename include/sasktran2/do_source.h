@@ -115,12 +115,21 @@ namespace sasktran2 {
         std::vector<Eigen::MatrixXd> m_scattering_matrix_interpolation_angles;
 
         int linear_storage_index(int angleidx, int layeridx, int szaidx, int aziidx) const;
-        void generate_scattering_matrices(const sasktran_disco::PersistentConfiguration<NSTOKES, CNSTR>& do_config);
+        int ground_start_index() const { return m_ground_start; };
+        int ground_storage_index(int angleidx, int szaidx, int aziidx) const;
 
         const sasktran2::Geometry1D& m_geometry;
         const Config& m_config;
 
         int m_num_azi;
+        int m_ground_start;
+
+        void accumulate_ground_sources(sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>& optical_layer,
+                                       sasktran_disco::AEOrder m,
+                                       sasktran2::DOSourceThreadStorage<NSTOKES, CNSTR>& thread_storage,
+                                       int szaidx,
+                                       int thread_idx);
+
     public:
         DOSourceDiffuseStorage(const sasktran_disco::GeometryLayerArray<NSTOKES, CNSTR>& layer_geometry,
                                const sasktran_disco::PersistentConfiguration<NSTOKES, CNSTR>& do_config,
@@ -151,6 +160,7 @@ namespace sasktran2 {
 
         void create_location_source_interpolator(const std::vector<Eigen::Vector3d>& locations,
                                                  const std::vector<Eigen::Vector3d>& directions,
+                                                 const std::vector<bool>& ground_hit_flag,
                                                  Eigen::SparseMatrix<double, Eigen::RowMajor>& interpolator
                                                  ) const;
 

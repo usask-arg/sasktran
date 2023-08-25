@@ -103,7 +103,7 @@ namespace sasktran2 {
             const sasktran2::raytracing::SphericalLayer& layer = ray.layers[j];
 
             sasktran2::SparseODDualView local_shell_od(m_shell_od[rayidx](j, wavelidx), m_traced_ray_od_matrix[rayidx], j);
-            const auto& layer_interpolator = interpolator[j];
+            const auto& layer_interpolator = interpolator.interior_weights[j];
             // Calculate and add the layer source to the radiance
             double atten_factor = std::exp(-current_od);
 
@@ -139,6 +139,17 @@ namespace sasktran2 {
         }
 
         radiance.value += layer_source.value * std::exp(-1 * current_od);
+
+        // Add ground interpolation triplets
+        if(ray.ground_is_hit) {
+            const auto& ground_interpolator = interpolator.ground_weights;
+
+            for(const auto& ele : ground_interpolator) {
+                for(int s = 0; s < NSTOKES; ++s) {
+                    triplets.emplace_back(Eigen::Triplet<double>(rayidx*NSTOKES + s, ele.first*NSTOKES + s, ele.second * std::exp(-1 * current_od) ));
+                }
+            }
+        }
     }
 
     template class SourceIntegrator<1>;

@@ -6,6 +6,12 @@
 
 namespace sasktran2 {
 
+    struct RaySourceInterpolationWeights {
+        std::vector<std::pair<std::vector<std::pair<int, double>>, std::vector<std::pair<int, double>>>> interior_weights;
+        std::vector<std::pair<int, double>> ground_weights;
+        bool ground_is_hit;
+    };
+
     /** Class that integrates source terms along the ray.  Note that in SASKTRAN2, source terms themselves are responsible
      *  for integrating across the layer, this class simply adds the source terms in each layer and attenuates them
      *  by the optical depth.
@@ -22,7 +28,7 @@ namespace sasktran2 {
      */
     template<int NSTOKES>
     class SourceIntegrator {
-        using SInterpolator = std::vector<std::vector<std::pair<std::vector<std::pair<int, double>>, std::vector<std::pair<int, double>>>>>;
+        using SInterpolator = std::vector<RaySourceInterpolationWeights>;
     private:
         bool m_calculate_derivatives; /**< True if we are calculating derivatives */
         std::vector<Eigen::SparseMatrix<double, Eigen::RowMajor>> m_traced_ray_od_matrix; /**< Vector of matrices A such that A * atmosphere_extinction = OD for each layer in that ray */
