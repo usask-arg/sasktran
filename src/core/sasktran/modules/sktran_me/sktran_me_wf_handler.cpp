@@ -1,5 +1,6 @@
 #include "include/sktran_me_internals.h"
 #include "include/sktran_me_atmosphere_interface.h"
+#include <boost/algorithm/string.hpp>
 
 namespace sktran_me {
     void WFHandler::set_from_strings(const std::vector<std::string> &wf_handles) {
@@ -10,6 +11,14 @@ namespace sktran_me {
             auto handle = FindGlobalClimatologyHandle(wf_handles[i].c_str(), false);
 
             if(*handle == SKCLIMATOLOGY_UNDEFINED) {
+                if(boost::iequals(wf_handles[i], "brdf")) {
+                    // Have a surface derivative
+                    m_wf_types[i] = wftype::SurfaceAlbedo;
+                    m_wf_guids[i] = SKCLIMATOLOGY_UNDEFINED;
+
+                } else {
+                    BOOST_LOG_TRIVIAL(error) << "Could not determine WF type for: " << wf_handles[i];
+                }
 
             } else {
                 // Species was in the handle table and so it is a simple numberdensity calculation
@@ -42,6 +51,8 @@ namespace sktran_me {
                 } else {
                     m_scattering_map[i] = -1;
                 }
+            } else {
+                m_scattering_map[i] = -1;
             }
         }
     }
@@ -57,10 +68,14 @@ namespace sktran_me {
             if(m_wf_types[i] == wftype::NumberDensity) {
                 num_wf += m_geometry->size();
             }
+
+            if(m_wf_types[i] == wftype::SurfaceAlbedo) {
+                // TODO: This will have to change for 2d atmospheres right?
+                num_wf += 1;
+            }
         }
 
         return num_wf;
-
     }
 
 }

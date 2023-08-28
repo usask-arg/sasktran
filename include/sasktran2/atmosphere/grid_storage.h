@@ -77,7 +77,6 @@ namespace sasktran2::atmosphere {
 
     private:
         ScatWeightType m_scattering_weights;
-        Eigen::SparseMatrix<double, Eigen::RowMajor> m_scattering_weights_sparse;
     public:
         PhaseInterpolator();
 

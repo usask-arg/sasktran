@@ -23,6 +23,8 @@ namespace sasktran2 {
         bool on_exact_altitude; /**< OPTIONAL.  True if the location is on an exact grid point of the global altitude grid */
         int lower_alt_index;    /**< OPTIONAL.  the lower altitude index of this point in the global altitude grid.  Set to -1 if not used. */
 
+        std::vector<std::pair<int, double>> interpolation_weights; /**< OPTIONAL.  Interpolation weights and indicies to the global geometry table */
+
         Location() : on_exact_altitude(false), lower_alt_index(-1) {};
 
         /**

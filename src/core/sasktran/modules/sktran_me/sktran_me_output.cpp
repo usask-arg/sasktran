@@ -90,6 +90,11 @@ namespace sktran_me {
                     ++deriv_start;
                 }
             }
+            if(m_wf_handler.wf_type(i) == WFHandler::wftype::SurfaceAlbedo) {
+                // This just needs to be copied
+                m_wf(deriv_start) += radiance.deriv(0, m_wf_handler.sasktran2_surface_deriv_start());
+                ++deriv_start;
+            }
         }
 
     }

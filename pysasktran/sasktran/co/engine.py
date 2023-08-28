@@ -16,6 +16,9 @@ class EngineCO(sk.Engine):
                  wavelengths: list = None, options: dict = None):
         super().__init__('co', geometry, atmosphere, wavelengths, options)
 
+        if 'altitudegrid' not in self.options:
+            self.options['altitudegrid'] = np.arange(0, 100001, 1000)
+
         self._model_parameters = dict()
         self._wf_shape = None
         self._nstokes = 1
@@ -45,27 +48,10 @@ class EngineCO(sk.Engine):
             wf_species_handles = []
             for a_species in np.atleast_1d(self.atmosphere.wf_species):
                 if not (a_species in self.atmosphere.species):
-                    err_msg = "Weighting function species '{}' was not in the species list".format(a_species)
-                    if err_msg is not None:
-                        raise ValueError(err_msg)
+                    wf_species_handles.append(a_species)
                 else:
                     wf_species_handles.append(self.atmosphere.species[a_species].species)
             self.options['wfspecies'] = " ".join(wf_species_handles)
-
-            if hasattr(self.atmosphere.wf_species, '__iter__') and not isinstance(self.atmosphere.wf_species, str):
-                self._wf_shape = (
-                    len(self.wavelengths),
-                    len(self.geometry.lines_of_sight),
-                    len(self.atmosphere.wf_species),
-                    -1
-                )
-            else:
-                self._wf_shape = (
-                    len(self.wavelengths),
-                    len(self.geometry.lines_of_sight),
-                    1,
-                    -1
-                )
 
     @wrap_skif_functionfail
     def calculate_radiance(self, output_format='numpy', full_stokes_vector=False, stokes_orientation='geographic'):
@@ -77,13 +63,27 @@ class EngineCO(sk.Engine):
                                          stokes_orientation=stokes_orientation)
 
         if self._atmosphere.wf_species is not None:
-            wf = self._iskengine.GetWeightingFunctions()[1].reshape(self._wf_shape)
+            wf = self._iskengine.GetWeightingFunctions()[1].reshape((len(self.wavelengths), len(self.geometry.lines_of_sight), -1))
 
             if hasattr(self.atmosphere.wf_species, '__iter__') and not isinstance(self.atmosphere.wf_species, str):
-                for species_idx, species in enumerate(self.atmosphere.wf_species):
-                    rad['wf_' + species] = (['wavelength', 'los', 'perturbation'], wf[:, :, species_idx, :])
+                wf_iter = self.atmosphere.wf_species
             else:
-                rad['wf_' + self.atmosphere.wf_species] = (['wavelength', 'los', 'perturbation'], wf[:, :, 0, :])
+                wf_iter = [self.atmosphere.wf_species]
+
+            wf_start_counter = 0
+            for species_idx, species in enumerate(wf_iter):
+                if species.lower() == 'brdf':
+                    num_species_wf = 1
+                    rad['wf_' + species] = (['wavelength', 'los'],
+                                            wf[:, :, wf_start_counter])
+
+                else:
+                    num_species_wf = len(self.options['altitudegrid'])
+                    rad['wf_' + species] = (['wavelength', 'los', 'perturbation'],
+                                            wf[:, :, wf_start_counter:(wf_start_counter + num_species_wf)])
+
+                wf_start_counter += num_species_wf
+
 
         return rad
 

@@ -8,7 +8,7 @@ namespace sktran_me {
     public:
         enum class wftype {
             NumberDensity,
-
+            SurfaceAlbedo
         };
     private:
         std::vector<wftype> m_wf_types;
@@ -39,6 +39,8 @@ namespace sktran_me {
         int species_index(int i) const { return m_species_index_map[i]; }
 
         int num_scattering_derivatives() const { return m_num_scatterers; }
+
+        int sasktran2_surface_deriv_start() const { return (2 + m_num_scatterers) * m_geometry->size(); }
 
     };
 }

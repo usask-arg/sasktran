@@ -162,10 +162,6 @@ namespace sasktran2::solartransmission {
             solar_od_entrance = 9999;
         }
 
-        // These two vectors give us the interpolation
-        m_geometry.assign_interpolation_weights(layer.entrance, m_thread_index_cache_one[threadidx]);
-        m_geometry.assign_interpolation_weights(layer.exit, m_thread_index_cache_two[threadidx]);
-
         auto& phase_interp = m_phase_interp[m_phase_index_map[losidx][layeridx]];
 
         auto& start_phase = m_start_source_cache[threadidx];
@@ -187,10 +183,10 @@ namespace sasktran2::solartransmission {
         end_phase.value.setZero();
 
         // Calculate SSA, don't do derivatives until later
-        for(auto& ele : m_thread_index_cache_one[threadidx]) {
+        for(auto& ele : layer.entrance.interpolation_weights) {
             ssa_start += m_atmosphere->storage().ssa(ele.first, wavelidx) * ele.second;
         }
-        for(auto& ele : m_thread_index_cache_two[threadidx]) {
+        for(auto& ele : layer.exit.interpolation_weights) {
             ssa_end += m_atmosphere->storage().ssa(ele.first, wavelidx) * ele.second;
         }
 
@@ -198,8 +194,8 @@ namespace sasktran2::solartransmission {
         start_phase.value(0) = ssa_start * entrance_factor;
         end_phase.value(0) = ssa_end * exit_factor;
 
-        phase_interp.scatter(m_atmosphere->storage().phase[wavelidx], m_thread_index_cache_one[threadidx], start_phase);
-        phase_interp.scatter(m_atmosphere->storage().phase[wavelidx], m_thread_index_cache_two[threadidx], end_phase);
+        phase_interp.scatter(m_atmosphere->storage().phase[wavelidx], layer.entrance.interpolation_weights, start_phase);
+        phase_interp.scatter(m_atmosphere->storage().phase[wavelidx], layer.exit.interpolation_weights, end_phase);
 
         if(calculate_derivative) {
             if constexpr (std::is_same_v<S, SolarTransmissionExact>) {
@@ -218,10 +214,10 @@ namespace sasktran2::solartransmission {
             }
 
             // And SSA derivative factors
-            for(auto& ele : m_thread_index_cache_one[threadidx]) {
+            for(auto& ele : layer.entrance.interpolation_weights) {
                 start_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * start_phase.value / ssa_start;
             }
-            for(auto& ele : m_thread_index_cache_two[threadidx]) {
+            for(auto& ele : layer.exit.interpolation_weights) {
                 end_phase.deriv(Eigen::all, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * end_phase.value / ssa_end;
             }
         }

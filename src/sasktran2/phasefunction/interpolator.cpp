@@ -110,8 +110,6 @@ namespace sasktran2::atmosphere {
                 }
             }
         }
-
-        m_scattering_weights_sparse = m_scattering_weights.sparseView();
     }
 
     template<int NSTOKES, bool ssonly>

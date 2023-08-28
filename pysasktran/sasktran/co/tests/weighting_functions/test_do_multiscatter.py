@@ -100,3 +100,43 @@ def test_scattering_wf_multiple_scatterer(delta_scale):
     rad = rad.isel(perturbation=slice(0, NUM_WF_VERIFY))
 
     validate_wf(rad['wf_air'], rad['wf_numerical_air'])
+
+
+def test_wf_albedo():
+    """
+
+    """
+    wavelengths = np.arange(280, 350, 1)
+
+    atmo = default_atmosphere(altitude_spacing=1000)
+
+    atmo['air2'] = sk.Species(sk.SimpleRayleigh(), sk.MSIS90())
+
+    geo = default_geometry()
+
+    engine = sk.EngineCO(atmosphere=atmo, geometry=geo, wavelengths=wavelengths,
+                         options={'msmode': 1,
+                                  'numssmoments': 4,
+                                  'numdostreams': 4,
+                                  'applydeltascaling': True
+                                  }
+                         )
+
+    atmo.wf_species = ['brdf', 'air2']
+    atmo.brdf = 0.3
+
+    rad = engine.calculate_radiance('xarray')
+
+    dbrdf = 0.001
+
+    atmo.brdf = 0.3 + dbrdf
+
+    rad_above = engine.calculate_radiance('xarray')
+
+    atmo.brdf = 0.3 - dbrdf
+
+    rad_below = engine.calculate_radiance('xarray')
+
+    wf_brdf = (rad_above['radiance'] - rad_below['radiance']) / (2*dbrdf)
+
+    pass

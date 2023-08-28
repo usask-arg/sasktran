@@ -332,6 +332,12 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                 }
 
             }
+            // Add one final derivative for the surface
+            LayerInputDerivative<NSTOKES>& deriv_albedo = m_input_derivatives.addDerivative(this->M_NSTR, this->M_NLYR - 1);
+            deriv_albedo.d_albedo = 1;
+            deriv_albedo.group_and_triangle_fraction.emplace_back(atmosphere.surface_deriv_start_index(), 1);
+            deriv_albedo.extinctions.emplace_back(1);
+
             m_input_derivatives.set_geometry_configured();
             m_input_derivatives.sort(this->M_NLYR);
         }
@@ -366,7 +372,7 @@ sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR>::OpticalLayerArray(
                     }
                 }
 
-            } else {
+            } else if (deriv.d_albedo == 0) {
                 // Scattering derivative
                 for(int l = 0; l < deriv.group_and_triangle_fraction.size(); ++l) {
                     auto& group = deriv.group_and_triangle_fraction[l];

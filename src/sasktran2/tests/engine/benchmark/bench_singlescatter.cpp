@@ -28,7 +28,7 @@ TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
     surface.albedo().resize(nwavel);
     surface.albedo().setZero();
 
-    sasktran2::atmosphere::Atmosphere<1> atmo(std::move(storage), std::move(surface), true);
+    sasktran2::atmosphere::Atmosphere<1> atmo(std::move(storage), std::move(surface), false);
 
     std::vector<double> extinction{ 7.07906113e-05, 6.46250950e-05, 5.86431083e-05, 5.29850715e-05,
                                     4.77339013e-05, 4.29288557e-05, 3.85773022e-05, 3.46642865e-05,

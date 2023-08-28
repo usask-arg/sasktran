@@ -139,6 +139,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
     void SphericalShellRayTracer::partial_layer(SphericalLayer& layer, const sasktran2::viewinggeometry::ViewingRay& ray, size_t start_index, ViewingDirection direction, TangentSide side) const {
@@ -165,6 +166,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
     void SphericalShellRayTracer::tangent_layer(SphericalLayer& layer, const sasktran2::viewinggeometry::ViewingRay& ray, size_t upper_index, double tangent_altitude, ViewingDirection direction, TangentSide side) const {
@@ -205,6 +207,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
 
@@ -240,6 +243,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
 

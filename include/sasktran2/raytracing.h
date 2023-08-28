@@ -142,6 +142,11 @@ namespace sasktran2::raytracing {
         );
     }
 
+    inline void add_interpolation_weights(SphericalLayer& layer, const sasktran2::Geometry1D& geometry) {
+        geometry.assign_interpolation_weights(layer.exit, layer.exit.interpolation_weights);
+        geometry.assign_interpolation_weights(layer.entrance, layer.entrance.interpolation_weights);
+    }
+
     /** Populates a layer with the optical depth quadrature parameters
      *
      * @param layer layer to populate

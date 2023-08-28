@@ -19,7 +19,7 @@ namespace sasktran2::atmosphere {
         Eigen::VectorXd& albedo() { return m_albedo;  };
         const Eigen::VectorXd& albedo() const { return m_albedo; }
 
-        int num_deriv() const { return 0; }
+        int num_deriv() const { return 1; }
     };
 
 
@@ -65,7 +65,7 @@ namespace sasktran2::atmosphere {
 
         int ssa_deriv_start_index() const { return (int)m_storage.total_extinction.rows();}
         int scat_deriv_start_index() const { return (int)m_storage.total_extinction.rows() * 2;}
-        int surface_deriv_start_index() const { return scat_deriv_start_index() + m_storage.phase[0].num_deriv(); }
+        int surface_deriv_start_index() const { return scat_deriv_start_index() + m_storage.phase[0].num_deriv()*m_storage.total_extinction.rows(); }
 
         int num_wavel() const { return (int)m_storage.total_extinction.cols();}
         int num_deriv() const;
