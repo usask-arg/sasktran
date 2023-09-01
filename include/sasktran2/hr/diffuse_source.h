@@ -18,7 +18,7 @@ namespace sasktran2::hr {
         sasktran2::Dual<double, sasktran2::dualstorage::dense> m_outgoing_sources; /**< Outgoing source terms, [stokes, direction, diffusegrid] */
 
         std::vector<Eigen::MatrixXd> point_scattering_matrices; /** For each point, outgoing source = scattering matrix @ incoming */
-        Eigen::SparseMatrix<double, Eigen::RowMajor> accumulation_matrix; /** incoming_radiance = accumulation_matrix @ outgoing_sources */
+        Eigen::SparseMatrix<double, Eigen::ColMajor> accumulation_matrix; /** incoming_radiance = accumulation_matrix @ outgoing_sources */
     };
 
     /** An implementation of the successive orders of scattering technique.  We call this HR mostly for historic

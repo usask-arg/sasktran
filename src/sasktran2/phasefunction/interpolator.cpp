@@ -1,17 +1,23 @@
 #include <sasktran2/atmosphere/grid_storage.h>
 #include <sasktran2/math/wigner.h>
 #include <sasktran2/math/scattering.h>
+#include <arm_neon.h>
 
 namespace sasktran2::atmosphere {
 
     template<int NSTOKES, bool ssonly>
-    PhaseInterpolator<NSTOKES, ssonly>::PhaseInterpolator() {}
+    PhaseInterpolator<NSTOKES, ssonly>::PhaseInterpolator() : m_geometry_loaded(false) {}
 
     template<int NSTOKES, bool ssonly>
     void PhaseInterpolator<NSTOKES, ssonly>::load_scattering_angle(const PhaseStorage<NSTOKES> &storage,
                                                                    const Eigen::Vector3d &incoming_ray,
                                                                    const Eigen::Vector3d &outgoing_ray,
                                                                    bool outgoing_facing_away) {
+        if(m_geometry_loaded) {
+            return;
+        }
+        m_geometry_loaded = true;
+
         if constexpr (NSTOKES ==1) {
             double cos_scatter = incoming_ray.dot( outgoing_ray);
             if(!outgoing_facing_away) {
@@ -118,30 +124,19 @@ namespace sasktran2::atmosphere {
                                              const std::vector<std::pair<int, double>>& index_weights,
                                              sasktran2::Dual<double, S, NSTOKES>& source) const {
 
-        using PhaseResult = typename std::conditional<ssonly, Eigen::Vector<double, NSTOKES>, Eigen::Vector<double, NSTOKES*NSTOKES>>::type;
+        using PhaseResult = typename std::conditional<ssonly, Eigen::Vector<sasktran2::types::leg_coeff, NSTOKES>, Eigen::Vector<sasktran2::types::leg_coeff, NSTOKES*NSTOKES>>::type;
 
 
         int numscatderiv = phase_storage.num_deriv();
         int derivstart = phase_storage.scattering_deriv_start();
 
-        PhaseResult phase_result;
-        phase_result.setZero();
-
-        // Interpolate the phase matrix to the geometric location we are at
-        for(const auto& ele : index_weights) {
-            phase_result.array() += ele.second * (m_scattering_weights * phase_storage.storage()(Eigen::all, ele.first)).array();
-        }
-
         if constexpr(NSTOKES == 1) {
-            // Any current derivatives will be scaled by the phase function
-            //source.deriv *= phase_result.value();
-
             // Apply phase derivatives
             if constexpr( S == sasktran2::dualstorage::dense) {
                 if(source.deriv.size() > 0) {
                     for(const auto& ele : index_weights) {
                         for(int i = 0; i < numscatderiv; ++i) {
-                            source.deriv(Eigen::all, derivstart + i*phase_storage.deriv_storage(i).cols() + ele.first) += ele.second * source.value(0) * (m_scattering_weights * phase_storage.deriv_storage(i)(Eigen::all, ele.first));
+                            source.deriv(Eigen::all, derivstart + i*phase_storage.deriv_storage(i).cols() + ele.first) += (ele.second * source.value(0) * (m_scattering_weights * phase_storage.deriv_storage(i)(Eigen::all, ele.first))).template cast<double>();
                         }
                     }
                 }
@@ -149,9 +144,24 @@ namespace sasktran2::atmosphere {
                 BOOST_LOG_TRIVIAL(warning) << "Phase derivatives with an input sparse source derivative is not supported";
             }
 
+            // Have to interpolate the phase
+            sasktran2::types::leg_coeff phase_result = 0;
+
+            for(const auto& ele : index_weights) {
+                phase_result += ele.second * (m_scattering_weights.dot(phase_storage.storage()(Eigen::all, ele.first)));
+            }
             // Apply the phase function
-            source.value(0) *= phase_result.value();
+            source.value(0) *= phase_result;
         } else {
+            PhaseResult phase_result;
+            phase_result.setZero();
+
+            // Interpolate the phase matrix to the geometric location we are at
+            for(const auto& ele : index_weights) {
+                phase_result.array() += ele.second * (m_scattering_weights * phase_storage.storage()(Eigen::all, ele.first)).array();
+            }
+
+
             // TODO: Derivatives here
             if constexpr (!ssonly) {
                 source.value.applyOnTheLeft(Eigen::Map<Eigen::Matrix<double, NSTOKES, NSTOKES>>(phase_result.data(), NSTOKES, NSTOKES));

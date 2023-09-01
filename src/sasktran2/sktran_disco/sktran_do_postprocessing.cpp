@@ -3,8 +3,9 @@
 
 namespace sasktran_disco::postprocessing {
 
+    template<int CNSTR>
     void h_plus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                        const sasktran_disco::VectorLayerDual<double>& eigval,
+                        const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                         sasktran_disco::SolutionIndex solution_index,
                         double layer_relative_location,
                         sasktran_disco::LayerDual<double>& h_plus
@@ -18,8 +19,9 @@ namespace sasktran_disco::postprocessing {
                 );
     }
 
+    template<int CNSTR>
     void h_minus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                         const sasktran_disco::VectorLayerDual<double>& eigval,
+                         const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                          sasktran_disco::SolutionIndex solution_index,
                          double layer_relative_location,
                          sasktran_disco::LayerDual<double>& h_minus
@@ -33,8 +35,9 @@ namespace sasktran_disco::postprocessing {
                 );
     }
 
+    template<int CNSTR>
     void d_minus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                         const sasktran_disco::VectorLayerDual<double>& eigval,
+                         const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                          sasktran_disco::SolutionIndex solution_index,
                          double layer_relative_location,
                          const sasktran_disco::Dual<double>& transmission,
@@ -81,8 +84,9 @@ namespace sasktran_disco::postprocessing {
         d_minus.deriv *= 1 / denom;
     }
 
+    template<int CNSTR>
     void d_plus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                         const sasktran_disco::VectorLayerDual<double>& eigval,
+                         const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                          sasktran_disco::SolutionIndex solution_index,
                          double layer_relative_location,
                          const sasktran_disco::Dual<double>& transmission,
@@ -126,5 +130,217 @@ namespace sasktran_disco::postprocessing {
         d_plus.value *= transmission.value / denom;
         d_plus.deriv *= 1 / denom;
     }
+
+    template void h_plus_sampled<-1>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, -1>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<1>(const sasktran_disco::LayerDual<double>& thickness,
+                                 const sasktran_disco::VectorLayerDual<double, 1>& eigval,
+                                 sasktran_disco::SolutionIndex solution_index,
+                                 double layer_relative_location,
+                                 sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<2>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 2>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<8>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 8>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<3>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 3>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<6>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 6>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+    template void h_plus_sampled<24>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 24>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    sasktran_disco::LayerDual<double>& h_plus);
+
+
+    template void h_minus_sampled<-1>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, -1>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<1>(const sasktran_disco::LayerDual<double>& thickness,
+                                  const sasktran_disco::VectorLayerDual<double, 1>& eigval,
+                                  sasktran_disco::SolutionIndex solution_index,
+                                  double layer_relative_location,
+                                  sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<2>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 2>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<8>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 8>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<3>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 3>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<6>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 6>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+    template void h_minus_sampled<24>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 24>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     sasktran_disco::LayerDual<double>& h_minus);
+
+
+    template void d_minus_sampled<-1>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, -1>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<1>(const sasktran_disco::LayerDual<double>& thickness,
+                                  const sasktran_disco::VectorLayerDual<double, 1>& eigval,
+                                  sasktran_disco::SolutionIndex solution_index,
+                                  double layer_relative_location,
+                                  const sasktran_disco::Dual<double>& transmission,
+                                  const sasktran_disco::Dual<double>& average_secant,
+                                  int layerderivstart,
+                                  sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<2>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 2>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<8>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 8>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<3>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 3>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<6>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 6>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_minus_sampled<24>(const sasktran_disco::LayerDual<double>& thickness,
+                                     const sasktran_disco::VectorLayerDual<double, 24>& eigval,
+                                     sasktran_disco::SolutionIndex solution_index,
+                                     double layer_relative_location,
+                                     const sasktran_disco::Dual<double>& transmission,
+                                     const sasktran_disco::Dual<double>& average_secant,
+                                     int layerderivstart,
+                                     sasktran_disco::Dual<double>& d_minus);
+
+    template void d_plus_sampled<-1>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, -1>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<1>(const sasktran_disco::LayerDual<double>& thickness,
+                                          const sasktran_disco::VectorLayerDual<double, 1>& eigval,
+                                          sasktran_disco::SolutionIndex solution_index,
+                                          double layer_relative_location,
+                                          const sasktran_disco::Dual<double>& transmission,
+                                          const sasktran_disco::Dual<double>& average_secant,
+                                          int layerderivstart,
+                                          sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<2>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 2>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<8>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 8>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<3>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 3>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<6>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 6>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
+
+    template void d_plus_sampled<24>(const sasktran_disco::LayerDual<double>& thickness,
+                                    const sasktran_disco::VectorLayerDual<double, 24>& eigval,
+                                    sasktran_disco::SolutionIndex solution_index,
+                                    double layer_relative_location,
+                                    const sasktran_disco::Dual<double>& transmission,
+                                    const sasktran_disco::Dual<double>& average_secant,
+                                    int layerderivstart,
+                                    sasktran_disco::Dual<double>& d_plus);
 
 }

@@ -342,6 +342,7 @@ namespace sasktran2::hr {
                     }
 
                 }
+                total_num_weights += num_location * num_direction;
 
             }
 
@@ -485,9 +486,12 @@ namespace sasktran2::hr {
 
             m_thread_storage[threadidx].m_firstorder_radiances.value(Eigen::seq(rayidx*NSTOKES, rayidx*NSTOKES + NSTOKES - 1)) = temp_result.value;
 
+
+            #ifdef SASKTRAN_DEBUG_ASSERTS
             if(temp_result.value.hasNaN()) {
                 BOOST_LOG_TRIVIAL(error) << "Incoming Ray: " << rayidx << " has NaN";
             }
+            #endif
 
         }
         auto& matrix = m_thread_storage[threadidx].accumulation_matrix;

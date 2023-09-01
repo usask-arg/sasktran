@@ -15,8 +15,9 @@ namespace sasktran_disco::postprocessing {
      * @param eigval Eigenvalue corresponding to this homogenous solution
      * @param layer_relative_location Relative location in optical depth coordinates. 0 for top of the layer, 1 for bottom of the layer.
      */
+     template<int CNSTR=-1>
     void h_plus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                        const sasktran_disco::VectorLayerDual<double>& eigval,
+                        const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                         sasktran_disco::SolutionIndex solution_index,
                         double layer_relative_location,
                         sasktran_disco::LayerDual<double>& h_plus
@@ -29,8 +30,9 @@ namespace sasktran_disco::postprocessing {
      * @param eigval Eigenvalue corresponding to this homogenous solution
      * @param layer_relative_location Relative location in optical depth coordinates. 0 for top of the layer, 1 for bottom of the layer.
      */
+    template<int CNSTR=-1>
     void h_minus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                         const sasktran_disco::VectorLayerDual<double>& eigval,
+                         const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                          sasktran_disco::SolutionIndex solution_index,
                          double layer_relative_location,
                          sasktran_disco::LayerDual<double>& h_minus
@@ -48,8 +50,9 @@ namespace sasktran_disco::postprocessing {
      * @param layerderivstart
      * @param d_minus
      */
+    template<int CNSTR=-1>
     void d_minus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                         const sasktran_disco::VectorLayerDual<double>& eigval,
+                         const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                          sasktran_disco::SolutionIndex solution_index,
                          double layer_relative_location,
                          const sasktran_disco::Dual<double>& transmission,
@@ -70,8 +73,9 @@ namespace sasktran_disco::postprocessing {
      * @param layerderivstart
      * @param d_plus
      */
+    template<int CNSTR=-1>
     void d_plus_sampled(const sasktran_disco::LayerDual<double>& thickness,
-                        const sasktran_disco::VectorLayerDual<double>& eigval,
+                        const sasktran_disco::VectorLayerDual<double, CNSTR>& eigval,
                         sasktran_disco::SolutionIndex solution_index,
                         double layer_relative_location,
                         const sasktran_disco::Dual<double>& transmission,

@@ -19,12 +19,15 @@ namespace sasktran2 {
         }
 
         m_shell_od.resize(traced_rays.size());
+        m_exp_minus_shell_od.resize(traced_rays.size());
+
         m_traced_rays = &traced_rays;
     }
 
     template<int NSTOKES>
     void SourceIntegrator<NSTOKES>::initialize_atmosphere(const sasktran2::atmosphere::Atmosphere<NSTOKES> &atmo) {
         // Multithread over LOS? or wavelength? Or just let Eigen do it?
+        #pragma omp parallel for
         for(int i = 0; i < m_traced_ray_od_matrix.size(); ++i) {
             m_shell_od[i].noalias() = m_traced_ray_od_matrix[i] * atmo.storage().total_extinction;
         }
@@ -52,7 +55,7 @@ namespace sasktran2 {
         for(int j = 0; j < ray.layers.size(); ++j) {
             const sasktran2::raytracing::SphericalLayer& layer = ray.layers[j];
 
-            sasktran2::SparseODDualView local_shell_od(m_shell_od[rayidx](j, wavelidx), m_traced_ray_od_matrix[rayidx], j);
+            sasktran2::SparseODDualView local_shell_od(m_shell_od[rayidx](j, wavelidx), std::exp(-m_shell_od[rayidx](j, wavelidx)), m_traced_ray_od_matrix[rayidx], j);
 
             // Attenuate the radiance by the layer OD
             // rad = rad * atten, drad = drad * atten + rad * datten
@@ -64,9 +67,9 @@ namespace sasktran2 {
                 }
             }
 
-            radiance.value *= std::exp(-local_shell_od.od);
+            radiance.value *= local_shell_od.exp_minus_od;
             if(m_calculate_derivatives) {
-                radiance.deriv *= std::exp(-local_shell_od.od);
+                radiance.deriv *= local_shell_od.exp_minus_od;
             }
 
             // Calculate all of the layer sources
@@ -87,6 +90,13 @@ namespace sasktran2 {
     }
 
     template<int NSTOKES>
+    void SourceIntegrator<NSTOKES>::integrate_optical_depth(
+            sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &radiance, int wavelidx, int rayidx,
+            int threadidx) {
+        radiance.value(0) = m_shell_od[rayidx](Eigen::all, wavelidx).array().sum();
+    }
+
+    template<int NSTOKES>
     void SourceIntegrator<NSTOKES>::integrate_and_emplace_accumulation_triplets(
             sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &radiance,
             std::vector<SourceTermInterface<NSTOKES> *> source_terms, int wavelidx, int rayidx, int threadidx,
@@ -102,7 +112,7 @@ namespace sasktran2 {
         for(int j = (int)ray.layers.size() - 1; j >= 0; --j) {
             const sasktran2::raytracing::SphericalLayer& layer = ray.layers[j];
 
-            sasktran2::SparseODDualView local_shell_od(m_shell_od[rayidx](j, wavelidx), m_traced_ray_od_matrix[rayidx], j);
+            sasktran2::SparseODDualView local_shell_od(m_shell_od[rayidx](j, wavelidx), std::exp(-m_shell_od[rayidx](j, wavelidx)), m_traced_ray_od_matrix[rayidx], j);
             const auto& layer_interpolator = interpolator.interior_weights[j];
             // Calculate and add the layer source to the radiance
             double atten_factor = std::exp(-current_od);
@@ -121,11 +131,11 @@ namespace sasktran2 {
                 auto& index_weight = layer_interpolator.first[i];
                 omega += m_atmosphere->storage().ssa(index_weight.first, wavelidx) * index_weight.second;
             }
-            double source_factor = omega * (1 - std::exp(-local_shell_od.od)) * atten_factor;
+            double source_factor = omega * (1 - local_shell_od.exp_minus_od) * atten_factor;
 
             for(const auto& ele : layer_interpolator.second) {
                 for(int s = 0; s < NSTOKES; ++s) {
-                    triplets.emplace_back(Eigen::Triplet<double>(rayidx*NSTOKES + s, ele.first*NSTOKES + s, ele.second * source_factor ));
+                    triplets.emplace_back(rayidx*NSTOKES + s, ele.first*NSTOKES + s, ele.second * source_factor );
                 }
             }
 

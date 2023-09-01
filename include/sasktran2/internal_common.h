@@ -9,6 +9,8 @@
 #include <iostream>
 #include <optional>
 
+#include <sasktran2/types.h>
+
 #ifndef EIGEN_DONT_PARALLELIZE
     #define EIGEN_DONT_PARALLELIZE
 #endif

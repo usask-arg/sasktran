@@ -73,7 +73,7 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
     sasktran2::viewinggeometry::ViewingGeometryContainer viewing_geometry;
     auto& los = viewing_geometry.observer_rays();
 
-    int nlos = 50;
+    int nlos = 250;
     for(int i = 0; i < nlos; ++i) {
         los.emplace_back(std::make_unique<sasktran2::viewinggeometry::TangentAltitude>(5000.0 + i*(10000.0 / double(nlos)), 0, 200000));
     }
@@ -81,10 +81,10 @@ TEST_CASE("do_wf_bench", "[sasktran2][engine]") {
     // Construct the config
     sasktran2::Config config;
 
-    config.set_num_do_streams(8);
+    config.set_num_do_streams(2);
     config.set_wf_precision(sasktran2::Config::WeightingFunctionPrecision::full);
 
-    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::hr);
+    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
     config.set_initialize_hr_with_do(true);
 
     // Make the engine

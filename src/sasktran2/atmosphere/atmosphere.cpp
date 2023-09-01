@@ -44,10 +44,10 @@ namespace sasktran2::atmosphere {
         }
 
         // Now scale k* = (1-wf) k
-        m_storage.total_extinction.array() = m_storage.total_extinction.array() * (1 - m_storage.ssa.array() * m_storage.f.array());
+        m_storage.total_extinction.array() = m_storage.total_extinction.array() * (1 - m_storage.ssa.array() * m_storage.f.template cast <double>().array());
 
         // And then w* = (1 - f) / (1-wf) * w
-        m_storage.ssa.array() = (1 - m_storage.f.array()) / (1 - m_storage.ssa.array() * m_storage.f.array()) * m_storage.ssa.array();
+        m_storage.ssa.array() = (1 - m_storage.f.template cast <double>().array()) / (1 - m_storage.ssa.array() * m_storage.f.template cast <double>().array()) * m_storage.ssa.array();
 
         // Lastly we need to scale the legendre coefficients, b = b / (1-f)
         // Note that this is the scaling for single scatter TMS correction, we still have to subtract f/1-f for multiple scatter

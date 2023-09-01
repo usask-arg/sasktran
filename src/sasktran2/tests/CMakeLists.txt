@@ -23,6 +23,7 @@ add_executable(sasktran2_tests
     engine/benchmark/bench_singlescatter.cpp
     engine/benchmark/bench_do_wf.cpp
         engine/benchmark/bench_hr.cpp
+        engine/benchmark/bench_occ.cpp
         )
 
 # Some special logic to support both CATCH2 version 2 and 3 for now

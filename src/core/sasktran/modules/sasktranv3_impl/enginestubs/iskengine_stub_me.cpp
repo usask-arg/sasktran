@@ -51,6 +51,23 @@ bool ISKEngine_Stub_ME::MakeScalarSetFunctions() {
                          }
     );
 
+    AddSetScalarFunction("occultationsource",
+                         [&, this](double d ) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             if(specifier == 0) {
+                                 m_config.set_occultation_source(sasktran2::Config::OccultationSource::none);
+                             }
+
+                             if(specifier == 1) {
+                                 m_config.set_occultation_source(sasktran2::Config::OccultationSource::standard);
+                             }
+
+                             return ok;
+                         }
+    );
+
     AddSetScalarFunction("nstokes",
                          [&, this](double d ) {
                              int specifier = (int) ceil(d - 0.5);

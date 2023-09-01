@@ -50,7 +50,7 @@
 
 
 // Setup dependening on what linear algebra package is being linked
-#ifdef SKTRAN_DO_USE_MKL
+#ifdef SKTRAN_USE_MKL
     // Using MKL for linear algebdra
     #define EIGEN_USE_MKL_ALL 1
 
@@ -58,7 +58,7 @@
 #else
     // Unsure if this is faster or not
     #define EIGEN_USE_BLAS 1
-    #ifdef SKTRAN_DO_USE_ACCELERATE
+    #ifdef SKTRAN_USE_ACCELERATE
         // Using apple Accelerate for linear algebra, which doesn't have a LAPACKE interface
 
         #define lapack_int int

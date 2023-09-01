@@ -4,7 +4,48 @@ import shlex
 import xarray as xr
 import numpy as np
 import sasktran as sk
+from sasktran.mie.distribution import sp_lognormal, integrated_mie
+from sasktran.mie.refractive import refractive_index_fn_h2so4, refractive_index_fn_water
+from sasktran.legendre import compute_greek_coefficients_legendre
 
+
+def aerosol_opt_prop(distribution, refractive_index_fn, wavelengths):
+    mie = sk.MieWiscombe()
+
+    vals = integrated_mie(mie, distribution, refractive_index_fn, wavelengths, num_quad=1000,
+                          maxintquantile=0.99999)
+
+    # vals xs is in units of nm^2, convert to cm^2
+    vals['xs_total'] *= 1e-14
+    vals['xs_scattering'] *= 1e-14
+    vals['xs_absorption'] *= 1e-14
+
+    lm_a1 = np.zeros_like(vals['lm_p11'].values)
+    lm_a2 = np.zeros_like(lm_a1)
+    lm_a3 = np.zeros_like(lm_a1)
+    lm_a4 = np.zeros_like(lm_a1)
+    lm_b1 = np.zeros_like(lm_a1)
+    lm_b2 = np.zeros_like(lm_a1)
+
+    for idx in range(len(vals.wavelength.values)):
+        selected = vals.isel(wavelength=idx)
+
+        lm_a1[idx, :], lm_a2[idx, :], lm_a3[idx, :], lm_a4[idx, :], lm_b1[idx, :], lm_b2[idx,
+                                                                                   :] = compute_greek_coefficients_legendre(
+            selected['lm_p11'].values, selected['lm_p12'].values, selected['lm_p11'].values,
+            selected['lm_p33'].values, selected['lm_p34'].values, selected['lm_p33'].values,
+            theta_grid=selected.angle.values
+        )
+
+    return sk.UserDefinedScatterConstantHeight(wavelengths,
+                                               vals['xs_scattering'],
+                                               vals['xs_absorption'],
+                                               lm_a1=lm_a1.T,
+                                               lm_a2=lm_a2.T,
+                                               lm_a3=lm_a3.T,
+                                               lm_a4=lm_a4.T,
+                                               lm_b1=lm_b1.T,
+                                               lm_b2=lm_b2.T)
 
 def rtm_comparison_file():
     data_dir = Path(appdirs.user_data_dir('sasktran'))
@@ -49,19 +90,9 @@ def rtm_atmosphere(anc_data, albedo_scen, atmo_scen):
                                     {'SKCLIMATOLOGY_LOGNORMAL_MODERADIUS_MICRONS': np.ones_like(altitudes) * 0.08,
                                      'SKCLIMATOLOGY_LOGNORMAL_MODEWIDTH': np.ones_like(altitudes) * 1.6}, 'H2SO4')
 
-        f = '/Users/dannyz/Downloads/mie_sulfate_strat.nc'
-        ds = xr.open_dataset(f)
-        opt_prop = sk.UserDefinedScatterConstantHeight(ds.wavelength.values,
-                                                       ds.xs_scattering.values,
-                                                       ds.xs_absorption.values,
-                                                       lm_a1=ds.lm_a1.values.T,
-                                                       lm_a2=ds.lm_a2.values.T,
-                                                       lm_a3=ds.lm_a3.values.T,
-                                                       lm_a4=ds.lm_a4.values.T,
-                                                       lm_b1=ds.lm_b1.values.T,
-                                                       lm_b2=ds.lm_b2.values.T)
-
-        species._optical_property = opt_prop
+        species._optical_property = aerosol_opt_prop(sp_lognormal(80, 1.6),
+                                                     refractive_index_fn_h2so4(),
+                                                     anc_data.wavelength.values.astype('float'))
 
         atmo['aerosol'] = species
 

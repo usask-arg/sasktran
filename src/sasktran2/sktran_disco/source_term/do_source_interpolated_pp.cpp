@@ -60,7 +60,7 @@ namespace sasktran2 {
                                                      const sasktran2::raytracing::SphericalLayer &layer,
                                                      const sasktran2::SparseODDualView &shell_od,
                                                      sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
-        if(abs(layer.entrance.radius() - layer.exit.radius()) < MINIMUM_SHELL_SIZE_M) {
+        if(layer.layer_distance < MINIMUM_SHELL_SIZE_M) {
             // Essentially an empty shell from rounding, don't have to do anything
             return;
         }
@@ -74,7 +74,7 @@ namespace sasktran2 {
             omega += this->m_atmosphere->storage().ssa(index_weight.first, wavelidx) * index_weight.second;
         }
 
-        double source_factor = (1-exp(-shell_od.od));
+        double source_factor = (1-shell_od.exp_minus_od);
 
         for(int s = 0; s < NSTOKES; ++s) {
             // Need some temporaries

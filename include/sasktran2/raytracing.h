@@ -43,6 +43,9 @@ namespace sasktran2::raytracing {
         double od_quad_start; /**< The OD in the layer is od_quad_start * k_entrance + od_quad_end * k_exit */
         double od_quad_end; /**< The OD in the layer is od_quad_start * k_entrance + od_quad_end * k_exit */
 
+        double od_quad_start_fraction; /**< The fraction the start matters */
+        double od_quad_end_fraction; /**< The fraction the end matters */
+
         double saz_entrance; /**< Relative solar azimuth angle at entrance in radians, unrefracted */
         double saz_exit; /**< Relative solar azimuth angle at exit in radians, unrefracted */
         double cos_sza_entrance; /**< Cosine solar zenith at entrance, unrefracted */
@@ -56,6 +59,7 @@ namespace sasktran2::raytracing {
     struct TracedRay {
         sasktran2::viewinggeometry::ViewingRay observer_and_look; /**< The observer location and look direction */
 
+        bool is_straight; /**< True if the ray is straight, i.e., the look vector does not change along the ray */
         bool ground_is_hit;	/**< True if the ground is hit by the ray */
 
         std::vector<SphericalLayer> layers; /**< Set of traced ray layers, starting from the end of the ray moving towards the observer */
@@ -196,6 +200,9 @@ namespace sasktran2::raytracing {
             layer.od_quad_start = (r1*dt1 - dt2) / dr * layer.curvature_factor;
             layer.od_quad_end = -1 * (r0*dt1 - dt2) / dr * layer.curvature_factor;
         }
+
+        layer.od_quad_start_fraction = layer.od_quad_start / (layer.od_quad_start + layer.od_quad_end);
+        layer.od_quad_end_fraction = layer.od_quad_end / (layer.od_quad_start + layer.od_quad_end);
     }
 
     /** Takes a list of traced rays and returns the min and max COS sza of any layer in the traced rays.

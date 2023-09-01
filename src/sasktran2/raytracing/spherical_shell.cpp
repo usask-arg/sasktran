@@ -5,6 +5,8 @@ namespace sasktran2::raytracing {
         // Set the ray to 0
         result.reset();
 
+        result.is_straight = true;
+
         // Calculate the tangent point details in a straight geometry
         double rt = ray.observer.radius() * sqrt(1 - ray.cos_viewing()*ray.cos_viewing());
         double tangent_altitude = rt - m_earth_radius;

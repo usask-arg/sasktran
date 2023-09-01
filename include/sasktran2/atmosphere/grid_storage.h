@@ -15,10 +15,10 @@ namespace sasktran2::atmosphere {
     template <int NSTOKES>
     class PhaseStorage {
     private:
-        Eigen::MatrixXd m_storage; // (leg coeff (stacked for polarized), geometry location)
+        Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1> m_storage; // (leg coeff (stacked for polarized), geometry location)
 
-        std::vector<Eigen::MatrixXd> m_derivatives; // (leg coeff (stacked for polarized), geometry location)
-        std::vector<Eigen::VectorXd> m_f_derivatives; // (geometry location) derivative of the delta scale factor
+        std::vector<Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1>> m_derivatives; // (leg coeff (stacked for polarized), geometry location)
+        std::vector<Eigen::Vector<sasktran2::types::leg_coeff, -1>> m_f_derivatives; // (geometry location) derivative of the delta scale factor
 
         int m_scatderivstart;
     public:
@@ -32,13 +32,13 @@ namespace sasktran2::atmosphere {
         int num_deriv() const { return (int)m_derivatives.size(); }
         int scattering_deriv_start() const { return m_scatderivstart; }
 
-        const Eigen::MatrixXd& storage() const { return m_storage; }
-        Eigen::MatrixXd& storage() { return m_storage; }
+        const Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1>& storage() const { return m_storage; }
+        Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1>& storage() { return m_storage; }
 
-        const Eigen::MatrixXd& deriv_storage(int derivindex) const { return m_derivatives[derivindex]; }
-        const Eigen::VectorXd& f_deriv_storage(int derivindex) const { return m_f_derivatives[derivindex]; }
-        Eigen::MatrixXd& deriv_storage(int derivindex) { return m_derivatives[derivindex]; }
-        Eigen::VectorXd& f_deriv_storage(int derivindex) { return m_f_derivatives[derivindex]; }
+        const Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1>& deriv_storage(int derivindex) const { return m_derivatives[derivindex]; }
+        const Eigen::Vector<sasktran2::types::leg_coeff, -1>& f_deriv_storage(int derivindex) const { return m_f_derivatives[derivindex]; }
+        Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1>& deriv_storage(int derivindex) { return m_derivatives[derivindex]; }
+        Eigen::Vector<sasktran2::types::leg_coeff, -1>& f_deriv_storage(int derivindex) { return m_f_derivatives[derivindex]; }
 
         void resize(int numgeo, int numlegendre) {
             // TODO: based on NSTOKES
@@ -73,10 +73,12 @@ namespace sasktran2::atmosphere {
      */
     template <int NSTOKES, bool ssonly=false>
     class PhaseInterpolator {
-    using ScatWeightType = typename std::conditional<ssonly, Eigen::Matrix<double, NSTOKES, -1>, Eigen::Matrix<double, NSTOKES*NSTOKES, -1>>::type;
+    using ScatWeightType = typename std::conditional<ssonly, Eigen::Matrix<sasktran2::types::leg_coeff, NSTOKES, -1>, Eigen::Matrix<sasktran2::types::leg_coeff, NSTOKES*NSTOKES, -1>>::type;
 
     private:
         ScatWeightType m_scattering_weights;
+        bool m_geometry_loaded;
+
     public:
         PhaseInterpolator();
 
@@ -90,7 +92,6 @@ namespace sasktran2::atmosphere {
                      sasktran2::Dual<double, S, NSTOKES>& source
                      ) const;
     };
-
 
 
     /** Base abstract storage container for specifying the atmospheric constituent parameters on the full
@@ -126,7 +127,7 @@ namespace sasktran2::atmosphere {
     public:
         Eigen::MatrixXd ssa;                // location, wavel
         Eigen::MatrixXd total_extinction;   // location, wavel
-        Eigen::MatrixXd f;                  // location, wavel, (Delta scaling factor)
+        Eigen::Matrix<sasktran2::types::leg_coeff, -1, -1> f; // location, wavel, (Delta scaling factor)
 
         int applied_f_order;                // Order of the delta_m scaling
         int applied_f_location;             // Index to the phase moment that defines the legendre scaling f

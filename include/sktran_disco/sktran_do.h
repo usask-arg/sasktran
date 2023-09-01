@@ -30,6 +30,7 @@
 // for any number of streams.  We also can specialize specific values of the number of streams but this takes a long
 // time to compile so we typically only do it on release.  Useful values for speed are 2, 4, and 16
 
+#define SASKTRAN_DISCO_FULL_COMPILE
 
 #ifdef SASKTRAN_DISCO_FULL_COMPILE
     #define SASKTRAN_DISCO_INSTANTIATE_TEMPLATE(classname) \
@@ -74,7 +75,6 @@
     //#define EIGEN_USE_BLAS 1
     #ifdef SKTRAN_USE_ACCELERATE
         // Using apple Accelerate for linear algebra, which doesn't have a LAPACKE interface
-        //#define EIGEN_USE_BLAS 1
 
         #define lapack_int int
         #include <clapack.h>

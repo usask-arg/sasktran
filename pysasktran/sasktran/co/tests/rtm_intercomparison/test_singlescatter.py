@@ -4,7 +4,7 @@ import numpy as np
 
 
 def test_all_singlescatter():
-    for atm_scenario in range(0, 2):
+    for atm_scenario in range(0, 3):
         for geo_scenario in range(8):
             scen = load_scenario(geo_scenario, atm_scenario, 0, 0, 16, altitude_spacing=500)
 
@@ -20,7 +20,7 @@ def test_all_singlescatter():
             rad = engine.calculate_radiance('xarray')
 
             scia_vals = scen['model_data']['radiance'].isel(model=2).values[:, :, :3]
-            p_diff = (rad['radiance'].values - scia_vals) / scia_vals * 100
+            p_diff = ((rad['radiance'].values - scia_vals) / scia_vals * 100)[:, :, 0]
 
             max_error = np.max(np.abs(p_diff.flatten()))
 

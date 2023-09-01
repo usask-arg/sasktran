@@ -110,7 +110,7 @@ namespace sasktran2 {
 
                             if(include_azimuth_weights) {
                                 for (int k = 0; k < m_num_azi; ++k) {
-                                    double azi_factor = cos(k * azi);
+                                    double azi_factor = cos(k * (EIGEN_PI - azi));
                                     int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], k);
 
                                     m_need_to_calculate_map[index] = true;

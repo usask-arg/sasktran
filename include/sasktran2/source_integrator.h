@@ -34,6 +34,7 @@ namespace sasktran2 {
         std::vector<Eigen::SparseMatrix<double, Eigen::RowMajor>> m_traced_ray_od_matrix; /**< Vector of matrices A such that A * atmosphere_extinction = OD for each layer in that ray */
 
         std::vector<Eigen::MatrixXd> m_shell_od; /**< Vector of matrices that stores the optical depth for each layer */
+        std::vector<Eigen::MatrixXd> m_exp_minus_shell_od;
 
         const std::vector<sasktran2::raytracing::TracedRay>* m_traced_rays; /**< Reference to the rays we are integrating */
 
@@ -88,6 +89,14 @@ namespace sasktran2 {
                 int threadidx,
                 const SInterpolator& source_interpolator,
                 std::vector<Eigen::Triplet<double>>& triplets
+                );
+
+        /** Calculates the Optical Depth for each ray */
+        void integrate_optical_depth(
+                sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES>& radiance,
+                int wavelidx,
+                int rayidx,
+                int threadidx
                 );
 
     };

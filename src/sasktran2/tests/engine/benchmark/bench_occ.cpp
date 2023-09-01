@@ -5,8 +5,8 @@
 
 #ifdef SKTRAN_CATCH2_VERSION3
 
-TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
-    omp_set_num_threads(1);
+TEST_CASE("occultation_bench", "[sasktran2][engine]") {
+    omp_set_num_threads(8);
     // Construct the geometry
     sasktran2::Coordinates coords(0.6, 0, 6371000, sasktran2::geometrytype::spherical);
 
@@ -78,6 +78,9 @@ TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
     // Construct the config
     sasktran2::Config config;
     config.set_num_do_streams(16);
+    config.set_num_threads(8);
+    config.set_occultation_source(sasktran2::Config::OccultationSource::standard);
+    config.set_single_scatter_source(sasktran2::Config::SingleScatterSource::none);
 
     // Make the engine
     Sasktran2<1> engine(config, &geo, viewing_geometry);
