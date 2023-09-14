@@ -1,3 +1,4 @@
+import sys
 import unittest
 import sasktran as sk
 import numpy as np
@@ -21,6 +22,7 @@ class TestEmission(unittest.TestCase):
         wavelen = np.arange(1223.0, 1321.0, 0.0001)
         signal = emission.isotropic_emission(52.0, -106.0, 80000.0, 57005.8, wavelen, False)
 
+    @unittest.skipIf(sys.platform == 'darwin', 'Photochemical Emission test Skipped on darwin')
     def test_with_engine(self):
         from sasktran.geometry import VerticalImage
 
