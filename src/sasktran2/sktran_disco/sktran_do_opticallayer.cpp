@@ -372,8 +372,9 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::integrate_source(AEOrder m, d
         }
     }
 
-    auto& hp = m_postprocessing_cache.hp;
-    auto& hm = m_postprocessing_cache.hm;
+    // could maybe use the full memory somehow? not sure
+    auto& hp = m_postprocessing_cache.hp[0];
+    auto& hm = m_postprocessing_cache.hm[0];
     auto& J = m_postprocessing_cache.J;
 
     auto& Y_plus = m_postprocessing_cache.Y_plus;
@@ -424,9 +425,9 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::integrate_source(AEOrder m, d
                                      lpsum_minus_deriv * homog_plus_matrix + lpsum_minus_matrix * homog_plus_deriv;
     }
 
-    auto& Dm = m_postprocessing_cache.Dm;
-    auto& Dp = m_postprocessing_cache.Dp;
-    auto& Eform = m_postprocessing_cache.Eform;
+    auto& Dm = m_postprocessing_cache.Dm[0];
+    auto& Dp = m_postprocessing_cache.Dp[0];
+    auto& Eform = m_postprocessing_cache.Eform[0];
 
     E(mu, x, M_OPTICAL_THICKNESS, transmission, Eform);
 
@@ -604,8 +605,8 @@ void sasktran_disco::OpticalLayer<1, 2>::integrate_source(AEOrder m, double mu, 
         }
     }
 
-    auto& hp = cache.hp;
-    auto& hm = cache.hm;
+    auto& hp = cache.hp[0];
+    auto& hm = cache.hm[0];
     auto& J = cache.J;
 
     auto& Y_plus = cache.Y_plus;
@@ -625,9 +626,9 @@ void sasktran_disco::OpticalLayer<1, 2>::integrate_source(AEOrder m, double mu, 
                               dual_lpsum_plus.value(0) * solution.value.dual_homog_minus().deriv(k,0) + dual_lpsum_minus.value(0) * solution.value.dual_homog_plus().deriv(k, 0);
     }
 
-    auto& Dm = cache.Dm;
-    auto& Dp = cache.Dp;
-    auto& Eform = cache.Eform;
+    auto& Dm = cache.Dm[0];
+    auto& Dp = cache.Dp[0];
+    auto& Eform = cache.Eform[0];
 
     E(mu, x, M_OPTICAL_THICKNESS, transmission, Eform);
 

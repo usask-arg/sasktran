@@ -51,6 +51,7 @@ namespace sasktran2::hr {
         std::vector<sasktran2::raytracing::TracedRay> m_incoming_traced_rays; /** Traced incoming rays to all diffuse points */
 
         std::vector<std::unique_ptr<DiffusePoint<NSTOKES>>> m_diffuse_points; /** Stacked vector of all interior diffuse points, including ground, interpolated using m_location_interpolator */
+        std::vector<bool> m_diffuse_point_full_calculation; /** True if we are doing the full incoming calculation at this diffuse point, false if it is interpolated from spherical corrections */
 
         std::vector<std::unique_ptr<sasktran2::hr::IncomingOutgoingSpherePair<NSTOKES>>> m_unit_sphere_pairs; /** Unit sphere ownership for the diffuse points, never accessed after construction by this class */
 
@@ -67,7 +68,7 @@ namespace sasktran2::hr {
         int m_total_num_diffuse_weights;
 
         Eigen::SparseMatrix<double, Eigen::RowMajor> m_do_to_diffuse_outgoing_interpolator;
-        const DOSourceInterpolatedPostProcessing<NSTOKES, -1>* m_do_source;
+        DOSourceInterpolatedPostProcessing<NSTOKES, -1>* m_do_source;
 
     private:
         sasktran2::grids::Grid generate_cos_sza_grid(double min_cos_sza, double max_cos_sza);
@@ -78,6 +79,7 @@ namespace sasktran2::hr {
         void generate_scattering_matrices(int wavelidx, int threadidx);
         void generate_accumulation_matrix(int wavelidx, int threadidx);
         void iterate_to_solution(int wavelidx, int threadidx);
+        void interpolate_sources(const Eigen::VectorXd& old_outgoing, sasktran2::Dual<double>& new_outgoing);
         void generate_source_interpolation_weights(const std::vector<sasktran2::raytracing::TracedRay>& rays,
                                                    SInterpolator& interpolator,
                                                    int& total_num_weights

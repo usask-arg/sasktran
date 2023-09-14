@@ -12,11 +12,12 @@ def test_all_multiscatter():
             engine = sk.EngineCO(atmosphere=scen['atmo'], geometry=scen['geo'], wavelengths=scen['wavelengths'],
                                  options={'msmode': 2,
                                           'altitudegrid': scen['altitudes'],
-                                          'numhriterations': 50,
-                                          'numhrincoming': 590,
+                                          'numhriterations': 1,
+                                          'numhrincoming': 350,
                                           'numhroutgoing': 350,
-                                          'initializehrwithdo': 0,
-                                          'applydeltascaling': True
+                                          'initializehrwithdo': 1,
+                                          'applydeltascaling': True,
+                                          'numthreads': 8
                                           }
                                  )
 

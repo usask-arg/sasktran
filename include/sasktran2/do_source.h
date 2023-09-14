@@ -109,7 +109,8 @@ namespace sasktran2 {
         std::unique_ptr<sasktran2::grids::Grid> m_cos_angle_grid;
         const sasktran2::grids::Grid& m_sza_grid;
 
-        Eigen::VectorX<bool> m_need_to_calculate_map; // [source idx]
+        Eigen::VectorX<bool> m_need_to_calculate_map; // [source idx] This is a map of source indices that are actually used, some of them may not be required
+        Eigen::VectorX<bool> m_converged_map;
 
         std::vector<Eigen::MatrixXd> m_scattering_matrix_stream_angles;
         std::vector<Eigen::MatrixXd> m_scattering_matrix_interpolation_angles;
@@ -162,7 +163,7 @@ namespace sasktran2 {
                                                  const std::vector<Eigen::Vector3d>& directions,
                                                  const std::vector<bool>& ground_hit_flag,
                                                  Eigen::SparseMatrix<double, Eigen::RowMajor>& interpolator
-                                                 ) const;
+                                                 );
 
     };
 
@@ -270,6 +271,7 @@ namespace sasktran2 {
     class DOSourceInterpolatedPostProcessing : public DOSource<NSTOKES, CNSTR> {
     private:
         const sasktran2::atmosphere::Atmosphere<NSTOKES>* m_atmosphere;
+        bool m_will_integrate_sources;
 
     protected:
         std::unique_ptr<sasktran_disco::VectorDim2<std::array<Eigen::SparseVector<double>, NSTOKES>>> m_los_source_interpolator;
@@ -287,7 +289,9 @@ namespace sasktran2 {
 
     public:
         DOSourceInterpolatedPostProcessing(const sasktran2::Geometry1D& geometry,
-                                           const sasktran2::raytracing::RayTracerBase& raytracer);
+                                           const sasktran2::raytracing::RayTracerBase& raytracer,
+                                           bool will_integrate_sources=true
+                                           );
 
         virtual void calculate(int wavelidx, int threadidx);
         virtual void initialize_geometry(const std::vector<sasktran2::raytracing::TracedRay>& los_rays) override;
@@ -299,7 +303,7 @@ namespace sasktran2 {
                                const sasktran2::SparseODDualView& shell_od,
                                sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES>& source) const;
 
-        const DOSourceDiffuseStorage<NSTOKES, CNSTR>& storage() const { return *m_diffuse_storage; }
+        DOSourceDiffuseStorage<NSTOKES, CNSTR>& storage() const { return *m_diffuse_storage; }
 
     };
 }

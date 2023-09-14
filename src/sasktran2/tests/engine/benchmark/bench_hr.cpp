@@ -112,14 +112,14 @@ TEST_CASE("HR_bench", "[sasktran2][engine]") {
     sasktran2::Geometry1D geo(std::move(coords), std::move(grid));
 
     // Construct the Atmosphere
-    int nwavel = 50;
-    sasktran2::atmosphere::AtmosphereGridStorageFull<1> storage(nwavel, geo.size(), 16);
+    int nwavel = 55;
+    sasktran2::atmosphere::AtmosphereGridStorageFull<3> storage(nwavel, geo.size(), 16);
     sasktran2::atmosphere::Surface surface;
 
     surface.albedo().resize(nwavel);
     surface.albedo().setConstant(0.3);
 
-    sasktran2::atmosphere::Atmosphere<1> atmo(std::move(storage), std::move(surface), false);
+    sasktran2::atmosphere::Atmosphere<3> atmo(std::move(storage), std::move(surface), false);
 
     std::vector<double> extinction{ 7.07906113e-05, 6.46250950e-05, 5.86431083e-05, 5.29850715e-05,
                                     4.77339013e-05, 4.29288557e-05, 3.85773022e-05, 3.46642865e-05,
@@ -171,18 +171,18 @@ TEST_CASE("HR_bench", "[sasktran2][engine]") {
     // Construct the config
     sasktran2::Config config;
 
-    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::hr);
-    config.set_initialize_hr_with_do(false);
-    config.set_num_hr_spherical_iterations(50);
+    config.set_multiple_scatter_source(sasktran2::Config::MultipleScatterSource::discrete_ordinates);
+    config.set_initialize_hr_with_do(true);
+    config.set_num_hr_spherical_iterations(1);
     config.set_wf_enabled(false);
     config.set_num_do_streams(16);
     config.set_num_hr_outgoing(350);
-    config.set_num_hr_incoming(350);
+    config.set_num_hr_incoming(590);
 
     // Make the engine
-    Sasktran2<1> engine(config, &geo, viewing_geometry);
+    Sasktran2<3> engine(config, &geo, viewing_geometry);
 
-    sasktran2::OutputIdealDense<1> output;
+    sasktran2::OutputIdealDense<3> output;
 
 
     engine.calculate_radiance(atmo, output);

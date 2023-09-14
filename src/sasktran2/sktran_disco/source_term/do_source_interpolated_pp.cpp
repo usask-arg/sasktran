@@ -4,8 +4,10 @@
 namespace sasktran2 {
     template<int NSTOKES, int CNSTR>
     DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::DOSourceInterpolatedPostProcessing(const sasktran2::Geometry1D &geometry,
-                                                                                           const sasktran2::raytracing::RayTracerBase &raytracer)
-            : DOSource<NSTOKES, CNSTR>(geometry, raytracer) {
+                                                                                           const sasktran2::raytracing::RayTracerBase &raytracer,
+                                                                                           bool will_integrate_sources
+                                                                                           )
+            : DOSource<NSTOKES, CNSTR>(geometry, raytracer), m_will_integrate_sources(will_integrate_sources) {
     }
 
     template<int NSTOKES, int CNSTR>
@@ -35,8 +37,10 @@ namespace sasktran2 {
                 this->m_geometry
         );
 
-        m_los_source_interpolator = m_diffuse_storage->geometry_interpolator(los_rays);
-        m_source_interpolator_view = m_los_source_interpolator.get();
+        if(m_will_integrate_sources) {
+            m_los_source_interpolator = m_diffuse_storage->geometry_interpolator(los_rays);
+            m_source_interpolator_view = m_los_source_interpolator.get();
+        }
 
     }
 

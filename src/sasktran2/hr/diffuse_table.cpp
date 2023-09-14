@@ -71,6 +71,14 @@ namespace sasktran2::hr {
 
         m_diffuse_points.resize(m_location_interpolator->num_interior_points() + m_location_interpolator->num_ground_points());
 
+        //m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), true);
+
+        m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), false);
+        m_diffuse_point_full_calculation[0] = true;
+        m_diffuse_point_full_calculation[m_diffuse_point_full_calculation.size() - 1] = true;
+        m_diffuse_point_full_calculation[m_diffuse_point_full_calculation.size() - 2] = true;
+        m_diffuse_point_full_calculation[25] = true;
+
         sasktran2::Location loc;
 
         for(int i = 0; i < m_location_interpolator->num_interior_points(); ++i) {
@@ -108,7 +116,9 @@ namespace sasktran2::hr {
         for(int i = 0; i < m_diffuse_points.size(); ++i) {
             m_diffuse_incoming_index_map[i] = start_incoming_idx;
             m_diffuse_outgoing_index_map[i] = start_outgoing_idx;
-            start_incoming_idx += m_diffuse_points[i]->num_incoming();
+            if(m_diffuse_point_full_calculation[i]) {
+                start_incoming_idx += m_diffuse_points[i]->num_incoming();
+            }
             start_outgoing_idx += m_diffuse_points[i]->num_outgoing();
         }
 
@@ -122,7 +132,9 @@ namespace sasktran2::hr {
 
             storage.point_scattering_matrices.resize(m_diffuse_points.size());
             for(int i = 0; i < m_diffuse_points.size(); ++i) {
-                storage.point_scattering_matrices[i].resize(m_diffuse_points[i]->num_outgoing() * NSTOKES, m_diffuse_points[i]->num_incoming() * NSTOKES);
+                if(m_diffuse_point_full_calculation[i]) {
+                    storage.point_scattering_matrices[i].resize(m_diffuse_points[i]->num_outgoing() * NSTOKES, m_diffuse_points[i]->num_incoming() * NSTOKES);
+                }
             }
         }
     }
@@ -132,6 +144,9 @@ namespace sasktran2::hr {
         sasktran2::viewinggeometry::ViewingRay viewing_ray;
 
         for(int i = 0; i < m_diffuse_points.size(); ++i) {
+            if(!m_diffuse_point_full_calculation[i]) {
+                continue;
+            }
             viewing_ray.observer = m_diffuse_points[i]->location();
             for(int j = 0; j < m_diffuse_points[i]->num_incoming(); ++j) {
                 viewing_ray.look_away = m_diffuse_points[i]->incoming_direction(j);
@@ -223,7 +238,7 @@ namespace sasktran2::hr {
 
         if(m_config->initialize_hr_with_do()) {
             m_initial_owned_sources.emplace_back(
-                    std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(m_geometry, m_raytracer)
+                    std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(m_geometry, m_raytracer, false)
             );
 
             m_do_source = static_cast<DOSourceInterpolatedPostProcessing<NSTOKES, -1>*>(m_initial_owned_sources[1].get());
@@ -354,6 +369,10 @@ namespace sasktran2::hr {
         auto& storage = m_thread_storage[threadidx];
 
         for(int i = 0; i < m_location_interpolator->num_interior_points(); ++i) {
+            if(!m_diffuse_point_full_calculation[i]) {
+                continue;
+            }
+
             const auto& point = m_diffuse_points[i];
 
             point->sphere_pair().calculate_scattering_matrix(m_atmosphere->storage().phase[wavelidx],
@@ -363,6 +382,10 @@ namespace sasktran2::hr {
         }
 
         for(int i = 0; i < m_location_interpolator->num_ground_points(); ++i) {
+            if(!m_diffuse_point_full_calculation[i + m_location_interpolator->num_interior_points()]) {
+                continue;
+            }
+
             const auto& point = m_diffuse_points[i + m_location_interpolator->num_interior_points()];
 
 
@@ -407,9 +430,13 @@ namespace sasktran2::hr {
                 storage.m_incoming_radiances.value.noalias() = storage.accumulation_matrix * storage.m_outgoing_sources.value + storage.m_firstorder_radiances.value;
             }
 
-            old_outgoing_vals = m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES));
+            old_outgoing_vals = m_thread_storage[threadidx].m_outgoing_sources.value;
 
             for(int i = 0; i < m_diffuse_points.size(); ++i) {
+                if(!m_diffuse_point_full_calculation[i]) {
+                    continue;
+                }
+
                 const auto& point = m_diffuse_points[i];
 
                 auto incoming_seq = Eigen::seq(m_diffuse_incoming_index_map[i]*NSTOKES, NSTOKES*(m_diffuse_incoming_index_map[i] + point->num_incoming()) - 1);
@@ -424,7 +451,7 @@ namespace sasktran2::hr {
                 #endif
             }
 
-            double max_change_factor = (m_thread_storage[threadidx].m_outgoing_sources.value(Eigen::seq(0, Eigen::last, NSTOKES)).array() / old_outgoing_vals.array() - 1).abs().maxCoeff();
+            interpolate_sources(old_outgoing_vals, storage.m_outgoing_sources);
 
             if(m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full && m_config->initialize_hr_with_do()) {
                 storage.m_outgoing_sources.deriv.array().colwise() *= storage.m_outgoing_sources.value.array() / old_outgoing_vals.array();
@@ -458,10 +485,42 @@ namespace sasktran2::hr {
             }
         }
          */
+    }
 
+    template<int NSTOKES>
+    void DiffuseTable<NSTOKES>::interpolate_sources(const Eigen::VectorXd &old_outgoing,
+                                                    sasktran2::Dual<double> &new_outgoing) {
+        for(int i = 0; i < m_diffuse_points.size(); ++i) {
+            if(!m_diffuse_point_full_calculation[i]) {
+                // Have to interpolate sources from the above/below diffuse points that do have a full calculation
 
+                // Find the point below
+                int lower_idx = i - 1;
+                while(!m_diffuse_point_full_calculation[lower_idx]) {
+                    --lower_idx;
+                }
 
+                int upper_idx = i + 1;
+                // Find the point above
+                while(!m_diffuse_point_full_calculation[upper_idx]) {
+                    ++upper_idx;
+                }
 
+                double alt_above = m_diffuse_points[upper_idx]->location().radius();
+                double alt_below = m_diffuse_points[lower_idx]->location().radius();
+
+                double alt = m_diffuse_points[i]->location().radius();
+
+                double w_above = (alt - alt_below) / (alt_above - alt_below);
+                double w_below = 1 - w_above;
+
+                auto above_seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[upper_idx], NSTOKES*(m_diffuse_outgoing_index_map[upper_idx] + m_diffuse_points[upper_idx]->num_outgoing()) - 1, NSTOKES);
+                auto below_seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[lower_idx], NSTOKES*(m_diffuse_outgoing_index_map[lower_idx] + m_diffuse_points[lower_idx]->num_outgoing()) - 1, NSTOKES);
+                auto seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[i], NSTOKES*(m_diffuse_outgoing_index_map[i] + m_diffuse_points[i]->num_outgoing()) - 1, NSTOKES);
+
+                new_outgoing.value.array()(seq) *= w_above * (new_outgoing.value.array()(above_seq) / old_outgoing.array()(above_seq)) + w_below * (new_outgoing.value.array()(below_seq) / old_outgoing.array()(below_seq));
+            }
+        }
     }
 
     template<int NSTOKES>

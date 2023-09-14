@@ -32,11 +32,11 @@ namespace sasktran2 {
 
         m_storage.resize(config.num_threads());
 
-        m_ground_start = (int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
+        m_ground_start = (int)m_altitude_grid->grid().size() * (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size();
 
         int num_ground_points = (int)m_cos_angle_grid->grid().size() * m_num_azi * (int)m_sza_grid.grid().size()*NSTOKES;
 
-        int num_source_points = m_ground_start + num_ground_points;
+        int num_source_points = m_ground_start*NSTOKES + num_ground_points;
 
         for(auto& storage: m_storage) {
             storage.source_terms_linear.resize(num_source_points, 0, true);
@@ -49,6 +49,7 @@ namespace sasktran2 {
         }
 
         m_need_to_calculate_map.resize(num_source_points);
+        m_converged_map.resize(num_source_points);
         m_need_to_calculate_map.setConstant(false);
     }
 
@@ -151,7 +152,7 @@ namespace sasktran2 {
     void DOSourceDiffuseStorage<NSTOKES, CNSTR>::create_location_source_interpolator(
             const std::vector<Eigen::Vector3d> &locations, const std::vector<Eigen::Vector3d> &directions,
             const std::vector<bool>& ground_hit_flag,
-            Eigen::SparseMatrix<double, Eigen::RowMajor> &interpolator) const {
+            Eigen::SparseMatrix<double, Eigen::RowMajor> &interpolator) {
 
         interpolator.resize(locations.size()*NSTOKES, m_storage[0].source_terms_linear.value_size());
 
@@ -190,8 +191,10 @@ namespace sasktran2 {
                             double weight = alt_weight[altidx] * angle_weight[angleidx] * sza_weight[szaidx];
 
                             for (int k = 0; k < m_num_azi; ++k) {
-                                double azi_factor = cos(k * saa);
+                                double azi_factor = cos(k * (EIGEN_PI - saa));
                                 int index = linear_storage_index(angle_index[angleidx], alt_index[altidx], sza_index[szaidx], k);
+
+                                m_need_to_calculate_map[index] = true;
 
                                 if constexpr (NSTOKES == 1) {
                                     tripletList.emplace_back(T(i, index, azi_factor * weight));
@@ -378,9 +381,17 @@ namespace sasktran2 {
             int szaidx,
             int thread_idx
     ) {
+        auto& storage = m_storage[thread_idx];
+
+        if(m == 0) {
+            // Have to reset some things
+            storage.source_terms_linear.value.setZero();
+            storage.source_terms_linear.deriv.setZero();
+            m_converged_map.setConstant(false);
+        }
+
         accumulate_ground_sources(optical_layer, m, thread_storage, szaidx, thread_idx);
 
-        auto& storage = m_storage[thread_idx];
 
         // Storage for derivatives of Y_plus and Y_minus,
         // TODO: Move these to cache
@@ -391,7 +402,6 @@ namespace sasktran2 {
 
         // TODO: Move to cache
         Eigen::Matrix<double, -1, NSTOKES> temp_deriv(input_derivatives.numDerivative(), NSTOKES);
-
 
         for(int lidx = 0; lidx < m_altitude_grid->grid().size(); ++lidx) {
             Y_minus_deriv.clear();
@@ -454,16 +464,48 @@ namespace sasktran2 {
             ConstMatrixView homog_plus_matrix(solution.value.dual_homog_plus().value.data(), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 *NSTOKES);
             ConstMatrixView homog_minus_matrix(solution.value.dual_homog_minus().value.data(), m_config.num_do_streams()/2 * NSTOKES, m_config.num_do_streams()/2 *NSTOKES);
 
+            // Precalculate the layer multipliers since they are the same for every angle
+            for (int i = 0; i < m_config.num_do_streams() / 2 * NSTOKES; ++i) {
+                const auto &eigval = solution.value.dual_eigval();
+
+                sasktran_disco::postprocessing::h_plus_sampled(layer->dual_thickness(),
+                                                               eigval,
+                                                               i,
+                                                               layer_fraction,
+                                                               hp[i]);
+
+                sasktran_disco::postprocessing::h_minus_sampled(layer->dual_thickness(),
+                                                                eigval,
+                                                                i,
+                                                                layer_fraction,
+                                                                hm[i]);
+
+                sasktran_disco::postprocessing::d_minus_sampled(layer->dual_thickness(),
+                                                                eigval,
+                                                                i,
+                                                                layer_fraction,
+                                                                transmission,
+                                                                average_secant,
+                                                                layerStart,
+                                                                Dm[i]);
+
+                sasktran_disco::postprocessing::d_plus_sampled(layer->dual_thickness(),
+                                                               eigval,
+                                                               i,
+                                                               layer_fraction,
+                                                               transmission,
+                                                               average_secant,
+                                                               layerStart,
+                                                               Dp[i]);
+            }
+
             for(int aidx = 0; aidx < m_cos_angle_grid->grid().size(); ++aidx) {
                 int sourceidx = linear_storage_index(aidx, lidx, szaidx, m);
 
-                if(!m_need_to_calculate_map[sourceidx]) {
+                if(!m_need_to_calculate_map[sourceidx] || m_converged_map[sourceidx]) {
                     continue;
                 }
 
-                for(int s = 0; s < NSTOKES; ++s) {
-                    storage.source_terms_linear.value(sourceidx*NSTOKES + s) = 0.0;
-                }
                 temp_deriv.setZero();
 
                 storage.phase_storage[aidx].set_phase_container(storage.phase_container, m);
@@ -515,79 +557,52 @@ namespace sasktran2 {
                 }
 
                 for (int i = 0; i < m_config.num_do_streams() / 2 * NSTOKES; ++i) {
-                    const auto& eigval = solution.value.dual_eigval();
-
-                    sasktran_disco::postprocessing::h_plus_sampled(layer->dual_thickness(),
-                                                                   eigval,
-                                                                   i,
-                                                                   layer_fraction,
-                                                                   hp);
-
-                    sasktran_disco::postprocessing::h_minus_sampled(layer->dual_thickness(),
-                                                                    eigval,
-                                                                    i,
-                                                                    layer_fraction,
-                                                                    hm);
+                    const auto& hpi = hp[i];
+                    const auto& hmi = hm[i];
+                    const auto& Dmi = Dm[i];
+                    const auto& Dpi = Dp[i];
 
                     for(int s = 0; s < NSTOKES; ++s) {
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_plus_matrix(s, i) * hp.value * dual_L.value(i);
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_minus_matrix(s, i) * hm.value * dual_M.value(i);
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_plus_matrix(s, i) * hpi.value * dual_L.value(i);
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += Y_minus_matrix(s, i) * hmi.value * dual_M.value(i);
 
                         // Y_plus/Y_minus and hp/hm only have layer derivatives, but dual_L/dual_M are dense derivatives
 
                         // Start with the dense ones
-                        temp_deriv(Eigen::all, s) += dual_L.deriv(Eigen::all, i) * Y_plus_matrix(s, i) * hp.value;
-                        temp_deriv(Eigen::all, s) += dual_M.deriv(Eigen::all, i) * Y_minus_matrix(s, i) * hm.value;
+                        temp_deriv(Eigen::all, s) += dual_L.deriv(Eigen::all, i) * Y_plus_matrix(s, i) * hpi.value;
+                        temp_deriv(Eigen::all, s) += dual_M.deriv(Eigen::all, i) * Y_minus_matrix(s, i) * hmi.value;
 
                         // And add in the layer derivatives
                         for(int k = 0; k < numderiv; ++k) {
                             // For Yplus/Yminus
-                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * hp.value * dual_L.value(i);
-                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * hm.value * dual_M.value(i);
+                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * hpi.value * dual_L.value(i);
+                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * hmi.value * dual_M.value(i);
 
                             // for Hp, Hm
-                            temp_deriv(k + layerStart, s) += hp.deriv(k) * Y_plus_matrix(s, i) * dual_L.value(i);
-                            temp_deriv(k + layerStart, s) += hm.deriv(k) * Y_minus_matrix(s, i) * dual_M.value(i);
+                            temp_deriv(k + layerStart, s) += hpi.deriv(k) * Y_plus_matrix(s, i) * dual_L.value(i);
+                            temp_deriv(k + layerStart, s) += hmi.deriv(k) * Y_minus_matrix(s, i) * dual_M.value(i);
                         }
 
                     }
 
-                    sasktran_disco::postprocessing::d_minus_sampled(layer->dual_thickness(),
-                                                                    eigval,
-                                                                    i,
-                                                                    layer_fraction,
-                                                                    transmission,
-                                                                    average_secant,
-                                                                    layerStart,
-                                                                    Dm);
-
-                    sasktran_disco::postprocessing::d_plus_sampled(layer->dual_thickness(),
-                                                                   eigval,
-                                                                   i,
-                                                                   layer_fraction,
-                                                                   transmission,
-                                                                   average_secant,
-                                                                   layerStart,
-                                                                   Dp);
-
                     for(int s = 0; s < NSTOKES; ++s) {
-                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += (dual_Aplus.value(i) * Y_plus_matrix(s, i) * Dm.value + dual_Aminus.value(i) * Y_minus_matrix(s, i) * Dp.value);
+                        storage.source_terms_linear.value(sourceidx*NSTOKES + s) += (dual_Aplus.value(i) * Y_plus_matrix(s, i) * Dmi.value + dual_Aminus.value(i) * Y_minus_matrix(s, i) * Dpi.value);
 
                         // Dp/Dm has dense derivatives, the others are small
 
                         // Start with the dense ones
-                        temp_deriv(Eigen::all, s) += Dm.deriv * dual_Aplus.value(i) * Y_plus_matrix(s, i);
-                        temp_deriv(Eigen::all, s) += Dp.deriv * dual_Aminus.value(i) * Y_minus_matrix(s, i);
+                        temp_deriv(Eigen::all, s) += Dmi.deriv * dual_Aplus.value(i) * Y_plus_matrix(s, i);
+                        temp_deriv(Eigen::all, s) += Dpi.deriv * dual_Aminus.value(i) * Y_minus_matrix(s, i);
 
                         // And add in the layer derivatives
                         for(int k = 0; k < numderiv; ++k) {
                             // For Yplus/Yminus
-                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * Dm.value * dual_Aplus.value(i);
-                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * Dp.value * dual_Aminus.value(i);
+                            temp_deriv(k + layerStart, s) += Y_plus_deriv[k](s, i) * Dmi.value * dual_Aplus.value(i);
+                            temp_deriv(k + layerStart, s) += Y_minus_deriv[k](s, i) * Dpi.value * dual_Aminus.value(i);
 
                             // for Aplus/Aminu
-                            temp_deriv(k + layerStart, s) += dual_Aplus.deriv(k, i) * Y_plus_matrix(s, i) * Dm.value;
-                            temp_deriv(k + layerStart, s) += dual_Aminus.deriv(k, i) * Y_minus_matrix(s, i) * Dp.value;
+                            temp_deriv(k + layerStart, s) += dual_Aplus.deriv(k, i) * Y_plus_matrix(s, i) * Dmi.value;
+                            temp_deriv(k + layerStart, s) += dual_Aminus.deriv(k, i) * Y_minus_matrix(s, i) * Dpi.value;
                         }
 
                     }
@@ -598,6 +613,22 @@ namespace sasktran2 {
                     int index = sourceidx*NSTOKES + s;
 
                     storage.source_terms_linear.value(index) /= ssa.value;
+
+                    // Check for convergence
+                    if(m >= 2 && s == 0) {
+                        int l1_index = linear_storage_index(aidx, lidx, szaidx, m-1);
+                        int l2_index = linear_storage_index(aidx, lidx, szaidx, m-2);
+
+                        if(abs(storage.source_terms_linear.value(index) / storage.source_terms_linear.value(l1_index*NSTOKES)) < 1e-4) {
+                            if (abs(storage.source_terms_linear.value(index) /
+                                    storage.source_terms_linear.value(l2_index * NSTOKES)) < 1e-4) {
+                                for(int azi = m+1; azi < m_config.num_do_streams(); ++azi) {
+                                    int converged_index = linear_storage_index(aidx, lidx, szaidx, azi);
+                                    m_converged_map[converged_index] = true;
+                                }
+                            }
+                        }
+                    }
 
                     for(int k = 0; k < numderiv; ++k) {
                         temp_deriv(k + layerStart, s) -= ssa.deriv(k) * storage.source_terms_linear.value(index);

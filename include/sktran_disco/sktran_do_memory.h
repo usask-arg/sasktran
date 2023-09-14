@@ -13,9 +13,9 @@ namespace sasktran_disco {
 
         sasktran_disco::InhomogeneousSourceHolder<NSTOKES> Qtemp, temp;
 
-        LayerDual<double> hp, hm;
+        std::vector<LayerDual<double>> hp, hm;
 
-        Dual<double> Dm, Dp, Eform;
+        std::vector<Dual<double>> Dm, Dp, Eform;
 
         LayerIndex cached_layer;
 
@@ -43,14 +43,24 @@ namespace sasktran_disco {
             Qtemp.resize(NSTR);
             temp.resize(NSTR);
 
-            // Layer Duals
-            hp.resize(numlayerderiv);
-            hm.resize(numlayerderiv);
+            hp.resize(NSTR/2 * NSTOKES);
+            hm.resize(NSTR/2 * NSTOKES);
+            Dm.resize(NSTR/2 * NSTOKES);
+            Dp.resize(NSTR/2 * NSTOKES);
+            Eform.resize(NSTR/2 * NSTOKES);
 
-            // Full Duals
-            Dm.resize(numtotalderiv);
-            Dp.resize(numtotalderiv);
-            Eform.resize(numtotalderiv);
+            for(int i = 0; i < NSTR/2 * NSTOKES; ++i) {
+                // Layer Duals
+                hp[i].resize(numlayerderiv);
+                hm[i].resize(numlayerderiv);
+
+                // Full Duals
+                Dm[i].resize(numtotalderiv);
+                Dp[i].resize(numtotalderiv);
+                Eform[i].resize(numtotalderiv);
+            }
+
+
 
             cached_layer = p;
         }
