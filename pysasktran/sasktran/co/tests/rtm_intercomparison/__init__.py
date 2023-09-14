@@ -31,11 +31,11 @@ def aerosol_opt_prop(distribution, refractive_index_fn, wavelengths):
         selected = vals.isel(wavelength=idx)
 
         lm_a1[idx, :], lm_a2[idx, :], lm_a3[idx, :], lm_a4[idx, :], lm_b1[idx, :], lm_b2[idx, :] = \
-            compute_greek_coefficients_legendre(
-                selected['lm_p11'].values, selected['lm_p12'].values, selected['lm_p11'].values,
-                selected['lm_p33'].values, selected['lm_p34'].values, selected['lm_p33'].values,
-                theta_grid=selected.angle.values
-            )
+            compute_greek_coefficients_legendre(selected['lm_p11'].values, selected['lm_p12'].values,
+                                                selected['lm_p11'].values,
+                                                selected['lm_p33'].values, selected['lm_p34'].values, selected['lm_p33'].values,
+                                                theta_grid=selected.angle.values
+                                                )
 
     return sk.UserDefinedScatterConstantHeight(wavelengths,
                                                vals['xs_scattering'],

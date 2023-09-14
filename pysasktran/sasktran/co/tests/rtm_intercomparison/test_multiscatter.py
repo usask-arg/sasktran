@@ -1,7 +1,6 @@
 import sasktran as sk
 from . import load_scenario
 import numpy as np
-import matplotlib.pyplot as plt
 
 
 def test_all_multiscatter():
@@ -15,7 +14,7 @@ def test_all_multiscatter():
                                           'numhriterations': 50,
                                           'numhrincoming': 110,
                                           'numhroutgoing': 110,
-                                          'numsza': 3,
+                                          'numsza': 1,
                                           'initializehrwithdo': 1,
                                           'applydeltascaling': True,
                                           'numhrsphericalcorrection': 6,

@@ -12,6 +12,7 @@ from sasktran.stokesvector import StokesVector
 class EngineCO(sk.Engine):
     """
     """
+
     def __init__(self, geometry: sk.Geometry = None, atmosphere: sk.Atmosphere = None,
                  wavelengths: list = None, options: dict = None):
         super().__init__('co', geometry, atmosphere, wavelengths, options)
@@ -57,13 +58,15 @@ class EngineCO(sk.Engine):
     def calculate_radiance(self, output_format='numpy', full_stokes_vector=False, stokes_orientation='geographic'):
         self._stokes_stack = self._nstokes
         if full_stokes_vector:
-            raise ValueError('EngineCO does not support full_stokes_vector=True in calculate radiance, instead set engine.nstokes=3')
+            raise ValueError(
+                'EngineCO does not support full_stokes_vector=True in calculate radiance, instead set engine.nstokes=3')
 
         rad = super().calculate_radiance(output_format=output_format, full_stokes_vector=full_stokes_vector,
                                          stokes_orientation=stokes_orientation)
 
         if self._atmosphere.wf_species is not None:
-            wf = self._iskengine.GetWeightingFunctions()[1].reshape((len(self.wavelengths), len(self.geometry.lines_of_sight), -1))
+            wf = self._iskengine.GetWeightingFunctions()[1].reshape(
+                (len(self.wavelengths), len(self.geometry.lines_of_sight), -1))
 
             if hasattr(self.atmosphere.wf_species, '__iter__') and not isinstance(self.atmosphere.wf_species, str):
                 wf_iter = self.atmosphere.wf_species
@@ -83,7 +86,6 @@ class EngineCO(sk.Engine):
                                             wf[:, :, wf_start_counter:(wf_start_counter + num_species_wf)])
 
                 wf_start_counter += num_species_wf
-
 
         return rad
 
