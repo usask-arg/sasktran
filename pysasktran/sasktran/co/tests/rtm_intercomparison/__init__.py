@@ -30,12 +30,12 @@ def aerosol_opt_prop(distribution, refractive_index_fn, wavelengths):
     for idx in range(len(vals.wavelength.values)):
         selected = vals.isel(wavelength=idx)
 
-        lm_a1[idx, :], lm_a2[idx, :], lm_a3[idx, :], lm_a4[idx, :], lm_b1[idx, :], lm_b2[idx,
-                                                                                   :] = compute_greek_coefficients_legendre(
-            selected['lm_p11'].values, selected['lm_p12'].values, selected['lm_p11'].values,
-            selected['lm_p33'].values, selected['lm_p34'].values, selected['lm_p33'].values,
-            theta_grid=selected.angle.values
-        )
+        lm_a1[idx, :], lm_a2[idx, :], lm_a3[idx, :], lm_a4[idx, :], lm_b1[idx, :], lm_b2[idx, :] = \
+            compute_greek_coefficients_legendre(
+                selected['lm_p11'].values, selected['lm_p12'].values, selected['lm_p11'].values,
+                selected['lm_p33'].values, selected['lm_p34'].values, selected['lm_p33'].values,
+                theta_grid=selected.angle.values
+            )
 
     return sk.UserDefinedScatterConstantHeight(wavelengths,
                                                vals['xs_scattering'],
@@ -46,6 +46,7 @@ def aerosol_opt_prop(distribution, refractive_index_fn, wavelengths):
                                                lm_a4=lm_a4.T,
                                                lm_b1=lm_b1.T,
                                                lm_b2=lm_b2.T)
+
 
 def rtm_comparison_file():
     data_dir = Path(appdirs.user_data_dir('sasktran'))
@@ -73,12 +74,13 @@ def rtm_atmosphere(anc_data, albedo_scen, atmo_scen):
     atmo['air'] = sk.Species(sk.SimpleRayleigh(), air_den)
 
     if atmo_scen > 0:
-
         opt_prop = sk.OpticalProperty('USERDEFINED_TABLES')
         opt_prop.skif_object().SetProperty('WavelengthTruncation', 1)
 
-        opt_prop.skif_object().AddUserDefined(100, anc_data.wavelength.values, anc_data.ozone_absorption_cross_section.values)
-        opt_prop.skif_object().AddUserDefined(400, anc_data.wavelength.values, anc_data.ozone_absorption_cross_section.values)
+        opt_prop.skif_object().AddUserDefined(100, anc_data.wavelength.values,
+                                              anc_data.ozone_absorption_cross_section.values)
+        opt_prop.skif_object().AddUserDefined(400, anc_data.wavelength.values,
+                                              anc_data.ozone_absorption_cross_section.values)
 
         atmo['ozone'] = sk.Species(opt_prop, ozone_den)
 
@@ -137,7 +139,7 @@ def test_case_geometry(sza, saa):
 
 
 def load_scenario(geometry_index: int, atmosphere_index: int, albedo_index: int, test_case: int, numlegendre: int,
-                  altitude_spacing: float=500):
+                  altitude_spacing: float = 500):
     rtm_file = rtm_comparison_file()
 
     geo = xr.open_dataset(rtm_file, group='geometry_data')

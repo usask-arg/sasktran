@@ -1,7 +1,6 @@
 #include <sasktran2/atmosphere/grid_storage.h>
 #include <sasktran2/math/wigner.h>
 #include <sasktran2/math/scattering.h>
-#include <arm_neon.h>
 
 namespace sasktran2::atmosphere {
 

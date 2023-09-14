@@ -33,15 +33,15 @@ def test_all_multiscatter():
 
             mmm_vals = scen['model_data']['radiance'].isel(model=1).values[:, :, :3]
 
-
             p_diff_I = ((rad['radiance'].values - mmm_vals) / mmm_vals * 100)[:, :, 0]
             p_diff_scia = ((scia_vals - mmm_vals) / mmm_vals * 100)[:, :, 0]
             p_diff_hr = ((hr_vals - mmm_vals) / mmm_vals * 100)[:, :, 0]
 
+            rad_lp = np.sqrt((rad['radiance'].isel(stokes=1) ** 2 + rad['radiance'].isel(stokes=2) ** 2))
+            scia_lp = np.sqrt(
+                scen['model_data']['radiance'].isel(model=2).values[:, :, 1] ** 2 + scen['model_data']['radiance'].isel(
+                    model=2).values[:, :, 2] ** 2)
 
-            rad_lp = np.sqrt((rad['radiance'].isel(stokes=1)**2 + rad['radiance'].isel(stokes=2)**2))
-            scia_lp = np.sqrt(scen['model_data']['radiance'].isel(model=2).values[:, :, 1]**2 + scen['model_data']['radiance'].isel(model=2).values[:, :, 2]**2)
-
-            p_diff_lp = ((rad_lp- scia_lp) / scia_lp * 100)
+            p_diff_lp = ((rad_lp - scia_lp) / scia_lp * 100)
 
             max_error = np.max(np.abs(p_diff_I.flatten()))
