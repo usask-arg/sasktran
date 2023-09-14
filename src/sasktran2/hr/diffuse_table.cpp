@@ -25,7 +25,7 @@ namespace sasktran2::hr {
         if(m_config->num_do_sza() > 1) {
             cos_sza_grid_values.setLinSpaced(m_config->num_do_sza(), min_cos_sza, max_cos_sza);
         } else {
-            // Maybe the mean tangent point should always be included?
+            // Set to reference cos_sza
             cos_sza_grid_values.resize(1);
             cos_sza_grid_values.setConstant(m_geometry.coordinates().cos_sza_at_reference());
         }
@@ -38,6 +38,8 @@ namespace sasktran2::hr {
     sasktran2::grids::AltitudeGrid DiffuseTable<NSTOKES>::generate_altitude_grid() {
         // TODO: Decouple altitude grid here from the global geometry grid ?
 
+        // Put diffuse points inbetween altitude levels
+        // TODO: why though? sources are usually calculated at the levels not inbetween
         Eigen::VectorXd alt_values = (m_geometry.altitude_grid().grid()(Eigen::seq(0, Eigen::last - 1)) + m_geometry.altitude_grid().grid()(Eigen::seq(1, Eigen::last))) / 2.0;
 
         return sasktran2::grids::AltitudeGrid(std::move(alt_values),sasktran2::grids::gridspacing::constant, sasktran2::grids::outofbounds::extend,
@@ -71,13 +73,37 @@ namespace sasktran2::hr {
 
         m_diffuse_points.resize(m_location_interpolator->num_interior_points() + m_location_interpolator->num_ground_points());
 
-        //m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), true);
+        if(m_config->num_hr_full_incoming_points() > 0) {
+            // We are approximating the multiple scatter source by only calculating incoming quantities at a subset
+            // of the diffuse points
 
-        m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), false);
-        m_diffuse_point_full_calculation[0] = true;
-        m_diffuse_point_full_calculation[m_diffuse_point_full_calculation.size() - 1] = true;
-        m_diffuse_point_full_calculation[m_diffuse_point_full_calculation.size() - 2] = true;
-        m_diffuse_point_full_calculation[25] = true;
+            // Start by setting the calculation to false at all points
+            m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), false);
+
+            // At all ground points we will do the incoming calculation
+            for(int i = m_location_interpolator->num_interior_points(); i < m_location_interpolator->num_interior_points() + m_location_interpolator->num_ground_points(); ++i) {
+                m_diffuse_point_full_calculation[i] = true;
+            }
+
+            int num_inc_per_profile = m_config->num_hr_full_incoming_points();
+            // TODO: This implicitly assumes the construction of the diffuse point locations, should figure out a better way to do this
+            int num_diffuse_in_profile = (m_location_interpolator->num_interior_points()) / m_config->num_do_sza();
+
+            for(int i = 0; i < m_config->num_do_sza(); ++i) {
+                // Start of the profile index
+                int profile_start = i * num_diffuse_in_profile;
+
+                for(int j = 0; j < num_inc_per_profile; ++j) {
+                    // Basically want linearly spaced from 0 to end inclusive
+                    int alt_index = (j*(num_diffuse_in_profile-1)) / (num_inc_per_profile-1);
+
+                    m_diffuse_point_full_calculation[profile_start + alt_index] = true;
+                }
+            }
+        } else {
+            // We are calculating incoming quantities at all points
+            m_diffuse_point_full_calculation.resize(m_diffuse_points.size(), true);
+        }
 
         sasktran2::Location loc;
 
@@ -175,8 +201,15 @@ namespace sasktran2::hr {
         // Set up the integrator
         m_integrator.initialize_geometry(m_incoming_traced_rays, this->m_geometry);
         // And the initial sources
-        for(auto& source : m_initial_owned_sources) {
+        // This is a little tricky, any source that is used for the incoming rays needs to be initialized with the
+        // traced incoming rays
+        for(auto& source : m_initial_sources) {
             source->initialize_geometry(m_incoming_traced_rays);
+        }
+
+        // But the DO Source should be initialized with the LOS rays
+        if(m_config->initialize_hr_with_do()) {
+            m_do_source->initialize_geometry(los_rays);
         }
 
         int temp;
@@ -514,11 +547,15 @@ namespace sasktran2::hr {
                 double w_above = (alt - alt_below) / (alt_above - alt_below);
                 double w_below = 1 - w_above;
 
+                // TODO: These adjustments work well for I, but more work is needed on adjusting Q/U...
                 auto above_seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[upper_idx], NSTOKES*(m_diffuse_outgoing_index_map[upper_idx] + m_diffuse_points[upper_idx]->num_outgoing()) - 1, NSTOKES);
                 auto below_seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[lower_idx], NSTOKES*(m_diffuse_outgoing_index_map[lower_idx] + m_diffuse_points[lower_idx]->num_outgoing()) - 1, NSTOKES);
-                auto seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[i], NSTOKES*(m_diffuse_outgoing_index_map[i] + m_diffuse_points[i]->num_outgoing()) - 1, NSTOKES);
 
-                new_outgoing.value.array()(seq) *= w_above * (new_outgoing.value.array()(above_seq) / old_outgoing.array()(above_seq)) + w_below * (new_outgoing.value.array()(below_seq) / old_outgoing.array()(below_seq));
+                for(int s = 0; s < NSTOKES; ++s) {
+                    auto seq = Eigen::seq(NSTOKES*m_diffuse_outgoing_index_map[i] + s, NSTOKES*(m_diffuse_outgoing_index_map[i] + m_diffuse_points[i]->num_outgoing()) - 1 + s, NSTOKES);
+                    new_outgoing.value.array()(seq) *= w_above * (new_outgoing.value.array()(above_seq) / old_outgoing.array()(above_seq)) + w_below * (new_outgoing.value.array()(below_seq) / old_outgoing.array()(below_seq));
+                }
+
             }
         }
     }

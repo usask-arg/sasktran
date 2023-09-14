@@ -14,6 +14,7 @@ namespace sasktran2 {
         m_hr_nincoming(110),
         m_hr_noutgoing(110),
         m_hr_nspherical_iterations(50),
+        m_hr_num_incoming_points(-1),
         m_initialize_hr_with_do_solution(false)
     {
         set_multiple_scatter_source(MultipleScatterSource::none);

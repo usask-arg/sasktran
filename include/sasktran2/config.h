@@ -179,29 +179,109 @@ namespace sasktran2 {
          */
         void set_num_do_sza(int nsza) { m_ndosza = nsza; }
 
+
+        /**
+         *
+         * @return True if the weighting function calculation is enabled
+         */
         bool wf_enabled() const { return m_enable_wfs; }
+
+        /** Enables/disables the calculation of weighting functions
+         *
+         * @param enable
+         */
         void set_wf_enabled(bool enable) { m_enable_wfs = enable; }
 
-
+        /**
+         *
+         * @return The number of spherical iterations used in the Discrete Ordinates source (Not currently used)
+         */
         int num_do_spherical_iterations() const { return m_ndosphericaliterations; }
+
+        /** Sets the number of spherical iterations used in the discrete ordinates source (not currently used)
+         *
+         * @param n
+         */
         void set_num_do_spherical_iterations(int n) { m_ndosphericaliterations = n; }
 
+        /**
+         *
+         * @return The number of spherical iterations inside the HR source
+         */
         int num_hr_spherical_iterations() const { return m_hr_nspherical_iterations; }
+
+        /** Sets the number of spherical iterations used in the HR source
+         *
+         * @param n
+         */
         void set_num_hr_spherical_iterations(int n) { m_hr_nspherical_iterations = n; }
 
+        /**
+         *
+         * @return The number of incoming points at each diffuse point in the HR source
+         */
         int num_hr_incoming() const { return m_hr_nincoming; }
+
+        /** Sets the number of incoming points at each diffuse point in the HR source
+         *
+         * @param n
+         */
         void set_num_hr_incoming(int n) { m_hr_nincoming = n; }
 
+        /**
+         *
+         * @return The number of outgoing directions at each diffuse point in the HR source
+         */
         int num_hr_outgoing() const { return m_hr_noutgoing; }
+
+        /** Sets the number of outgoing directions at each diffuse point in the HR source
+         *
+         * @param n
+         */
         void set_num_hr_outgoing(int n) { m_hr_noutgoing = n; }
 
+        /**
+         *
+         * @return  True if the HR source is to be initialized by the DO source
+         */
         bool initialize_hr_with_do() const { return m_initialize_hr_with_do_solution; }
+
+        /** Set to True if the HR source is to be intialized by the DO source
+         *
+         * @param init
+         */
         void set_initialize_hr_with_do(bool init) { m_initialize_hr_with_do_solution = init; }
 
+        /**
+         *
+         * @return The precision of the Weighting Function calculation
+         */
         WeightingFunctionPrecision wf_precision() const { return m_wf_precision; }
+
+        /** Sets the precision of the weighting function calculation
+         *
+         * @param precision
+         */
         void set_wf_precision(WeightingFunctionPrecision precision) { m_wf_precision = precision; }
 
+        /**
+         *
+         * @return Then number of points (per diffuse profile) that we calculate the incoming signal on.  Can be set to -1 to use all the points
+         */
+        int num_hr_full_incoming_points() const { return m_hr_num_incoming_points; }
+
+        /** Sets the number of points (per diffuse profile) that we calculate the incoming signal at. Can be set to -1
+         *  to use all the points.
+         *
+         * @param points
+         */
+        void set_num_hr_full_incoming_points (int points) { m_hr_num_incoming_points = points; }
+
+
+
     private:
+        // TODO: Refactor these into individual source configs?
+
         int m_nthreads;
         int m_nstokes;
         int m_ndostreams;
@@ -214,6 +294,7 @@ namespace sasktran2 {
         int m_hr_noutgoing;
 
         int m_hr_nspherical_iterations;
+        int m_hr_num_incoming_points;
 
         bool m_apply_delta_scaling;
 

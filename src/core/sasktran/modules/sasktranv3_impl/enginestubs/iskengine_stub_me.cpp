@@ -101,6 +101,17 @@ bool ISKEngine_Stub_ME::MakeScalarSetFunctions() {
                          }
     );
 
+    AddSetScalarFunction("numsza",
+                         [&, this](double d ) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             m_config.set_num_do_sza(specifier);
+
+                             return ok;
+                         }
+    );
+
     AddSetScalarFunction("numthreads",
                          [&, this](double d ) {
                              int specifier = (int) ceil(d - 0.5);
@@ -204,6 +215,17 @@ bool ISKEngine_Stub_ME::MakeScalarSetFunctions() {
                              bool ok = true;
 
                              m_config.set_num_hr_outgoing(specifier);
+
+                             return ok;
+                         }
+    );
+
+    AddSetScalarFunction("numhrsphericalcorrection",
+                         [&, this](double d) {
+                             int specifier = (int) ceil(d - 0.5);
+                             bool ok = true;
+
+                             m_config.set_num_hr_full_incoming_points(specifier);
 
                              return ok;
                          }

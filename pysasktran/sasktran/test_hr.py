@@ -28,8 +28,8 @@ class TestEngineHR(unittest.TestCase):
 
         # And do the calculation
         radiance = engine.calculate_radiance('xarray')
-        correct_check1 = [0.0583454507287009, 0.0575745091193133, 0.0304976942923949, 0.0100584374020211]
-        correct_check2 = [0.0312688589955404, 0.0090109076095719, 0.0027612316622947, 0.0009875801095094]
+        correct_check1 = [0.0583460264942, 0.05757622065389, 0.03050035948276, 0.01005435209381]
+        correct_check2 = [0.03126582019871, 0.00901111620012, 0.00276132516431, 0.00098715768225]
 
         np.testing.assert_allclose(correct_check1, radiance.isel(wavelength=0, los=[0, 10, 20, 30])['radiance'].values, rtol=1e-6)
         np.testing.assert_allclose(correct_check2, radiance.isel(wavelength=1, los=[0, 10, 20, 30])['radiance'].values, rtol=1e-6)

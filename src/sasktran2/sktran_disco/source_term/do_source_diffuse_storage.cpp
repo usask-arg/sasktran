@@ -383,7 +383,7 @@ namespace sasktran2 {
     ) {
         auto& storage = m_storage[thread_idx];
 
-        if(m == 0) {
+        if(m == 0 && szaidx == 0) {
             // Have to reset some things
             storage.source_terms_linear.value.setZero();
             storage.source_terms_linear.deriv.setZero();

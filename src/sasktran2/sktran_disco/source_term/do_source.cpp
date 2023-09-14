@@ -51,19 +51,8 @@ namespace sasktran2 {
 
     template<int NSTOKES, int CNSTR>
     void DOSource<NSTOKES, CNSTR>::generate_sza_grid() {
-        // Go through all of the los rays and find the maximum and minimum SZA
-        double min_cos_sza = 1;
-        double max_cos_sza = -1;
-
-        for(const auto& ray : *m_los_rays) {
-            for(const auto& layer : ray.layers) {
-                min_cos_sza = std::min(layer.cos_sza_entrance, min_cos_sza);
-                min_cos_sza = std::min(layer.cos_sza_exit, min_cos_sza);
-
-                max_cos_sza = std::max(layer.cos_sza_entrance, max_cos_sza);
-                max_cos_sza = std::max(layer.cos_sza_exit, max_cos_sza);
-            }
-        }
+        // find the min/max SZA from the LOS rays and generate the cos_sza_grid
+        std::pair<double, double> min_max_cos_sza = sasktran2::raytracing::min_max_cos_sza_of_all_rays(*m_los_rays);
 
         int num_sza = m_config->num_do_sza();
         double ref_cos_sza = m_geometry.coordinates().cos_sza_at_reference();
@@ -79,7 +68,7 @@ namespace sasktran2 {
                                                                   sasktran2::grids::outofbounds::extend,
                                                                   sasktran2::grids::interpolation::linear);
         } else {
-            sza_grid = Eigen::ArrayXd::LinSpaced(num_sza, min_cos_sza, max_cos_sza);
+            sza_grid = Eigen::ArrayXd::LinSpaced(num_sza, min_max_cos_sza.first, min_max_cos_sza.second);
 
             m_sza_grid = std::make_unique<sasktran2::grids::Grid>(std::move(sza_grid), sasktran2::grids::gridspacing::constant,
                                                                   sasktran2::grids::outofbounds::extend,

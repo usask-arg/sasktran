@@ -62,13 +62,13 @@ namespace sasktran2::hr {
 
         std::vector<std::vector<std::pair<int, double>>> m_diffuse_point_interpolation_weights; /** Interpolation mapping from the global coordinates to the diffuse locations.  Mostly used to generate the scattering matrices. */
 
-        SInterpolator m_los_source_weights;
-        SInterpolator m_diffuse_source_weights;
+        SInterpolator m_los_source_weights; /** Interpolator mapping from line of sight points to source terms in this table */
+        SInterpolator m_diffuse_source_weights; /** Interpolator mapping from incoming rays to source terms in this table */
 
-        int m_total_num_diffuse_weights;
+        int m_total_num_diffuse_weights; /** Total number of diffuse weights, used to help memory allocs */
 
-        Eigen::SparseMatrix<double, Eigen::RowMajor> m_do_to_diffuse_outgoing_interpolator;
-        DOSourceInterpolatedPostProcessing<NSTOKES, -1>* m_do_source;
+        Eigen::SparseMatrix<double, Eigen::RowMajor> m_do_to_diffuse_outgoing_interpolator; /** Mapping from the DO source terms to the outgoing sphere sources */
+        DOSourceInterpolatedPostProcessing<NSTOKES, -1>* m_do_source; /** Reference to the DO source */
 
     private:
         sasktran2::grids::Grid generate_cos_sza_grid(double min_cos_sza, double max_cos_sza);
@@ -94,6 +94,10 @@ namespace sasktran2::hr {
                      const sasktran2::Geometry1D& geometry
                      );
 
+        /** Initializes the config inside the source term
+         *
+         * @param config
+         */
         virtual void initialize_config(const sasktran2::Config& config);
 
         /** Initializes any geometry information that is required for calculating the source term.  This method is called
