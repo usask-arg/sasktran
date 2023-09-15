@@ -7,7 +7,7 @@ from setuptools import setup
 from setuptools import find_packages
 from setuptools.dist import Distribution
 from distutils.core import Extension
-import numpy as np  
+from numpy import get_include
 import glob
 from copy import copy
 from pathlib import Path
@@ -64,7 +64,7 @@ extra_objects = []
 cplus_include_path, cplus_library_path = get_cplus_paths()
 
 include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
-                      np.get_include(),
+                      get_include(),
                       r'../src/core/base/nxbase'
                       ] +  cplus_include_path
 
