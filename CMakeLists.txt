@@ -135,6 +135,9 @@ endif()
 
 # -------- END LAPACK FINDING -------
 
+message(STATUS "Lapack Configuration Complete")
+
+
 install (TARGETS sasktranBuildProperties
         EXPORT ${EXPORT_NAME}
         LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}

@@ -8,6 +8,9 @@ concurrency:
   cancel-in-progress: true
 
 
+env:
+  IN_CONDA_BUILD: true
+
 jobs:
   build-conda:
     runs-on: ${{ matrix.os }}
