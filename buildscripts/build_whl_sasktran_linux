@@ -33,7 +33,7 @@ if [[ -z $IN_CONDA_BUILD ]]; then
   fi
 else
   pushd pysasktran
-  $PYTHON setup.py bdist_wheel -d ../wheelhouse
+  $PYTHON setup.py install
   popd
 fi
 
