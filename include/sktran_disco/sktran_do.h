@@ -2,6 +2,7 @@
 
 // STL dependencies 
 #include <algorithm>
+#include <memory>
 #include <numeric>
 #include <mutex>
 #include <queue>
