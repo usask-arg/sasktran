@@ -33,7 +33,7 @@ if [[ -z $CONDA_TOOLCHAIN_BUILD ]]; then
   fi
 else
   pushd pysasktran
-  $PYTHON setup.py install
+  $PYTHON setup.py install --no-deps
   popd
 fi
 

@@ -36,13 +36,13 @@ jobs:
       - name: Build Conda package
         shell: bash -el {0}
         run: |
-          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe
+          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe --output-folder pkgs/
 
       - name: Save conda package
         uses: actions/upload-artifact@v3
         with:
-          name: conda-mac-arm-${{ matrix.py_version }}
-          path: /usr/local/miniconda/envs/conda_build/conda-bld/osx-64
+          name: conda-${{ matrix.os}}-x86-${{ matrix.py_version }}
+          path: pkgs
   
   build-conda-cross-mac-arm:
     runs-on: macos-11
@@ -67,10 +67,10 @@ jobs:
       - name: Build Conda package
         shell: bash -el {0}
         run: |
-          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m conda-recipe/osx_arm64_.yaml
+          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m conda-recipe/osx_arm64_.yaml --output-folder pkgs/
 
       - name: Save conda package
         uses: actions/upload-artifact@v3
         with:
-          name: conda-mac-arm-${{ matrix.py_version }}
-          path: /usr/local/miniconda/envs/conda_build/conda-bld/osx-64
+          name: conda-macos-11-arm-${{ matrix.py_version }}
+          path: pkgs
