@@ -60,12 +60,12 @@ namespace sktran_me {
         nxVector west, south, up;
         geodetic.GetGeodeticWestSouthUp(&west, &south, &up);
 
-        loc.position = Eigen::Vector3d(up.X(), up.Y(), up.Z());
+        loc.position = Eigen::Vector3d(up.X(), up.Y(), up.Z()).normalized();
 
         double csz;
         double rel_az;
 
-        sasktran2::raytracing::calculate_csz_saz(m_geographic_sun, loc, look, csz, rel_az);
+        sasktran2::raytracing::calculate_csz_saz(m_geographic_sun, loc, look.normalized(), csz, rel_az);
 
 
 

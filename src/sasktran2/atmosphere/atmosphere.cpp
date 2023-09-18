@@ -6,8 +6,7 @@ namespace sasktran2::atmosphere {
 	Atmosphere<NSTOKES>::Atmosphere(AtmosphereGridStorageFull<NSTOKES>&& storage, Surface&& surface, bool calculate_derivatives):
 		m_storage(storage),
 		m_surface(surface),
-        m_calculate_derivatives(calculate_derivatives),
-        m_storage_accessor(&m_storage)
+        m_calculate_derivatives(calculate_derivatives)
 	{
 
 	}

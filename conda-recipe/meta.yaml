@@ -41,7 +41,20 @@ requirements:
     - openblas
     - zlib
     - python
+    - pyyaml
+    - appdirs
+    - boost
+    - urllib3
+    - xarray
 
+
+test:
+  requires:
+    - netcdf4
+    - pytest
+    - scipy
+  commands:
+    - pytest --pyargs sasktran
 
 about:
   home: http://www.example.com
