@@ -62,21 +62,14 @@ extra_objects = []
 
 cplus_include_path, cplus_library_path = get_cplus_paths()
 
-if 'CONDA_BUILD_CROSS_COMPILATION' in os.environ:
-    # Can't import numpy
-    import pkgutil
-    np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
+import pkgutil
+np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
 
-    include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
-                          r'../src/core/base/nxbase',
-                          np_path,
-                          ] +  cplus_include_path
-else:
-    from numpy import get_include
-    include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
-                          get_include(),
-                          r'../src/core/base/nxbase'
-                          ] +  cplus_include_path
+include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
+                      r'../src/core/base/nxbase',
+                      np_path,
+                      ] +  cplus_include_path
+
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
     library_dirs      =[ r'..\src\core\fortran_libraries\lib\Windows_x64',
