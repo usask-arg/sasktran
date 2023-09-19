@@ -1,3 +1,4 @@
+import dist_utils
 from .config import update_registry_from_config
 from .geometry import Geometry, VerticalImage, NadirGeometry
 from .atmosphere import Atmosphere
