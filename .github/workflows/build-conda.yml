@@ -67,7 +67,7 @@ jobs:
       - name: Build Conda package
         shell: bash -el {0}
         run: |
-          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m conda-recipe/osx_arm64_.yaml --output-folder pkgs/
+          conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m conda-recipe/osx_arm64_.yaml --output-folder pkgs/ --no-test
 
       - name: Save conda package
         uses: actions/upload-artifact@v3

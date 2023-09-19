@@ -8,7 +8,7 @@ export CXX=$5
 AUDITWHEEL=$6
 
 
-if [[ -z $CONDA_TOOLCHAIN_BUILD ]]; then
+if [[ -z $CONDA_BUILD_STATE ]]; then
 
   if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
 

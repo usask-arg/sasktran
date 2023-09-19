@@ -38,14 +38,15 @@ requirements:
     - libnetcdf
     - hdf5
     - yaml-cpp
-    - openblas
+    - libopenblas
     - zlib
     - python
     - pyyaml
     - appdirs
-    - boost
+    - boost-cpp
     - urllib3
     - xarray
+    - llvm-openmp
 
 
 test:
@@ -53,6 +54,7 @@ test:
     - netcdf4
     - pytest
     - scipy
+    - zenodo_get
   commands:
     - pytest --pyargs sasktran
 
