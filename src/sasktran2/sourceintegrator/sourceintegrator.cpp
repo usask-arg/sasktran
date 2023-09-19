@@ -30,6 +30,12 @@ namespace sasktran2 {
         #pragma omp parallel for
         for(int i = 0; i < m_traced_ray_od_matrix.size(); ++i) {
             m_shell_od[i].noalias() = m_traced_ray_od_matrix[i] * atmo.storage().total_extinction;
+
+            #ifdef SASKTRAN_DEBUG_ASSERTS
+                if(!m_shell_od[i].allFinite()) {
+                    BOOST_LOG_TRIVIAL(error) << "Error calculating Layer OD for ray: " << i;
+                }
+            #endif
         }
 
         m_atmosphere = &atmo;
@@ -81,7 +87,7 @@ namespace sasktran2 {
             if(radiance.value.hasNaN()) {
                 static bool message = false;
                 if(!message) {
-                    BOOST_LOG_TRIVIAL(error) << "One of the sources was  NaN" << " Ray:" << rayidx << "layer: " << j;
+                    BOOST_LOG_TRIVIAL(error) << "One of the sources was  NaN" << " Ray:" << rayidx << "layer: " << j << "Layer od: " << local_shell_od.od << "Layer Atten Factor: " << local_shell_od.exp_minus_od;
                     message = true;
                 }
             }

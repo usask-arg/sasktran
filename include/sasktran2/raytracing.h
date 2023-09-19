@@ -203,6 +203,15 @@ namespace sasktran2::raytracing {
 
         layer.od_quad_start_fraction = layer.od_quad_start / (layer.od_quad_start + layer.od_quad_end);
         layer.od_quad_end_fraction = layer.od_quad_end / (layer.od_quad_start + layer.od_quad_end);
+
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(std::isnan(layer.od_quad_start) || std::isnan(layer.od_quad_end) || std::isnan(layer.od_quad_end_fraction) || std::isnan(layer.od_quad_end_fraction)) {
+                BOOST_LOG_TRIVIAL(error) << "One of layer quadrature parameters was nan";
+
+                BOOST_LOG_TRIVIAL(error) << "od_quad_start: " << layer.od_quad_start << " od_quad_end: " << layer.od_quad_end;
+                BOOST_LOG_TRIVIAL(error) << "r0: " << r0 << " r1:" << r1 << " look_vector:" << layer.average_look_away;
+            }
+        #endif
     }
 
     /** Takes a list of traced rays and returns the min and max COS sza of any layer in the traced rays.

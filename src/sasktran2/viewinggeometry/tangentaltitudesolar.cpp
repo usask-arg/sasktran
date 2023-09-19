@@ -10,6 +10,23 @@ namespace sasktran2::viewinggeometry {
                                                m_observeraltitude(observeraltitude),
                                                m_cos_sza(cos_sza)
                                                {
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(std::isnan(tangentaltitude) || tangentaltitude < 0) {
+                BOOST_LOG_TRIVIAL(error) << "Invalid Tangent Altitude in TangentAltitudeSolar: " << tangentaltitude;
+            }
+
+            if(std::isnan(relative_azimuth_angle)) {
+                BOOST_LOG_TRIVIAL(error) << "NaN Relative Azimuth Angle in TangentAltitudeSolar";
+            }
+
+            if(std::isnan(observeraltitude)) {
+                BOOST_LOG_TRIVIAL(error) << "NaN Observer Altitude in TangentAltitudeSolar";
+            }
+
+            if(std::isnan(cos_sza) || std::abs(cos_sza) > 1) {
+                BOOST_LOG_TRIVIAL(error) << "Invalid cos_sza in TangentAltitudeSolar: " << cos_sza;
+            }
+        #endif
 
     }
 

@@ -46,7 +46,7 @@ requirements:
     - boost-cpp
     - urllib3
     - xarray
-    - llvm-openmp
+    - llvm-openmp # [mac]
 
 
 test:
