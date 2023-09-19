@@ -50,6 +50,25 @@ namespace sasktran2::viewinggeometry {
 
         ray.observer.position = tangent_point - s*ray.look_away;
 
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(!tangent_point.allFinite()) {
+                BOOST_LOG_TRIVIAL(error) << "Error calculating tangent point from cos_sza: " << m_cos_sza << " tangent_alt: " << m_tangentaltitude;
+            }
+
+            if(!ray.look_away.allFinite()) {
+                BOOST_LOG_TRIVIAL(error) << "Error calculating the look vector from tangent point: " << tangent_point << " rel_az: " << m_relative_azimuth_angle;
+            }
+
+            if(!ray.observer.position.allFinite()) {
+                BOOST_LOG_TRIVIAL(error) << "Error estimating the observer position from: ";
+                BOOST_LOG_TRIVIAL(error) << "tangent_point: " << tangent_point;
+                BOOST_LOG_TRIVIAL(error) << "look_away: " << ray.look_away;
+                BOOST_LOG_TRIVIAL(error) << "obs_alt: " << m_observeraltitude;
+                BOOST_LOG_TRIVIAL(error) << "tangent_alt: " << m_tangentaltitude;
+                BOOST_LOG_TRIVIAL(error) << "s: " << s;
+            }
+        #endif
+
         return ray;
 
     }
