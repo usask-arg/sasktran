@@ -92,6 +92,17 @@ void Sasktran2<NSTOKES>::calculate_geometry() {
         const auto& viewing_ray = m_viewing_geometry.observer_rays()[i];
         sasktran2::viewinggeometry::ViewingRay ray = viewing_ray->construct_ray(m_geometry->coordinates());
 
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(!ray.look_away.allFinite() || !ray.observer.position.allFinite()) {
+                BOOST_LOG_TRIVIAL(error) << "Error constructing LOS ray: " << i;
+
+                BOOST_LOG_TRIVIAL(error) << "ray look: " << ray.look_away;
+                BOOST_LOG_TRIVIAL(error) << "obs: " << ray.observer.position;
+
+                BOOST_LOG_TRIVIAL(error) << "LOS Type: " << typeid(viewing_ray).name();
+            }
+        #endif
+
         m_raytracer->trace_ray(ray, m_traced_rays[i]);
     }
 
