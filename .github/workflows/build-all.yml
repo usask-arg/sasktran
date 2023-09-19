@@ -361,7 +361,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py38]
+        py_version: [py38, py39, py310, py311]
 
     steps:
       - name: Checkout repository
