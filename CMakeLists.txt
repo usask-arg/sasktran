@@ -144,8 +144,6 @@ install (TARGETS sasktranBuildProperties
         INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
 
 
-target_compile_definitions(sasktranBuildProperties INTERFACE SASKTRAN_DEBUG_ASSERTS)
-
 
 add_subdirectory (src/sasktran2)
 add_subdirectory (src/core)

@@ -167,6 +167,9 @@ namespace sasktran2::raytracing {
             // Or we are doing shell interpolation
             layer.od_quad_start = layer.layer_distance / 2 * layer.curvature_factor;
             layer.od_quad_end = layer.layer_distance / 2 * layer.curvature_factor;
+
+            layer.od_quad_start_fraction = 0.5;
+            layer.od_quad_end_fraction = 0.5;
         }
         else {
             double costheta0 = layer.entrance.cos_zenith_angle(layer.average_look_away);
@@ -199,10 +202,10 @@ namespace sasktran2::raytracing {
             }
             layer.od_quad_start = (r1*dt1 - dt2) / dr * layer.curvature_factor;
             layer.od_quad_end = -1 * (r0*dt1 - dt2) / dr * layer.curvature_factor;
-        }
 
-        layer.od_quad_start_fraction = layer.od_quad_start / (layer.od_quad_start + layer.od_quad_end);
-        layer.od_quad_end_fraction = layer.od_quad_end / (layer.od_quad_start + layer.od_quad_end);
+            layer.od_quad_start_fraction = layer.od_quad_start / (layer.od_quad_start + layer.od_quad_end);
+            layer.od_quad_end_fraction = layer.od_quad_end / (layer.od_quad_start + layer.od_quad_end);
+        }
 
         #ifdef SASKTRAN_DEBUG_ASSERTS
             if(std::isnan(layer.od_quad_start) || std::isnan(layer.od_quad_end) || std::isnan(layer.od_quad_end_fraction) || std::isnan(layer.od_quad_end_fraction)) {
@@ -438,8 +441,14 @@ namespace sasktran2::raytracing {
                 }
             }
             else {
-                dist_from_tangent = side * direction * sqrt(re*re - rtsq);
+                dist_from_tangent = side * direction * sqrt(abs(re*re - rtsq));
             }
+
+            #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(std::isnan(tangent_distance) || std::isnan(dist_from_tangent)) {
+                BOOST_LOG_TRIVIAL(error) << "Error computing tangent distances";
+            }
+            #endif
 
             if (side == TangentSide::nearside) {
                 return tangent_distance - dist_from_tangent;
@@ -447,6 +456,8 @@ namespace sasktran2::raytracing {
             else {
                 return tangent_distance + dist_from_tangent;
             }
+
+
         }
     };
 
