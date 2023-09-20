@@ -7,7 +7,6 @@ from setuptools import setup
 from setuptools import find_packages
 from setuptools.dist import Distribution
 from distutils.core import Extension
-import numpy as np  
 import glob
 from copy import copy
 from pathlib import Path
@@ -63,10 +62,14 @@ extra_objects = []
 
 cplus_include_path, cplus_library_path = get_cplus_paths()
 
+import pkgutil
+np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
+
 include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
-                      np.get_include(),
-                      r'../src/core/base/nxbase'
+                      r'../src/core/base/nxbase',
+                      np_path,
                       ] +  cplus_include_path
+
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
     library_dirs      =[ r'..\src\core\fortran_libraries\lib\Windows_x64',

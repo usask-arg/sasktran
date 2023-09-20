@@ -4,8 +4,10 @@
 namespace sasktran2 {
     template<int NSTOKES, int CNSTR>
     DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::DOSourceInterpolatedPostProcessing(const sasktran2::Geometry1D &geometry,
-                                                                                           const sasktran2::raytracing::RayTracerBase &raytracer)
-            : DOSource<NSTOKES, CNSTR>(geometry, raytracer) {
+                                                                                           const sasktran2::raytracing::RayTracerBase &raytracer,
+                                                                                           bool will_integrate_sources
+                                                                                           )
+            : DOSource<NSTOKES, CNSTR>(geometry, raytracer), m_will_integrate_sources(will_integrate_sources) {
     }
 
     template<int NSTOKES, int CNSTR>
@@ -35,15 +37,26 @@ namespace sasktran2 {
                 this->m_geometry
         );
 
-        m_los_source_interpolator = m_diffuse_storage->geometry_interpolator(los_rays);
-        m_source_interpolator_view = m_los_source_interpolator.get();
+        if(m_will_integrate_sources) {
+            m_los_source_interpolator = m_diffuse_storage->geometry_interpolator(los_rays);
+            m_source_interpolator_view = m_los_source_interpolator.get();
+        }
 
     }
 
     template<int NSTOKES, int CNSTR>
     void DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::initialize_atmosphere(
             const sasktran2::atmosphere::Atmosphere<NSTOKES> &atmosphere) {
+        m_atmosphere = &atmosphere;
+
         DOSource<NSTOKES, CNSTR>::initialize_atmosphere(atmosphere);
+
+        m_diffuse_storage->initialize_atmosphere(atmosphere);
+    }
+
+    template<int NSTOKES, int CNSTR>
+    void DOSourceInterpolatedPostProcessing<NSTOKES, CNSTR>::initialize_config(const sasktran2::Config &config) {
+        DOSource<NSTOKES, CNSTR>::initialize_config(config);
     }
 
     template <int NSTOKES, int CNSTR>
@@ -51,53 +64,49 @@ namespace sasktran2 {
                                                      const sasktran2::raytracing::SphericalLayer &layer,
                                                      const sasktran2::SparseODDualView &shell_od,
                                                      sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
-        if(abs(layer.entrance.radius() - layer.exit.radius()) < MINIMUM_SHELL_SIZE_M) {
+        if(layer.layer_distance < MINIMUM_SHELL_SIZE_M) {
             // Essentially an empty shell from rounding, don't have to do anything
             return;
         }
-        double source_factor = 1-exp(-shell_od.od);
 
-        // TODO: Linearization
+        auto& interpolator = this->m_los_source_weights[losidx][layeridx];
+
+        // Start by calculating ssa at the source point
+        double omega = 0;
+        for(int i = 0; i < interpolator.size(); ++i) {
+            auto& index_weight = interpolator[i];
+            omega += this->m_atmosphere->storage().ssa(index_weight.first, wavelidx) * index_weight.second;
+        }
+
+        double source_factor = (1-shell_od.exp_minus_od);
 
         for(int s = 0; s < NSTOKES; ++s) {
-            source.value(s) += source_factor * ((*m_source_interpolator_view)[losidx][layeridx][s].dot(m_diffuse_storage->source(threadidx)[s].value));
-        }
-    }
+            // Need some temporaries
+            double source_value = (*m_source_interpolator_view)[losidx][layeridx][s].dot(m_diffuse_storage->linear_source(threadidx).value);
 
+            source.value(s) += omega * source_factor * source_value;
 
-    template<int NSTOKES, int CNSTR>
-    DOSourceInterpolatedPostProcessingView<NSTOKES, CNSTR>::DOSourceInterpolatedPostProcessingView(
-            const sasktran_disco::VectorDim2<std::array<Eigen::SparseVector<double>, NSTOKES>> &interpolator,
-            const DOSourceDiffuseStorage<NSTOKES, CNSTR> &source_storage) : m_source_interpolator(interpolator), m_diffuse_storage(source_storage) {
+            if(m_atmosphere->num_deriv() > 0) {
+                // Now we need dJ/dthickness
+                for(auto it = shell_od.deriv_iter; it; ++it) {
+                    source.deriv(s, it.index()) += it.value() * (1 - source_factor) * source_value * omega;
+                }
 
-    }
+                // And dJ/dssa
+                for(auto& ele : interpolator) {
+                    source.deriv(s, m_atmosphere->ssa_deriv_start_index() + ele.first) += ele.second * source_factor * source_value;
+                }
 
-    template<int NSTOKES, int CNSTR>
-    void
-    DOSourceInterpolatedPostProcessingView<NSTOKES, CNSTR>::integrated_source(int wavelidx, int losidx, int layeridx,
-                                                                              int threadidx,
-                                                                              const sasktran2::raytracing::SphericalLayer &layer,
-                                                                              const sasktran2::SparseODDualView &shell_od,
-                                                                              sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES> &source) const {
-        int m = 0; // azi order
-
-        auto azi_seq = Eigen::seq(m*m_diffuse_storage.num_azi_terms(), (m+1)*m_diffuse_storage.num_azi_terms()-1);
-
-        if(abs(layer.entrance.radius() - layer.exit.radius()) < MINIMUM_SHELL_SIZE_M) {
-            // Essentially an empty shell from rounding, don't have to do anything
-            return;
-        }
-        double source_factor = 1-exp(-shell_od.od);
-
-        // TODO: Linearization?
-
-        for(int s = 0; s < NSTOKES; ++s) {
-            source.value(s) += source_factor * ((m_source_interpolator)[losidx][layeridx][s].dot(m_diffuse_storage.source(threadidx)[s].value(azi_seq)));
-            source.value(s) += source_factor * ((m_source_interpolator)[losidx][layeridx][s].dot(m_diffuse_storage.singlescatter_source(threadidx)[s].value(azi_seq)));
+                if(this->m_config->wf_precision() == sasktran2::Config::WeightingFunctionPrecision::full) {
+                    // The derivatives are omega * source_factor * (interpolator @ source_deriv_storage)
+                    // This seems to be the fastest way to do the calculation
+                    for(auto it = Eigen::SparseVector<double>::InnerIterator((*m_source_interpolator_view)[losidx][layeridx][s]); it; ++it) {
+                        source.deriv(s, Eigen::all) += omega * source_factor * it.value() * m_diffuse_storage->linear_source(threadidx).deriv(it.index(), Eigen::all);
+                    }
+                }
+            }
         }
     }
 
     SASKTRAN_DISCO_INSTANTIATE_TEMPLATE(DOSourceInterpolatedPostProcessing);
-
-    SASKTRAN_DISCO_INSTANTIATE_TEMPLATE(DOSourceInterpolatedPostProcessingView);
 }

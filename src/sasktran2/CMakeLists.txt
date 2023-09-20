@@ -4,7 +4,8 @@ add_library(sasktran2BuildProperties INTERFACE)
 
 # Set the include directories
 target_include_directories(sasktran2BuildProperties INTERFACE
-		${CMAKE_SOURCE_DIR}/include)
+		$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+		$<INSTALL_INTERFACE:include>)
 
 # Add sub libraries
 add_library(sasktran2 
@@ -17,6 +18,7 @@ add_library(sasktran2
 
 		    unitsphere/lebedev_autogen.cpp
 		    unitsphere/lebedev.cpp
+		    unitsphere/unitsphere_ground.cpp
 
 			grids/grid.cpp
 			grids/source_location_interpolator.cpp
@@ -32,6 +34,7 @@ add_library(sasktran2
 			geometry/geometry1d.cpp
 			viewinggeometry/tangentaltitude.cpp
 		    viewinggeometry/groundviewing.cpp
+		    viewinggeometry/tangentaltitudesolar.cpp
 			raytracing/spherical_shell.cpp
 			raytracing/plane_parallel.cpp
 		    solar/solartransmissionexact.cpp
@@ -64,19 +67,49 @@ add_library(sasktran2
 			sktran_disco/sktran_do_surface.cpp
 			sktran_disco/sktran_do_testing.cpp
 			sktran_disco/sktran_do_types.cpp
-		sktran_disco/source_term/do_source_legendrestorage.cpp
-		sktran_disco/source_term/do_source_diffuse_storage.cpp
-        sktran_disco/source_term/do_source.cpp
-		sktran_disco/source_term/do_source_exact_pp.cpp
-		sktran_disco/source_term/do_source_interpolated_pp.cpp
-		sktran_disco/source_term/do_source_spherical_corrected.cpp
-		sktran_disco/sktran_do_dll_expose.cpp)
+		    sktran_disco/sktran_do_postprocessing.cpp
+			sktran_disco/source_term/do_source_legendrestorage.cpp
+			sktran_disco/source_term/do_source_diffuse_storage.cpp
+        	sktran_disco/source_term/do_source.cpp
+			sktran_disco/source_term/do_source_interpolated_pp.cpp
+			sktran_disco/sktran_do_dll_expose.cpp)
+
+
+# Doxygen document build
+find_package(Doxygen)
+if (DOXYGEN_FOUND)
+	if (BUILD_DOXYGEN)
+		# set input and output files
+		set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/../../docs/doxygen/Doxyfile.in)
+		set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+
+		# request to configure the file
+		configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+		message("Doxygen build started")
+
+		# note the option ALL which allows to build the docs together with the application
+		add_custom_target( doc_doxygen ALL
+				COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+				WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+				COMMENT "Generating API documentation with Doxygen"
+				VERBATIM )
+	endif()
+else()
+	message("Doxygen need to be installed to generate the doxygen documentation")
+endif()
+
 
 target_link_libraries(sasktran2 PUBLIC sasktran2BuildProperties sasktranBuildProperties)
 
 include(CTest)
 add_subdirectory(tests)
 
+install (TARGETS sasktran2BuildProperties
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
 
-# On install, copy sasktran2/include directory to install_directory/include
-install (DIRECTORY ${CMAKE_SOURCE_DIR}/include DESTINATION ${INCLUDE_INSTALL_DIR}/sasktran2)
+install (TARGETS sasktran2
+		EXPORT ${EXPORT_NAME}
+		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
+		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})

@@ -5,6 +5,7 @@
 namespace sasktran2 {
     enum dualstorage {
         dense,
+        denseRowMajor,
         sparse,
         sparseview
     };
@@ -31,8 +32,10 @@ namespace sasktran2 {
 	class Dual {
 	private:
         using DerivStorage = typename std::conditional<DerivStorageE==dualstorage::dense,
-                Eigen::Matrix<T, CSIZE, -1>, typename std::conditional<DerivStorageE==dualstorage::sparse,
-                Eigen::SparseMatrix<T>, Eigen::SparseMatrix<T>>::type>::type;
+                Eigen::Matrix<T, CSIZE, -1>, typename std::conditional<DerivStorageE==dualstorage::denseRowMajor,
+                Eigen::Matrix<T, CSIZE, -1, Eigen::RowMajor>,
+                typename std::conditional<DerivStorageE==dualstorage::sparse,
+                Eigen::SparseMatrix<T>, Eigen::SparseMatrix<T>>::type>::type>::type;
 
 	public:
         Eigen::Vector<T, CSIZE> value; /**< values */
@@ -138,6 +141,7 @@ namespace sasktran2 {
      */
     struct SparseODDualView {
         double od; /**< Optical depth */
+        double exp_minus_od; /**< exp(-od) */
         Eigen::SparseMatrix<double, Eigen::RowMajor>::InnerIterator deriv_iter; /**< Iterator to a row of a sparse matrix that defines the derivatives of od */
 
         /**
@@ -147,9 +151,10 @@ namespace sasktran2 {
          * @param col The column of the full derivative matrix that this od value applies to
          */
         SparseODDualView(double in_od,
+                         double exp_minus_od,
                          const Eigen::SparseMatrix<double, Eigen::RowMajor>& deriv_matrix,
                          int col
-                         ) : od(in_od), deriv_iter(deriv_matrix, col) {};
+                         ) : od(in_od), exp_minus_od(exp_minus_od), deriv_iter(deriv_matrix, col) {};
     };
 
 }

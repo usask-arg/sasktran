@@ -132,6 +132,7 @@ void nxGeodetic::FromGeodetic( double latitude, double longitude, double aHeight
 
    double fm1  = (1.0-m_Ref);
    double fm12 =  fm1*fm1;
+
    double C    = 1.0/sqrt( cosphi*cosphi + fm12*sinphi*sinphi );
    double S    =  fm12*C;
    double P    = (m_ReA*C+aHeight)*cosphi;

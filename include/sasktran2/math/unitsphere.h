@@ -5,6 +5,9 @@
 
 
 namespace sasktran2::math {
+    /** Base interface class for UnitSpheres inside Sasktran2
+     *
+     */
     class UnitSphere {
     private:
     public:
@@ -20,6 +23,33 @@ namespace sasktran2::math {
                                  std::vector<std::pair<int, double>>& index_weights,
                                  int& num_interp
                                  ) const = 0;
+    };
+
+    /**
+     *
+     */
+    class UnitSphereGround : public UnitSphere {
+    private:
+        std::unique_ptr<const UnitSphere> m_full_sphere;
+        const Eigen::Vector3d m_location;
+
+        std::vector<int> m_contributing_map;
+        std::vector<int> m_reverse_contributing_map;
+        std::vector<bool> m_is_full_sphere_looking_up;
+
+    public:
+        UnitSphereGround(std::unique_ptr<const UnitSphere>&& sphere, const Eigen::Vector3d location);
+
+        int num_points() const override;
+
+        Eigen::Vector3d get_quad_position(int index) const override;
+
+        double quadrature_weight(int i) const override;
+
+        void interpolate(const Eigen::Vector3d& direction,
+                                 std::vector<std::pair<int, double>>& index_weights,
+                                 int& num_interp
+        ) const override;
     };
 
     /**

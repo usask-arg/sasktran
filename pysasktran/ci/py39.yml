@@ -1,4 +1,6 @@
 name: py39_test
+channels:
+  - conda-forge
 dependencies:
   - python=3.9
   - numpy
@@ -7,5 +9,7 @@ dependencies:
   - netcdf4
   - pip
   - scipy
+  - nomkl
   - pip:
     - pytest-cov
+    - zenodo_get

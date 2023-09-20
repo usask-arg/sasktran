@@ -133,23 +133,34 @@ using namespace::nxmath;
 /*---------------------------------------------------------------------------*/
 nxVector nxGeodetic::FromTangentPointLocation( const nxVector& obs, const nxVector& elluser )
 {
+    const int numiter = 5;
+
 	nxVector	loc; 
 	nxVector	ell;
 	// Stretch coordinates along the z-direction
+
+    double f = m_Ref;
+
 	ell = elluser.UnitVector();
-	double transformFactor = 1.0 / (1.0 - m_Ref); 
-	nxVector obsTransf(obs.X(), obs.Y(), obs.Z()*transformFactor);
-	nxVector ellTransf(ell.X(), ell.Y(), ell.Z()*transformFactor);
 
-	// The radius is minimized at distance dot(look,obs) along the look direction
-	double s = -ellTransf.Dot(obsTransf) / ellTransf.Dot(ellTransf);
+    for(int i = 0; i < numiter; ++i) {
+        double transformFactor = 1.0 / (1.0 - f);
+        nxVector obsTransf(obs.X(), obs.Y(), obs.Z()*transformFactor);
+        nxVector ellTransf(ell.X(), ell.Y(), ell.Z()*transformFactor);
 
-	// Set point, transforming back to ellipsoid
-	loc = obs + s*ell;
+        // The radius is minimized at distance dot(look,obs) along the look direction
+        double s = -ellTransf.Dot(obsTransf) / ellTransf.Dot(ellTransf);
 
-	// Set as geodetic location, return to caller
-	FromGeocentricVector( loc );
-	return loc; 
+        // Set point, transforming back to ellipsoid
+        loc = obs + s*ell;
+
+        // Set as geodetic location, return to caller
+        FromGeocentricVector( loc );
+
+        f = m_Ref * (m_ReA / (m_ReA + m_height));
+    }
+
+    return loc;
 }
 
 

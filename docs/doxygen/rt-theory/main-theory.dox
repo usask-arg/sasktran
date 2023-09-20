@@ -1,0 +1,80 @@
+/*! \page rt-theory Radiative Transfer Theory
+
+    Radiative transfer theory generally describes the propagation of radiation within a given medium.
+    Typically we refer to radiation by a quantity \f$I_{\lambda}(\mathbf{r}, \Omega)\f$  known as the spectral radiance at a given
+    location \f$\mathbf{r}\f$, direction \f$\Omega\f$, and wavelength, \f$\lambda\f$.  The spectral radiance
+    has SI units of,
+
+    \f{equation}{\label{eq:rt_si_units}
+        [I_\lambda] = \frac{W}{sr \cdot m^{-2} \cdot nm},
+    \f}
+
+    but this is commonly written as
+
+    \f{equation}{\label{eq:rt_counting_units}
+        [I_\lambda] = \frac{photons}{s \cdot sr \cdot cm^{-2} \cdot nm},
+    \f}
+
+    to be a quantity more easily related to how a counting detector would measure spectral radiance.
+    Note that radiance specified in this form is not simply a scaling of the previous form since the energy per photon changes as a function of wavelength.
+    In the context of atmospheric radiative transfer, often the spectral dependence is implicity assumed and spectral radiance is simply called radiance.
+    The wavelength subscript is then dropped for brevity.
+
+    In general it is not possible to fully describe the state of radiation by the radiance, or intensity, alone and it is required to include information on the polarization state.
+    There are multiple ways to parameterize the state of polarization, but the most common in atmospheric radiative transfer is that of the Stokes vector,
+
+    \f{equation}{\label{eq:stokes}
+        \mathbf{I} = \begin{pmatrix} I \\ Q \\ U \\ V \end{pmatrix},
+    \f}
+
+    where the four Stokes parameters are defined in terms of the electric field,
+
+    \f{align}{
+    I &= \overline{E_\theta E^*_\theta} + \overline{E_\phi E^*_\phi} \\
+    Q &= \overline{E_\theta E^*_\theta} - \overline{E_\phi E^*_\phi} \\
+    U &= -2 \text{Re}[\overline{E_\theta E^*_\phi}] \\
+    V &= 2 \text{Im}[\overline{E_\theta E^*_\phi}] \\
+    \f}
+
+    where \f$E_\theta\f$ and \f$E_\phi\f$ are the parallel and perpindicular components of the electric field in a given reference plane.
+    Various definitions of the reference plane exist, and care has to be taken when comparing Stokes vector elements from different sources.
+    However, generally \f$I\f$ is the intensity, \f$Q,U\f$ describe the linear polarization state, and \f$V\f$ is the circular polarization state.
+
+
+    The fundamental equation describing propagation and transport of radiation is, in integral form,
+
+    \f{equation}{\label{eq:rt}
+
+    \mathbf{I}(\mathbf{r}, \Omega) = \mathbf{I}(\mathbf{r}_\text{end}, \Omega) e^{-\tau(\mathbf{r}_\text{end}, \mathbf{r})} + \int_{\mathbf{r}_{end}}^{\mathbf{r}} k(s) J(s, \Omega(s)) e^{-\tau(s, \mathbf{r})} ds,
+
+    \f}
+
+    where a path is implicitly defined from the initial location and direction (\f$\mathbf{r}, \Omega\f$) that has an end-point \f$\mathbf{r}_\text{end}\f$, \f$s\f$ is a distance along that path that implicitly defines a
+    location, with \f$s=0\f$ corresponding to \f$\mathbf{r}\f$, \f$J\f$ is the cumulative source of radiation, and \f$k\f$ is a quantity known as the extinction.
+    The functional \f$\tau\f$ is defined as,
+
+    \f{equation}{\label{eq:od}
+
+    \tau(\mathbf{r}_1, \mathbf{r}_2) = \int_{\mathbf{r}_1}^{\mathbf{r}_2} k(s) ds,
+
+    \f}
+
+    and is known as the optical depth between two points, here we assume \f$s>0\f$ so the optical depth is always a positive quantity.
+    The radiative transfer equation essentially says that to find the radiance at a given point and direction, we start by tracing a ray from that point.
+    The radiance is then the radiance at the end of the ray, attenuated back, plus all of the sources along the ray, also attenuated back.
+
+    \section rt-sources Source Terms
+    Once the source terms, \f$J\f$ are known, the radiance can be calculated through a line integral.
+    Typically the challenging part of radiative transfer modelling is determining the source terms.
+    In atmospheric radiative transfer, the primary source terms are scattering and thermal emissions.
+    Scattering is dominant at shorter wavelengths, while thermal emissions take over at longer wavelength.
+
+
+    \subsection rt-sources-scattering Scattering
+
+
+
+    \subpage rt-disco
+
+
+ */

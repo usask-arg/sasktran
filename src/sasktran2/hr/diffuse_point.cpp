@@ -42,8 +42,8 @@ namespace sasktran2::hr {
         int negation;
 
         // Incoming ray is opposite the propagation direction, outgoing ray is in the direction of propagation
-
         math::stokes_scattering_factors(-1*incoming_ray, outgoing_ray, theta, C1, C2, S1, S2, negation);
+
 
         // We have 4 greek coefficients (a1, a2, a3, b1), and we use the expansion (sum over legendre poly assumed)
         // P11 = a1 d_{0, 0}
@@ -85,7 +85,8 @@ namespace sasktran2::hr {
         // Note that b1 is assumed to be for the "generalized spherical functions" and so it picks up a minus
         // sign when we use the wigner function instead
 
-        scat_mat[0].block<3, 3>(start_row, start_col)(0, 0) += d00.d(theta, legendre_idx);
+        // 0, 0 component
+        scat_mat[0].block<3, 3>(start_row, start_col)(0, 0) = d00.d(theta, legendre_idx);
 
         // 1, 0 component
         scat_mat[3].block<3, 3>(start_row, start_col)(1, 0) = -C2 * d02.d(theta, legendre_idx);
@@ -171,6 +172,7 @@ namespace sasktran2::hr {
         phase_matrix.setZero();
 
         // Interpolate legendre coefficient to the location we are at
+        // TODO: Delta scaling
         for(int l = 0; l < m_legendre_scat_mats.size(); ++l) {
             double leg_coeff = 0.0;
 
@@ -191,6 +193,7 @@ namespace sasktran2::hr {
         phase_matrix.setZero();
 
         // Interpolate legendre coefficient to the location we are at
+        // TODO: Delta scaling
         for(int l = 0; l < m_legendre_scat_mats.size(); ++l) {
             std::array<double, 4> leg_coeff({0, 0, 0, 0});
 
@@ -198,11 +201,13 @@ namespace sasktran2::hr {
                 for(int i = 0; i < 4; ++i) {
                     leg_coeff[i] += ele.second * (phase.storage()(l*4 + i, ele.first));
 
+                    #ifdef SASKTRAN_DEBUG_ASSERTS
                     if(leg_coeff[i] != leg_coeff[i]) {
                         BOOST_LOG_TRIVIAL(error) << l << " " << i << " " << ele.second << " " << ele.first << " " << (phase.storage()(l*4 + i, ele.first));
                         BOOST_LOG_TRIVIAL(error) << phase.storage()(Eigen::all, ele.first);
 
                     }
+                    #endif
                 }
             }
             for(int i = 0; i < 4; ++i) {
@@ -210,6 +215,33 @@ namespace sasktran2::hr {
             }
         }
 
+    }
+
+    template<int NSTOKES>
+    void IncomingOutgoingSpherePair<NSTOKES>::calculate_ground_scattering_matrix(
+            const sasktran2::atmosphere::Surface &surface, const std::vector<std::pair<int, double>> &index_weights,
+            const sasktran2::Location& loc,
+            int wavelidx, double *phase_storage_location) const {
+        Eigen::Map<Eigen::MatrixXd> phase_matrix(phase_storage_location, m_legendre_scat_mats[0][0].rows(), m_legendre_scat_mats[0][0].cols());
+
+        // TODO: update for BRDF
+
+        double albedo = surface.albedo()[wavelidx];
+
+        // scattering matrix elements are albedo/pi * cos(theta),
+        // but quadrature is sut up for 4pi normalization so we multiply this by 4pi
+
+        phase_matrix.setZero();
+
+
+        // right now just lambertian, so only scalar
+        for(int i = 0; i < phase_matrix.cols(); i += NSTOKES) {
+            double cos_theta = loc.cos_zenith_angle(m_incoming_sphere->get_quad_position(i/NSTOKES));
+
+            for(int j = 0; j < phase_matrix.rows(); j += NSTOKES) {
+                phase_matrix(j, i) = 4*albedo * cos_theta * m_incoming_sphere->quadrature_weight(i/NSTOKES);
+            }
+        }
     }
 
     template<int NSTOKES>

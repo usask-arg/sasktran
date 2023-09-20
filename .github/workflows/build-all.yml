@@ -25,6 +25,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
       - run: git config --global --add safe.directory /__w/sasktran/sasktran
       - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DCMAKE_PREFIX_PATH=/usr/local/include/openblas
       - run: cmake --build build --config Release --target install -j 2
@@ -87,7 +89,7 @@ jobs:
         run: |
           python -m pip install -r pysasktran/requirements.txt
           python -m pip install sasktran --no-index -f wheelhouse/
-          python -m pip install pytest xarray scipy
+          python -m pip install pytest xarray scipy zenodo_get netcdf4
       
       - name: Import SASKTRAN
         run: |
@@ -185,6 +187,8 @@ jobs:
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Get 10.9 SDK
         run: |
@@ -315,6 +319,8 @@ jobs:
 
       - name: Checkout repository
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
         env:
@@ -361,7 +367,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py38]
+        py_version: [py38, py39, py310, py311]
 
     steps:
       - name: Checkout repository

@@ -82,6 +82,10 @@ target_link_libraries(sasktranBuildProperties INTERFACE
         Boost::thread
         )
 
+if(WIN32)
+target_compile_definitions(sasktranBuildProperties INTERFACE BOOST_USE_WINAPI_VERSION=BOOST_WINAPI_VERSION_WIN7)
+endif()
+
 # -------- LAPACK FINDING -----------
 # We support multiple blas vendors, but these can require some funny options
 set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
@@ -94,12 +98,15 @@ if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
 elseif(SKTRAN_BLAS_VENDOR MATCHES "Apple")
     set(BLA_STATIC TRUE)
     set(BLA_SIZEOF_INTEGER 4)
-    target_include_directories(sasktranBuildProperties INTERFACE /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX12.3.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers)
+    target_include_directories(sasktranBuildProperties INTERFACE /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/System/Library/Frameworks/Accelerate.framework/Frameworks/vecLib.framework/Headers)
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_ACCELERATE)
+    target_compile_definitions(sasktranBuildProperties INTERFACE ACCELERATE_NEW_LAPACK=1)
+    target_compile_definitions(sasktranBuildProperties INTERFACE EIGEN_USE_BLAS)
 else()
     # have to set this on unix even when using static openblas because of a cmake fortran bug
     set(BLA_STATIC FALSE)
     set(BLA_SIZEOF_INTEGER 4)
+    target_compile_definitions(sasktranBuildProperties INTERFACE EIGEN_USE_BLAS)
 endif()
 set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
 set(CMAKE_FIND_LIBRARY_PREFIXES "" lib)  # openblas include a "lib" prefix in it's names
@@ -128,10 +135,15 @@ endif()
 
 # -------- END LAPACK FINDING -------
 
+message(STATUS "Lapack Configuration Complete")
+
+
 install (TARGETS sasktranBuildProperties
         EXPORT ${EXPORT_NAME}
         LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
         INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
+
+
 
 add_subdirectory (src/sasktran2)
 add_subdirectory (src/core)

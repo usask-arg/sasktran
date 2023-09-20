@@ -10,9 +10,8 @@ build:
   binary_relocation: true
   script:
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DPythonEnvironments="current" -DCMAKE_BUILD_TYPE=Release # [not win]
-    - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DCMAKE_BUILD_TYPE=Release # [win]
-    - cmake --build build_conda --config Release -j
-    - pip install sasktran --no-deps -f wheelhouse/
+    - cmake ${CMAKE_ARGS}  -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DCMAKE_BUILD_TYPE=Release -DCMAKE_VERBOSE_MAKEFILE:BOOL=ON # [win]
+    - cmake --build build_conda --config Release
 
 requirements:
   build:
@@ -39,10 +38,25 @@ requirements:
     - libnetcdf
     - hdf5
     - yaml-cpp
-    - openblas
+    - libopenblas
     - zlib
     - python
+    - pyyaml
+    - appdirs
+    - boost-cpp
+    - urllib3
+    - xarray
+    - llvm-openmp # [mac]
 
+
+test:
+  requires:
+    - netcdf4
+    - pytest
+    - scipy
+    - zenodo_get
+  commands:
+    - pytest --pyargs sasktran
 
 about:
   home: http://www.example.com

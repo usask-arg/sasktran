@@ -109,6 +109,55 @@ class ISKEngine_Stub_HR : public ISKEngine_Stub
 };
 
 
+class ISKEngine_Stub_ME : public ISKEngine_Stub
+{
+private:
+    bool m_geometry_is_configured;
+    int m_nstokes;
+    std::vector<double> m_wavelengths;
+    Eigen::VectorXd m_altitude_grid;
+    nxGeodetic m_geodetic;
+
+    SKTRAN_LineOfSightArray_V21	m_linesofsight;
+    std::unique_ptr<Sasktran2Interface> m_engine;
+    std::unique_ptr<sasktran2::viewinggeometry::ViewingGeometryContainer> m_viewing_rays;
+    std::unique_ptr<sasktran2::Geometry1D> m_geometry;
+    sasktran2::Config m_config;
+    sktran_me::ReferencePointEstimator m_refpoint_estimator;
+    sktran_me::GeometryConstructor m_geometry_constructor;
+    sktran_me::AtmosphereInterface m_atmosphere_interface;
+    sktran_me::WFHandler m_wfhandler;
+
+    std::unique_ptr<sktran_me::AtmosphereConstructorBase> m_atmosphere_constructor;
+
+    std::unique_ptr<nxVector> m_manual_sun;
+
+    bool									MakeScalarSetFunctions();
+    bool									MakeVectorSetFunctions();
+    bool									MakeObjectSetFunctions();
+    bool									MakeVectorGetFunctions();
+    bool									MakeScalarGetFunctions();
+    bool									MakeStringSetFunctions();
+
+
+public:
+	ISKEngine_Stub_ME();
+	virtual 			   ~ISKEngine_Stub_ME() {};
+	virtual nxUnknown* RawObjectPointer() { return nullptr; } // engines cannot be accessed
+	virtual bool			AddLineOfSight(double mjd, const nxVector& observer, const nxVector& lookvector, int* losindex) override;
+	virtual bool			AddSpecies(const CLIMATOLOGY_HANDLE& species, ISKClimatology_Stub* climatology, ISKOpticalProperty_Stub* opticalproperty) override;
+	virtual bool			AddEmission(const EMISSION_HANDLE& species, ISKEmission_Stub* emission) override;
+	virtual bool			SetAtmosphericState(ISKClimatology_Stub* climatology) override;
+	virtual bool			SetAlbedo(double albedo) override;
+	virtual bool			SetBRDF(ISKBrdf_Stub* brdf) override;
+	virtual bool			SetPolarizationMode(int polarizationmode) override;
+	virtual bool			SetWavelengths(const double* wavelen, int numwavelen) override;
+	virtual bool			InitializeModel() override;
+	virtual bool			CalculateRadiance(const double** radiance, int* numwavelens, int* numlinesofsight) override;
+	virtual bool			CalculateStokesVector(const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight) override;
+	virtual bool			GetWeightingFunctions(const double** wf, int* numwavel, int* numlinesofsight, int* numwf) override;
+};
+
 
 /*-----------------------------------------------------------------------------
  *					ISKEngine_Stub_MC		2014-2-8*/

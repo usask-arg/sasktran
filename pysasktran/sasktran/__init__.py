@@ -1,3 +1,4 @@
+import sasktran.dist_utils
 from .config import update_registry_from_config
 from .geometry import Geometry, VerticalImage, NadirGeometry
 from .atmosphere import Atmosphere
@@ -20,10 +21,11 @@ from .aband.model import ABandEmission
 from .mie import Mie, MieWiscombe
 from .tir.engine import EngineTIR
 from .disco.engine import EngineDO
+from .co.engine import EngineCO
 
 # Utility classes overtop of sasktranif objects
 from .lineofsight import LineOfSight
-from .species import Species, SpeciesAerosol, SpeciesAerosolGloSSAC, SpeciesBaumIceCloud
+from .species import Species, SpeciesAerosol, SpeciesAerosolGloSSAC, SpeciesBaumIceCloud, SpeciesGaussianHeight
 from .stokesvector import StokesVector
 
 from .handles import standard_handles

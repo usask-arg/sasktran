@@ -3,17 +3,42 @@
 
 
 namespace sasktran2 {
-    Coordinates::Coordinates(double cos_sza, double saa, double earth_radius, geometrytype geotype) :
+    Coordinates::Coordinates(double cos_sza, double saa, double earth_radius, geometrytype geotype, bool force_sun_z) :
     m_geotype(geotype),
     m_earth_radius(earth_radius){
-        // Create the default x,y,z local coordinates
-        m_x_unit << 1, 0, 0;
-        m_y_unit << 0, 1, 0;
-        m_z_unit << 0, 0, 1;
 
-        Eigen::Vector3d sun_horiz = cos(saa) * m_x_unit + sin(saa) * m_y_unit;
+        if(!force_sun_z) {
+            // Create the default x,y,z local coordinates
+            m_x_unit << 1, 0, 0;
+            m_y_unit << 0, 1, 0;
+            m_z_unit << 0, 0, 1;
 
-        m_sun_unit = cos_sza * m_z_unit + sqrt(1 - cos_sza*cos_sza) * sun_horiz;
+            Eigen::Vector3d sun_horiz = cos(saa) * m_x_unit + sin(saa) * m_y_unit;
+
+            m_sun_unit = cos_sza * m_z_unit + sqrt(1 - cos_sza*cos_sza) * sun_horiz;
+        } else {
+            // We are forcing the sun unit vector to be z
+            m_sun_unit << 0, 0, 1;
+
+            // And the reference point unit vector (m_z_unit) then must be
+            m_z_unit << sqrt(1 - cos_sza * cos_sza), 0, cos_sza;
+            // y will be unchanged
+            m_y_unit << 0, 1, 0;
+
+            m_x_unit = m_y_unit.cross(m_z_unit);
+        }
+
+    }
+
+    Coordinates::Coordinates(Eigen::Vector3d ref_point_unit, Eigen::Vector3d ref_plane_unit, Eigen::Vector3d sun_unit,
+                             double earth_radius, geometrytype geotype) :
+                             m_z_unit(ref_point_unit),
+                             m_x_unit(ref_plane_unit),
+                             m_y_unit(ref_point_unit.cross(ref_plane_unit).normalized()),
+                             m_sun_unit(sun_unit),
+                             m_geotype(geotype),
+                             m_earth_radius(earth_radius) {
+
     }
 
     Eigen::Vector3d Coordinates::unit_vector_from_angles(double theta, double phi) const {

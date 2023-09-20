@@ -9,6 +9,7 @@ add_executable(sasktran2_tests
     raytracing/test_spherical_shell.cpp
     raytracing/test_plane_parallel.cpp
     engine/test_engine_basic.cpp
+    engine/wf/test_wf_singlescatter_scalar.cpp
 
     engine/hr/test_hr_basic.cpp
 
@@ -19,7 +20,11 @@ add_executable(sasktran2_tests
     sktran_disco/legacy/test_vector.cpp
 
     sktran_disco/benchmark/bench_lowlevel.cpp
- "engine/benchmark/bench_singlescatter.cpp")
+    engine/benchmark/bench_singlescatter.cpp
+    engine/benchmark/bench_do_wf.cpp
+        engine/benchmark/bench_hr.cpp
+        engine/benchmark/bench_occ.cpp
+        )
 
 # Some special logic to support both CATCH2 version 2 and 3 for now
 find_package(Catch2 2 CONFIG QUIET)

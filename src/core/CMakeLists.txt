@@ -25,7 +25,7 @@ find_package(netCDF REQUIRED CONFIG)
 
 find_package(yaml-cpp CONFIG REQUIRED)
 
-
+message(STATUS "Looking for HDF5")
 # hdf5 is annoying because sometimes it doesn't bundle the config
 # First try to find config HDF5
 find_package(hdf5 CONFIG)
@@ -44,6 +44,9 @@ else()
         message(ERROR "Could not determine hdf5 target")
     endif()
 endif()
+
+message(STATUS "Found HDF5")
+
 
 target_link_libraries(sasktranCoreBuildProperties INTERFACE yaml-cpp)
 target_link_libraries(sasktranCoreBuildProperties INTERFACE ${netCDF_LIBRARIES})

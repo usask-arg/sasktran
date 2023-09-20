@@ -320,6 +320,8 @@ class UserDefinedScatterConstantHeight(OpticalProperty):
         Legendre coefficients :math:`\beta_{1,l}`.  Shape (n, m).
     lm_b2: np.ndarray
         Legendre coefficients :math:`\beta_{2,l}`.  Shape (n, m).
+    delta_m_order: int
+        Delta-m order to truncaate the optical property by.  None implies no scaling
     """
     def __init__(self,
                  wavelengths: np.array,
@@ -332,32 +334,51 @@ class UserDefinedScatterConstantHeight(OpticalProperty):
                  lm_a4: np.ndarray = None,
                  lm_b1: np.ndarray = None,
                  lm_b2: np.ndarray = None,
+                 delta_m_order: int = None
                  ):
         super().__init__('USERDEFINED_SCATTERCONSTANTHEIGHT')
 
+        if delta_m_order is not None:
+            f = lm_a1[delta_m_order, :] / (2*delta_m_order + 1)
+
+            scaling_subtract = (2*np.array(list(range(delta_m_order))) + 1)[:, np.newaxis] * f[np.newaxis, :]
+            order_truncation = delta_m_order
+        else:
+            f = np.zeros_like(wavelengths)
+            scaling_subtract = np.zeros_like(lm_a1)
+            order_truncation = lm_a1.shape[0]
+
+        total_xs = xs_scat + xs_abs
+        omega = xs_scat / (xs_scat + xs_abs)
+
+        # Apply scaling
+        total_xs_scaled = (1 - omega*f) * total_xs
+        omega_scaled = (1 - f) / (1 - omega*f) * omega
+
         self.skif_object().SetProperty('wavelengths', wavelengths)
-        self.skif_object().SetProperty('xs_scat', xs_scat)
-        self.skif_object().SetProperty('xs_abs', xs_abs)
+        self.skif_object().SetProperty('xs_scat', omega_scaled * total_xs_scaled)
+        self.skif_object().SetProperty('xs_abs', (1-omega_scaled) * total_xs)
         if legendre_moments is not None:
             self.skif_object().SetProperty('legendremoments', legendre_moments)
 
         if lm_a1 is not None:
-            self.skif_object().SetProperty('legendremomentsa1', lm_a1)
+            self.skif_object().SetProperty('legendremomentsa1', (lm_a1[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
+        # TODO: Check these polarized scalings
         if lm_a2 is not None:
-            self.skif_object().SetProperty('legendremomentsa2', lm_a2)
+            self.skif_object().SetProperty('legendremomentsa2', (lm_a2[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
         if lm_a3 is not None:
-            self.skif_object().SetProperty('legendremomentsa3', lm_a3)
+            self.skif_object().SetProperty('legendremomentsa3', (lm_a3[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
         if lm_a4 is not None:
-            self.skif_object().SetProperty('legendremomentsa4', lm_a4)
+            self.skif_object().SetProperty('legendremomentsa4', (lm_a4[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
         if lm_b1 is not None:
-            self.skif_object().SetProperty('legendremomentsb1', lm_b1)
+            self.skif_object().SetProperty('legendremomentsb1', (lm_b1[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
         if lm_b2 is not None:
-            self.skif_object().SetProperty('legendremomentsb2', lm_b2)
+            self.skif_object().SetProperty('legendremomentsb2', (lm_b2[:order_truncation] - scaling_subtract) / (1 - f[np.newaxis, :]))
 
 
 class OpticalPropertyConvolved(OpticalProperty):
@@ -653,7 +674,7 @@ class HITRANChemical(OpticalProperty):
 
             # If we are not using the cache, just check if the wavenumber range has changed and if so reset the
             # object
-            if not self._use_cache:
+            if not self._use_cache or kwargs['engine']._name.lower() == 'co':
                 if self._wavenumber_range is None or self._wavenumber_range[0] != min_wavenumber or self._wavenumber_range[1] != max_wavenumber:
                     self._wavenumber_range = new_wavenumber_range
                     self._reset_skif_object()

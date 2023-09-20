@@ -116,20 +116,6 @@ namespace sasktran_disco_lowlevel {
             auto& optical_layer = *optical_layers[thread_id];
             optical_layer.set_optical(i, std::move(brdf), *atmosphere, weightingfunctions);
 
-
-            /*
-            // TODO: Replace reconstruction of layerarray/RTE
-            sasktran_disco::OpticalLayerArray<NSTOKES, CNSTR> optical_layer(persistent_config,
-                                                                              i,
-                                                                              los,
-                                                                              std::move(brdf),
-                                                                              *atmosphere,
-                                                                              weightingfunctions,
-                                                                              geometry_layer,
-                                                                              thread_data);
-            */
-
-
             sasktran_disco::RTESolver<NSTOKES, CNSTR> rte(persistent_config, optical_layer);
 
             for(int m = 0; m < numazimuth; ++m) {

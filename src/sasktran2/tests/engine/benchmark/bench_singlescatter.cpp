@@ -21,14 +21,14 @@ TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
     sasktran2::Geometry1D geo(std::move(coords), std::move(grid));
 
     // Construct the Atmosphere
-    int nwavel = 10;
+    int nwavel = 5000;
     sasktran2::atmosphere::AtmosphereGridStorageFull<1> storage(nwavel, geo.size(), 16);
     sasktran2::atmosphere::Surface surface;
 
     surface.albedo().resize(nwavel);
     surface.albedo().setZero();
 
-    sasktran2::atmosphere::Atmosphere<1> atmo(std::move(storage), std::move(surface), true);
+    sasktran2::atmosphere::Atmosphere<1> atmo(std::move(storage), std::move(surface), false);
 
     std::vector<double> extinction{ 7.07906113e-05, 6.46250950e-05, 5.86431083e-05, 5.29850715e-05,
                                     4.77339013e-05, 4.29288557e-05, 3.85773022e-05, 3.46642865e-05,
@@ -70,13 +70,14 @@ TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
     sasktran2::viewinggeometry::ViewingGeometryContainer viewing_geometry;
     auto& los = viewing_geometry.observer_rays();
 
-    int nlos = 100;
+    int nlos = 300;
     for (int i = 0; i < nlos; ++i) {
         los.emplace_back(std::make_unique<sasktran2::viewinggeometry::TangentAltitude>(10000.0 + i * 500.0, 0, 200000));
     }
 
     // Construct the config
     sasktran2::Config config;
+    config.set_num_do_streams(16);
 
     // Make the engine
     Sasktran2<1> engine(config, &geo, viewing_geometry);
@@ -84,9 +85,9 @@ TEST_CASE("Singlescatterbench", "[sasktran2][engine]") {
     sasktran2::OutputIdealDense<1> output;
 
 
-    BENCHMARK("Test") {
+    //BENCHMARK("Test") {
         engine.calculate_radiance(atmo, output);
-    };
+    //};
 }
 
 #endif

@@ -2,9 +2,6 @@
 #include "modules/sktran_do_deprecated/include/sktran_do.h"
 #include <boost/container/map.hpp>
 
-#ifdef _WIN32
-const double M_PI      = 3.14159265358979323846264338327950288419716939937510582;
-#endif
 
 // Absolute difference between the solar secant and an eigenvalue before a taylor expansion is used in the solution
 #define SKTRAN_DO_GREENS_EPS 1e-4
@@ -651,8 +648,8 @@ namespace sktran_do_detail
 	{
 		return (i == j) ? 1.0 : 0.0;
 	}
-
-	static const double PI = M_PI;
+	
+	static const double PI = EIGEN_PI;
 
 	// Used to efficiently calculate the triple product of vectors of 
 	// legendre polynomials.

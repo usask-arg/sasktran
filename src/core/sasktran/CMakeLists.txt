@@ -164,6 +164,14 @@ set(sasktran_do_src
 		modules/sktran_do_deprecated/sktran_do_types.cpp
 		)
 
+set(sasktran_me_src
+	modules/sktran_me/sktran_me_atmosphere_interface.cpp
+	modules/sktran_me/sktran_me_los_converter.cpp
+	modules/sktran_me/sktran_me_refpoint_estimator.cpp
+	modules/sktran_me/sktran_me_wf_handler.cpp
+	modules/sktran_me/sktran_me_output.cpp
+	)
+
 set(sasktran_core_src
     modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base.cpp
 	modules/sasktranv3_impl/climatologystubs/iskclimatology_stub_base_specifics.cpp
@@ -174,6 +182,7 @@ set(sasktran_core_src
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_occ.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_tir.cpp
 	modules/sasktranv3_impl/enginestubs/iskengine_stub_do.cpp
+	modules/sasktranv3_impl/enginestubs/iskengine_stub_me.cpp
 	modules/sasktranv3_impl/enginestubs/iskgeodetic_stub_std.cpp
 		 "modules/sasktranv3_impl/miestubs/iskmie_stub_wiscombe.cpp")
 
@@ -199,13 +208,15 @@ set(sasktran_test_src
 	Application/TestInstallation/test_o2_o2.cpp 
 	Application/TestInstallation/test_so2.cpp
 	Application/TestInstallation/testdelaunaysphere.cpp 
-	Application/TestInstallation/testscattermatrices.cpp 
+	Application/TestInstallation/testscattermatrices.cpp
+	Application/TestInstallation/test_sktran_me_stub.cpp
 )
 
 # Build the library
-add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src})
+add_library(${SASKTRAN_BASE_NAME} ${sasktran_common_src} ${sasktran_hr_src} ${sasktran_mc_src} ${sasktran_so_src} ${sasktran_occ_src} ${sasktran_tir_src} ${sasktran_do_src} ${sasktran_me_src})
 
 target_link_libraries(${SASKTRAN_BASE_NAME} PUBLIC sasktranCoreBuildProperties)
+target_link_libraries(${SASKTRAN_BASE_NAME} PUBLIC sasktran2)
 
 
 # Set the header files
@@ -228,6 +239,8 @@ target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktranCoreBuildProperties)
 target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktranCoreBuildProperties)
 
 target_link_libraries(${SASKTRAN_CORE_NAME} PUBLIC sasktran2)
+target_link_libraries(${SASKTRAN_STUB_NAME} PUBLIC sasktran2)
+
 
 
 # Set the header files

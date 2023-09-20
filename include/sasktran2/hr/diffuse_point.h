@@ -2,6 +2,7 @@
 
 #include <sasktran2/internal_common.h>
 #include <sasktran2/math/unitsphere.h>
+#include <sasktran2/atmosphere/atmosphere.h>
 #include <sasktran2/atmosphere/grid_storage.h>
 
 namespace sasktran2::hr {
@@ -28,10 +29,16 @@ namespace sasktran2::hr {
                                          const std::vector<std::pair<int, double>>& index_weights,
                                          double* phase_storage_location) const;
 
+        void calculate_ground_scattering_matrix(const sasktran2::atmosphere::Surface& surface,
+                                                const std::vector<std::pair<int, double>>& index_weights,
+                                                const sasktran2::Location& loc,
+                                                int wavelidx,
+                                                double* phase_storage_location
+                                                ) const;
+
         const sasktran2::math::UnitSphere& incoming_sphere() const { return *m_incoming_sphere; }
         const sasktran2::math::UnitSphere& outgoing_sphere() const { return *m_outgoing_sphere; }
     };
-
 
     template <int NSTOKES>
     class DiffusePoint {

@@ -5,6 +5,8 @@ namespace sasktran2::raytracing {
         // Set the ray to 0
         result.reset();
 
+        result.is_straight = true;
+
         // Calculate the tangent point details in a straight geometry
         double rt = ray.observer.radius() * sqrt(1 - ray.cos_viewing()*ray.cos_viewing());
         double tangent_altitude = rt - m_earth_radius;
@@ -139,6 +141,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
     void SphericalShellRayTracer::partial_layer(SphericalLayer& layer, const sasktran2::viewinggeometry::ViewingRay& ray, size_t start_index, ViewingDirection direction, TangentSide side) const {
@@ -165,6 +168,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
     void SphericalShellRayTracer::tangent_layer(SphericalLayer& layer, const sasktran2::viewinggeometry::ViewingRay& ray, size_t upper_index, double tangent_altitude, ViewingDirection direction, TangentSide side) const {
@@ -205,6 +209,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
 
@@ -240,6 +245,7 @@ namespace sasktran2::raytracing {
         layer.average_look_away = ray.look_away;
 
         add_od_quadrature(layer);
+        add_interpolation_weights(layer, m_geometry);
     }
 
 

@@ -24,6 +24,7 @@ sasktran_disco::OpticalLayer<NSTOKES, CNSTR>
         m_triple_product_holder_1(m_layercache.triple_product_holder_2),
         m_triple_product(m_layercache.triple_product),
         m_dual_thickness(m_layercache.dual_thickness),
+        m_dual_ssa(m_layercache.dual_ssa),
         m_average_secant(m_layercache.average_secant),
         m_dual_bt_ceiling(m_layercache.dual_bt_ceiling),
         m_dual_bt_floor(m_layercache.dual_bt_floor) {
@@ -96,6 +97,7 @@ sasktran_disco::OpticalLayer<NSTOKES, CNSTR>
     m_triple_product_holder_1(m_layercache.triple_product_holder_2),
     m_triple_product(m_layercache.triple_product),
     m_dual_thickness(m_layercache.dual_thickness),
+    m_dual_ssa(m_layercache.dual_ssa),
     m_average_secant(m_layercache.average_secant),
     m_dual_bt_ceiling(m_layercache.dual_bt_ceiling),
     m_dual_bt_floor(m_layercache.dual_bt_floor)
@@ -116,10 +118,16 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::configureDerivative() {
 	m_dual_thickness.layer_index = M_INDEX;
 	m_dual_thickness.layer_start = (uint)m_input_derivs.layerStartIndex(M_INDEX);
 
+    m_dual_ssa.resize(m_input_derivs.numDerivativeLayer(M_INDEX));
+    m_dual_ssa.layer_index = M_INDEX;
+    m_dual_ssa.layer_start = (uint)m_input_derivs.layerStartIndex(M_INDEX);
+
 	m_dual_thickness.value = M_OPTICAL_THICKNESS;
+    m_dual_ssa.value = M_SSA;
 	for (uint i = 0; i < m_input_derivs.numDerivativeLayer(M_INDEX); ++i) {
 		m_dual_thickness.deriv(i) = m_input_derivs.layerDerivatives()[m_dual_thickness.layer_start + i].d_optical_depth;
-	}
+        m_dual_ssa.deriv(i) = m_input_derivs.layerDerivatives()[m_dual_ssa.layer_start + i].d_SSA;
+    }
 
     LayerIndex p = index();
     uint numderiv = (uint)m_input_derivs.numDerivativeLayer(p);
@@ -364,8 +372,9 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::integrate_source(AEOrder m, d
         }
     }
 
-    auto& hp = m_postprocessing_cache.hp;
-    auto& hm = m_postprocessing_cache.hm;
+    // could maybe use the full memory somehow? not sure
+    auto& hp = m_postprocessing_cache.hp[0];
+    auto& hm = m_postprocessing_cache.hm[0];
     auto& J = m_postprocessing_cache.J;
 
     auto& Y_plus = m_postprocessing_cache.Y_plus;
@@ -416,9 +425,9 @@ void sasktran_disco::OpticalLayer<NSTOKES, CNSTR>::integrate_source(AEOrder m, d
                                      lpsum_minus_deriv * homog_plus_matrix + lpsum_minus_matrix * homog_plus_deriv;
     }
 
-    auto& Dm = m_postprocessing_cache.Dm;
-    auto& Dp = m_postprocessing_cache.Dp;
-    auto& Eform = m_postprocessing_cache.Eform;
+    auto& Dm = m_postprocessing_cache.Dm[0];
+    auto& Dp = m_postprocessing_cache.Dp[0];
+    auto& Eform = m_postprocessing_cache.Eform[0];
 
     E(mu, x, M_OPTICAL_THICKNESS, transmission, Eform);
 
@@ -596,8 +605,8 @@ void sasktran_disco::OpticalLayer<1, 2>::integrate_source(AEOrder m, double mu, 
         }
     }
 
-    auto& hp = cache.hp;
-    auto& hm = cache.hm;
+    auto& hp = cache.hp[0];
+    auto& hm = cache.hm[0];
     auto& J = cache.J;
 
     auto& Y_plus = cache.Y_plus;
@@ -617,9 +626,9 @@ void sasktran_disco::OpticalLayer<1, 2>::integrate_source(AEOrder m, double mu, 
                               dual_lpsum_plus.value(0) * solution.value.dual_homog_minus().deriv(k,0) + dual_lpsum_minus.value(0) * solution.value.dual_homog_plus().deriv(k, 0);
     }
 
-    auto& Dm = cache.Dm;
-    auto& Dp = cache.Dp;
-    auto& Eform = cache.Eform;
+    auto& Dm = cache.Dm[0];
+    auto& Dp = cache.Dp[0];
+    auto& Eform = cache.Eform[0];
 
     E(mu, x, M_OPTICAL_THICKNESS, transmission, Eform);
 

@@ -26,8 +26,17 @@ namespace sasktran2::grids {
         return coords.solar_coordinate_vector(m_cos_sza_grid.grid()(csz_index), EIGEN_PI, m_altitude_grid.grid()(alt_index));
     }
 
+    Eigen::Vector3d AltitudeSZASourceLocationInterpolator::ground_location(const sasktran2::Coordinates &coords,
+                                                                           int ground_index) const {
+        return coords.solar_coordinate_vector(m_cos_sza_grid.grid()(ground_index), EIGEN_PI, 0);
+    }
+
     int AltitudeSZASourceLocationInterpolator::interior_linear_index(int alt_index, int sza_index) {
         return (int)(alt_index + sza_index * m_altitude_grid.grid().size());
+    }
+
+    int AltitudeSZASourceLocationInterpolator::ground_linear_index(int sza_index) const {
+        return num_interior_points() + sza_index;
     }
 
     void AltitudeSZASourceLocationInterpolator::interior_interpolation_weights(const sasktran2::Coordinates& coords,
@@ -56,6 +65,30 @@ namespace sasktran2::grids {
                 weights[i + j*num_alt_contrib].first = interior_linear_index(alt_index[i], sza_index[j]);
                 weights[i + j*num_alt_contrib].second = sza_weight[j] * alt_weight[i];
             }
+        }
+    }
+
+    void AltitudeSZASourceLocationInterpolator::ground_interpolation_weights(const sasktran2::Coordinates &coords,
+                                                                             const sasktran2::Location &location,
+                                                                             std::vector<std::pair<int, double>> &weights,
+                                                                             int &num_interp) const {
+        std::array<int, 2> sza_index;
+        std::array<double, 2> sza_weight;
+        int num_sza_contrib;
+
+        double cos_sza = coords.solar_angles_at_location(location.position).first;
+
+        m_cos_sza_grid.calculate_interpolation_weights(cos_sza, sza_index, sza_weight, num_sza_contrib);
+
+        num_interp = num_sza_contrib;
+
+        if( weights.size() < num_interp) {
+            weights.resize(num_interp);
+        }
+
+        for(int j = 0; j < num_sza_contrib; ++j) {
+            weights[j].first = ground_linear_index(sza_index[j]);
+            weights[j].second = sza_weight[j];
         }
     }
 }

@@ -9,3 +9,4 @@ build/
 dist/
 .vscode/
 *.ipynb_checkpoints*
+local_scripts

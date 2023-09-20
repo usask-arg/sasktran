@@ -23,6 +23,8 @@ namespace sasktran2 {
         bool on_exact_altitude; /**< OPTIONAL.  True if the location is on an exact grid point of the global altitude grid */
         int lower_alt_index;    /**< OPTIONAL.  the lower altitude index of this point in the global altitude grid.  Set to -1 if not used. */
 
+        std::vector<std::pair<int, double>> interpolation_weights; /**< OPTIONAL.  Interpolation weights and indicies to the global geometry table */
+
         Location() : on_exact_altitude(false), lower_alt_index(-1) {};
 
         /**
@@ -90,12 +92,29 @@ namespace sasktran2 {
          * @param saa Solar azimuth angle in [radians]
          * @param earth_radius Earth radius in [m]
          * @param geotype Type of geometry (spherical or plane parallel) defaults to spherical
+         * @param force_sun_z Set to true to force the sun unit vector to be (0, 0, 1)
          */
         Coordinates(double cos_sza,
                     double saa,
                     double earth_radius,
-                    geometrytype geotype=geometrytype::spherical
+                    geometrytype geotype=geometrytype::spherical,
+                    bool force_sun_z=false
                  );
+
+        /** Constructs the coordinates by manually specifying the unit vectors for the reference point and planes.
+         *
+         * @param ref_point_unit Unit vector to the reference point, becomes m_z
+         * @param ref_plane_unit Unit vector along the reference plane, becomes m_x
+         * @param sun_unit Unit vector towards the sun
+         * @param earth_radius Earth radius in [m]
+         * @param geotype Type of geometry (spherical or plane parallel) defaults to spherical
+         */
+        Coordinates(Eigen::Vector3d ref_point_unit,
+                    Eigen::Vector3d ref_plane_unit,
+                    Eigen::Vector3d sun_unit,
+                    double earth_radius,
+                    geometrytype geotype=geometrytype::spherical
+                    );
 
         /**
          * @return The geometry type (plane parallel, spherical, ellipsoidal) for the coordinate system
@@ -153,6 +172,12 @@ namespace sasktran2 {
          *  @return Pair (cos_sza, saa) with saa in radians
          */
         std::pair<double, double> solar_angles_at_location(const Eigen::Vector3d& location) const;
+
+        /** Calculates the solar zenith angle at the reference point
+         *
+         * @return cosine of solar zenith angle at the reference point
+         */
+        double cos_sza_at_reference() const { return solar_angles_at_location(m_z_unit).first; }
 
         /** Constructs a look vector at a given location with a specified relative azimuth angle to the sun
          *

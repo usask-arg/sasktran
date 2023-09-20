@@ -23,6 +23,14 @@ void Sasktran2<NSTOKES>::construct_source_terms() {
         m_los_source_terms.push_back(m_source_terms[m_source_terms.size() - 1].get());
     }
 
+    if(m_config.single_scatter_source() == sasktran2::Config::SingleScatterSource::solartable) {
+        m_source_terms.emplace_back(
+                std::make_unique<sasktran2::solartransmission::SingleScatterSource<sasktran2::solartransmission::SolarTransmissionTable, NSTOKES>>(*m_geometry, *m_raytracer)
+        );
+
+        m_los_source_terms.push_back(m_source_terms[m_source_terms.size() - 1].get());
+    }
+
     if(m_config.occultation_source() == sasktran2::Config::OccultationSource::standard) {
         m_source_terms.emplace_back(
                 std::make_unique<sasktran2::solartransmission::OccultationSource<NSTOKES>>()
@@ -40,38 +48,19 @@ void Sasktran2<NSTOKES>::construct_source_terms() {
                         std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, 2>>(*m_geometry, *m_raytracer)
                 );
             } else {
-                if(m_config.num_do_spherical_iterations() == 0) {
-                    m_source_terms.emplace_back(
-                            std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                    );
-                } else {
-                    m_source_terms.emplace_back(
-                            std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                    );
-                }
-            }
-        } else {
-            if(m_config.num_do_spherical_iterations() == 0) {
                 m_source_terms.emplace_back(
                         std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
                 );
-            } else {
-                m_source_terms.emplace_back(
-                        std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry, *m_raytracer)
-                );
             }
-        }
-        #else
-        if(m_config.num_do_spherical_iterations() == 0) {
+        } else {
             m_source_terms.emplace_back(
                     std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
             );
-        } else {
-            m_source_terms.emplace_back(
-                    std::make_unique<sasktran2::DOSourceSphericallyCorrected<NSTOKES, -1>>(*m_geometry,
-                                                                                                 *m_raytracer)
-            );
         }
+        #else
+        m_source_terms.emplace_back(
+                std::make_unique<sasktran2::DOSourceInterpolatedPostProcessing<NSTOKES, -1>>(*m_geometry, *m_raytracer)
+        );
 
         #endif
 
@@ -102,6 +91,17 @@ void Sasktran2<NSTOKES>::calculate_geometry() {
     for(int i = 0; i < m_viewing_geometry.observer_rays().size(); ++i) {
         const auto& viewing_ray = m_viewing_geometry.observer_rays()[i];
         sasktran2::viewinggeometry::ViewingRay ray = viewing_ray->construct_ray(m_geometry->coordinates());
+
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(!ray.look_away.allFinite() || !ray.observer.position.allFinite()) {
+                BOOST_LOG_TRIVIAL(error) << "Error constructing LOS ray: " << i;
+
+                BOOST_LOG_TRIVIAL(error) << "ray look: " << ray.look_away;
+                BOOST_LOG_TRIVIAL(error) << "obs: " << ray.observer.position;
+
+                BOOST_LOG_TRIVIAL(error) << "LOS Type: " << typeid(viewing_ray).name();
+            }
+        #endif
 
         m_raytracer->trace_ray(ray, m_traced_rays[i]);
     }

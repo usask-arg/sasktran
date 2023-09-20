@@ -319,7 +319,7 @@ void sktran_do_detail::RTESolver<NSTOKES, CNSTR>::solveHomogeneous(AEOrder m, Op
         // Compute eigensolution
         lapack_int errorcode;
 
-        #ifdef SKTRAN_DO_USE_ACCELERATE
+        #ifdef SKTRAN_USE_ACCELERATE
             Eigen::VectorXd work(N*NSTOKES*4);
             int worksize = N*NSTOKES*4;
             char jobvl = 'N';
@@ -655,7 +655,7 @@ void sktran_do_detail::RTESolver<NSTOKES, CNSTR>::solveBVP(AEOrder m)
         errorcode = la::dgbsv_pentadiagonal(N, 1, mat.data(), b.data(), N);
     }
     else {
-    #ifdef SKTRAN_DO_USE_ACCELERATE
+    #ifdef SKTRAN_USE_ACCELERATE
         int one = 1;
         dgbsv_(&N, &NCD, &NCD, &one, mat.data(), &LDA, ipiv.data(), b.data(), &N, &errorcode);
     #else
@@ -704,7 +704,7 @@ void sktran_do_detail::RTESolver<NSTOKES, CNSTR>::solveBVP(AEOrder m)
     }
     else {
         // Solve using the same LHS as above
-    #ifdef SKTRAN_DO_USE_ACCELERATE
+    #ifdef SKTRAN_USE_ACCELERATE
         char trans = 'N';
         int intnderiv = numDeriv;
         dgbtrs_(&trans, &N, &NCD, &NCD, &intnderiv, mat.data(), &LDA, ipiv.data(), rhs.data(), &N, &errorcode);

@@ -101,6 +101,8 @@ namespace sasktran2::solartransmission {
         std::vector<std::vector<int>> m_phase_index_map;
         std::vector<sasktran2::atmosphere::PhaseInterpolator<NSTOKES, true>> m_phase_interp;
 
+        sasktran2::Dual<double> m_precomputed_sources;
+
         mutable std::vector<std::vector<std::pair<int, double>>> m_thread_index_cache_one;
         mutable std::vector<std::vector<std::pair<int, double>>> m_thread_index_cache_two;
 
@@ -108,6 +110,7 @@ namespace sasktran2::solartransmission {
         mutable std::vector<sasktran2::Dual<double, sasktran2::dualstorage::dense, NSTOKES>> m_end_source_cache;
 
         const Geometry1D& m_geometry;
+        const sasktran2::Config* m_config;
 
         const std::vector<sasktran2::raytracing::TracedRay>* m_los_rays;
 

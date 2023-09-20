@@ -8,25 +8,32 @@ export CXX=$5
 AUDITWHEEL=$6
 
 
-if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
+if [[ -z $CONDA_BUILD_STATE ]]; then
 
-    if [ $PYENV == "current" ]; then 
-        pushd pysasktran
-        python3 setup.py bdist_wheel -d ../wheelhouse
-        popd
+  if [[ -z $IN_MANYLINUX_CONTAINER ]]; then
 
-    else
-        eval "$(conda shell.bash hook)"
-        conda activate $PYENV
+      if [ $PYENV == "current" ]; then
+          pushd pysasktran
+          python3 setup.py bdist_wheel -d ../wheelhouse
+          popd
 
-        pushd pysasktran
-        python3 setup.py bdist_wheel -d ../wheelhouse
-        popd
-        conda deactivate
-    fi
+      else
+          eval "$(conda shell.bash hook)"
+          conda activate $PYENV
+
+          pushd pysasktran
+          python3 setup.py bdist_wheel -d ../wheelhouse
+          popd
+          conda deactivate
+      fi
+  else
+    pushd pysasktran
+    /opt/python/$PYENV/bin/python setup.py bdist_wheel -d ../wheelhouse
+    popd
+  fi
 else
   pushd pysasktran
-  /opt/python/$PYENV/bin/python setup.py bdist_wheel -d ../wheelhouse
+  $PYTHON -m pip install . --no-deps
   popd
 fi
 

@@ -1,4 +1,6 @@
 name: py38_test
+channels:
+  - conda-forge
 dependencies:
   - python=3.8
   - numpy
@@ -7,5 +9,7 @@ dependencies:
   - netcdf4
   - pip
   - scipy
+  - nomkl
   - pip:
     - pytest-cov
+    - zenodo_get

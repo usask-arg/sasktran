@@ -35,7 +35,8 @@ namespace sasktran2 {
                     m_do_los,
                     std::move(brdf),
                     *solver.geometry_layers,
-                    *m_atmosphere
+                    *m_atmosphere,
+                    *m_config
                     );
 
             sasktran_disco::RTESolver<NSTOKES, CNSTR> rte(*solver.persistent_config, optical_layer);
@@ -50,22 +51,11 @@ namespace sasktran2 {
 
     template<int NSTOKES, int CNSTR>
     void DOSource<NSTOKES, CNSTR>::generate_sza_grid() {
-        // Go through all of the los rays and find the maximum and minimum SZA
-        double min_cos_sza = 1;
-        double max_cos_sza = -1;
-
-        for(const auto& ray : *m_los_rays) {
-            for(const auto& layer : ray.layers) {
-                min_cos_sza = std::min(layer.cos_sza_entrance, min_cos_sza);
-                min_cos_sza = std::min(layer.cos_sza_exit, min_cos_sza);
-
-                max_cos_sza = std::max(layer.cos_sza_entrance, max_cos_sza);
-                max_cos_sza = std::max(layer.cos_sza_exit, max_cos_sza);
-            }
-        }
+        // find the min/max SZA from the LOS rays and generate the cos_sza_grid
+        std::pair<double, double> min_max_cos_sza = sasktran2::raytracing::min_max_cos_sza_of_all_rays(*m_los_rays);
 
         int num_sza = m_config->num_do_sza();
-        double ref_cos_sza = m_geometry.coordinates().sun_unit().z();
+        double ref_cos_sza = m_geometry.coordinates().cos_sza_at_reference();
         Eigen::VectorXd sza_grid;
 
         if(num_sza == 1) {
@@ -78,14 +68,44 @@ namespace sasktran2 {
                                                                   sasktran2::grids::outofbounds::extend,
                                                                   sasktran2::grids::interpolation::linear);
         } else {
-            sza_grid = Eigen::ArrayXd::LinSpaced(num_sza, min_cos_sza, max_cos_sza);
+            sza_grid = Eigen::ArrayXd::LinSpaced(num_sza, min_max_cos_sza.first, min_max_cos_sza.second);
 
             m_sza_grid = std::make_unique<sasktran2::grids::Grid>(std::move(sza_grid), sasktran2::grids::gridspacing::constant,
                                                                   sasktran2::grids::outofbounds::extend,
                                                                   sasktran2::grids::interpolation::linear);
         }
+
     }
 
+    template<int NSTOKES, int CNSTR>
+    void DOSource<NSTOKES, CNSTR>::construct_los_location_interpolator(const std::vector<sasktran2::raytracing::TracedRay>& rays) {
+        m_los_source_weights.resize(rays.size());
+
+        std::vector<std::pair<int, double>> temp_location_storage;
+        std::vector<std::pair<int, double>> temp_direction_storage;
+
+        int num_location, num_direction;
+
+        Eigen::Vector3d rotated_los;
+
+        sasktran2::Location temp_location;
+
+        for (int rayidx = 0; rayidx < rays.size(); ++rayidx) {
+            auto &ray_interpolator = m_los_source_weights[rayidx];
+            const auto &ray = rays[rayidx];
+
+            ray_interpolator.resize(ray.layers.size());
+
+            for (int layeridx = 0; layeridx < ray.layers.size(); ++layeridx) {
+                const auto &layer = ray.layers[layeridx];
+
+                temp_location.position = (layer.entrance.position + layer.exit.position) / 2.0;
+
+                m_geometry.assign_interpolation_weights(temp_location, ray_interpolator[layeridx]);
+
+            }
+        }
+    }
 
     template <int NSTOKES, int CNSTR>
     void DOSource<NSTOKES, CNSTR>::initialize_geometry(const std::vector<sasktran2::raytracing::TracedRay> &los_rays) {
@@ -114,6 +134,8 @@ namespace sasktran2 {
             m_thread_storage[thidx].postprocessing_cache.resize(m_geometry.altitude_grid().grid().size() - 1);
             m_thread_storage[thidx].legendre_phase_container.resize(m_config->num_do_streams());
         }
+
+        construct_los_location_interpolator(los_rays);
     }
 
     template <int NSTOKES, int CNSTR>

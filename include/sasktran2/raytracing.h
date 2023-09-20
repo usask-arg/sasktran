@@ -1,5 +1,6 @@
 #pragma once
 #include <sasktran2/internal_common.h>
+#include <sasktran2/math/scattering.h>
 
 #include <sasktran2/geometry.h>
 #include <sasktran2/viewinggeometry.h>
@@ -42,6 +43,9 @@ namespace sasktran2::raytracing {
         double od_quad_start; /**< The OD in the layer is od_quad_start * k_entrance + od_quad_end * k_exit */
         double od_quad_end; /**< The OD in the layer is od_quad_start * k_entrance + od_quad_end * k_exit */
 
+        double od_quad_start_fraction; /**< The fraction the start matters */
+        double od_quad_end_fraction; /**< The fraction the end matters */
+
         double saz_entrance; /**< Relative solar azimuth angle at entrance in radians, unrefracted */
         double saz_exit; /**< Relative solar azimuth angle at exit in radians, unrefracted */
         double cos_sza_entrance; /**< Cosine solar zenith at entrance, unrefracted */
@@ -55,6 +59,7 @@ namespace sasktran2::raytracing {
     struct TracedRay {
         sasktran2::viewinggeometry::ViewingRay observer_and_look; /**< The observer location and look direction */
 
+        bool is_straight; /**< True if the ray is straight, i.e., the look vector does not change along the ray */
         bool ground_is_hit;	/**< True if the ground is hit by the ray */
 
         std::vector<SphericalLayer> layers; /**< Set of traced ray layers, starting from the end of the ray moving towards the observer */
@@ -89,10 +94,11 @@ namespace sasktran2::raytracing {
 
         csz = local_up.dot(sun_unit);
 
-        Eigen::Vector3d los_projected = look_away - local_up * (look_away.dot(local_up));
-        Eigen::Vector3d sun_projceted = sun_unit - local_up * (sun_unit.dot(local_up));
+        Eigen::Vector3d los_projected = (look_away - local_up * (look_away.dot(local_up))).normalized();
+        Eigen::Vector3d sun_projceted = (sun_unit - local_up * (sun_unit.dot(local_up))).normalized();
 
-        double proj = sun_projceted.normalized().dot(los_projected.normalized());
+        /*
+        double proj = sun_projceted.dot(los_projected);
 
         if (proj > 1) {
             proj = 1;
@@ -100,8 +106,17 @@ namespace sasktran2::raytracing {
         else if (proj < -1) {
             proj = -1;
         }
-
+        // TODO: Check this, is this right?
+        
         saa = -1*acos(proj);
+         */
+        
+        // Take sun to by the x axis, then the y axis is up cross sun
+        Eigen::Vector3d y_axis = local_up.cross(sun_projceted);
+
+        // put -1 since these are look away
+        saa = atan2(y_axis.dot(los_projected), sun_projceted.dot(los_projected));
+
     }
 
     /** Populates a layer with the solar parameters
@@ -131,6 +146,11 @@ namespace sasktran2::raytracing {
         );
     }
 
+    inline void add_interpolation_weights(SphericalLayer& layer, const sasktran2::Geometry1D& geometry) {
+        geometry.assign_interpolation_weights(layer.exit, layer.exit.interpolation_weights);
+        geometry.assign_interpolation_weights(layer.entrance, layer.entrance.interpolation_weights);
+    }
+
     /** Populates a layer with the optical depth quadrature parameters
      *
      * @param layer layer to populate
@@ -147,6 +167,9 @@ namespace sasktran2::raytracing {
             // Or we are doing shell interpolation
             layer.od_quad_start = layer.layer_distance / 2 * layer.curvature_factor;
             layer.od_quad_end = layer.layer_distance / 2 * layer.curvature_factor;
+
+            layer.od_quad_start_fraction = 0.5;
+            layer.od_quad_end_fraction = 0.5;
         }
         else {
             double costheta0 = layer.entrance.cos_zenith_angle(layer.average_look_away);
@@ -179,7 +202,19 @@ namespace sasktran2::raytracing {
             }
             layer.od_quad_start = (r1*dt1 - dt2) / dr * layer.curvature_factor;
             layer.od_quad_end = -1 * (r0*dt1 - dt2) / dr * layer.curvature_factor;
+
+            layer.od_quad_start_fraction = layer.od_quad_start / (layer.od_quad_start + layer.od_quad_end);
+            layer.od_quad_end_fraction = layer.od_quad_end / (layer.od_quad_start + layer.od_quad_end);
         }
+
+        #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(std::isnan(layer.od_quad_start) || std::isnan(layer.od_quad_end) || std::isnan(layer.od_quad_end_fraction) || std::isnan(layer.od_quad_end_fraction)) {
+                BOOST_LOG_TRIVIAL(error) << "One of layer quadrature parameters was nan";
+
+                BOOST_LOG_TRIVIAL(error) << "od_quad_start: " << layer.od_quad_start << " od_quad_end: " << layer.od_quad_end;
+                BOOST_LOG_TRIVIAL(error) << "r0: " << r0 << " r1:" << r1 << " look_vector:" << layer.average_look_away;
+            }
+        #endif
     }
 
     /** Takes a list of traced rays and returns the min and max COS sza of any layer in the traced rays.
@@ -406,8 +441,14 @@ namespace sasktran2::raytracing {
                 }
             }
             else {
-                dist_from_tangent = side * direction * sqrt(re*re - rtsq);
+                dist_from_tangent = side * direction * sqrt(abs(re*re - rtsq));
             }
+
+            #ifdef SASKTRAN_DEBUG_ASSERTS
+            if(std::isnan(tangent_distance) || std::isnan(dist_from_tangent)) {
+                BOOST_LOG_TRIVIAL(error) << "Error computing tangent distances";
+            }
+            #endif
 
             if (side == TangentSide::nearside) {
                 return tangent_distance - dist_from_tangent;
@@ -415,6 +456,8 @@ namespace sasktran2::raytracing {
             else {
                 return tangent_distance + dist_from_tangent;
             }
+
+
         }
     };
 

@@ -7,6 +7,73 @@
 namespace sasktran2::math {
     #define SCATTERING_EPSILSON 1e-8
 
+    inline void relative_azimuth(const Eigen::Vector3d& incoming,
+                                 const Eigen::Vector3d& outgoing,
+                                 double& rel_az) {
+        double cos_scatter = incoming.dot(outgoing);
+
+        if(cos_scatter > 1) {
+            cos_scatter = 1;
+        }
+        if(cos_scatter < -1) {
+            cos_scatter = -1;
+        }
+
+        double theta = acos(cos_scatter);
+
+        double sin_scatter = sin(theta);
+
+        // inc is angle between incoming and z direction
+        double costh_inc = incoming.z();
+
+        // scat is angle between outgoing and z direction
+        double costh_scat = outgoing.z();
+
+        // Also can get slight rounding errors here
+        if(costh_inc > 1) {
+            costh_inc = 1;
+        }
+        if(costh_inc < -1) {
+            costh_inc = -1;
+        }
+
+        if(costh_scat > 1) {
+            costh_scat = 1;
+        }
+        if(costh_scat < -1) {
+            costh_scat = -1;
+        }
+
+        double sinth_inc = sin(acos(costh_inc));
+        double sinth_scat = sin(acos(costh_scat));
+
+        double costh1, costh2;
+        // Now there are two special cases we have to handle
+
+        // If the incoming direction is the z-direction, then sinth_inc = 0
+
+
+        double phi_inc, phi_scat, phi_diff;
+
+        costh1 = (costh_scat - costh_inc * cos_scatter) / (sinth_inc * sin_scatter);
+
+        Eigen::Vector3d horiz_inc = incoming;
+        horiz_inc.z() = 0;
+        horiz_inc = horiz_inc.normalized();
+
+        phi_inc = atan2(horiz_inc.y(), horiz_inc.x());
+
+        costh2 = (costh_inc - costh_scat * cos_scatter) / (sinth_scat * sin_scatter);
+
+        Eigen::Vector3d horiz_scat = outgoing;
+        horiz_scat.z() = 0;
+        horiz_scat = horiz_scat.normalized();
+
+        phi_scat = atan2(horiz_scat.y(), horiz_scat.x());
+
+        rel_az = phi_inc - phi_scat;
+    }
+
     inline void stokes_scattering_factors(const Eigen::Vector3d& incoming,
                                           const Eigen::Vector3d& outgoing,
                                           double& theta,

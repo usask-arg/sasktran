@@ -80,6 +80,35 @@ namespace sasktran2::viewinggeometry {
         ViewingRay construct_ray(const sasktran2::Coordinates& geometry) override final;
     };
 
+    /** A singular line of sight that is defined from solar parameters at the tangent altitude of the measurement.
+     *  This class should only be used for limb viewing lines of sight. And is only valid when operating
+     *  in Spherical geometry with a 1D atmosphere.
+     */
+    class TangentAltitudeSolar : public ViewingGeometryBase {
+    private:
+        double m_tangentaltitude; /**< The unrefracted tangent altitude of the line of sight in [m]   */
+        double m_observeraltitude; /**< The altitude of the observer in [m].  If None then the observer is assumed to be outside the atmosphere */
+        double m_relative_azimuth_angle; /**< Relative azimuth angle in [radians] */
+        double m_cos_sza; /**< Cosine of solar zenith angle */
+
+    public:
+        /**
+        * @param tangentaltitude The unrefracted tangent altitude of the line of sight in [m]
+        * @param relative_azimuth_angle The relative azimuth angle for the line of sight in [radians]
+        * @param observeraltitude The altitude of the observer in [m].
+        * @param cos_sza Cosine of solar zenith angle
+        */
+        TangentAltitudeSolar(double tangentaltitude, double relative_azimuth_angle, double observeraltitude,
+                             double cos_sza);
+
+        /** Constructs the ray from the user provided angles and altitudes
+         *
+         * @param geometry Internal sasktran Coordinates
+         * @return ViewingRay
+         */
+        ViewingRay construct_ray(const sasktran2::Coordinates& geometry) override final;
+    };
+
     /** A singular line of sight that is defined based upon the solar angles at the ground point.
      */
     class GroundViewingSolar : public ViewingGeometryBase {
