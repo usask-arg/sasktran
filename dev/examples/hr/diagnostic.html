@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
@@ -14,9 +14,9 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
-        <script src="../../_static/doctools.js"></script>
-        <script src="../../_static/sphinx_highlight.js"></script>
+        <script src="../../_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -40,7 +40,7 @@
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -116,7 +116,7 @@
            <div itemprop="articleBody">
              
   <section id="Collecting-diagnostic-data-during-radiative-transfer-calculation-with-HR">
-<h1>Collecting diagnostic data during radiative transfer calculation with HR<a class="headerlink" href="#Collecting-diagnostic-data-during-radiative-transfer-calculation-with-HR" title="Permalink to this heading">¶</a></h1>
+<h1>Collecting diagnostic data during radiative transfer calculation with HR<a class="headerlink" href="#Collecting-diagnostic-data-during-radiative-transfer-calculation-with-HR" title="Link to this heading">¶</a></h1>
 <p>In this example we collect diagnostic data, namely in- and out-radiance at specified diffuse profiles and orders of scattering, and store it to an hdf5 file. To enable data collection, at least one of the following two HR engine options should be set:</p>
 <ul class="simple">
 <li><p>diagnosticscatterorders - the list of orders of scattering,</p></li>
@@ -430,11 +430,7 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 </div>
 <div class="output_area stderr docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_3308/2621053390.py:9: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
-  heights = np.array( h5f.get(&#39;heights&#39;) )
-/tmp/ipykernel_3308/2621053390.py:13: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
-  rads = np.array( h5f.get(type + &#39;_wlen_&#39; + &#39;%.2f&#39;%wlen + &#39;_ord_&#39; + str(order) +
-/tmp/ipykernel_3308/2621053390.py:39: MatplotlibDeprecationWarning: Unable to determine Axes to steal space for Colorbar. Using gca(), but will raise in the future. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
+/tmp/ipykernel_3491/2621053390.py:39: MatplotlibDeprecationWarning: Unable to determine Axes to steal space for Colorbar. Using gca(), but will raise in the future. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
   fig.colorbar(m, shrink=0.5, aspect=15, ticks=np.linspace(min(facevals),
 </pre></div></div>
 </div>
@@ -481,13 +477,9 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
-<div class="highlight"><pre>
-/tmp/ipykernel_3308/2621053390.py:60: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
-  heights = np.array( h5f.get(&#39;heights&#39;) )
-/tmp/ipykernel_3308/2621053390.py:70: DeprecationWarning: `product` is deprecated as of NumPy 1.25.0, and will be removed in NumPy 2.0. Please use `prod` instead.
-  rad = np.array( h5f.get(type + &#39;_wlen_&#39; + &#39;%.2f&#39;%wlen + &#39;_ord_&#39; +
-</pre></div></div>
+<div class="output_area docutils container">
+<img alt="../../_images/examples_hr_diagnostic_11_0.png" src="../../_images/examples_hr_diagnostic_11_0.png" />
+</div>
 </div>
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
@@ -496,18 +488,11 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 <img alt="../../_images/examples_hr_diagnostic_11_1.png" src="../../_images/examples_hr_diagnostic_11_1.png" />
 </div>
 </div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_11_2.png" src="../../_images/examples_hr_diagnostic_11_2.png" />
-</div>
-</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_11_3.png" src="../../_images/examples_hr_diagnostic_11_3.png" />
+<img alt="../../_images/examples_hr_diagnostic_11_2.png" src="../../_images/examples_hr_diagnostic_11_2.png" />
 </div>
 </div>
 </section>

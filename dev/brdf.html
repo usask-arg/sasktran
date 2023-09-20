@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>BRDF &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>BRDF &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -118,17 +118,17 @@
            <div itemprop="articleBody">
              
   <section id="brdf">
-<span id="id1"></span><h1>BRDF<a class="headerlink" href="#brdf" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>BRDF<a class="headerlink" href="#brdf" title="Link to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.brdf</span></code></p>
 <p>SASKTRAN support <a class="reference external" href="https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function">BRDF surfaces</a>. A surface must
 be added to every <a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a> object. Below are the BRDF classes currently supported by
 SASKTRAN.</p>
 <section id="common-brdfs">
-<h2>Common BRDFs<a class="headerlink" href="#common-brdfs" title="Permalink to this heading">¶</a></h2>
+<h2>Common BRDFs<a class="headerlink" href="#common-brdfs" title="Link to this heading">¶</a></h2>
 <p>Below is the documentation for the common BRDFs that SASKTRAN supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.BRDF">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">BRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">BRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class which implements a Bidirectional Reflectance Distribution Function.  This is a light wrapper around the
 sasktranif ISKBrdf object.  It is recommended to use the specialized BRDF classes rather than this one.</p>
@@ -155,7 +155,7 @@ the opposite way.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.BRDF.reflectance">
-<span class="sig-name descname"><span class="pre">reflectance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavel_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cos_dphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.reflectance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">reflectance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavel_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cos_dphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.reflectance" title="Link to this definition">¶</a></dt>
 <dd><p>Calculates the value of the BRDF for a given wavelength, location, time and geometry.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -175,7 +175,7 @@ and +1 (forward scattering).</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.BRDF.skif_object">
-<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.skif_object" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.skif_object" title="Link to this definition">¶</a></dt>
 <dd><p>Returns the internel SasktranIF object</p>
 </dd></dl>
 
@@ -183,7 +183,7 @@ and +1 (forward scattering).</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Lambertian">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Lambertian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Lambertian" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Lambertian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Lambertian" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Class which implements a Lambertian Bidirectional Reflectance Distribution Function.</p>
 <dl class="field-list simple">
@@ -205,7 +205,7 @@ and +1 (forward scattering).</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Kokhanovsky">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Kokhanovsky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.5e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Kokhanovsky" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Kokhanovsky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.5e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Kokhanovsky" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of the snow BRDF from Kokhanovsky 2012.  The parameters L and M are optional, the default values
 correspond to 1020 nm over greenland.</p>
@@ -238,7 +238,7 @@ URL: <a class="reference external" href="http://ieeexplore.ieee.org/stamp/stamp.
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Roujean">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Roujean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectral_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vis'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Roujean" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Roujean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectral_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vis'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Roujean" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of the BRDF from Roujean 1992 for heterogenous surfaces. Pre-defined values are given for 11
 different surfaces in the visible and near infrared bands.</p>
@@ -272,7 +272,7 @@ sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.</
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.CoxMunk">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">CoxMunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wind_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.334</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.CoxMunk" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">CoxMunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wind_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.334</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.CoxMunk" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of the water BRDF based on Cox and Munk 1954 and Spurr 2002.</p>
 <p>Equation A.18 from Spurr is implemented with the following changes:</p>
@@ -307,7 +307,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Rahman">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Rahman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Rahman" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Rahman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Rahman" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of the Semiempirical Rahman BRDF based on Rahman 1993 and Spurr 2002.</p>
 <p>Equation 2 from Rahman is implemented with the following changes:</p>
@@ -345,7 +345,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Hapke">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Hapke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Hapke" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Hapke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Hapke" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of a vegetation BRDF based on Hapke 2012 and Spurr 2002.</p>
 <p>Equation A.10 of Spurr is implemented with the following changes:</p>
@@ -381,7 +381,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.MODIS">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">MODIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_iso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_vol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_geo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MODIS" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">MODIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_iso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_vol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_geo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MODIS" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implementation of the Ross-thick Li-sparse-reciprocal BRDF used in MODIS’ Albedo/BRDF product. It is a linear
 combination of an isotropic (Lambertian) term, a volume scatterer (Ross-thick kernel) and a geometric scatterer
@@ -410,11 +410,11 @@ URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/f
 
 </section>
 <section id="kernel-based-brdfs">
-<h2>Kernel-Based BRDFs<a class="headerlink" href="#kernel-based-brdfs" title="Permalink to this heading">¶</a></h2>
+<h2>Kernel-Based BRDFs<a class="headerlink" href="#kernel-based-brdfs" title="Link to this heading">¶</a></h2>
 <p>Below is the documentation for the kernel-based BRDFs that SASKTRAN supports.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LinearCombination">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LinearCombination</span></span><a class="headerlink" href="#sasktran.LinearCombination" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LinearCombination</span></span><a class="headerlink" href="#sasktran.LinearCombination" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implements a BRDF that is a linear combination of an arbitrary number of kernels.</p>
 <p class="rubric">Examples</p>
@@ -437,7 +437,7 @@ URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/f
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.LinearCombination.add_kernel">
-<span class="sig-name descname"><span class="pre">add_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><span class="pre">BRDF</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.add_kernel" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">add_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><span class="pre">BRDF</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.add_kernel" title="Link to this definition">¶</a></dt>
 <dd><p>Add a BRDF kernel to the linear combination.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -448,20 +448,20 @@ URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/f
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.LinearCombination.kernel_weights">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernel_weights</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernel_weights" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernel_weights</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernel_weights" title="Link to this definition">¶</a></dt>
 <dd><p>List of kernel weights. If the number of weights given does not match the number of kernels present, the
 given weights will not be set.</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.LinearCombination.kernels">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernels</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernels" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernels</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernels" title="Link to this definition">¶</a></dt>
 <dd><p>Full list of BRDF kernels.</p>
 </dd></dl>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.LinearCombination.remove_kernel">
-<span class="sig-name descname"><span class="pre">remove_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.remove_kernel" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.remove_kernel" title="Link to this definition">¶</a></dt>
 <dd><p>Remove the BRDF kernel at the position given by index. Accepts negative indices as Python does.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -474,7 +474,7 @@ given weights will not be set.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.RoujeanKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RoujeanKernel</span></span><a class="headerlink" href="#sasktran.RoujeanKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RoujeanKernel</span></span><a class="headerlink" href="#sasktran.RoujeanKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Implements the Roujean kernel from Roujean 1992 and Spurr 2002. This kernel is part of the above Roujean BRDF.
 It is recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
@@ -503,7 +503,7 @@ sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.</
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LiKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>Base class for Li kernels from Wanner 1995 and Spurr 2002. It is recommended to use derived classes
 (LiSparseKernel, LiDenseKernel or LiSparseReciprocalKernel) instead of this class. It is also recommended to use
@@ -539,7 +539,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LiSparseKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
 <p>The Li-sparse kernel models sparse canopy where mutual shadowing can be ignored. It is recommended to use
 kernels as part of a LinearCombination and not as standalone BRDFs.</p>
@@ -578,7 +578,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LiSparseReciprocalKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseReciprocalKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseReciprocalKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseReciprocalKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseReciprocalKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
 <p>The Li-sparse-reciprocal kernel is a variation on the Li-sparse kernel which allows the incident/viewing angles
 to be swapped without changing the BRDF’s value (reciprocal) - See the MODIS Albedo/BRDF ATBD. It is recommended
@@ -611,7 +611,7 @@ URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/f
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LiDenseKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiDenseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiDenseKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiDenseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiDenseKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
 <p>The Li-dense kernel models dense canopy where mutual shadowing cannot be ignored. It is recommended to use
 kernels as part of a LinearCombination and not as standalone BRDFs.</p>
@@ -650,7 +650,7 @@ url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.RossThinKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThinKernel</span></span><a class="headerlink" href="#sasktran.RossThinKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThinKernel</span></span><a class="headerlink" href="#sasktran.RossThinKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>The Ross-thin kernel models canopies with a small leaf area index (LAI) - see Wanner 1995 and Spurr 2002. It is
 recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
@@ -681,7 +681,7 @@ URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.RossThickKernel">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThickKernel</span></span><a class="headerlink" href="#sasktran.RossThickKernel" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThickKernel</span></span><a class="headerlink" href="#sasktran.RossThickKernel" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>The Ross-thick kernel models canopies with a large leaf area index (LAI) - see Wanner 1995 and Spurr 2002. It is
 recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
@@ -712,12 +712,12 @@ URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1
 
 </section>
 <section id="two-dimensional-brdfs">
-<h2>Two-Dimensional BRDFs<a class="headerlink" href="#two-dimensional-brdfs" title="Permalink to this heading">¶</a></h2>
+<h2>Two-Dimensional BRDFs<a class="headerlink" href="#two-dimensional-brdfs" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN is capable of modelling surfaces where the BRDF varies across the surface of the Earth.
 These are BRDFs that have two-dimensional variation across the surface</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LatLonBRDF">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LatLonBRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">longitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brdfs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LatLonBRDF" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LatLonBRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">longitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brdfs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LatLonBRDF" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
 <p>A custom BRDF that is constructed as the combination of other BRDF’s on a uniform latitude/longitude grid.</p>
 <dl class="field-list simple">
@@ -748,7 +748,7 @@ and not from -180 to 180.</p></li>
 
 </section>
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a></dt><dd><p>An object that describes the atmospheric constituents, and surface type to the engine.
 Atmospheric constituents are defined by a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a>, and surfaces are defined by

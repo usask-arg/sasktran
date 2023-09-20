@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Configuration &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Configuration &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -107,7 +107,7 @@
            <div itemprop="articleBody">
              
   <section id="configuration">
-<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h1>
 <p>Some settings, particularly the location of large databases, are stored in a global configuration file.  The
 location of this file on your system can be found by running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -118,11 +118,11 @@ location of this file on your system can be found by running:</p>
 <p>The file is a standard <cite>yaml</cite> format file that can be edited with any text editor.  The format of the file is
 <cite>key: value</cite>, you will probably have to create the file the first time.</p>
 <section id="databases">
-<h2>Databases<a class="headerlink" href="#databases" title="Permalink to this heading">¶</a></h2>
+<h2>Databases<a class="headerlink" href="#databases" title="Link to this heading">¶</a></h2>
 <p>Several databases can be downloaded using functions within the <cite>sasktran</cite> package.  Note that after downloading
 any of these databases it might be necessary to restart the interpreter for the settings to take effect.</p>
 <section id="pratmo">
-<h3>PRATMO<a class="headerlink" href="#pratmo" title="Permalink to this heading">¶</a></h3>
+<h3>PRATMO<a class="headerlink" href="#pratmo" title="Link to this heading">¶</a></h3>
 <p>The <a class="reference internal" href="climatology.html#sasktran.Pratmo" title="sasktran.Pratmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Pratmo</span></code></a> climatology object requires a ~50 mb file to be downloaded to use which can be done
 by running:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -132,7 +132,7 @@ by running:</p>
 </div>
 </section>
 <section id="hitran">
-<h3>HITRAN<a class="headerlink" href="#hitran" title="Permalink to this heading">¶</a></h3>
+<h3>HITRAN<a class="headerlink" href="#hitran" title="Link to this heading">¶</a></h3>
 <p>In order to use HITRAN you must download a large (few gb) database with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
 
@@ -143,26 +143,26 @@ by running:</p>
 </section>
 </section>
 <section id="key-reference">
-<h2>Key Reference<a class="headerlink" href="#key-reference" title="Permalink to this heading">¶</a></h2>
+<h2>Key Reference<a class="headerlink" href="#key-reference" title="Link to this heading">¶</a></h2>
 <section id="hitran-directory">
-<h3>hitran_directory<a class="headerlink" href="#hitran-directory" title="Permalink to this heading">¶</a></h3>
+<h3>hitran_directory<a class="headerlink" href="#hitran-directory" title="Link to this heading">¶</a></h3>
 <p>Location of the HITRAN 2016 database.  Necessary to use the <a class="reference internal" href="optical_property.html#sasktran.HITRANChemical" title="sasktran.HITRANChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.HITRANChemical</span></code></a> object. Folder
 should contain <cite>By-Molecules</cite> and <cite>Global_Data</cite> directories which contains the database.  The standard value for this key on the
 University of Saskatchewan network is <cite>\\utls\SasktranFiles\hitranhapi</cite></p>
 </section>
 <section id="hitran-cache">
-<h3>hitran_cache<a class="headerlink" href="#hitran-cache" title="Permalink to this heading">¶</a></h3>
+<h3>hitran_cache<a class="headerlink" href="#hitran-cache" title="Link to this heading">¶</a></h3>
 <p>Location of a HITRAN cache folder.  Should be set by default, but can be changed to a different location
 if desired.</p>
 </section>
 <section id="baum-directory">
-<h3>baum_directory<a class="headerlink" href="#baum-directory" title="Permalink to this heading">¶</a></h3>
+<h3>baum_directory<a class="headerlink" href="#baum-directory" title="Link to this heading">¶</a></h3>
 <p>Location of the Baum 2014 ice crystal optical property database.  Necessary to use the <a class="reference internal" href="optical_property.html#sasktran.BaumIceCrystal" title="sasktran.BaumIceCrystal"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.BaumIceCrystal</span></code></a>
 object.  Folder should contain the file <cite>GeneralHabitMixture_SeverelyRough_AllWavelengths_FullPhaseMatrix.nc</cite>. The
 standard value for this key on the University of Saskatchewan network is <cite>\\utls\SasktranFiles\BaumIceCrystals</cite></p>
 </section>
 <section id="pratmo-directory">
-<h3>pratmo_directory<a class="headerlink" href="#pratmo-directory" title="Permalink to this heading">¶</a></h3>
+<h3>pratmo_directory<a class="headerlink" href="#pratmo-directory" title="Link to this heading">¶</a></h3>
 <p>Location of a folder containing a climatology based upon the Pratmo photochemical box model.
 Necessary to use the <a class="reference internal" href="climatology.html#sasktran.Pratmo" title="sasktran.Pratmo"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Pratmo</span></code></a> climatology object.  This file can be directly downloaded with:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -174,7 +174,7 @@ Necessary to use the <a class="reference internal" href="climatology.html#sasktr
 it is not necessary to set this key.</p>
 </section>
 <section id="glossac-file">
-<h3>glossac_file<a class="headerlink" href="#glossac-file" title="Permalink to this heading">¶</a></h3>
+<h3>glossac_file<a class="headerlink" href="#glossac-file" title="Link to this heading">¶</a></h3>
 <p>Full path to a NetCDF file containing the GloSSAC climatology.  Necessary to use the
 <a class="reference internal" href="climatology.html#sasktran.GloSSAC" title="sasktran.GloSSAC"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.GloSSAC</span></code></a> climatology object.</p>
 </section>

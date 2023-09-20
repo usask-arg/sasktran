@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Atmosphere &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Atmosphere &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -116,11 +116,11 @@
            <div itemprop="articleBody">
              
   <section id="atmosphere">
-<span id="id1"></span><h1>Atmosphere<a class="headerlink" href="#atmosphere" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Atmosphere<a class="headerlink" href="#atmosphere" title="Link to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.atmosphere</span></code></p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Atmosphere">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Atmosphere</span></span><a class="headerlink" href="#sasktran.Atmosphere" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Atmosphere</span></span><a class="headerlink" href="#sasktran.Atmosphere" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>The Atmosphere class is a generic container that defines the atmospheric state for a radiative transfer calculation.
 The first component of this is defining a set of atmospheric constituents, which is controlled by the
@@ -134,7 +134,7 @@ currently the only radiative transfer model that supports emissions is the HR en
 <a class="reference internal" href="#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a>).</p>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.atmospheric_state">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atmospheric_state</span></span><a class="headerlink" href="#sasktran.Atmosphere.atmospheric_state" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">atmospheric_state</span></span><a class="headerlink" href="#sasktran.Atmosphere.atmospheric_state" title="Link to this definition">¶</a></dt>
 <dd><p>A special <a class="reference internal" href="tir/climatology.html#climatology"><span class="std std-ref">Climatology</span></a> used to set the atmosphere’s temperature, and pressure. This
 climatology must support both ‘SKCLIMATOLOGY_TEMPERATURE_K’ and ‘SKCLIMATOLOGY_PRESSURE_PA’. The default
 atmospheric state is <a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.MSIS90</span></code></a>.</p>
@@ -165,7 +165,7 @@ atmospheric state is <a class="reference internal" href="climatology.html#sasktr
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.brdf">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">brdf</span></span><a class="headerlink" href="#sasktran.Atmosphere.brdf" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">brdf</span></span><a class="headerlink" href="#sasktran.Atmosphere.brdf" title="Link to this definition">¶</a></dt>
 <dd><p>The surface <a class="reference internal" href="brdf.html#brdf"><span class="std std-ref">BRDF</span></a> object. If set to a scalar, a Lambertian albedo is assumed.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -187,7 +187,7 @@ atmospheric state is <a class="reference internal" href="climatology.html#sasktr
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.emissions">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emissions</span></span><a class="headerlink" href="#sasktran.Atmosphere.emissions" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">emissions</span></span><a class="headerlink" href="#sasktran.Atmosphere.emissions" title="Link to this definition">¶</a></dt>
 <dd><p>A dictionary of <a class="reference internal" href="emission.html#emission"><span class="std std-ref">Emission</span></a> objects with keys being the identifying emission strings</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -207,7 +207,7 @@ atmospheric state is <a class="reference internal" href="climatology.html#sasktr
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.has_changed">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_changed</span></span><a class="headerlink" href="#sasktran.Atmosphere.has_changed" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">has_changed</span></span><a class="headerlink" href="#sasktran.Atmosphere.has_changed" title="Link to this definition">¶</a></dt>
 <dd><p>True if the atmosphere has changed since being added to an <a class="reference internal" href="engine.html#sasktran.Engine" title="sasktran.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Engine</span></code></a> object.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Type<span class="colon">:</span></dt>
@@ -218,7 +218,7 @@ atmospheric state is <a class="reference internal" href="climatology.html#sasktr
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.remove_species">
-<span class="sig-name descname"><span class="pre">remove_species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Atmosphere.remove_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">remove_species</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Atmosphere.remove_species" title="Link to this definition">¶</a></dt>
 <dd><p>Removes a species with a given identifier from the atmosphere.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -243,7 +243,7 @@ atmospheric state is <a class="reference internal" href="climatology.html#sasktr
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.species">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species</span></span><a class="headerlink" href="#sasktran.Atmosphere.species" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">species</span></span><a class="headerlink" href="#sasktran.Atmosphere.species" title="Link to this definition">¶</a></dt>
 <dd><p>A dictionary of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> objects with the keys being the species identifying strings.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -278,7 +278,7 @@ aliases to this dictionary. For example this means that</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Atmosphere.wf_species">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wf_species</span></span><a class="headerlink" href="#sasktran.Atmosphere.wf_species" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">wf_species</span></span><a class="headerlink" href="#sasktran.Atmosphere.wf_species" title="Link to this definition">¶</a></dt>
 <dd><p><a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifier to calculate weighing functions for. Weighting functions will be calculated if
 this property is set. Note that engines that support multi-species weighting functions can handle this
 property being a list of species identifiers. If this property is None, weighting functions won’t be calculated.</p>
@@ -311,7 +311,7 @@ property being a list of species identifiers. If this property is None, weightin
 </dd></dl>
 
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a></dt><dd><p>Representation of a atmospheric constituent.</p>
 </dd>

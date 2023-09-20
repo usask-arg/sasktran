@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quickstart Guide &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Quickstart Guide &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -97,7 +97,7 @@
            <div itemprop="articleBody">
              
   <section id="quickstart-guide">
-<span id="quickstart"></span><h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Permalink to this heading">¶</a></h1>
+<span id="quickstart"></span><h1>Quickstart Guide<a class="headerlink" href="#quickstart-guide" title="Link to this heading">¶</a></h1>
 <p>Performing a calculation with <code class="docutils literal notranslate"><span class="pre">sasktran</span></code> can be broken up into three steps:</p>
 <ul class="simple">
 <li><p>Defining the geometry of the problem.  Typically this boils down to calculating an observer location,
@@ -106,7 +106,7 @@ a look vector, and a timestamp for the measurements.  <code class="docutils lite
 <li><p>Choosing a radiative transfer model and setting it up for the calculation.</p></li>
 </ul>
 <section id="defining-the-geometry">
-<h2>Defining the Geometry<a class="headerlink" href="#defining-the-geometry" title="Permalink to this heading">¶</a></h2>
+<h2>Defining the Geometry<a class="headerlink" href="#defining-the-geometry" title="Link to this heading">¶</a></h2>
 <p>The raw input to <code class="docutils literal notranslate"><span class="pre">sasktran</span></code> for each measurement is the observer location, a unit look vector, and a timestamp
 represented with a Modified Julian Date.  If you already have these things, excellent, we can directly create a
 <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Geometry</span></code></a> object,</p>
@@ -141,7 +141,7 @@ represented with a Modified Julian Date.  If you already have these things, exce
 </div>
 </section>
 <section id="representing-the-atmosphere">
-<h2>Representing the Atmosphere<a class="headerlink" href="#representing-the-atmosphere" title="Permalink to this heading">¶</a></h2>
+<h2>Representing the Atmosphere<a class="headerlink" href="#representing-the-atmosphere" title="Link to this heading">¶</a></h2>
 <p>Each atmospheric constituent is represented by two things:</p>
 <ul class="simple">
 <li><p>A climatology which specifies the amount and distribution of the constituent, the class <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a>
@@ -161,7 +161,7 @@ let’s create an atmosphere consisting of Rayleigh scattering and ozone absorpt
 </div>
 </section>
 <section id="setting-up-the-engine">
-<h2>Setting up the Engine<a class="headerlink" href="#setting-up-the-engine" title="Permalink to this heading">¶</a></h2>
+<h2>Setting up the Engine<a class="headerlink" href="#setting-up-the-engine" title="Link to this heading">¶</a></h2>
 <p>The final step is creating the <a class="reference internal" href="engine.html#sasktran.Engine" title="sasktran.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Engine</span></code></a> object which actually performs the radiative transfer
 calculation.  <cite>sasktran</cite> contains multiple radiative transfer models, but for most standard applications it is
 recommended to use the <code class="docutils literal notranslate"><span class="pre">hr</span></code> engine which is suitable for all viewing geometries in the UV-VIS-NIR spectral regime:</p>

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weighting Functions &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Weighting Functions &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -106,7 +106,7 @@
            <div itemprop="articleBody">
              
   <section id="weighting-functions">
-<span id="id1"></span><h1>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h1>
 <p>SASKTRAN-TIR supports the analytic computation of weighting functions for concentrations of gas species and temperature.
 It is possible to compute weighting functions for a single parameter or for multiple parameters simultaneously.
 Weighting functions computed for a single parameter have the form:</p>
@@ -139,7 +139,7 @@ Weighting functions computed for a single parameter have the form:</p>
 <p>To calculate weighting functions for a gas species the <a class="reference internal" href="../atmosphere.html#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a> must be set.
 To compute temperature weighting functions set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran_tir_engine.EngineTIR.do_temperature_wf</span></code> option to True.</p>
 <section id="weighting-function-units">
-<h2>Weighting Function Units<a class="headerlink" href="#weighting-function-units" title="Permalink to this heading">¶</a></h2>
+<h2>Weighting Function Units<a class="headerlink" href="#weighting-function-units" title="Link to this heading">¶</a></h2>
 <p>By definition, SASKTRAN-TIR weighting functions have units of <span class="math notranslate nohighlight">\(\mathrm{radiance / species}\)</span>.
 The radiance portion has units of <span class="math notranslate nohighlight">\(\mathrm{photon}/(\mathrm{s \: cm^2 \: nm \: sr})\)</span>.
 The units of the weighting function species are configurable.
@@ -148,7 +148,7 @@ To calculate gas species weighting functions with respect to Volume Mixing Ratio
 <code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran_tir.engine.EngineTIR.do_vmr_wf</span></code> option to True.</p>
 </section>
 <section id="multiple-species-calculations">
-<h2>Multiple Species Calculations<a class="headerlink" href="#multiple-species-calculations" title="Permalink to this heading">¶</a></h2>
+<h2>Multiple Species Calculations<a class="headerlink" href="#multiple-species-calculations" title="Link to this heading">¶</a></h2>
 <p>When weighting functions are computed for more than one species, an extra dimension is added to the weighting function
 array. The index <span class="math notranslate nohighlight">\(n\)</span> of each species are assigned in the same order as the species were listed when setting
 <a class="reference internal" href="../atmosphere.html#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a>. If temperature weighting functions are also being computed, they are

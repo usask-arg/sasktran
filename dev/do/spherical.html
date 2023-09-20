@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Spherical Approximations &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Spherical Approximations &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -37,7 +37,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -109,11 +109,11 @@
            <div itemprop="articleBody">
              
   <section id="spherical-approximations">
-<span id="spherical"></span><h1>Spherical Approximations<a class="headerlink" href="#spherical-approximations" title="Permalink to this heading">¶</a></h1>
+<span id="spherical"></span><h1>Spherical Approximations<a class="headerlink" href="#spherical-approximations" title="Link to this heading">¶</a></h1>
 <p>While SK-DO is based on the discrete ordinates technique which is designed for a plane-parallel atmosphere, SK-DO
 contains several approximations to handle various levels of sphericity.</p>
 <section id="pseudo-spherical-approximation">
-<h2>Pseudo-Spherical Approximation<a class="headerlink" href="#pseudo-spherical-approximation" title="Permalink to this heading">¶</a></h2>
+<h2>Pseudo-Spherical Approximation<a class="headerlink" href="#pseudo-spherical-approximation" title="Link to this heading">¶</a></h2>
 <p>The pseudo-spherical approximation is a common method where the incoming solar beam is treated in a spherical
 atmosphere.  These transmittances are then used to initialize the discrete ordinates technique.  The pseudo-spherical
 approximation is enabled by default, and there is usually no reason to disable it as it does not have any computational
@@ -124,7 +124,7 @@ overhead involved in using it.  However, it can be disabled with</p>
 <p>if desired.</p>
 </section>
 <section id="line-of-sight-spherical-corrections">
-<h2>Line of Sight Spherical Corrections<a class="headerlink" href="#line-of-sight-spherical-corrections" title="Permalink to this heading">¶</a></h2>
+<h2>Line of Sight Spherical Corrections<a class="headerlink" href="#line-of-sight-spherical-corrections" title="Link to this heading">¶</a></h2>
 <p>SK-DO also contains the capability to include spherical effects along the line of sight.  In this mode the
 line of sight ray is traced in a fully spherical atmosphere.  Single scattering source terms are calculated exactly
 inside the spherical atmosphere.  Multiple scatter source terms are calculated using the discrete ordinates method

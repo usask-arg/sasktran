@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geodetic &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Geodetic &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -116,13 +116,13 @@
            <div itemprop="articleBody">
              
   <section id="geodetic">
-<span id="id1"></span><h1>Geodetic<a class="headerlink" href="#geodetic" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Geodetic<a class="headerlink" href="#geodetic" title="Link to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.geodetic</span></code></p>
 <p>Internally SASKTRAN uses the <a class="reference external" href="https://en.wikipedia.org/wiki/World_Geodetic_System">World Geodetic System (WGS48)</a>.
 This module provides some helpers for working with geodetic coordinates.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Geodetic">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geodetic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geoid_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geodetic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geoid_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class which handles the representation of the Earth geometry.  The object is initialized through one of the
 <cite>from</cite> methods, and then after initialization various parameters are available.</p>
@@ -146,7 +146,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.altitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">altitude</span></span><a class="headerlink" href="#sasktran.Geodetic.altitude" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">altitude</span></span><a class="headerlink" href="#sasktran.Geodetic.altitude" title="Link to this definition">¶</a></dt>
 <dd><p>Altitude in meters</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -165,7 +165,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Geodetic.altitude_intercepts">
-<span class="sig-name descname"><span class="pre">altitude_intercepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.altitude_intercepts" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">altitude_intercepts</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.altitude_intercepts" title="Link to this definition">¶</a></dt>
 <dd><p>Calculate the two intersections of a line of sight and an altitude.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -200,7 +200,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Geodetic.from_lat_lon_alt">
-<span class="sig-name descname"><span class="pre">from_lat_lon_alt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_lat_lon_alt" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_lat_lon_alt</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">latitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_lat_lon_alt" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes the Geodetic based on a specifiec latitude, longitude, and altitude.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -224,7 +224,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Geodetic.from_tangent_altitude">
-<span class="sig-name descname"><span class="pre">from_tangent_altitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boresight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_tangent_altitude" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_tangent_altitude</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">boresight</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_tangent_altitude" title="Link to this definition">¶</a></dt>
 <dd><p>Initialized the Geodetic from a specified tangent altitude, obsever location, and bore sight plane.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -256,7 +256,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Geodetic.from_tangent_point">
-<span class="sig-name descname"><span class="pre">from_tangent_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_tangent_point" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_tangent_point</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">observer</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_tangent_point" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes  the Geodetic by calculating the tangent point from an observer position and look vector</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -279,7 +279,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Geodetic.from_xyz">
-<span class="sig-name descname"><span class="pre">from_xyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_xyz" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_xyz</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">location</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic.from_xyz" title="Link to this definition">¶</a></dt>
 <dd><p>Initializes the Geodetic from a geocentric location</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -299,7 +299,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.latitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">latitude</span></span><a class="headerlink" href="#sasktran.Geodetic.latitude" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">latitude</span></span><a class="headerlink" href="#sasktran.Geodetic.latitude" title="Link to this definition">¶</a></dt>
 <dd><p>Latitude in degrees in the range (-90 to 90)</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -318,7 +318,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_south">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_south</span></span><a class="headerlink" href="#sasktran.Geodetic.local_south" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_south</span></span><a class="headerlink" href="#sasktran.Geodetic.local_south" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector unit vector tangent to the Earth pointing south</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -337,7 +337,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_up">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_up</span></span><a class="headerlink" href="#sasktran.Geodetic.local_up" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_up</span></span><a class="headerlink" href="#sasktran.Geodetic.local_up" title="Link to this definition">¶</a></dt>
 <dd><p>Three element unit vector normal to the surface of the Earth pointing up</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -356,7 +356,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_west">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_west</span></span><a class="headerlink" href="#sasktran.Geodetic.local_west" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_west</span></span><a class="headerlink" href="#sasktran.Geodetic.local_west" title="Link to this definition">¶</a></dt>
 <dd><p>Three element unit vector tangent to the surface of the Earth pointing west</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -375,7 +375,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.location">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#sasktran.Geodetic.location" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#sasktran.Geodetic.location" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector representing the position in geocentric coordinates</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -394,7 +394,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.longitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">longitude</span></span><a class="headerlink" href="#sasktran.Geodetic.longitude" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">longitude</span></span><a class="headerlink" href="#sasktran.Geodetic.longitude" title="Link to this definition">¶</a></dt>
 <dd><p>Longitude in degrees in the range (0 to 360)</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -413,7 +413,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.osculating_spheroid_center">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_center</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_center" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_center</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_center" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector representing the center of the osculating spheroid, relative to the center
 of the geoid, in meters.</p>
 <p class="rubric">Examples</p>
@@ -433,7 +433,7 @@ of the geoid, in meters.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.osculating_spheroid_radius">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_radius</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_radius" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_radius</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_radius" title="Link to this definition">¶</a></dt>
 <dd><p>Radius of the osculating spheroid in meters.
 .. rubric:: Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -453,7 +453,7 @@ of the geoid, in meters.</p>
 </dd></dl>
 
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="geometry.html#geometry"><span class="std std-ref">Geometry</span></a></dt><dd><p>Objects which describe the geometry of the calculations to the engine. At a minimum these
 objects define the <a class="reference internal" href="lines_of_sight.html#lines-of-sight"><span class="std std-ref">Lines of Sight</span></a>, but can also specify things such as the suns

@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Climatology &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Climatology &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,7 +39,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -120,7 +120,7 @@
            <div itemprop="articleBody">
              
   <section id="climatology">
-<span id="id1"></span><h1>Climatology<a class="headerlink" href="#climatology" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Climatology<a class="headerlink" href="#climatology" title="Link to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.climatology</span></code></p>
 <p>A <a class="reference internal" href="#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a> object is essentially a lookup table of profiles
 where the tables keys are quantities name. A grid (altitude and potentially geographic)
@@ -158,7 +158,7 @@ into SASKTRAN (see <a class="reference internal" href="#useful-climatology-short
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Climatology">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Climatology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Climatology</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">ClimatologyBase</span></code></p>
 <p>A climatology quantifying something in/about the atmosphere. For example climatologies could be used
 to define profiles for temperature, pressure, gas number densities, etc.</p>
@@ -177,7 +177,7 @@ to define profiles for temperature, pressure, gas number densities, etc.</p>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Climatology.get_parameter">
-<span class="sig-name descname"><span class="pre">get_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology.get_parameter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology.get_parameter" title="Link to this definition">¶</a></dt>
 <dd><p>Get a profile from the climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -200,7 +200,7 @@ to define profiles for temperature, pressure, gas number densities, etc.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Climatology.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Climatology.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -216,10 +216,10 @@ to define profiles for temperature, pressure, gas number densities, etc.</p>
 </dd></dl>
 
 <section id="user-defined-climatologies">
-<h2>User Defined Climatologies<a class="headerlink" href="#user-defined-climatologies" title="Permalink to this heading">¶</a></h2>
+<h2>User Defined Climatologies<a class="headerlink" href="#user-defined-climatologies" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_bounds_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">out_of_bounds_value</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>A special climatology which handles user defined values.</p>
 <dl class="field-list simple">
@@ -248,7 +248,7 @@ linear interpolation is done.  Default is False.</p></li>
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -265,7 +265,7 @@ linear interpolation is done.  Default is False.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined2D">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles_deg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alts_m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined2D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined2D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">angles_deg</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alts_m</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">normal_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined2D" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>A two dimensional user defined climatology in altitude and angle within a user specified plane.</p>
 <dl class="field-list simple">
@@ -281,7 +281,7 @@ linear interpolation is done.  Default is False.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined2D.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined2D.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined2D.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -298,7 +298,7 @@ linear interpolation is done.  Default is False.</p></li>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined3D">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined3D" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">ClimatologyUserDefined3D</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">lats</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lons</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">alts</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">values</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">dict</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">interp</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">'linear'</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spline</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">bool</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined3D" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>A user defined climatology class for profiles which have a geographic dependence.</p>
 <p>For more information see <cite>sk.ClimatologyUserDefined</cite>.</p>
@@ -319,7 +319,7 @@ linear interpolation is done.  Default is False.</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.ClimatologyUserDefined3D.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined3D.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.ClimatologyUserDefined3D.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -344,10 +344,10 @@ linear interpolation is done.  Default is False.</p></li>
 </div>
 </section>
 <section id="useful-climatology-shorthands">
-<h2>Useful Climatology Shorthands<a class="headerlink" href="#useful-climatology-shorthands" title="Permalink to this heading">¶</a></h2>
+<h2>Useful Climatology Shorthands<a class="headerlink" href="#useful-climatology-shorthands" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Labow">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Labow</span></span><a class="headerlink" href="#sasktran.Labow" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Labow</span></span><a class="headerlink" href="#sasktran.Labow" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>The Labow volume mixing ratio climatology of ozone. This is a climatology of the volume mixing ratio from
 0 km to 60 km in 1 km increments for 18 latitudes in steps of 10 degrees from -85 to +85 for each month of the year.
@@ -360,14 +360,14 @@ This requires an atmospheric number density climatology for which the MSIS90 cli
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Pratmo">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Pratmo</span></span><a class="headerlink" href="#sasktran.Pratmo" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Pratmo</span></span><a class="headerlink" href="#sasktran.Pratmo" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>A climatology for the NO2 number density based upon the Prather photo-chemical box model. This climatological
 model is based upon monthly mean solutions to the box model for a range of latitudes, local solar times and
 altitudes.</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.Pratmo.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Pratmo.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Pratmo.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -384,7 +384,7 @@ altitudes.</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.MSIS90">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">MSIS90</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_o2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">includes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f107_avg_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f107_prev_day_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ap_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_altitude_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_spacing_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MSIS90" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">MSIS90</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">include_o2</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">includes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f107_avg_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f107_prev_day_flux</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">150.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">ap_index</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0,</span> <span class="pre">4.0)</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_altitude_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">120</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">height_spacing_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MSIS90" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Climatology" title="sasktran.climatology.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a></p>
 <p>A climatology that implements the MSIS-90 atmospheric model, (Hedin 1991).
 This is typically used in Sasktran applications as a quick and robust background atmospheric state.
@@ -454,7 +454,7 @@ wind, geopotential height and pressure for 0–120 km, Advances in Space Researc
 J. Geophys. Res., 96 ( A2), 1159– 1172, doi:10.1029/90JA02125</p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.MSIS90.supported_species">
-<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MSIS90.supported_species" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">supported_species</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MSIS90.supported_species" title="Link to this definition">¶</a></dt>
 <dd><p>Get a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a> identifiers that are supported by this climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
@@ -471,7 +471,7 @@ J. Geophys. Res., 96 ( A2), 1159– 1172, doi:10.1029/90JA02125</p>
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.GloSSAC">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">GloSSAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">525</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">GloSSAC</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelength_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">525</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">extend</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">False</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.ClimatologyUserDefined" title="sasktran.climatology.ClimatologyUserDefined"><code class="xref py py-class docutils literal notranslate"><span class="pre">ClimatologyUserDefined</span></code></a></p>
 <p>The global stratospheric aerosol extinction climatology at 8 wavelengths from 386-3400nm that spans from 1979-2016
 and incorporates data from numerous satellite datasets. Interpolations in latitude and time use nearest neigbour.</p>
@@ -497,7 +497,7 @@ below and above the valid range respectively</p></li>
 </dl>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.GloSSAC.get_parameter">
-<span class="sig-name descname"><span class="pre">get_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC.get_parameter" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">get_parameter</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">species</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">altitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC.get_parameter" title="Link to this definition">¶</a></dt>
 <dd><p>Get a profile from the climatology.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -520,7 +520,7 @@ below and above the valid range respectively</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.GloSSAC.skif_object">
-<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC.skif_object" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.GloSSAC.skif_object" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Returns<span class="colon">:</span></dt>
 <dd class="field-odd"><p>Underlying ISKClimatology object which represents the climatology</p>
@@ -535,7 +535,7 @@ below and above the valid range respectively</p></li>
 
 </section>
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a></dt><dd><p>An object that describes the atmospheric constituents, and surface type to the engine.
 Atmospheric constituents are defined by a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a>, and surfaces are defined by

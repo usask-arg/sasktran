@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Overview &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Overview &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,7 +39,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -112,7 +112,7 @@
            <div itemprop="articleBody">
              
   <section id="overview">
-<span id="lowlevel"></span><h1>Overview<a class="headerlink" href="#overview" title="Permalink to this heading">¶</a></h1>
+<span id="lowlevel"></span><h1>Overview<a class="headerlink" href="#overview" title="Link to this heading">¶</a></h1>
 <p>In addition to being part of the standard SASKTRAN framework, SASKTRAN-DO exposes a secondary interface
 that we colloquially refer to as the low-level interface.  The low-level interface has the potential to be
 faster and allow for more generic calculations, as the cost of increased complexity in setting it up.  Instead
@@ -135,7 +135,7 @@ the theory of the discrete ordinates technique with a focus on how to define the
 for the model. For details on how to construct these inputs in code, we recommend reviewing the API reference for
 the input and output structures, and looking at some of the examples.</p>
 <section id="optical-layer-quantities">
-<h2>Optical Layer Quantities<a class="headerlink" href="#optical-layer-quantities" title="Permalink to this heading">¶</a></h2>
+<h2>Optical Layer Quantities<a class="headerlink" href="#optical-layer-quantities" title="Link to this heading">¶</a></h2>
 <p>DO performs radiative transfer through a medium consisting of <span class="math notranslate nohighlight">\(N_{lyr}\)</span> optically homogeneous
 layers.  We use the index <span class="math notranslate nohighlight">\(i\)</span> to index over each layer, <span class="math notranslate nohighlight">\(i=0\)</span> always corresponds to the
 layer at the Top of the Atmosphere (TOA), while <span class="math notranslate nohighlight">\(i=N_{lyr}-1\)</span> is the layer touching the surface
@@ -164,18 +164,18 @@ assume every coefficient except for <span class="math notranslate nohighlight">\
 are necessary for input. The <cite>pysasktran</cite> package includes functionality to calculate Wigner functions
 and also calculate the necessary coefficients if you only have the phase function.</p>
 <section id="delta-scaling">
-<h3>Delta Scaling<a class="headerlink" href="#delta-scaling" title="Permalink to this heading">¶</a></h3>
+<h3>Delta Scaling<a class="headerlink" href="#delta-scaling" title="Link to this heading">¶</a></h3>
 <p>DO includes the option to include a delta-scaling factor for the phase function.</p>
 </section>
 <section id="single-scatter-correction">
-<h3>Single Scatter Correction<a class="headerlink" href="#single-scatter-correction" title="Permalink to this heading">¶</a></h3>
+<h3>Single Scatter Correction<a class="headerlink" href="#single-scatter-correction" title="Link to this heading">¶</a></h3>
 <p>DO implements the TMS correction which replaces the single scatter solution with an exact single scatter calculation.
 In this case the first row of the phase matrix <span class="math notranslate nohighlight">\(\vec{P}\)</span> must be specified for each viewing geometry.  Note that
 currently this option only works in scalar mode.</p>
 </section>
 </section>
 <section id="geometry-layer-quantities">
-<h2>Geometry Layer Quantities<a class="headerlink" href="#geometry-layer-quantities" title="Permalink to this heading">¶</a></h2>
+<h2>Geometry Layer Quantities<a class="headerlink" href="#geometry-layer-quantities" title="Link to this heading">¶</a></h2>
 <p>To further define the problem we need to specify a few quantities that are purely geometry dependent.
 These are:</p>
 <blockquote>
@@ -189,7 +189,7 @@ of the observer inside the atmosphere. If all spherical approximations are turne
 off and the observer is outside the atmosphere they are not used.</p>
 </section>
 <section id="viewing-geometry">
-<h2>Viewing Geometry<a class="headerlink" href="#viewing-geometry" title="Permalink to this heading">¶</a></h2>
+<h2>Viewing Geometry<a class="headerlink" href="#viewing-geometry" title="Link to this heading">¶</a></h2>
 <p>The viewing geometry for DO is specified in terms of viewing angles and solar angles.</p>
 <blockquote>
 <div><ul class="simple">
@@ -203,7 +203,7 @@ off and the observer is outside the atmosphere they are not used.</p>
 <cite>cos_sza</cite>.</p>
 </section>
 <section id="weighting-function-specification">
-<h2>Weighting Function Specification<a class="headerlink" href="#weighting-function-specification" title="Permalink to this heading">¶</a></h2>
+<h2>Weighting Function Specification<a class="headerlink" href="#weighting-function-specification" title="Link to this heading">¶</a></h2>
 <p>A key feature of DO is that it is analytically linearized with respect to the optical input quantities, this
 includes:</p>
 <ul class="simple">
@@ -228,7 +228,7 @@ Currently this involves some manual work by the user.  The user must calculate h
 individually, calculate <span class="math notranslate nohighlight">\(N_{lyr}\)</span> derivatives, and then sum them together.</p>
 </section>
 <section id="computational-considerations">
-<h2>Computational Considerations<a class="headerlink" href="#computational-considerations" title="Permalink to this heading">¶</a></h2>
+<h2>Computational Considerations<a class="headerlink" href="#computational-considerations" title="Link to this heading">¶</a></h2>
 <p>For most applications DO will be called many times with the same layer configuration for multiple sets of optical properties,
 for example, the same calculation performed at multiple wavelengths.  For this reason, multiple sets of optical
 properties can be input to the model at the same time.  We refer to this dimension as the wavelength dimension, although

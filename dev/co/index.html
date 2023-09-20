@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>SASKTRAN-DO &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
+  <title>SASKTRAN-CO &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -19,9 +19,7 @@
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
-    <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Sasktran-Disco Quick Start" href="quick_start.html" />
-    <link rel="prev" title="Full Property List" href="../tir/properties.html" /> 
+    <link rel="search" title="Search" href="../search.html" /> 
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -61,16 +59,10 @@
 <li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
 </ul>
-<ul class="current">
+<ul>
 <li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
-<li class="toctree-l1 current"><a class="current reference internal" href="#">SASKTRAN-DO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html">Sasktran-Disco Quick Start</a></li>
-<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
-<li class="toctree-l2"><a class="reference internal" href="lowlevelmain.html">The Low Level Interface to SASKTRAN-DO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html">API Reference</a></li>
-</ul>
-</li>
+<li class="toctree-l1"><a class="reference internal" href="../do/index.html">SASKTRAN-DO</a></li>
 </ul>
 
         </div>
@@ -87,9 +79,9 @@
           <div role="navigation" aria-label="Page navigation">
   <ul class="wy-breadcrumbs">
       <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">SASKTRAN-DO</li>
+      <li class="breadcrumb-item active">SASKTRAN-CO</li>
       <li class="wy-breadcrumbs-aside">
-            <a href="../_sources/do/index.rst.txt" rel="nofollow"> View page source</a>
+            <a href="../_sources/co/index.rst.txt" rel="nofollow"> View page source</a>
       </li>
   </ul>
   <hr/>
@@ -97,49 +89,21 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
            <div itemprop="articleBody">
              
-  <section id="sasktran-do">
-<span id="do-main"></span><h1>SASKTRAN-DO<a class="headerlink" href="#sasktran-do" title="Link to this heading">¶</a></h1>
-<p>SASKTRAN-DO is an implementation of the discrete ordinates technique within the SASKTRAN framework.
-To get a sense for what this looks like we would recommend starting with the quickstart guide, and then go straight into looking at some examples at See <a class="reference internal" href="../examples/do_examples.html#do-examples"><span class="std std-ref">SASKTRAN-DO Examples</span></a>.</p>
-<p>SASKTRAN-DO can also be used as a pure “scattering code” where layer optical properties such as layer optical depth,
-layer single scattering albedo, and layer legendre coefficients are directly specified by the user. Generally
-this option is only recommended for advanced users working on specialized applications.  Some convenience methods
-are implemented to aid in generation of these layer optical properties, but this is still an area of active development.</p>
+  <section id="sasktran-co">
+<span id="co-main"></span><h1>SASKTRAN-CO<a class="headerlink" href="#sasktran-co" title="Link to this heading">¶</a></h1>
+<p>SASKTRAN “Co”nsoldiated is a new engine in active development, therefore things are subject to change rapidly from
+version to version. The goal is to combine the functionality of the HR, DO, TIR, and OCC into a single engine, making
+the engine suitable for most atmospheric applications.  It is possible that CO will eventually replace all of these engines and
+become the default recommended SASKTRAN engine, however this is likely years in the future.</p>
 <p>Contents:</p>
 <div class="toctree-wrapper compound">
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="quick_start.html">Sasktran-Disco Quick Start</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#usage">Usage</a></li>
-<li class="toctree-l2"><a class="reference internal" href="quick_start.html#advanced-configuration">Advanced Configuration</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="layering.html">Layering and Vertical Grids in SASKTRAN-DO</a></li>
-<li class="toctree-l2"><a class="reference internal" href="polarization.html">Polarization</a></li>
-<li class="toctree-l2"><a class="reference internal" href="spherical.html">Spherical Approximations</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="lowlevelmain.html">The Low Level Interface to SASKTRAN-DO</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="lowlevel.html">Overview</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="api.html">API Reference</a><ul>
-<li class="toctree-l2"><a class="reference internal" href="api.html#commonly-used-options">Commonly Used Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#less-commonly-used-options">Less Commonly Used Options</a></li>
-<li class="toctree-l2"><a class="reference internal" href="api.html#low-level-interface">Low Level Interface</a></li>
-</ul>
-</li>
-</ul>
 </div>
 </section>
 
 
            </div>
           </div>
-          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
-        <a href="../tir/properties.html" class="btn btn-neutral float-left" title="Full Property List" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
-        <a href="quick_start.html" class="btn btn-neutral float-right" title="Sasktran-Disco Quick Start" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
-    </div>
+          <footer>
 
   <hr/>
 

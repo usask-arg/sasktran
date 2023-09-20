@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geometry &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Geometry &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -118,7 +118,7 @@
            <div itemprop="articleBody">
              
   <section id="geometry">
-<span id="id1"></span><h1>Geometry<a class="headerlink" href="#geometry" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Geometry<a class="headerlink" href="#geometry" title="Link to this heading">¶</a></h1>
 <p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.geometry</span></code></p>
 <p>Objects used to specify the <a class="reference internal" href="lines_of_sight.html#lines-of-sight"><span class="std std-ref">Lines of Sight</span></a> and other geometric specifications to your
 <a class="reference internal" href="engine.html#engine"><span class="std std-ref">Engine</span></a> such as the sun’s position and where you would like the engines reference point to
@@ -127,7 +127,7 @@ be. Note that at a minimum, a <a class="reference internal" href="#sasktran.Geom
 calculate radiances for).</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Geometry">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geometry</span></span><a class="headerlink" href="#sasktran.Geometry" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geometry</span></span><a class="headerlink" href="#sasktran.Geometry" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class which represents the Geometry for a radiative transfer calculation.  Currently this is made up of
 a set of <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.LineOfSight</span></code></a> which define the viewing geometry, and a <a class="reference internal" href="#sasktran.Geometry.sun" title="sasktran.Geometry.sun"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Geometry.sun</span></code></a>
@@ -155,7 +155,7 @@ done in the <a class="reference internal" href="#sasktran.VerticalImage" title="
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geometry.lines_of_sight">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lines_of_sight</span></span><a class="headerlink" href="#sasktran.Geometry.lines_of_sight" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lines_of_sight</span></span><a class="headerlink" href="#sasktran.Geometry.lines_of_sight" title="Link to this definition">¶</a></dt>
 <dd><p>A list of <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.LineOfSight</span></code></a> in which to calculate radiances.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -179,7 +179,7 @@ done in the <a class="reference internal" href="#sasktran.VerticalImage" title="
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geometry.reference_point">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reference_point</span></span><a class="headerlink" href="#sasktran.Geometry.reference_point" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">reference_point</span></span><a class="headerlink" href="#sasktran.Geometry.reference_point" title="Link to this definition">¶</a></dt>
 <dd><dl class="simple">
 <dt>[latitude, longitude,</dt><dd><p>surface_altitude, mjd]. Note that longitude must be a value in the range [0, 360).</p>
 </dd>
@@ -198,7 +198,7 @@ done in the <a class="reference internal" href="#sasktran.VerticalImage" title="
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geometry.sun">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sun</span></span><a class="headerlink" href="#sasktran.Geometry.sun" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sun</span></span><a class="headerlink" href="#sasktran.Geometry.sun" title="Link to this definition">¶</a></dt>
 <dd><p>Unit vector pointing to the sun in geodetic coordinates. See
 <a class="reference internal" href="geodetic.html#sasktran.Geodetic.location" title="sasktran.Geodetic.location"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Geodetic.location</span></code></a>.</p>
 <p class="rubric">Examples</p>
@@ -220,7 +220,7 @@ done in the <a class="reference internal" href="#sasktran.VerticalImage" title="
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.VerticalImage">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">VerticalImage</span></span><a class="headerlink" href="#sasktran.VerticalImage" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">VerticalImage</span></span><a class="headerlink" href="#sasktran.VerticalImage" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Geometry" title="sasktran.geometry.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a></p>
 <p>A specialized <a class="reference internal" href="#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> class which has various convenience methods to construct lines of sight
 corresponding to a vertical image of the atmosphere based on input solar zenith angles.</p>
@@ -235,7 +235,7 @@ corresponding to a vertical image of the atmosphere based on input solar zenith 
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.VerticalImage.from_sza_saa">
-<span class="sig-name descname"><span class="pre">from_sza_saa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sza</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tanalts_km</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locallook</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">satalt_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refalt_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.VerticalImage.from_sza_saa" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_sza_saa</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">sza</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">saa</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lat</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lon</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">tanalts_km</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">locallook</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">satalt_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">refalt_km</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">20</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.VerticalImage.from_sza_saa" title="Link to this definition">¶</a></dt>
 <dd><p>Constructs the geometry from a given solar zenith angle and solar azimuth angle</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
@@ -260,11 +260,11 @@ represents a vertical image, the solar angles change for every line of sight.</p
 
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">NadirGeometry</span></span><a class="headerlink" href="#sasktran.NadirGeometry" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">NadirGeometry</span></span><a class="headerlink" href="#sasktran.NadirGeometry" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="#sasktran.Geometry" title="sasktran.geometry.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a></p>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.from_fov">
-<span class="sig-name descname"><span class="pre">from_fov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bearing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_fov" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_fov</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">center</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">ntheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dtheta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">dphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">bearing</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span><span class="w"> </span><span class="p"><span class="pre">|</span></span><span class="w"> </span><span class="pre">None</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_fov" title="Link to this definition">¶</a></dt>
 <dd><p>Adds lines of sight by creating a rectangular grid of equally
 spaced angles surrounding a center line of sight. The center line of
 sight is  defined by the observer position and the center position.</p>
@@ -289,7 +289,7 @@ if the los is vertical.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.from_lat_lon">
-<span class="sig-name descname"><span class="pre">from_lat_lon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_lat_lon" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_lat_lon</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.geodetic.Geodetic"><span class="pre">Geodetic</span></a></span></em>, <em class="sig-param"><span class="n"><span class="pre">lats</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">lons</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">elevations</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_lat_lon" title="Link to this definition">¶</a></dt>
 <dd><p>Construct lines of sight from arrays of points (latitude, longitude[, elevation]).</p>
 <p class="rubric">Notes</p>
 <p>Arguments for this function are associated sequences (ie. the first observation is at (lats[0], lons[0], the
@@ -321,7 +321,7 @@ sight, otherwise latitudes will be flattened and associated element wise.</p></l
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.from_zeniths_and_azimuth_difference">
-<span class="sig-name descname"><span class="pre">from_zeniths_and_azimuth_difference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_zenith</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_zeniths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth_differences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_azimuth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">180.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">58197.666</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_alt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(52.1332,</span> <span class="pre">253.33,</span> <span class="pre">0,</span> <span class="pre">58197.666)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_zeniths_and_azimuth_difference" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_zeniths_and_azimuth_difference</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_zenith</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_zeniths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">azimuth_differences</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_azimuth</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">180.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">58197.666</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_alt</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">(52.1332,</span> <span class="pre">253.33,</span> <span class="pre">0,</span> <span class="pre">58197.666)</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_zeniths_and_azimuth_difference" title="Link to this definition">¶</a></dt>
 <dd><p>Configures the geometry from arrays of solar zenith angles, observer zenith angles, and azimuth angle
 differences. If only one solar zenith angle is provided, from_zeniths_and_azimuths is called.</p>
 <p>If multiple solar zenith angles are provided, a north-facing (azimuth=0) sun is positioned over the reference
@@ -352,7 +352,7 @@ arrays before passing them as np.arrays.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.from_zeniths_and_azimuths">
-<span class="sig-name descname"><span class="pre">from_zeniths_and_azimuths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_zenith</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_mjds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_zeniths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_azimuths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_altitudes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_zeniths_and_azimuths" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">from_zeniths_and_azimuths</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">solar_zenith</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solar_azimuth</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_mjds</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_zeniths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_azimuths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer_altitudes</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">reference_point</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.from_zeniths_and_azimuths" title="Link to this definition">¶</a></dt>
 <dd><p>Configures the geometry from arrays of zenith and azimuth angles. Only one solar zenith angle can be specified.</p>
 <p class="rubric">Notes</p>
 <p>Observation parameters are forced to np.arrays and then broadcasted to a common shape. This means that any
@@ -377,7 +377,7 @@ arrays before passing them as np.arrays.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.lines_of_sight">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lines_of_sight</span></span><a class="headerlink" href="#sasktran.NadirGeometry.lines_of_sight" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">lines_of_sight</span></span><a class="headerlink" href="#sasktran.NadirGeometry.lines_of_sight" title="Link to this definition">¶</a></dt>
 <dd><p>A list of <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.LineOfSight</span></code></a> in which to calculate radiances.</p>
 <p class="rubric">Examples</p>
 <div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -401,7 +401,7 @@ arrays before passing them as np.arrays.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.sun">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sun</span></span><a class="headerlink" href="#sasktran.NadirGeometry.sun" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">sun</span></span><a class="headerlink" href="#sasktran.NadirGeometry.sun" title="Link to this definition">¶</a></dt>
 <dd><p>Unit vector pointing to the sun in geodetic coordinates. See
 <a class="reference internal" href="geodetic.html#sasktran.Geodetic.location" title="sasktran.Geodetic.location"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Geodetic.location</span></code></a>.</p>
 <p class="rubric">Examples</p>
@@ -421,7 +421,7 @@ arrays before passing them as np.arrays.</p>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.NadirGeometry.transform_los_to_preserve_ground_angles">
-<span class="sig-name descname"><span class="pre">transform_los_to_preserve_ground_angles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.transform_los_to_preserve_ground_angles" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">transform_los_to_preserve_ground_angles</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.NadirGeometry.transform_los_to_preserve_ground_angles" title="Link to this definition">¶</a></dt>
 <dd><p>Adjusts all lines of sight that intersect the ground so that the solar/observer zenith/azimuth angles will
 be preserved on the osculating sphere. Currently the reference point must be manually set to use this method.
 If the ground intersection of a line of sight coincides with the reference point, no change will occur.</p>
@@ -436,7 +436,7 @@ sphere locations that share lat/lon coordinates with the ground intersection.</p
 </dd></dl>
 
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="lines_of_sight.html#lines-of-sight"><span class="std std-ref">Lines of Sight</span></a></dt><dd><p>An object that describes a line of sight. A line of sight is made up of: (1) a look vector,
 (2) an observer position, (3) an obervation time.</p>

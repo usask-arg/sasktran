@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Weighting Functions &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Weighting Functions &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
         <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
@@ -39,7 +39,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -119,7 +119,7 @@
            <div itemprop="articleBody">
              
   <section id="weighting-functions">
-<span id="id1"></span><h1>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h1>
 <p>In the SASKTRAN framework, weighting functions are returned in the form:</p>
 <div class="math notranslate nohighlight">
 \[\mathrm{wf[i, j, k]} = \frac{\partial I(\lambda_\mathrm{i}, \mathrm{L_j})}{\partial
@@ -148,17 +148,17 @@
 <p>Some engines might support additional forms but by default must return the form given above. To
 calculate weighting functions the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a> must be set.</p>
 <section id="weighting-function-altitudes">
-<h2>Weighting Function Altitudes<a class="headerlink" href="#weighting-function-altitudes" title="Permalink to this heading">¶</a></h2>
+<h2>Weighting Function Altitudes<a class="headerlink" href="#weighting-function-altitudes" title="Link to this heading">¶</a></h2>
 <p>This is fairly self explanatory; weighting functions are calculated at specific altitudes. These
 altitudes are usually set via an engine option.</p>
 </section>
 <section id="weighting-function-widths">
-<h2>Weighting Function Widths<a class="headerlink" href="#weighting-function-widths" title="Permalink to this heading">¶</a></h2>
+<h2>Weighting Function Widths<a class="headerlink" href="#weighting-function-widths" title="Link to this heading">¶</a></h2>
 <p>In multiple <a class="reference internal" href="engine.html#engine"><span class="std std-ref">Engine</span></a>’s the concept of weighting function widths is important.</p>
 <figure class="align-center" id="id2" style="width: 50%">
 <img alt="_images/wf_equiv_fd.svg" src="_images/wf_equiv_fd.svg" /><figcaption>
 <p><span class="caption-text">Visual of what is meant by the weighting function altitude, and width for an equivalent
-finite difference weighting function calculation.</span><a class="headerlink" href="#id2" title="Permalink to this image">¶</a></p>
+finite difference weighting function calculation.</span><a class="headerlink" href="#id2" title="Link to this image">¶</a></p>
 </figcaption>
 </figure>
 <p>Weighting function widths refer to the region (around a weighting function altitude) in which a
@@ -176,7 +176,7 @@ the top of the atmosphere (TOA) or surface respectively.</p>
 </div>
 </section>
 <section id="see-also">
-<h2>See Also<a class="headerlink" href="#see-also" title="Permalink to this heading">¶</a></h2>
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
 <dl class="simple">
 <dt><a class="reference internal" href="engine.html#engine"><span class="std std-ref">Engine</span></a></dt><dd><p>Objects that can calculate radiances. Additionally some engines can calculate analytic or
 optimized <a class="reference internal" href="#weighting-functions"><span class="std std-ref">Weighting Functions</span></a>.</p>

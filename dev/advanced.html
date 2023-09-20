@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Advanced Topics &mdash; SASKTRAN 0+untagged.1.gabd5774 documentation</title>
+  <title>Advanced Topics &mdash; SASKTRAN 1.8.1+2.g0944a46 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=cfaf87bc"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                0+untagged.1.gabd5774
+                1.8.1+2.g0944a46
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -103,11 +103,11 @@
            <div itemprop="articleBody">
              
   <section id="advanced-topics">
-<span id="advanced"></span><h1>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Permalink to this heading">¶</a></h1>
+<span id="advanced"></span><h1>Advanced Topics<a class="headerlink" href="#advanced-topics" title="Link to this heading">¶</a></h1>
 <section id="creating-sasktranif-like-objects">
-<h2>Creating SasktranIF Like Objects<a class="headerlink" href="#creating-sasktranif-like-objects" title="Permalink to this heading">¶</a></h2>
+<h2>Creating SasktranIF Like Objects<a class="headerlink" href="#creating-sasktranif-like-objects" title="Link to this heading">¶</a></h2>
 <section id="motivation">
-<h3>Motivation<a class="headerlink" href="#motivation" title="Permalink to this heading">¶</a></h3>
+<h3>Motivation<a class="headerlink" href="#motivation" title="Link to this heading">¶</a></h3>
 <p>Often it is desired to create a new optical property or climatology for a project, but modifying the SasktranIF
 internals is not an option.  In the climatology case solution for this kind of problem is to use the UserDefined classes available
 to make a climatology for example.  However this has the downside that the created object no longer acts like a
@@ -116,7 +116,7 @@ pseudo-sasktranif objects where the logic is implemented in Python, but are stil
 regular <cite>sasktranif</cite> style objects.  This allows a decoupling of the configuration and execution stages.</p>
 </section>
 <section id="how-it-works">
-<h3>How It Works<a class="headerlink" href="#how-it-works" title="Permalink to this heading">¶</a></h3>
+<h3>How It Works<a class="headerlink" href="#how-it-works" title="Link to this heading">¶</a></h3>
 <p>All climatologies, optical properties, etc, that are input to a SASKTRAN engine must still be raw <cite>sasktranif</cite> objects.
 However since in the <cite>sasktran</cite> package we operate one level above the raw <cite>sasktranif</cite> interface, only converting
 to <cite>ISK</cite> style objects when necessary, we can defer this conversion until the last possible moment, typically right
@@ -126,7 +126,7 @@ any class that has information that can be converted into a <cite>sasktranif</ci
 be integrated very closely with the <cite>sasktran</cite> package.</p>
 </section>
 <section id="example-scaling-climatology">
-<h3>Example - Scaling Climatology<a class="headerlink" href="#example-scaling-climatology" title="Permalink to this heading">¶</a></h3>
+<h3>Example - Scaling Climatology<a class="headerlink" href="#example-scaling-climatology" title="Link to this heading">¶</a></h3>
 <p>As a first example, we will implement a scaling climatology, something which takes in an existing climatology and scales
 it by a constant value.</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sasktran.climatology</span> <span class="kn">import</span> <span class="n">ClimatologyBase</span>
@@ -197,7 +197,7 @@ however we could also look at the engines option map and figure out what the opt
 We now have an object where the logic is implemented inside python, but we can still use it the same as any
 <cite>sasktranif</cite> climatology object.</p>
 <section id="why-not-just-make-a-user-defined-climatology">
-<h4>Why Not Just Make a User Defined Climatology?<a class="headerlink" href="#why-not-just-make-a-user-defined-climatology" title="Permalink to this heading">¶</a></h4>
+<h4>Why Not Just Make a User Defined Climatology?<a class="headerlink" href="#why-not-just-make-a-user-defined-climatology" title="Link to this heading">¶</a></h4>
 <p>We could have just as easily make a ClimatologyUserDefined object with the scaled values above and used that instead,
 what is better about what we have done?  The primary advantage is that we do not need to know the configuration ahead
 of time.  If we wanted to make a UserDefined object from the beginning we would need to know what latitude/longitude/mjd
