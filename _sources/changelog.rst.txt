@@ -3,6 +3,12 @@
 Changelog
 *********
 
+1.8.2
+=====
+* Fixed a bug in how the tangent point was being calculated
+* Fixed numerous bugs in the Mac x86 wheels
+* Added experimental support for Mac ARM wheels
+
 1.8.1
 =====
 * Re-release to fix documentation bugs

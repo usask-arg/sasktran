@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Solar Spectrum &mdash; SASKTRAN 1.8.1 documentation</title>
+  <title>Solar Spectrum &mdash; SASKTRAN 1.8.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=269e6701"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.1
+                1.8.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -115,10 +115,10 @@
            <div itemprop="articleBody">
              
   <section id="solar-spectrum">
-<span id="id1"></span><h1>Solar Spectrum<a class="headerlink" href="#solar-spectrum" title="Permalink to this heading">¶</a></h1>
+<span id="id1"></span><h1>Solar Spectrum<a class="headerlink" href="#solar-spectrum" title="Link to this heading">¶</a></h1>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">SolarSpectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SAO2010'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">SolarSpectrum</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'SAO2010'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Utility class for obtaining the solar spectrum</p>
 <dl class="field-list simple">
@@ -135,7 +135,7 @@
 </div>
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum.irradiance">
-<span class="sig-name descname"><span class="pre">irradiance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solardistance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwhm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.irradiance" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">irradiance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">solardistance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">fwhm</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">stdev</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.irradiance" title="Link to this definition">¶</a></dt>
 <dd><dl class="field-list simple">
 <dt class="field-odd">Parameters<span class="colon">:</span></dt>
 <dd class="field-odd"><ul class="simple">
@@ -186,7 +186,7 @@ stdev, or an array the same size at wavelengths.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum.max_wavelength">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_wavelength</span></span><a class="headerlink" href="#sasktran.SolarSpectrum.max_wavelength" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">max_wavelength</span></span><a class="headerlink" href="#sasktran.SolarSpectrum.max_wavelength" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Maximum wavelength in nm that this specific solar spectrum is valid for
 :rtype: float</p>
 <p class="rubric">Examples</p>
@@ -200,7 +200,7 @@ stdev, or an array the same size at wavelengths.</p></li>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum.min_wavelength">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_wavelength</span></span><a class="headerlink" href="#sasktran.SolarSpectrum.min_wavelength" title="Permalink to this definition">¶</a></dt>
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">min_wavelength</span></span><a class="headerlink" href="#sasktran.SolarSpectrum.min_wavelength" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Minimum wavelength in nm that this specific solar spectrum is valid for
 :rtype: float</p>
 <p class="rubric">Examples</p>
@@ -214,7 +214,7 @@ stdev, or an array the same size at wavelengths.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum.resolution">
-<span class="sig-name descname"><span class="pre">resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.resolution" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">resolution</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavelengths</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.resolution" title="Link to this definition">¶</a></dt>
 <dd><p>Gets the resolution in fwhm for the solar spectrum at a set of specific wavelengths.
 :param wavelengths: Wavelengths to get the resolution at
 :type wavelengths: np.array</p>
@@ -237,7 +237,7 @@ stdev, or an array the same size at wavelengths.</p></li>
 
 <dl class="py method">
 <dt class="sig sig-object py" id="sasktran.SolarSpectrum.skif_object">
-<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.skif_object" title="Permalink to this definition">¶</a></dt>
+<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.SolarSpectrum.skif_object" title="Link to this definition">¶</a></dt>
 <dd><p>Get the underlying skif object</p>
 <dl class="field-list simple">
 <dt class="field-odd">Return type<span class="colon">:</span></dt>

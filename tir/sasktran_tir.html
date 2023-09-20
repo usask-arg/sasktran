@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>The TIR Engine &mdash; SASKTRAN 1.8.1 documentation</title>
+  <title>The TIR Engine &mdash; SASKTRAN 1.8.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/documentation_options.js?v=269e6701"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -37,7 +37,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.1
+                1.8.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -113,7 +113,7 @@
            <div itemprop="articleBody">
              
   <section id="the-tir-engine">
-<span id="sasktran-tir"></span><h1>The TIR Engine<a class="headerlink" href="#the-tir-engine" title="Permalink to this heading">¶</a></h1>
+<span id="sasktran-tir"></span><h1>The TIR Engine<a class="headerlink" href="#the-tir-engine" title="Link to this heading">¶</a></h1>
 <p>The <code class="docutils literal notranslate"><span class="pre">TIR</span></code> engine solves the radiative transfer equation in the thermal infra-region on a true spherical Earth.</p>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
@@ -142,7 +142,7 @@ Nadir viewing is also supported where the surface is modeled as a black body wit
 </dd>
 </dl>
 <section id="weighting-functions">
-<h2>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Permalink to this heading">¶</a></h2>
+<h2>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-TIR supports the same weighting function interface as SASKTRAN-HR, and supports multiple-species weighting
 functions with a similar interface to SASKTRAN-Disco.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard atmosphere configuration</span>
@@ -166,7 +166,7 @@ functions with a similar interface to SASKTRAN-Disco.</p>
 </pre></div>
 </div>
 <section id="shape-of-wf">
-<h3>Shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code><a class="headerlink" href="#shape-of-wf" title="Permalink to this heading">¶</a></h3>
+<h3>Shape of <code class="docutils literal notranslate"><span class="pre">wf</span></code><a class="headerlink" href="#shape-of-wf" title="Link to this heading">¶</a></h3>
 <dl class="simple">
 <dt>Length definitions for this section</dt><dd><p><code class="docutils literal notranslate"><span class="pre">lwav</span> <span class="pre">=</span> <span class="pre">len(engine.wavelengths)</span></code>
 <code class="docutils literal notranslate"><span class="pre">llos</span> <span class="pre">=</span> <span class="pre">len(geometry.lines_of_sight)</span></code>
@@ -180,19 +180,19 @@ multiple species syntax then the shape is <code class="docutils literal notransl
 </section>
 </section>
 <section id="engine-options">
-<h2>Engine Options<a class="headerlink" href="#engine-options" title="Permalink to this heading">¶</a></h2>
+<h2>Engine Options<a class="headerlink" href="#engine-options" title="Link to this heading">¶</a></h2>
 <section id="id1">
-<h3>Weighting Functions<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3>Weighting Functions<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.wf_heights">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_heights</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_heights" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_heights</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_heights" title="Link to this definition">¶</a></dt>
 <dd><p>Heights, in meters, to compute analytic weighting functions at.</p>
 <p><strong>Default:</strong> <code class="docutils literal notranslate"><span class="pre">np.linspace(500,</span> <span class="pre">99500,</span> <span class="pre">100)</span></code>  # 500, 1500, 2500, …, 99500</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.wf_widths">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_widths</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_widths" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">wf_widths</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.wf_widths" title="Link to this definition">¶</a></dt>
 <dd><p>Weighting function widths. The weighting functions determine the effect of perturbing a species population at
 each height specified by <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> on the radiance. The property wf_widths species the vertical distance
 from each value in <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> to the height where the perturbation is zero. Therefore, <code class="docutils literal notranslate"><span class="pre">wf_heights</span></code> and <code class="docutils literal notranslate"><span class="pre">wf_widths</span></code>
@@ -204,7 +204,7 @@ decreases linearly (with height) to 0 at <code class="docutils literal notransla
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.do_vmr_wf">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_vmr_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_vmr_wf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_vmr_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_vmr_wf" title="Link to this definition">¶</a></dt>
 <dd><p>Controls the units of gas species weighting functions. The default setting configures weighting functions
 to be given in (radiance / number density) where number density has units of cm^-3.
 Setting this property to True tells the engine to calculate weighting functions with units of
@@ -214,17 +214,17 @@ Setting this property to True tells the engine to calculate weighting functions 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.do_temperature_wf">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_temperature_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_temperature_wf" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">do_temperature_wf</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.do_temperature_wf" title="Link to this definition">¶</a></dt>
 <dd><p>Set this property to True to enable temperature weighting function calculations.</p>
 <p><strong>Default:</strong> False</p>
 </dd></dl>
 
 </section>
 <section id="integration">
-<h3>Integration<a class="headerlink" href="#integration" title="Permalink to this heading">¶</a></h3>
+<h3>Integration<a class="headerlink" href="#integration" title="Link to this heading">¶</a></h3>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.adaptive_integration">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">adaptive_integration</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.adaptive_integration" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">adaptive_integration</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.adaptive_integration" title="Link to this definition">¶</a></dt>
 <dd><p>A boolean property that, if True, enables dynamic cell splitting during the radiative transfer integration.
 During the ray tracing process, the line of sight is split into cells based on the intersection of the line of
 sight with geometric shapes used to split the atmosphere into homogeneous layers. When the optical depth of a
@@ -241,7 +241,7 @@ value is less than the property <code class="docutils literal notranslate"><span
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">max_optical_depth_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">max_optical_depth_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.max_optical_depth_of_cell" title="Link to this definition">¶</a></dt>
 <dd><p>Set the maximum optical depth of a single cell is allowed to have before it is split into two cells, when
 adaptive integration is enabled. If the property <code class="docutils literal notranslate"><span class="pre">adaptive_integration</span></code> is set to False, this property has no
 effect.</p>
@@ -250,7 +250,7 @@ effect.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">min_extinction_ratio_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">min_extinction_ratio_of_cell</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.min_extinction_ratio_of_cell" title="Link to this definition">¶</a></dt>
 <dd><p>Set the minimum ratio between the extinction at the endpoints of single cell that is allowed before the cell
 is split, when adaptive integration is enabled. If the property <code class="docutils literal notranslate"><span class="pre">adaptive_integration</span></code> is set to False, this
 property has no effect. The ratio is calculated as the smaller of the two extinction values divided by the
@@ -260,7 +260,7 @@ larger.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.linear_extinction">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">linear_extinction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.linear_extinction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">linear_extinction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.linear_extinction" title="Link to this definition">¶</a></dt>
 <dd><p>If this property is set to True, the engine calculates the optical depth of a cell by allowing the extinction
 to vary linearly with height, between the values at the endpoints of the cell. If this property is set to False,
 the extinction of a cell is constant, calculated as the average of the values at the endpoints.</p>
@@ -269,10 +269,10 @@ the extinction of a cell is constant, calculated as the average of the values at
 
 </section>
 <section id="geometry-and-atmosphere">
-<h3>Geometry and Atmosphere<a class="headerlink" href="#geometry-and-atmosphere" title="Permalink to this heading">¶</a></h3>
+<h3>Geometry and Atmosphere<a class="headerlink" href="#geometry-and-atmosphere" title="Link to this heading">¶</a></h3>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.ground_emissivity">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">ground_emissivity</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.ground_emissivity" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">ground_emissivity</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.ground_emissivity" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the scalar emissivity of the surface of the Earth. If the line of sight ends at the ground, the emission
 from the Earth’s surface must be taken into account. In the TIR engine this emission is modelled as a
 black body with constant emissivity. For limb-viewing geometries this setting will have no effect as there are
@@ -282,21 +282,21 @@ no scattering effects in the TIR engine.</p>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.refraction">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">refraction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.refraction" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">refraction</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.refraction" title="Link to this definition">¶</a></dt>
 <dd><p>If set to true, then refractive ray tracing is performed for the observer line of sight rays.</p>
 <p><strong>Default:</strong> false</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.surface_elevation">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">surface_elevation</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.surface_elevation" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">surface_elevation</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.surface_elevation" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the surface elevation in meters.</p>
 <p><strong>Default:</strong> 0 m</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">top_of_atmosphere_altitude</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">top_of_atmosphere_altitude</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.top_of_atmosphere_altitude" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the altitude of the top of the atmosphere. Above this altitude it is assumed there is no atmosphere.
 Due to the assumption of local thermodynamic equilibrium within the Thermal InfraRed engine, increasing
 the value above 100000 m is not recommended because this simplification can not be used at higher altitudes.</p>
@@ -305,14 +305,14 @@ the value above 100000 m is not recommended because this simplification can not 
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.grid_spacing">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">grid_spacing</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.grid_spacing" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">grid_spacing</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.grid_spacing" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the vertical spacing of homogeneous atmosphere layers in [m].</p>
 <p><strong>Default:</strong> 1000 m</p>
 </dd></dl>
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.atmosphere_dimensions">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">atmosphere_dimensions</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.atmosphere_dimensions" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">atmosphere_dimensions</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.atmosphere_dimensions" title="Link to this definition">¶</a></dt>
 <dd><p>Sets the number of dimensions for the atmosphere in the radiative transfer calculation.</p>
 <table class="docutils align-default">
 <thead>
@@ -335,10 +335,10 @@ along the line of sight</p></td>
 
 </section>
 <section id="performance">
-<h3>Performance<a class="headerlink" href="#performance" title="Permalink to this heading">¶</a></h3>
+<h3>Performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h3>
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.num_threads">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">num_threads</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.num_threads" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">num_threads</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.num_threads" title="Link to this definition">¶</a></dt>
 <dd><p>Controls the number of threads to use when multithreading the radiative transfer calculation.  The default value
 of 0 indicates that the number of threads used will be equal to the number of available logical cores on
 the target machine.</p>
@@ -349,7 +349,7 @@ transfer calculation in the background and the computer is too slow to multitask
 
 <dl class="py attribute">
 <dt class="sig sig-object py" id="sasktran.tir.engine.EngineTIR.use_cached_cross_sections">
-<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">use_cached_cross_sections</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.use_cached_cross_sections" title="Permalink to this definition">¶</a></dt>
+<span class="sig-prename descclassname"><span class="pre">EngineTIR.</span></span><span class="sig-name descname"><span class="pre">use_cached_cross_sections</span></span><a class="headerlink" href="#sasktran.tir.engine.EngineTIR.use_cached_cross_sections" title="Link to this definition">¶</a></dt>
 <dd><p>Designed to enable faster iterative radiance calculations, this setting instructs the TIR engine to compute
 cross sections using cached results. This can only be done if:</p>
 <blockquote>

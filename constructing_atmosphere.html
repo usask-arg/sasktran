@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Specifying the Atmosphere &mdash; SASKTRAN 1.8.1 documentation</title>
+  <title>Specifying the Atmosphere &mdash; SASKTRAN 1.8.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=269e6701"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.1
+                1.8.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -112,7 +112,7 @@
            <div itemprop="articleBody">
              
   <section id="specifying-the-atmosphere">
-<span id="constructing-atmosphere"></span><h1>Specifying the Atmosphere<a class="headerlink" href="#specifying-the-atmosphere" title="Permalink to this heading">¶</a></h1>
+<span id="constructing-atmosphere"></span><h1>Specifying the Atmosphere<a class="headerlink" href="#specifying-the-atmosphere" title="Link to this heading">¶</a></h1>
 <p>One of the most important and complicated steps in constructing a radiative transfer calculation is
 building a representation of the atmosphere.   To perform a radiative transfer calculation, a few things are needed:</p>
 <ul class="simple">
@@ -130,7 +130,7 @@ simple as a constant number between 0–1 indicating a Lambertian surface.</p></
 <p>All of these things are combined together with the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Atmosphere</span></code></a> class which is the input
 to the radiative transfer model.</p>
 <section id="climatologies">
-<h2>Climatologies<a class="headerlink" href="#climatologies" title="Permalink to this heading">¶</a></h2>
+<h2>Climatologies<a class="headerlink" href="#climatologies" title="Link to this heading">¶</a></h2>
 <p>A <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Climatology</span></code></a> object is essentially a lookup table of profiles
 where the tables keys are quantities name. A grid (altitude and potentially geographic)
 definition is also associated.</p>
@@ -138,7 +138,7 @@ definition is also associated.</p>
 <a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined" title="sasktran.ClimatologyUserDefined"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined</span></code></a> class. Some climatologies that we use a lot are built
 into SASKTRAN (see <cite>Useful Climatology Shorthands</cite>).</p>
 <section id="available-climatologies">
-<h3>Available Climatologies<a class="headerlink" href="#available-climatologies" title="Permalink to this heading">¶</a></h3>
+<h3>Available Climatologies<a class="headerlink" href="#available-climatologies" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="climatology.html#sasktran.ClimatologyUserDefined" title="sasktran.ClimatologyUserDefined"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.ClimatologyUserDefined</span></code></a>(altitudes, ...)</p></td>
@@ -167,9 +167,9 @@ into SASKTRAN (see <cite>Useful Climatology Shorthands</cite>).</p>
 </section>
 </section>
 <section id="optical-properties">
-<h2>Optical Properties<a class="headerlink" href="#optical-properties" title="Permalink to this heading">¶</a></h2>
+<h2>Optical Properties<a class="headerlink" href="#optical-properties" title="Link to this heading">¶</a></h2>
 <section id="available-optical-properties">
-<h3>Available Optical Properties<a class="headerlink" href="#available-optical-properties" title="Permalink to this heading">¶</a></h3>
+<h3>Available Optical Properties<a class="headerlink" href="#available-optical-properties" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="optical_property.html#sasktran.Rayleigh" title="sasktran.Rayleigh"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Rayleigh</span></code></a>()</p></td>
@@ -211,7 +211,7 @@ into SASKTRAN (see <cite>Useful Climatology Shorthands</cite>).</p>
 </section>
 </section>
 <section id="the-species-object">
-<h2>The Species Object<a class="headerlink" href="#the-species-object" title="Permalink to this heading">¶</a></h2>
+<h2>The Species Object<a class="headerlink" href="#the-species-object" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="species.html#sasktran.Species" title="sasktran.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> class is a combination of a <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a>
 and <a class="reference internal" href="optical_property.html#sasktran.OpticalProperty" title="sasktran.OpticalProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpticalProperty</span></code></a>,
 linking them together.  In most cases creating the Species is as simple as:</p>
@@ -245,7 +245,7 @@ could not automatically be determined.  Here we need to do:</p>
 </div>
 </section>
 <section id="the-atmospheric-state">
-<h2>The Atmospheric State<a class="headerlink" href="#the-atmospheric-state" title="Permalink to this heading">¶</a></h2>
+<h2>The Atmospheric State<a class="headerlink" href="#the-atmospheric-state" title="Link to this heading">¶</a></h2>
 <p>The atmospheric state is a special <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a> which supports both pressure
 and temperature.  These pressure and temperature profiles are used to calculate the cross sections of the
 atmospheric constituents, they are not used to define Rayleigh scattering within the atmosphere, that is done with
@@ -268,7 +268,7 @@ be changed through:</p>
 it is necessary that both of these keys are supported.</p>
 </section>
 <section id="brdf">
-<h2>BRDF<a class="headerlink" href="#brdf" title="Permalink to this heading">¶</a></h2>
+<h2>BRDF<a class="headerlink" href="#brdf" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="brdf.html#sasktran.BRDF" title="sasktran.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a> object controls the surface reflectance inside the radiative transfer model.
 This could be as simple as a scalar which represents an isotropically reflecting Lambertian surface:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -283,7 +283,7 @@ This could be as simple as a scalar which represents an isotropically reflecting
 </pre></div>
 </div>
 <section id="available-brdf-s">
-<h3>Available BRDF’s<a class="headerlink" href="#available-brdf-s" title="Permalink to this heading">¶</a></h3>
+<h3>Available BRDF’s<a class="headerlink" href="#available-brdf-s" title="Link to this heading">¶</a></h3>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.Lambertian" title="sasktran.Lambertian"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.Lambertian</span></code></a>(albedo)</p></td>
@@ -311,7 +311,7 @@ This could be as simple as a scalar which represents an isotropically reflecting
 </table>
 </section>
 <section id="kernel-based-brdf-s">
-<h3>Kernel Based BRDF’s<a class="headerlink" href="#kernel-based-brdf-s" title="Permalink to this heading">¶</a></h3>
+<h3>Kernel Based BRDF’s<a class="headerlink" href="#kernel-based-brdf-s" title="Link to this heading">¶</a></h3>
 <p>For advanced users it is possible to combine multiple BRDF Kernels together to create a hybrid BRDF object.
 The main class which enables this is the <a class="reference internal" href="brdf.html#sasktran.LinearCombination" title="sasktran.LinearCombination"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearCombination</span></code></a> object.:</p>
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
@@ -322,7 +322,7 @@ The main class which enables this is the <a class="reference internal" href="brd
 </pre></div>
 </div>
 <section id="available-kernels">
-<h4>Available Kernels<a class="headerlink" href="#available-kernels" title="Permalink to this heading">¶</a></h4>
+<h4>Available Kernels<a class="headerlink" href="#available-kernels" title="Link to this heading">¶</a></h4>
 <table class="autosummary longtable docutils align-default">
 <tbody>
 <tr class="row-odd"><td><p><a class="reference internal" href="brdf.html#sasktran.RoujeanKernel" title="sasktran.RoujeanKernel"><code class="xref py py-obj docutils literal notranslate"><span class="pre">sasktran.RoujeanKernel</span></code></a>()</p></td>

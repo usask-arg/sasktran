@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Choosing an Engine &mdash; SASKTRAN 1.8.1 documentation</title>
+  <title>Choosing an Engine &mdash; SASKTRAN 1.8.2 documentation</title>
       <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
+        <script src="_static/documentation_options.js?v=269e6701"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
@@ -37,7 +37,7 @@
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.1
+                1.8.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
@@ -125,19 +125,19 @@
            <div itemprop="articleBody">
              
   <section id="choosing-an-engine">
-<span id="other-engines"></span><h1>Choosing an Engine<a class="headerlink" href="#choosing-an-engine" title="Permalink to this heading">¶</a></h1>
+<span id="other-engines"></span><h1>Choosing an Engine<a class="headerlink" href="#choosing-an-engine" title="Link to this heading">¶</a></h1>
 <p>SASKTRAN is a framework containing modules to handle all aspects of the radiative transfer problem, including setting up the geometry, defining the atmosphere, and solving the radiative transfer equation.
 The radiative transfer equation can be solved in multiple ways, and SASKTRAN contains multiple engines, or solvers, to perform this task.
 Which engine to use depends on the specific task at hand.</p>
 <section id="sasktran-hr">
-<h2>SASKTRAN-HR<a class="headerlink" href="#sasktran-hr" title="Permalink to this heading">¶</a></h2>
+<h2>SASKTRAN-HR<a class="headerlink" href="#sasktran-hr" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-HR is the primary engine used and is described in Zawada et. al. (2015).</p>
 <section id="suitable-for">
-<h3>Suitable For<a class="headerlink" href="#suitable-for" title="Permalink to this heading">¶</a></h3>
+<h3>Suitable For<a class="headerlink" href="#suitable-for" title="Link to this heading">¶</a></h3>
 <p>Problems requiring fast and accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant.</p>
 </section>
 <section id="advantages">
-<h3>Advantages<a class="headerlink" href="#advantages" title="Permalink to this heading">¶</a></h3>
+<h3>Advantages<a class="headerlink" href="#advantages" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Fully spherical geometry</p></li>
 <li><p>Fast</p></li>
@@ -146,7 +146,7 @@ Which engine to use depends on the specific task at hand.</p>
 </ul>
 </section>
 <section id="disadvantages">
-<h3>Disadvantages<a class="headerlink" href="#disadvantages" title="Permalink to this heading">¶</a></h3>
+<h3>Disadvantages<a class="headerlink" href="#disadvantages" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Accuracy is controlled by a wide variety of settings which may require specific tuning for your problem.</p></li>
 <li><p>Support for atmospheric emissions is available, but experimental and limited.</p></li>
@@ -154,42 +154,42 @@ Which engine to use depends on the specific task at hand.</p>
 </section>
 </section>
 <section id="sasktran-occ">
-<h2>SASKTRAN-OCC<a class="headerlink" href="#sasktran-occ" title="Permalink to this heading">¶</a></h2>
+<h2>SASKTRAN-OCC<a class="headerlink" href="#sasktran-occ" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-OCC is an engine designed for fast occultation applications.</p>
 <section id="id1">
-<h3>Suitable For<a class="headerlink" href="#id1" title="Permalink to this heading">¶</a></h3>
+<h3>Suitable For<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
 <p>Occultation viewing geometry in all spectral regions.</p>
 </section>
 <section id="id2">
-<h3>Advantages<a class="headerlink" href="#id2" title="Permalink to this heading">¶</a></h3>
+<h3>Advantages<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Extremely fast</p></li>
 <li><p>Refraction is treated within a fully spherical atmosphere</p></li>
 </ul>
 </section>
 <section id="id3">
-<h3>Disadvantages<a class="headerlink" href="#id3" title="Permalink to this heading">¶</a></h3>
+<h3>Disadvantages<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Scattering and emission terms are neglected</p></li>
 </ul>
 </section>
 </section>
 <section id="sasktran-mc">
-<h2>SASKTRAN-MC<a class="headerlink" href="#sasktran-mc" title="Permalink to this heading">¶</a></h2>
+<h2>SASKTRAN-MC<a class="headerlink" href="#sasktran-mc" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-MC performs Monte-Carlo integration to solve the RTE and is described in Zawada et. al. (2015).</p>
 <section id="id4">
-<h3>Suitable For<a class="headerlink" href="#id4" title="Permalink to this heading">¶</a></h3>
+<h3>Suitable For<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
 <p>Problems requiring accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant and runtime is of secondary concern.</p>
 </section>
 <section id="id5">
-<h3>Advantages<a class="headerlink" href="#id5" title="Permalink to this heading">¶</a></h3>
+<h3>Advantages<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Fully spherical geometry</p></li>
 <li><p>Accurate, requiring much less configuration than SASKTRAN-HR</p></li>
 </ul>
 </section>
 <section id="id6">
-<h3>Disadvantages<a class="headerlink" href="#id6" title="Permalink to this heading">¶</a></h3>
+<h3>Disadvantages<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Can be slow depending on the application</p></li>
 <li><p>Results contain random noise</p></li>
@@ -197,21 +197,21 @@ Which engine to use depends on the specific task at hand.</p>
 </section>
 </section>
 <section id="sasktran-do">
-<h2>SASKTRAN-DO<a class="headerlink" href="#sasktran-do" title="Permalink to this heading">¶</a></h2>
+<h2>SASKTRAN-DO<a class="headerlink" href="#sasktran-do" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-DO is a discrete ordinates solver based upon the VLIDORT technique.</p>
 <section id="id7">
-<h3>Suitable For<a class="headerlink" href="#id7" title="Permalink to this heading">¶</a></h3>
+<h3>Suitable For<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
 <p>Nadir viewing applications in the UV-VIS-NIR spectral region.</p>
 </section>
 <section id="id8">
-<h3>Advantages<a class="headerlink" href="#id8" title="Permalink to this heading">¶</a></h3>
+<h3>Advantages<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Extremely fast</p></li>
 <li><p>Perfectly linearized for most inputs</p></li>
 </ul>
 </section>
 <section id="id9">
-<h3>Disadvantages<a class="headerlink" href="#id9" title="Permalink to this heading">¶</a></h3>
+<h3>Disadvantages<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Not suitable for limb viewing applications</p></li>
 <li><p>Errors that increase as the viewing zenith angle increases.</p></li>
@@ -219,14 +219,14 @@ Which engine to use depends on the specific task at hand.</p>
 </section>
 </section>
 <section id="sasktran-tir">
-<h2>SASKTRAN-TIR<a class="headerlink" href="#sasktran-tir" title="Permalink to this heading">¶</a></h2>
+<h2>SASKTRAN-TIR<a class="headerlink" href="#sasktran-tir" title="Link to this heading">¶</a></h2>
 <p>SASKTRAN-TIR is a thermal radiative transfer model designed for applications in the IR and beyond spectral regions.</p>
 <section id="id10">
-<h3>Suitable For<a class="headerlink" href="#id10" title="Permalink to this heading">¶</a></h3>
+<h3>Suitable For<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
 <p>Applications in the IR and beyond spectral regime where scattering can be neglected.</p>
 </section>
 <section id="id11">
-<h3>Advantages<a class="headerlink" href="#id11" title="Permalink to this heading">¶</a></h3>
+<h3>Advantages<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Fast</p></li>
 <li><p>Spherical geometry</p></li>
@@ -234,14 +234,14 @@ Which engine to use depends on the specific task at hand.</p>
 </ul>
 </section>
 <section id="id12">
-<h3>Disadvantages<a class="headerlink" href="#id12" title="Permalink to this heading">¶</a></h3>
+<h3>Disadvantages<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
 <ul class="simple">
 <li><p>Scattering is not included</p></li>
 </ul>
 </section>
 </section>
 <section id="references">
-<h2>References<a class="headerlink" href="#references" title="Permalink to this heading">¶</a></h2>
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
 <p>Zawada, D. J., Dueck, S. R., Rieger, L. A., Bourassa, A. E., Lloyd, N. D., and Degenstein, D. A.: High-resolution and Monte Carlo additions to the SASKTRAN radiative transfer model, Atmos. Meas. Tech., 8, 2609-2623, <a class="reference external" href="https://doi.org/10.5194/amt-8-2609-2015">https://doi.org/10.5194/amt-8-2609-2015</a>, 2015.</p>
 <p>Bourassa, A. E., Degenstein, D. A., and Llewellyn, E. J.: SASKTRAN: A Spherical Geometry Radiative Transfer Code for Efficient Estimation of Limb Scattered Sunlight, J Quant Spectrosc Radiat Trans, Volume 109, Issue 1, 52-73, <a class="reference external" href="https://doi.org/10.1016/j.jqsrt.2007.07.007">https://doi.org/10.1016/j.jqsrt.2007.07.007</a>, 2008.</p>
 </section>

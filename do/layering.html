@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Layering and Vertical Grids in SASKTRAN-DO &mdash; SASKTRAN 1.8.1 documentation</title>
+  <title>Layering and Vertical Grids in SASKTRAN-DO &mdash; SASKTRAN 1.8.2 documentation</title>
       <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/_static/theme_overrides.css" type="text/css" />
@@ -13,9 +13,9 @@
     <script src="../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
-        <script src="../_static/doctools.js"></script>
-        <script src="../_static/sphinx_highlight.js"></script>
+        <script src="../_static/documentation_options.js?v=269e6701"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
@@ -37,7 +37,7 @@
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.1
+                1.8.2
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -110,7 +110,7 @@
            <div itemprop="articleBody">
              
   <section id="layering-and-vertical-grids-in-sasktran-do">
-<span id="layering"></span><h1>Layering and Vertical Grids in SASKTRAN-DO<a class="headerlink" href="#layering-and-vertical-grids-in-sasktran-do" title="Permalink to this heading">¶</a></h1>
+<span id="layering"></span><h1>Layering and Vertical Grids in SASKTRAN-DO<a class="headerlink" href="#layering-and-vertical-grids-in-sasktran-do" title="Link to this heading">¶</a></h1>
 <p>The discrete ordinates method (and by extension, SASKTRAN-DO) represents the atmosphere by a set of stacked,
 homogenous layers.  Each layer is characterized by the vertical optical depth, single scattering albedo, and
 Legendre coefficients of the phase function expansion.  If you are familiar with “pure scattering” radiative transfer
@@ -118,7 +118,7 @@ models such as DISORT or LIDORT these are the input quantities you may be used t
 with a higher level interface.  This page describes internally how SASKTRAN-DO
 interprets the input it is provided.</p>
 <section id="the-altitude-grid">
-<h2>The Altitude Grid<a class="headerlink" href="#the-altitude-grid" title="Permalink to this heading">¶</a></h2>
+<h2>The Altitude Grid<a class="headerlink" href="#the-altitude-grid" title="Link to this heading">¶</a></h2>
 <p>We can think of the primary input to SASKTRAN-DO being number density of a variety of species on a fixed altitude grid.
 The altitude grid object is set through the <a class="reference internal" href="../engine.html#sasktran.EngineDO.alt_grid" title="sasktran.EngineDO.alt_grid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sasktran.EngineDO.alt_grid()</span></code></a> method of the engine,
 with the default being a linearly spaced grid from 0 km to 100 km with a spacing of 0.5 km.  Any climatology
@@ -130,7 +130,7 @@ respect to an atmospheric species will be returned with respect to this altitude
 uniformly spaced, and the bottom and top altitudes can be set to any value.</p>
 </section>
 <section id="layer-construction">
-<h2>Layer Construction<a class="headerlink" href="#layer-construction" title="Permalink to this heading">¶</a></h2>
+<h2>Layer Construction<a class="headerlink" href="#layer-construction" title="Link to this heading">¶</a></h2>
 <p>While inputs are specified on an altitude grid, internally the discrete ordinate technique requires homogenous layers.
 As previously mentioned, the layer properties are calculated by integrating the atmospheric state over the layer boundaries,
 but there are multiple ways to determine how the layer boundaries themselves are determined.  SASKTRAN-DO
@@ -139,7 +139,7 @@ primarily influence the layer construction are <code class="xref py py-meth docu
 controls the total number of homogeneous layers, and <a class="reference internal" href="../engine.html#sasktran.EngineDO.layer_construction" title="sasktran.EngineDO.layer_construction"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sasktran.EngineDO.layer_construction()</span></code></a> which
 controls the technique to determine the layer boundaries.</p>
 <section id="uniform-pressure-layers">
-<h3>Uniform Pressure Layers<a class="headerlink" href="#uniform-pressure-layers" title="Permalink to this heading">¶</a></h3>
+<h3>Uniform Pressure Layers<a class="headerlink" href="#uniform-pressure-layers" title="Link to this heading">¶</a></h3>
 <p>The default method to construct layers is to place the boundaries uniform in pressure.  This is a good technique
 for a variety of applications as it results in layers that are more densely spaced close to the surface where scattering is
 the greatest.  It also results in layer boundaries that are independent of the input concentrations.  This is the default
@@ -149,7 +149,7 @@ setting but can be manually specified with</p>
 </div>
 </section>
 <section id="uniform-height-layers">
-<h3>Uniform Height Layers<a class="headerlink" href="#uniform-height-layers" title="Permalink to this heading">¶</a></h3>
+<h3>Uniform Height Layers<a class="headerlink" href="#uniform-height-layers" title="Link to this heading">¶</a></h3>
 <p>Another option is to place the layers uniformly in altitude.  This can be beneficial when operating in limb mode
 where altitude variation is important or in areas of large absorption.  This can be set through</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">layer_construction</span> <span class="o">=</span> <span class="s1">&#39;uniform_height&#39;</span>
@@ -162,7 +162,7 @@ where altitude variation is important or in areas of large absorption.  This can
 <p>note that setting this will set both the number of layers and layer construction method options.</p>
 </section>
 <section id="manually-specifying-layer-boundaries">
-<h3>Manually Specifying Layer Boundaries<a class="headerlink" href="#manually-specifying-layer-boundaries" title="Permalink to this heading">¶</a></h3>
+<h3>Manually Specifying Layer Boundaries<a class="headerlink" href="#manually-specifying-layer-boundaries" title="Link to this heading">¶</a></h3>
 <p>Lastly, layers can be manual specified through</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">layer_construction</span> <span class="o">=</span> <span class="n">array_containing_boundaries_in_m</span>
 </pre></div>
@@ -172,7 +172,7 @@ equal to the number of layer boundaries minus one.</p>
 </section>
 </section>
 <section id="accuracy-involving-the-number-of-layers">
-<h2>Accuracy Involving the Number of Layers<a class="headerlink" href="#accuracy-involving-the-number-of-layers" title="Permalink to this heading">¶</a></h2>
+<h2>Accuracy Involving the Number of Layers<a class="headerlink" href="#accuracy-involving-the-number-of-layers" title="Link to this heading">¶</a></h2>
 <p>Including more layers both improves the models ability to represent vertical inhomogeneity, and improves the calculation
 of the pseudo-spherical beam transmittance.  The number of layers required to achieve a certain level of accuracy will be
 highly application dependent.  Generally in areas of the spectrum with little absorption less layers are required, while large
