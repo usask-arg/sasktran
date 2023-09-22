@@ -2,6 +2,14 @@ name: 'SASKTRAN2 Conda Build'
 
 on:
   workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, reopened, synchronize, labeled ]
+  release:
+    types:
+      - published
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
