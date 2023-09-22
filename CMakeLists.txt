@@ -25,12 +25,7 @@ endif()
 
 project (sasktran-core VERSION ${SASKTRAN_CORE_VERSION})
 
-# Fortran library settings, windows we add a link directory, linux we build it
-if(WIN32)
-    link_directories(${CMAKE_SOURCE_DIR}/src/core/fortran_libraries/lib/Windows_x64/)
-else()
-    enable_language(Fortran)
-endif()
+
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -44,6 +39,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
+
+option(BUILD_SASKTRAN_LEGACY "Builds the Legacy SASKTRAN code" ON)
+
 # Try to find boost 1.6 or greater
 set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
 find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread log)
@@ -146,4 +144,7 @@ install (TARGETS sasktranBuildProperties
 
 
 add_subdirectory (src/sasktran2)
-add_subdirectory (src/core)
+
+if(BUILD_SASKTRAN_LEGACY)
+    add_subdirectory (src/core)
+endif()

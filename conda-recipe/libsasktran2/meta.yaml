@@ -1,0 +1,34 @@
+package:
+  name: libsasktran2
+  version: "0.0.0"
+
+source:
+  path: ../../ # this can be changed to git-url
+
+build:
+  number: 0
+  binary_relocation: true
+  script:
+    - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release # [not win]
+    - cmake ${CMAKE_ARGS}  -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release # [win]
+    - cmake --build build_conda --config Release --target install
+
+requirements:
+  build:
+    - cmake >=3.5
+    - {{ compiler('cxx') }}
+  host:
+    - boost-cpp
+    - libopenblas
+    - eigen
+    - catch2
+    - llvm-openmp # [mac]
+  run:
+    - libopenblas
+    - boost-cpp
+    - llvm-openmp # [mac]
+
+about:
+  home: http://www.example.com
+  license: MIT
+  summary: "Summary in here ..."
