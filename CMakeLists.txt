@@ -88,7 +88,7 @@ endif()
 # We support multiple blas vendors, but these can require some funny options
 set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
         "Sets the BLAS/LAPACK vendor. See https://cmake.org/cmake/help/latest/module/FindBLAS.html#blas-lapack-vendors.")
-set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple)
+set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple Generic)
 
 if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     set(BLA_STATIC FALSE)
@@ -119,7 +119,7 @@ if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     find_path(LAPACKE_H_INCLUDE_DIR mkl_lapacke.h REQUIRED)  # include directory for <lapacke.h>
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_MKL)
-else()
+elseif(SKTRAN_BLAS_VENDOR MATCHES "OpenBLAS")
     find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
     find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR})
