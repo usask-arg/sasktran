@@ -125,7 +125,7 @@ else()
     list(GET ${LAPACK_LIBRARIES} 0 FIRST_LAPACK_LIBRARY)
     get_filename_component(LAPACKE_HINT_DIRECTORY ${FIRST_LAPACK_LIBRARY} PATH)
 
-    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED HINTS )  # include directory for <lapacke.h>
+    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED HINTS ${LAPACKE_HINT_DIRECTORY})  # include directory for <lapacke.h>
 
     list(GET ${BLAS_LIBRARIES} 0 FIRST_BLAS_LIBRARY)
 
