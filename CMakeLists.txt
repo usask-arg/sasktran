@@ -106,7 +106,9 @@ else()
     set(BLA_SIZEOF_INTEGER 4)
     target_compile_definitions(sasktranBuildProperties INTERFACE EIGEN_USE_BLAS)
 endif()
-set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
+if(NOT (SKTRAN_BLAS_VENDOR MATCHES "Generic"))
+    set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
+endif()
 set(CMAKE_FIND_LIBRARY_PREFIXES "" lib)  # openblas include a "lib" prefix in it's names
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
@@ -119,9 +121,16 @@ if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     find_path(LAPACKE_H_INCLUDE_DIR mkl_lapacke.h REQUIRED)  # include directory for <lapacke.h>
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_MKL)
-elseif(SKTRAN_BLAS_VENDOR MATCHES "OpenBLAS")
-    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
-    find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
+else()
+    list(GET ${LAPACK_LIBRARIES} 0 FIRST_LAPACK_LIBRARY)
+    get_filename_component(LAPACKE_HINT_DIRECTORY ${FIRST_LAPACK_LIBRARY} PATH)
+
+    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED HINTS )  # include directory for <lapacke.h>
+
+    list(GET ${BLAS_LIBRARIES} 0 FIRST_BLAS_LIBRARY)
+
+    get_filename_component(BLAS_HINT_DIRECTORY ${FIRST_BLAS_LIBRARY} PATH)
+    find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED HINTS ${BLAS_HINT_DIRECTORY})    # include directory for <cblas.h>
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR})
 
     if(WIN32)
