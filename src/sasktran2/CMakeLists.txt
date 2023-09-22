@@ -8,9 +8,7 @@ target_include_directories(sasktran2BuildProperties INTERFACE
 		$<INSTALL_INTERFACE:include>)
 
 # Add sub libraries
-add_library(sasktran2 
-			STATIC
-
+add_library(sasktran2
 			coordinates/geodetic.cpp
 		    coordinates/coordinates.cpp
 

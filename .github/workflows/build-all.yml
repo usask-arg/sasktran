@@ -28,7 +28,7 @@ jobs:
         with:
           fetch-depth: 0
       - run: git config --global --add safe.directory /__w/sasktran/sasktran
-      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DCMAKE_PREFIX_PATH=/usr/local/include/openblas
+      - run: cmake -S . -B build  -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$CMAKE_INSTALL_PREFIX -DCMAKE_PREFIX_PATH=/usr/local/include/openblas -DBUILD_SHARED_LIBS=OFF
       - run: cmake --build build --config Release --target install -j 2
       - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
@@ -212,7 +212,7 @@ jobs:
       - name: configure cmake project
         shell: bash -el {0}
         run: | 
-          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
+          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF  -DBUILD_SHARED_LIBS=OFF
       - name: build cpp
         shell: bash -el {0}
         run: cmake --build build --config Release --target install -j 3
@@ -322,7 +322,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
+      - run: cmake -S . -B build  -DPythonEnvironments="py37;py38;py39;py310;py311" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"  -DBUILD_SHARED_LIBS=OFF
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/

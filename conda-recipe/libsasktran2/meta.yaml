@@ -9,8 +9,8 @@ build:
   number: 0
   binary_relocation: true
   script:
-    - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release # [not win]
-    - cmake ${CMAKE_ARGS}  -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release # [win]
+    - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON # [not win]
+    - cmake ${CMAKE_ARGS}  -H. -Bbuild_conda -G "%CMAKE_GENERATOR%" -DCMAKE_INSTALL_PREFIX="%LIBRARY_PREFIX%" -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON # [win]
     - cmake --build build_conda --config Release --target install
 
 requirements:
@@ -19,12 +19,14 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - boost-cpp
-    - libopenblas
+    - libblas
+    - libcblas
+    - liblapack
+    - liblapacke
     - eigen
     - catch2
     - llvm-openmp # [mac]
   run:
-    - libopenblas
     - boost-cpp
     - llvm-openmp # [mac]
 
