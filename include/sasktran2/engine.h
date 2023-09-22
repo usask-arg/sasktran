@@ -81,12 +81,6 @@ public:
               m_viewing_geometry(viewing_rays),
               m_geometry(geometry)
               {
-                  #ifndef SKTRAN_USE_ACCELERATE
-                  #ifndef SKTRAN_USE_MKL
-                  LAPACKE_set_nancheck(0);
-                  #endif
-                  #endif
-
                   // First create the ray tracer
                   construct_raytracer();
 

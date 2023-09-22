@@ -122,17 +122,6 @@ if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_MKL)
 else()
-    list(GET ${LAPACK_LIBRARIES} 0 FIRST_LAPACK_LIBRARY)
-    get_filename_component(LAPACKE_HINT_DIRECTORY ${FIRST_LAPACK_LIBRARY} PATH)
-
-    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED HINTS ${LAPACKE_HINT_DIRECTORY}/../include)  # include directory for <lapacke.h>
-
-    list(GET ${BLAS_LIBRARIES} 0 FIRST_BLAS_LIBRARY)
-
-    get_filename_component(BLAS_HINT_DIRECTORY ${FIRST_BLAS_LIBRARY} PATH)
-    find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED HINTS ${BLAS_HINT_DIRECTORY})    # include directory for <cblas.h>
-    target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR}/../include)
-
     if(WIN32)
         # OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
         target_compile_options(sasktranBuildProperties INTERFACE /wd4190)
