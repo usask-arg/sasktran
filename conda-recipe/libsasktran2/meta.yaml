@@ -19,10 +19,10 @@ requirements:
     - {{ compiler('cxx') }}
   host:
     - boost-cpp
-    - libblas
-    - libcblas
-    - liblapack
-    - liblapacke
+    - libblas=*=*netlib
+    - libcblas=*=*netlib
+    - liblapack=*=*netlib
+    - liblapacke=*=*netlib
     - eigen
     - catch2
     - llvm-openmp # [mac]
