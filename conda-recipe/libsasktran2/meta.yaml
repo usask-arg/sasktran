@@ -26,9 +26,11 @@ requirements:
     - eigen
     - catch2
     - llvm-openmp # [mac]
+    - zlib
   run:
     - boost-cpp
     - llvm-openmp # [mac]
+    - zlib
 
 about:
   home: http://www.example.com

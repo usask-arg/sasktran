@@ -127,6 +127,10 @@ else()
         target_compile_options(sasktranBuildProperties INTERFACE /wd4190)
     endif()
 
+    if(SKTRAN_BLAS_VENDOR MATCHES "Generic")
+        target_link_libraries(sasktranBuildProperties INTERFACE lapacke)
+    endif()
+
 endif()
 
 # -------- END LAPACK FINDING -------
