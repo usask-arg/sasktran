@@ -128,8 +128,8 @@ else()
     endif()
 
     if(SKTRAN_BLAS_VENDOR MATCHES "Generic")
-        if(UNIX)
-            target_link_libraries(sasktranBuildProperties INTERFACE lapacke)
+        find_package(LAPACKE REQUIRED CONFIG)
+            target_link_libraries(sasktranBuildProperties INTERFACE LAPACKE_LIBRARIES)
         endif()
     endif()
 
