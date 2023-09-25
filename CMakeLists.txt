@@ -7,8 +7,11 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 if(UNIX)
     add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment -Wno-deprecated-declarations -Wno-psabi")
+    enable_language(Fortran)
 endif()
 
 execute_process(COMMAND git describe --tags
