@@ -2,7 +2,6 @@
 
 #include <sasktran2/config.h>
 #include <sasktran2/atmosphere/atmosphere.h>
-#include <sasktran2/coordinates/coordinates.h>
 #include <sasktran2/viewinggeometry.h>
 #include <sasktran2/raytracing.h>
 #include <sasktran2/solartransmission.h>

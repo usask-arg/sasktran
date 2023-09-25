@@ -9,9 +9,6 @@ target_include_directories(sasktran2BuildProperties INTERFACE
 
 # Add sub libraries
 add_library(sasktran2
-			coordinates/geodetic.cpp
-		    coordinates/coordinates.cpp
-
 		    config/config.cpp
 
 		    unitsphere/lebedev_autogen.cpp
