@@ -23,6 +23,7 @@ requirements:
     - libcblas=*=*netlib
     - liblapack=*=*netlib
     - liblapacke=*=*netlib
+    - libtmglib=*=*netlib
     - eigen
     - catch2
     - llvm-openmp # [mac]
