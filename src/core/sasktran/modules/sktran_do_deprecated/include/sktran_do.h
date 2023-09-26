@@ -69,8 +69,7 @@
 
         #define lapack_complex_float std::complex<float>
         #define lapack_complex_double std::complex<double>
-        #include <lapacke.h>
-        #include <cblas.h>
+        #include <Eigen/src/misc/lapacke.h>
     #endif
 #endif
 

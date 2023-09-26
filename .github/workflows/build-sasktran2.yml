@@ -104,7 +104,7 @@ jobs:
       - name: Build Conda package
         shell: bash -el {0}
         run: |
-          conda-build -c conda-forge -c file://deps/ pysasktran2/conda-recipe/meta.yaml --output-folder pkgs/
+          conda-build -c conda-forge -c file:///deps/ pysasktran2/conda-recipe --output-folder pkgs/
 
       - name: Save conda package
         uses: actions/upload-artifact@v3

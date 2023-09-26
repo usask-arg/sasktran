@@ -108,3 +108,9 @@ install (TARGETS sasktran2
 		EXPORT ${EXPORT_NAME}
 		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
 		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/include" # source directory
+		DESTINATION "include" # target directory
+		FILES_MATCHING # install only matched files
+		PATTERN "*.h" # select header files
+		)
