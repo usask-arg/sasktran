@@ -1,0 +1,123 @@
+name: 'SASKTRAN2 Conda Build'
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+  pull_request:
+    types: [ opened, reopened, synchronize, labeled ]
+  release:
+    types:
+      - published
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+
+jobs:
+  build-conda-libsasktran2:
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-11]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Conda build environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: conda_build
+          environment-file: buildscripts/conda-build-env.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+      - name: Build Conda package
+        shell: bash -el {0}
+        run: |
+          conda-build -c conda-forge conda-recipe/libsasktran2 --output-folder pkgs/
+
+      - name: Save conda package
+        uses: actions/upload-artifact@v3
+        with:
+          name: libsasktran2-conda-${{ matrix.os}}-x86_64
+          path: pkgs
+
+  build-conda-cross-mac-arm:
+    runs-on: macos-11
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Conda build environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: conda_build
+          environment-file: buildscripts/conda-build-env.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+      - name: Build Conda package
+        shell: bash -el {0}
+        run: |
+          conda-build -c conda-forge conda-recipe/libsasktran2 -m conda-recipe/osx_arm64_.yaml --output-folder pkgs/ --no-test
+
+      - name: Save conda package
+        uses: actions/upload-artifact@v3
+        with:
+          name: libsasktran2-conda-macos-11-arm
+          path: pkgs
+
+  build-conda-pysasktran2:
+    needs: build-conda-libsasktran2
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-11]
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+          submodules: true
+
+      - name: Setup Conda build environment
+        uses: conda-incubator/setup-miniconda@v2
+        with:
+          activate-environment: conda_build
+          environment-file: buildscripts/conda-build-env.yml
+          channels: conda-forge
+          auto-activate-base: false
+
+      - name: Download libsasktran2
+        id: download
+        uses: actions/download-artifact@v3
+        with:
+          name: libsasktran2-conda-${{ matrix.os}}-x86_64
+          path: deps
+
+      - name: Build Conda package
+        shell: bash -el {0}
+        run: |
+          conda-build -c conda-forge -c file:/${{steps.download.outputs.download-path}} pysasktran2/conda-recipe --output-folder pkgs/
+
+      - name: Save conda package
+        uses: actions/upload-artifact@v3
+        with:
+          name: pysasktran2-conda-${{ matrix.os}}-x86_64
+          path: pkgs

@@ -1,4 +1,10 @@
 # Build properties for the sasktranCore project
+
+# Fortran library settings, windows we add a link directory, linux we build it
+if(WIN32)
+    link_directories(${CMAKE_SOURCE_DIR}/src/core/fortran_libraries/lib/Windows_x64/)
+endif()
+
 add_library(sasktranCoreBuildProperties INTERFACE)
 
 target_link_libraries(sasktranCoreBuildProperties INTERFACE sasktranBuildProperties)

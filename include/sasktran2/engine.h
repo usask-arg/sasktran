@@ -2,7 +2,6 @@
 
 #include <sasktran2/config.h>
 #include <sasktran2/atmosphere/atmosphere.h>
-#include <sasktran2/coordinates/coordinates.h>
 #include <sasktran2/viewinggeometry.h>
 #include <sasktran2/raytracing.h>
 #include <sasktran2/solartransmission.h>
@@ -81,12 +80,6 @@ public:
               m_viewing_geometry(viewing_rays),
               m_geometry(geometry)
               {
-                  #ifndef SKTRAN_USE_ACCELERATE
-                  #ifndef SKTRAN_USE_MKL
-                  LAPACKE_set_nancheck(0);
-                  #endif
-                  #endif
-
                   // First create the ray tracer
                   construct_raytracer();
 

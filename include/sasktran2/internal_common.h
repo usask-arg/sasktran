@@ -43,8 +43,8 @@
 // #define SASKTRAN_DEBUG_ASSERTS
 
 
-#include <lapacke.h>
-#include <cblas.h>
+#include <Eigen/src/misc/lapacke.h>
+
 #endif
 #endif
 

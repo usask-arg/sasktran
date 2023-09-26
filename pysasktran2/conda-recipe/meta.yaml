@@ -1,0 +1,40 @@
+package:
+  name: sasktran2
+  version: "0.0.0"
+
+source:
+  path: ../
+
+build:
+  number: 0
+  binary_relocation: true
+  script:
+    - {{ PYTHON }} -m pip install . -vvv
+
+requirements:
+  build:
+    - cmake >=3.5
+    - python                                 # [build_platform != target_platform]
+    - cross-python_{{ target_platform }}     # [build_platform != target_platform]
+    - {{ compiler('cxx') }}
+    - libsasktran2
+  host:
+    - python {{ python }}
+  run:
+    - python {{ python }}
+
+
+test:
+  requires:
+    - pytest
+  imports:
+    - sasktran2
+  source_files:
+    - tests
+  commands:
+    - python -m pytest
+
+about:
+  home: http://www.example.com
+  license: MIT
+  summary: "Summary in here ..."

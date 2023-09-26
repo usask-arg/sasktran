@@ -7,8 +7,11 @@ if(UNIX AND NOT APPLE)
     set(LINUX TRUE)
 endif()
 
+set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
+
 if(UNIX)
     add_definitions("-Wno-inconsistent-missing-override -Wno-suggest-override -Wno-comment -Wno-deprecated-declarations -Wno-psabi")
+    enable_language(Fortran)
 endif()
 
 execute_process(COMMAND git describe --tags
@@ -25,12 +28,7 @@ endif()
 
 project (sasktran-core VERSION ${SASKTRAN_CORE_VERSION})
 
-# Fortran library settings, windows we add a link directory, linux we build it
-if(WIN32)
-    link_directories(${CMAKE_SOURCE_DIR}/src/core/fortran_libraries/lib/Windows_x64/)
-else()
-    enable_language(Fortran)
-endif()
+
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -44,6 +42,9 @@ set(CMAKE_CXX_EXTENSIONS OFF)
 set(CMAKE_POSITION_INDEPENDENT_CODE ON)
 
 option(FORCE_BOOST_STATIC "Force the use of boost static libraries" ON)
+
+option(BUILD_SASKTRAN_LEGACY "Builds the Legacy SASKTRAN code" ON)
+
 # Try to find boost 1.6 or greater
 set(Boost_USE_STATIC_LIBS ${FORCE_BOOST_STATIC})
 find_package(Boost REQUIRED COMPONENTS filesystem system regex timer random thread log)
@@ -90,7 +91,7 @@ endif()
 # We support multiple blas vendors, but these can require some funny options
 set(SKTRAN_BLAS_VENDOR "OpenBLAS" CACHE STRING
         "Sets the BLAS/LAPACK vendor. See https://cmake.org/cmake/help/latest/module/FindBLAS.html#blas-lapack-vendors.")
-set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple)
+set_property(CACHE SKTRAN_BLAS_VENDOR PROPERTY STRINGS OpenBLAS Intel10_64lp Apple Generic)
 
 if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     set(BLA_STATIC FALSE)
@@ -108,7 +109,9 @@ else()
     set(BLA_SIZEOF_INTEGER 4)
     target_compile_definitions(sasktranBuildProperties INTERFACE EIGEN_USE_BLAS)
 endif()
-set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
+if(NOT (SKTRAN_BLAS_VENDOR MATCHES "Generic"))
+    set(BLA_VENDOR ${SKTRAN_BLAS_VENDOR})
+endif()
 set(CMAKE_FIND_LIBRARY_PREFIXES "" lib)  # openblas include a "lib" prefix in it's names
 find_package(BLAS REQUIRED)
 find_package(LAPACK REQUIRED)
@@ -122,15 +125,15 @@ if(SKTRAN_BLAS_VENDOR MATCHES "Intel")
     target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR})
     target_compile_definitions(sasktranBuildProperties INTERFACE SKTRAN_USE_MKL)
 else()
-    find_path(LAPACKE_H_INCLUDE_DIR lapacke.h REQUIRED)  # include directory for <lapacke.h>
-    find_path(CBLAS_H_INCLUDE_DIR cblas.h REQUIRED)    # include directory for <cblas.h>
-    target_include_directories(sasktranBuildProperties INTERFACE ${LAPACKE_H_INCLUDE_DIR} ${CBLAS_H_INCLUDE_DIR})
-
     if(WIN32)
         # OpenBlas can give warnings about std::complex linkage on windows/visual studio, but we don't use any complex lapack functions anyway so just disable the warning
         target_compile_options(sasktranBuildProperties INTERFACE /wd4190)
     endif()
 
+    if(SKTRAN_BLAS_VENDOR MATCHES "Generic")
+        find_package(LAPACKE REQUIRED CONFIG)
+        target_link_libraries(sasktranBuildProperties INTERFACE lapacke)
+    endif()
 endif()
 
 # -------- END LAPACK FINDING -------
@@ -146,4 +149,7 @@ install (TARGETS sasktranBuildProperties
 
 
 add_subdirectory (src/sasktran2)
-add_subdirectory (src/core)
+
+if(BUILD_SASKTRAN_LEGACY)
+    add_subdirectory (src/core)
+endif()

@@ -8,12 +8,7 @@ target_include_directories(sasktran2BuildProperties INTERFACE
 		$<INSTALL_INTERFACE:include>)
 
 # Add sub libraries
-add_library(sasktran2 
-			STATIC
-
-			coordinates/geodetic.cpp
-		    coordinates/coordinates.cpp
-
+add_library(sasktran2
 		    config/config.cpp
 
 		    unitsphere/lebedev_autogen.cpp
@@ -113,3 +108,9 @@ install (TARGETS sasktran2
 		EXPORT ${EXPORT_NAME}
 		LIBRARY DESTINATION ${STATIC_LIB_INSTALL_DIR}
 		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
+
+install(DIRECTORY "${CMAKE_SOURCE_DIR}/include/" # source directory
+		DESTINATION "include" # target directory
+		FILES_MATCHING # install only matched files
+		PATTERN "*.h" # select header files
+		)
