@@ -3,7 +3,7 @@ package:
   version: {{ GIT_DESCRIBE_TAG }}
 
 source:
-  path: ../../ # this can be changed to git-url
+  git_url: ../../ # this can be changed to git-url
 
 build:
   number: {{ GIT_DESCRIBE_NUMBER }}
