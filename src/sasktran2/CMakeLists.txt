@@ -110,7 +110,7 @@ install (TARGETS sasktran2
 		INCLUDES DESTINATION ${INCLUDE_INSTALL_DIR})
 
 install(DIRECTORY "${CMAKE_SOURCE_DIR}/include" # source directory
-		DESTINATION "include" # target directory
+		DESTINATION "" # target directory
 		FILES_MATCHING # install only matched files
 		PATTERN "*.h" # select header files
 		)

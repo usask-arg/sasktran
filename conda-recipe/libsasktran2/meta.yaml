@@ -1,12 +1,13 @@
 package:
   name: libsasktran2
-  version: "0.0.0"
+  version: {{ GIT_DESCRIBE_TAG }}
 
 source:
   path: ../../ # this can be changed to git-url
 
 build:
-  number: 0
+  number: {{ GIT_DESCRIBE_NUMBER }}
+  string: {{ GIT_BUILD_STR }}
   binary_relocation: true
   script:
     - cmake ${CMAKE_ARGS} -H. -Bbuild_conda -G "${CMAKE_GENERATOR}" -DCMAKE_INSTALL_PREFIX=${PREFIX} -DFORCE_BOOST_STATIC=OFF -DBUILD_SASKTRAN_LEGACY=OFF -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=ON -DSKTRAN_BLAS_VENDOR=Generic # [not win]

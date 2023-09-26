@@ -96,6 +96,7 @@ jobs:
           auto-activate-base: false
 
       - name: Download libsasktran2
+        id: download
         uses: actions/download-artifact@v3
         with:
           name: libsasktran2-conda-${{ matrix.os}}-x86_64
@@ -104,7 +105,7 @@ jobs:
       - name: Build Conda package
         shell: bash -el {0}
         run: |
-          conda-build -c conda-forge -c file:///deps/ pysasktran2/conda-recipe --output-folder pkgs/
+          conda-build -c conda-forge -c file:/${{steps.download.outputs.download-path}} pysasktran2/conda-recipe --output-folder pkgs/
 
       - name: Save conda package
         uses: actions/upload-artifact@v3
