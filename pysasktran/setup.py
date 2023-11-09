@@ -5,8 +5,7 @@ from shutil import copyfile, rmtree
 import versioneer
 from setuptools import setup
 from setuptools import find_packages
-from setuptools.dist import Distribution
-from distutils.core import Extension
+from setuptools import Extension
 import glob
 from copy import copy
 from pathlib import Path
