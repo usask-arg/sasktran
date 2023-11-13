@@ -267,7 +267,7 @@ jobs:
         run: conda create -n py311 python=3.11 numpy=1.22.3
       
       - name: Create conda py312 Build Environment
-        run: conda create -n py312 python=3.12 numpy=1.22.3
+        run: conda create -n py312 python=3.12 numpy=1.26.0
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
