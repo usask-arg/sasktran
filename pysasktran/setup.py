@@ -2,7 +2,6 @@
 import os
 import sys
 from shutil import copyfile, rmtree
-import versioneer
 from setuptools import setup
 from setuptools import find_packages
 from setuptools import Extension
@@ -192,9 +191,9 @@ extension_module = Extension(                                                   
 
 setup(
     name='sasktran',
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
+    use_scm_version={},
     packages=find_packages(),
+    setup_requirements=['setuptools_scm'],
     url='https://arg.usask.ca/docs/sasktran/',
     license='MIT',
     author='Daniel Zawada',
