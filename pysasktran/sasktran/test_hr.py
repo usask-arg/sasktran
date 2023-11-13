@@ -164,7 +164,7 @@ class TestEngineHR(unittest.TestCase):
                 radiance_normal = engine_normal.calculate_radiance()
                 radiance_prefill = engine_prefill.calculate_radiance()
 
-                self.failUnless(np.allclose(radiance_normal, radiance_prefill, rtol=2e-3, atol=0), "Prefill table radiance significantly different than normal radiance for SZA={}, SAA={}".format(sza, saa))
+                np.testing.assert_allclose(radiance_normal, radiance_prefill, rtol=2e-3, atol=0)
 
     def test_hitran_hrssapprox(self):
         tanalts_km = np.arange(10, 50, 1)
