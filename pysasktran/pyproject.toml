@@ -1,0 +1,23 @@
+[build-system]
+requires = ["setuptools>64", "wheel", "setuptools-scm>=8.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sasktran"
+dynamic = ["version"]
+description="The University of Saskatchewan Radiative Transfer Model"
+dependencies = ['numpy', 'pyyaml', 'urllib3', 'appdirs', 'packaging']
+authors = [
+    { name = "Daniel Zawada", email = "daniel.zawada@usask.ca" },
+]
+requires-python = ">=3.7"
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Programming Language :: Python :: 3 :: Only",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+]
+
+[tool.setuptools_scm]
+root = "../"

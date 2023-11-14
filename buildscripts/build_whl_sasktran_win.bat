@@ -7,7 +7,7 @@ ECHO %3
 
 call conda activate %PYENV%
 pushd pysasktran 
-python setup.py bdist_wheel -d ..\wheelhouse --plat-name=win-amd64
+python -m pip wheel -d ..\wheelhouse --plat-name=win-amd64
 IF %ERRORLEVEL% NEQ 0 EXIT /B 1
 popd
 call conda deactivate
