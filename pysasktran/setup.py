@@ -24,8 +24,8 @@ def get_install_requires() -> List[str]:
 def get_cplus_paths():
     cplus_include_path = []
     cplus_library_path = []
-    cplus_include_pathstr = os.environ.get("SASKTRAN_IF_INCLUDE_PATH")
-    cplus_library_pathstr = os.environ.get("SASKTRAN_IF_LIBRARY_PATH")
+    cplus_include_pathstr = os.environ.get("SASKTRAN_IF_INCLUDE_PATH", "")
+    cplus_library_pathstr = os.environ.get("SASKTRAN_IF_LIBRARY_PATH", "")
 
     print("\n**************************** READ THIS NOTICE ****************************************\n")
     print("CPLUS_INCLUDE_PATH = {}".format(os.environ.get("SASKTRAN_IF_INCLUDE_PATH")))
@@ -191,9 +191,7 @@ extension_module = Extension(                                                   
 
 setup(
     name='sasktran',
-    use_scm_version={"root": "../"},
     packages=find_packages(),
-    setup_requirements=['setuptools_scm'],
     url='https://arg.usask.ca/docs/sasktran/',
     license='MIT',
     author='Daniel Zawada',

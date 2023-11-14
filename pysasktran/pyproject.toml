@@ -21,3 +21,4 @@ classifiers = [
 
 [tool.setuptools_scm]
 root = "../"
+write_to = "sasktran/_version.py"
