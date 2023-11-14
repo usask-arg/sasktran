@@ -14,7 +14,7 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
 
       if [ $PYENV == "current" ]; then
           pushd pysasktran
-          python3 -m pip wheel -d ../wheelhouse
+          python3 -m pip wheel -w ../wheelhouse
           popd
 
       else
@@ -22,13 +22,13 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
           conda activate $PYENV
 
           pushd pysasktran
-          python3 -m pip wheel -d ../wheelhouse
+          python3 -m pip wheel -w ../wheelhouse
           popd
           conda deactivate
       fi
   else
     pushd pysasktran
-    /opt/python/$PYENV/bin/python -m pip wheel -d ../wheelhouse
+    /opt/python/$PYENV/bin/python -m pip wheel -w ../wheelhouse
     popd
   fi
 else
