@@ -191,7 +191,7 @@ extension_module = Extension(                                                   
 
 setup(
     name='sasktran',
-    use_scm_version=True,
+    use_scm_version={"root": "../"},
     packages=find_packages(),
     setup_requirements=['setuptools_scm'],
     url='https://arg.usask.ca/docs/sasktran/',
