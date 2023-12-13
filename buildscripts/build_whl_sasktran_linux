@@ -29,6 +29,7 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
       fi
   else
     pushd pysasktran
+    /opt/python/$PYENV/bin/python -m pip install setuptools-scm
     /opt/python/$PYENV/bin/python -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation -vvv
     popd
   fi
