@@ -12,3 +12,4 @@ dependencies:
   - delocate=0.10.4
   - numpy=1.23.5
   - eigen=3.4.0
+  - setuptools_scm
