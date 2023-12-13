@@ -23,7 +23,7 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
 
           pushd pysasktran
           python3 -m pip install setuptools-scm
-          python3 -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation
+          python3 -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation -vvv
           popd
           conda deactivate
       fi
