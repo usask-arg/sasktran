@@ -331,7 +331,7 @@ if(TRUE)
 		)
 
 		if(WIN32)
-			get_target_property(YAML_LIBRARY_DIR yaml-cpp::yaml-cpp LOCATION_RELEASE)
+			set(YAML_LIBRARY_DIR ${YAML_CPP_LIBRARY_DIR})
 			get_target_property(YAML_INCLUDER_DIRS yaml-cpp::yaml-cpp INTERFACE_INCLUDE_DIRECTORIES)
 		else()
 			get_target_property(YAML_LIBRARY_DIR yaml-cpp LOCATION_RELEASE)
