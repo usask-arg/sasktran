@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Constructing the Geometry &mdash; SASKTRAN 1.8.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/documentation_options.js?v=82e6e318"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Choosing an Engine" href="other_engines.html" />
+    <link rel="prev" title="Specifying the Atmosphere" href="constructing_atmosphere.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Constructing the Geometry</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#What-is-the-Geometry?">What is the Geometry?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Convenience-Classes">Convenience Classes</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#Using-the-Geodetic-Object">Using the Geodetic Object</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Constructing the Geometry</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/constructing_geometry.ipynb.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="Constructing-the-Geometry">
+<h1>Constructing the Geometry<a class="headerlink" href="#Constructing-the-Geometry" title="Link to this heading">¶</a></h1>
+<section id="What-is-the-Geometry?">
+<h2>What is the Geometry?<a class="headerlink" href="#What-is-the-Geometry?" title="Link to this heading">¶</a></h2>
+<p>Along with the <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">Atmosphere</span></code></a>, the <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> object is one of the fundamental inputs required for a radiative transfer calculation.</p>
+<p>At its core the <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> object is just a list of <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineOfSight</span></code></a>.  Each <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineOfSight</span></code></a> represents the geometry of a single measurements and is made up by three things:</p>
+<ul class="simple">
+<li><p>The observer position in geocentric coordinates.  For example, [3.676013154788849600e+005, 1.009976313640051500e+006, -6.871601202127538600e+006].</p></li>
+<li><p>A unit look vector also in geocentric coordinates.  For example, [2.884568631765662100e-001, 7.925287180643269000e-001,  5.372996083468238900e-001].</p></li>
+<li><p>The time of the measurement, represented as a Modified Julian Date, for example, 54832.5.  The time field is used to calculate the solar position.</p></li>
+</ul>
+<p>Putting these three things together we can create the <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineOfSight</span></code></a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[1]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+
+<span class="n">line_of_sight</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LineOfSight</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.676013154788849600e+005</span><span class="p">,</span> <span class="mf">1.009976313640051500e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127538600e+006</span><span class="p">],</span>
+                              <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662100e-001</span><span class="p">,</span> <span class="mf">7.925287180643269000e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238900e-001</span><span class="p">],</span>
+                              <span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line_of_sight</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Observer: [367601.31547888496, 1009976.3136400515, -6871601.202127539]
+Look: [0.2884568631765662, 0.7925287180643269, 0.5372996083468239]
+MJD: 54832.5
+</pre></div></div>
+</div>
+<p>For lines of sight that are limb viewing, each line of sight is often referred to from its tangent point</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">line_of_sight</span><span class="o">.</span><span class="n">tangent_location</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ISKGeodetic: IAU 1976
+ Latitude: -57.50000019273359, Longitude: 70.0, Altitude: 10002.995861731353
+</pre></div></div>
+</div>
+<p>Multiple lines of sights can be created in the same fashion</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[3]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">line_of_sight_2</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LineOfSight</span><span class="p">(</span><span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.692808540679614500e+005</span><span class="p">,</span> <span class="mf">1.014590807988641800e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.870844156040793300e+006</span><span class="p">],</span>
+                                 <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662100e-001</span><span class="p">,</span> <span class="mf">7.925287180643269000e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238900e-001</span><span class="p">],</span>
+                                 <span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">line_of_sight_2</span><span class="o">.</span><span class="n">tangent_location</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ISKGeodetic: IAU 1976
+ Latitude: -57.50000023112414, Longitude: 70.0, Altitude: 12002.995861732867
+</pre></div></div>
+</div>
+<p>The <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> object is just a collection of these <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineOfSight</span></code></a></p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[4]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geometry</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geometry</span><span class="p">()</span>
+
+<span class="n">geometry</span><span class="o">.</span><span class="n">lines_of_sight</span> <span class="o">=</span> <span class="p">[</span><span class="n">line_of_sight</span><span class="p">,</span> <span class="n">line_of_sight_2</span><span class="p">]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Geometry object containing 2 lines of sight
+</pre></div></div>
+</div>
+</section>
+<section id="Convenience-Classes">
+<h2>Convenience Classes<a class="headerlink" href="#Convenience-Classes" title="Link to this heading">¶</a></h2>
+<p>The default input for the <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> are physical positions and time, which is easy to use if you are trying to model actual measurements from an actual instrument.  However, for most simulation work calculating these raw physical lines of sight can be tedious, especially if it is desired to change parameters such as the solar position (which by default is set by the average time of the measurements).  For this reason some convenience classes are provided which make geometry calculations simpler in many cases.  For limb viewing the most useful convenience class is <a class="reference internal" href="geometry.html#sasktran.VerticalImage" title="sasktran.geometry.VerticalImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalImage</span></code></a>, which constructs a vertical set of measurements at a single instant in time based upon the tangent altitudes and solar angles</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[5]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sasktran.geometry</span> <span class="kn">import</span> <span class="n">VerticalImage</span>
+
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">VerticalImage</span><span class="p">()</span>
+<span class="n">geometry</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="n">sza</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">saa</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tanalts_km</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">54372</span><span class="p">,</span> <span class="n">locallook</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
+                      <span class="n">satalt_km</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span> <span class="n">refalt_km</span><span class="o">=</span><span class="mi">20</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">geometry</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Geometry object containing 4 lines of sight
+Sun position forced to [0.5       0.75      0.4330127]
+</pre></div></div>
+</div>
+<p>This creates a <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geometry</span></code></a> object with lines of sight that match the desired solar angles and tangent point information.  There is an additional message saying that the sun position is forced to a specific vector, this indicates that the sun is no longer set by the time.  The object is still made up of a list of <a class="reference internal" href="lines_of_sight.html#sasktran.LineOfSight" title="sasktran.LineOfSight"><code class="xref py py-class docutils literal notranslate"><span class="pre">LineOfSight</span></code></a> objects that we can access directly.</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[6]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">geometry</span><span class="o">.</span><span class="n">lines_of_sight</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">&#39;-------------------------------------&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">geometry</span><span class="o">.</span><span class="n">lines_of_sight</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">tangent_location</span><span class="p">())</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+Observer: [ 6398137.                0.         -2835095.13067904]
+Look: [-0.00351341  0.          0.99999383]
+MJD: 54372
+-------------------------------------
+ISKGeodetic: IAU 1976
+ Latitude: 0.20130381481710838, Longitude: 0.0, Altitude: 9999.93036821498
+</pre></div></div>
+</div>
+<p>In cases where there is not a convenience class such as <a class="reference internal" href="geometry.html#sasktran.VerticalImage" title="sasktran.geometry.VerticalImage"><code class="xref py py-class docutils literal notranslate"><span class="pre">VerticalImage</span></code></a> that matches your specific use case, there is also a low level <a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.Geodetic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodetic</span></code></a> object that can be used to help with constructing lines of sight.</p>
+</section>
+<section id="Using-the-Geodetic-Object">
+<h2>Using the Geodetic Object<a class="headerlink" href="#Using-the-Geodetic-Object" title="Link to this heading">¶</a></h2>
+<p>The <a class="reference internal" href="geodetic.html#sasktran.Geodetic" title="sasktran.Geodetic"><code class="xref py py-class docutils literal notranslate"><span class="pre">Geodetic</span></code></a> is a class that is designed to aid with various Earth coordinate systems. One of its major uses is to from geocentric (3 element x,y,z) to latitude, longitude, height, referenced to a specific Earth geoid (by default, IAU 1976).  For example, we can convert our observer position used above,</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
+
+<span class="n">geo</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span><span class="mf">3.692808540679614500e+005</span><span class="p">,</span> <span class="mf">1.014590807988641800e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.870844156040793300e+006</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">geo</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+ISKGeodetic: IAU 1976
+ Latitude: -81.12320535369729, Longitude: 70.00000000000001, Altitude: 597895.4159141617
+</pre></div></div>
+</div>
+<p>Or, we could convert our tangent point above to geocentric coordinates</p>
+<div class="nbinput docutils container">
+<div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[8]:
+</pre></div>
+</div>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">geo</span><span class="o">.</span><span class="n">from_lat_lon_alt</span><span class="p">(</span><span class="n">latitude</span><span class="o">=-</span><span class="mf">57.49967218373388</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mf">70.0</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mf">12000.000104637467</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">geo</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="nboutput nblast docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area docutils container">
+<div class="highlight"><pre>
+[ 1177109.33068763  3234081.30629361 -5366123.67907112]
+</pre></div></div>
+</div>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="constructing_atmosphere.html" class="btn btn-neutral float-left" title="Specifying the Atmosphere" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="other_engines.html" class="btn btn-neutral float-right" title="Choosing an Engine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

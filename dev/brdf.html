@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BRDF &mdash; SASKTRAN 1.8.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/documentation_options.js?v=82e6e318"></script>
+        <script src="_static/doctools.js?v=888ff710"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Climatology" href="climatology.html" />
+    <link rel="prev" title="Atmosphere" href="atmosphere.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#complete-api-reference-pages">Complete API Reference Pages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="atmosphere.html">Atmosphere</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">BRDF</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#common-brdfs">Common BRDFs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#kernel-based-brdfs">Kernel-Based BRDFs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#two-dimensional-brdfs">Two-Dimensional BRDFs</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geodetic.html">Geodetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l3"><a class="reference internal" href="lines_of_sight.html">Lines of Sight</a></li>
+<li class="toctree-l3"><a class="reference internal" href="optical_property.html">Optical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="emission.html">Emission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="solar_spectrum.html">Solar Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="species.html">Species</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stokes_vector.html">Stokes Vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api_reference.html">API Reference</a></li>
+      <li class="breadcrumb-item active">BRDF</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/brdf.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="brdf">
+<span id="id1"></span><h1>BRDF<a class="headerlink" href="#brdf" title="Link to this heading">¶</a></h1>
+<p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.brdf</span></code></p>
+<p>SASKTRAN support <a class="reference external" href="https://en.wikipedia.org/wiki/Bidirectional_reflectance_distribution_function">BRDF surfaces</a>. A surface must
+be added to every <a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a> object. Below are the BRDF classes currently supported by
+SASKTRAN.</p>
+<section id="common-brdfs">
+<h2>Common BRDFs<a class="headerlink" href="#common-brdfs" title="Link to this heading">¶</a></h2>
+<p>Below is the documentation for the common BRDFs that SASKTRAN supports.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.BRDF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">BRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class which implements a Bidirectional Reflectance Distribution Function.  This is a light wrapper around the
+sasktranif ISKBrdf object.  It is recommended to use the specialized BRDF classes rather than this one.</p>
+<p>A BRDF is defined as the ratio of the radiance scattered from a surface into a given direction to
+the collimated power incident on a unit area of the surface. Much of the literature on BRDFs (Spurr 2002, Roujean
+1992, Rahman 1993, Wanner 1995, Cox and Munk 1954, Kokhanovsky 2012) define reflectance functions through a
+quantity that is scaled up by pi compared to this definition.</p>
+<p>Sasktran defines the relative azimuth angle such that 0 degrees corresponds to forward scattering. Much of the
+literature on BRDFs (Spurr 2002, Roujean 1992, Rahman 1993, Wanner 1995, Cox and Munk 1954, Hapke 2012) define it
+the opposite way.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>name</strong> (<em>str</em>) – Name of the BRDF object to create</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">BRDF</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">BRDF</span><span class="p">(</span><span class="s1">&#39;lambertian&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">skif_object</span><span class="p">()</span><span class="o">.</span><span class="n">SetProperty</span><span class="p">(</span><span class="s1">&#39;Albedo&#39;</span><span class="p">,</span> <span class="mf">0.3</span><span class="p">)</span>
+<span class="go">True</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">340</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.0954929658551372</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.BRDF.reflectance">
+<span class="sig-name descname"><span class="pre">reflectance</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wavel_nm</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">longitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_in</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">mu_out</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">cos_dphi</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.reflectance" title="Link to this definition">¶</a></dt>
+<dd><p>Calculates the value of the BRDF for a given wavelength, location, time and geometry.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wavel_nm</strong> (<em>float</em>) – Wavelength in nanometers.</p></li>
+<li><p><strong>latitude</strong> (<em>float</em>) – Latitude of surface location.</p></li>
+<li><p><strong>longitude</strong> (<em>float</em>) – Longitude of surface location.</p></li>
+<li><p><strong>mjd</strong> (<em>float</em>) – Modified Julian Date</p></li>
+<li><p><strong>mu_in</strong> (<em>float</em>) – Cosine of the incoming zenith angle. Must be between 0 and 1</p></li>
+<li><p><strong>mu_out</strong> (<em>float</em>) – Cosine of the outgoing zenith angle. Must be between 0 and 1</p></li>
+<li><p><strong>cos_dphi</strong> (<em>float</em>) – Cosine of the azimuth angle between incoming and outgoing directions. Must be between -1 (backscattering)
+and +1 (forward scattering).</p></li>
+</ul>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.BRDF.skif_object">
+<span class="sig-name descname"><span class="pre">skif_object</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="o"><span class="pre">**</span></span><span class="n"><span class="pre">kwargs</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.BRDF.skif_object" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the internel SasktranIF object</p>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Lambertian">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Lambertian</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">albedo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Lambertian" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Class which implements a Lambertian Bidirectional Reflectance Distribution Function.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>albedo</strong> (<em>float</em>) – Ratio of incoming to outgoing radiance.  The reflectance distribution is equal to albedo/pi</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran.brdf</span> <span class="kn">import</span> <span class="n">Lambertian</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">Lambertian</span><span class="p">(</span><span class="n">albedo</span><span class="o">=</span><span class="mf">0.3</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">340</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.0954929658551372</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">albedo</span> <span class="o">=</span> <span class="mi">1</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">340</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.3183098861837907</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Kokhanovsky">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Kokhanovsky</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">L</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">3600000.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">M</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.5e-08</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Kokhanovsky" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of the snow BRDF from Kokhanovsky 2012.  The parameters L and M are optional, the default values
+correspond to 1020 nm over greenland.</p>
+<p>Equation 1 is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>L</strong> (<em>float</em><em>, </em><em>optional</em>) – Parameter approximately equal to 13 times the average snow grain optical diameter. Default 3.6e6</p></li>
+<li><p><strong>M</strong> (<em>float</em><em>, </em><em>optional</em>) – Parameter proportional to the mass concentration of pollutants in the snow. Default 5.5e-8</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran.brdf</span> <span class="kn">import</span> <span class="n">Kokhanovsky</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">Kokhanovsky</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.25185744490707646</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>A. A. Kokhanovsky and F. M. Breon, “Validation of an Analytical Snow BRDF Model
+Using PARASOL Multi-Angular and Multispectral Observations,”
+IEEE Geoscience and Remote Sensing Letters, vol. 9, no. 5, pp. 928-932, Sept. 2012.
+doi: 10.1109/LGRS.2012.2185775
+URL: <a class="reference external" href="http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=6166850&amp;isnumber=6205680">http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&amp;arnumber=6166850&amp;isnumber=6205680</a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Roujean">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Roujean</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">surface</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">spectral_region</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">'vis'</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Roujean" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of the BRDF from Roujean 1992 for heterogenous surfaces. Pre-defined values are given for 11
+different surfaces in the visible and near infrared bands.</p>
+<p>Equation 10 is implemented with values of k0, k1, and k2 from Table 1, but with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+<li><p>the reflectance is also divided by 100 (k0, k1, k2 are percentages)</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>surface</strong> (<em>str</em>) – One of the following: ‘plowed field’, ‘annual grass’, ‘hard wheat’, ‘steppe’, ‘corn’, ‘orchard grass’,
+‘irrigated wheat’, ‘pineforest’, ‘deciduous forest’, ‘soybean’, or ‘grass lawn’</p></li>
+<li><p><strong>spectral_region</strong> (<em>str</em><em>, </em><em>optional</em>) – One of the following: ‘vis’ for the visible spectrum or ‘nir’ for the near-infrared spectrum. Default ‘vis’</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran.brdf</span> <span class="kn">import</span> <span class="n">Roujean</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">Roujean</span><span class="p">(</span><span class="n">surface</span><span class="o">=</span><span class="s1">&#39;corn&#39;</span><span class="p">,</span> <span class="n">spectral_region</span><span class="o">=</span><span class="s1">&#39;nir&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.09605247619742084</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Roujean, J.-L., M. Leroy, and P.-Y. Deschamps (1992), A bidirectional
+reflectance model of the Earth’s surface for the correction of remote
+sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.CoxMunk">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">CoxMunk</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">wind_speed</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">5.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">water_index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.334</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.CoxMunk" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of the water BRDF based on Cox and Munk 1954 and Spurr 2002.</p>
+<p>Equation A.18 from Spurr is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>wind_speed</strong> (<em>float</em><em>, </em><em>optional</em>) – Wind speed in m/s. Default 5.0</p></li>
+<li><p><strong>water_index</strong> (<em>float</em><em>, </em><em>optional</em>) – Index of refraction of water. Default 1.334</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">CoxMunk</span><span class="p">(</span><span class="n">wind_speed</span><span class="o">=</span><span class="mf">5.0</span><span class="p">,</span> <span class="n">water_index</span><span class="o">=</span><span class="mf">1.334</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="go">0.21213348733518164</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Cox C, Munk W. The measurement of the roughness of the sea surface
+from photographs of the Sun glitter. J Opt Soc Ann 1954; 44:838–50.</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Rahman">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Rahman</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">rho0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">theta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">k</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Rahman" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of the Semiempirical Rahman BRDF based on Rahman 1993 and Spurr 2002.</p>
+<p>Equation 2 from Rahman is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>rho0</strong> (<em>float</em>) – Empirical parameter related to the overall intensity of reflection (not proportional to single-scatter albedo)</p></li>
+<li><p><strong>theta</strong> (<em>float</em>) – Empirical parameter that controls the relative amount of backward (-1&lt;=theta&lt;=0) or forward (0&lt;=theta&lt;=1)
+scattering</p></li>
+<li><p><strong>k</strong> (<em>float</em>) – Emprical parameter that indicates the level of anisotropy of the surface</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Rahman</span><span class="p">(</span><span class="n">rho0</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">theta</span><span class="o">=-</span><span class="mf">0.5</span><span class="p">,</span> <span class="n">k</span><span class="o">=</span><span class="mf">1.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.01505098240847888</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Rahman H, Pinty B, Verstraete M. Coupled surface atmosphere reflectance
+(CSAR) model: 2. Semi-empirical surface model usable with NOAA AVHRR
+data. J Geophys Res 1993; 98:20,791–801.</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.Hapke">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Hapke</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">omega</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">delta</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">b0</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Hapke" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of a vegetation BRDF based on Hapke 2012 and Spurr 2002.</p>
+<p>Equation A.10 of Spurr is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>omega</strong> (<em>float</em>) – Single scatter albedo</p></li>
+<li><p><strong>delta</strong> (<em>float</em>) – Angular width at half maximum of the hotspot / opposition peak</p></li>
+<li><p><strong>b0</strong> (<em>float</em>) – Amplitude of the hotspot / opposition peak</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Hapke</span><span class="p">(</span><span class="n">omega</span><span class="o">=</span><span class="mf">0.6</span><span class="p">,</span> <span class="n">delta</span><span class="o">=</span><span class="mf">0.06</span><span class="p">,</span> <span class="n">b0</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.0814968276380363</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Hapke B. Theory of reflectance and emittance spectroscopy. Cambridge:
+Cambridge University Press, 2012.</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.MODIS">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">MODIS</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">f_iso</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_vol</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">f_geo</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.MODIS" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implementation of the Ross-thick Li-sparse-reciprocal BRDF used in MODIS’ Albedo/BRDF product. It is a linear
+combination of an isotropic (Lambertian) term, a volume scatterer (Ross-thick kernel) and a geometric scatterer
+(Li-sparse-reciprocal kernel).</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>f_iso</strong> (<em>float</em>) – Weight of the isotropic (Lambertian) kernel</p></li>
+<li><p><strong>f_vol</strong> (<em>float</em>) – Weight of the volume (Ross-thick) kernel</p></li>
+<li><p><strong>f_geo</strong> (<em>float</em>) – Weight of the geometric (Li-sparse-reciprocal) kernel</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MODIS</span><span class="p">(</span><span class="n">f_iso</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">f_vol</span><span class="o">=</span><span class="mf">0.2</span><span class="p">,</span> <span class="n">f_geo</span><span class="o">=</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.031577469878097834</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>A. H. Strahler, J. P. Muller, “MODIS BRDF/Albedo Product: Algorithm
+Theoretical Basis Document Version 5.0,” April 1999.
+URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/atbd_mod09_v5.pdf">https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/atbd_mod09_v5.pdf</a></p>
+</dd></dl>
+
+</section>
+<section id="kernel-based-brdfs">
+<h2>Kernel-Based BRDFs<a class="headerlink" href="#kernel-based-brdfs" title="Link to this heading">¶</a></h2>
+<p>Below is the documentation for the kernel-based BRDFs that SASKTRAN supports.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LinearCombination">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LinearCombination</span></span><a class="headerlink" href="#sasktran.LinearCombination" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implements a BRDF that is a linear combination of an arbitrary number of kernels.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LinearCombination</span><span class="p">()</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">kernel1</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="n">albedo</span><span class="o">=</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel2</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">RossThickKernel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">kernel3</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LiSparseReciprocalKernel</span><span class="p">(</span><span class="n">crown_shape</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">kernels</span> <span class="o">=</span> <span class="p">[</span><span class="n">kernel1</span><span class="p">,</span> <span class="n">kernel2</span><span class="p">,</span> <span class="n">kernel3</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">kernel_weights</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.2</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">]</span>
+</pre></div>
+</div>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.031577469878097834</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.LinearCombination.add_kernel">
+<span class="sig-name descname"><span class="pre">add_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">kernel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><span class="pre">BRDF</span></a></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.add_kernel" title="Link to this definition">¶</a></dt>
+<dd><p>Add a BRDF kernel to the linear combination.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>kernel</strong> (<em>sk.BRDF</em>) – The BRDF kernel to add.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sasktran.LinearCombination.kernel_weights">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernel_weights</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernel_weights" title="Link to this definition">¶</a></dt>
+<dd><p>List of kernel weights. If the number of weights given does not match the number of kernels present, the
+given weights will not be set.</p>
+</dd></dl>
+
+<dl class="py property">
+<dt class="sig sig-object py" id="sasktran.LinearCombination.kernels">
+<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">kernels</span></span><a class="headerlink" href="#sasktran.LinearCombination.kernels" title="Link to this definition">¶</a></dt>
+<dd><p>Full list of BRDF kernels.</p>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.LinearCombination.remove_kernel">
+<span class="sig-name descname"><span class="pre">remove_kernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">index</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">-1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LinearCombination.remove_kernel" title="Link to this definition">¶</a></dt>
+<dd><p>Remove the BRDF kernel at the position given by index. Accepts negative indices as Python does.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>index</strong> (<em>int</em>) – Position of the kernel to remove. Invalid indices will remove nothing and produce a warning. Default -1</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.RoujeanKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RoujeanKernel</span></span><a class="headerlink" href="#sasktran.RoujeanKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Implements the Roujean kernel from Roujean 1992 and Spurr 2002. This kernel is part of the above Roujean BRDF.
+It is recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 2 from Roujean is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">RoujeanKernel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-0.4471903004981418</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+<p>Roujean, J.-L., M. Leroy, and P.-Y. Deschamps (1992), A bidirectional
+reflectance model of the Earth’s surface for the correction of remote
+sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LiKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>Base class for Li kernels from Wanner 1995 and Spurr 2002. It is recommended to use derived classes
+(LiSparseKernel, LiDenseKernel or LiSparseReciprocalKernel) instead of this class. It is also recommended to use
+kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Tree crowns are modelled as spheroids of height 2b and width 2r, with centers a height of h above the ground.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crown_shape</strong> (<em>float</em>) – The ratio b/r describing the shape of the crown.</p></li>
+<li><p><strong>relative_height</strong> (<em>float</em>) – The ratio h/b describing the height of the crown above the ground.</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LiKernel</span><span class="p">(</span><span class="s1">&#39;li_sparse_kernel&#39;</span><span class="p">,</span> <span class="n">crown_shape</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-0.8753521870054244</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>W. Wanner and A. H. Strahler, “On the derivation of kernels for kernel-driven
+modes of bidirectional reflectance,” Journal of Geophysical Research, vol.
+100, no. d10, pp. 21077-21089, Oct. 20, 1995.
+doi: 10.1029/95JD02371
+URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract">http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract</a></p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LiSparseKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
+<p>The Li-sparse kernel models sparse canopy where mutual shadowing can be ignored. It is recommended to use
+kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 32 from Wanner is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crown_shape</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 1.0</p></li>
+<li><p><strong>relative_height</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 2.0</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LiSparseKernel</span><span class="p">(</span><span class="n">crown_shape</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-0.8753521870054244</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>W. Wanner and A. H. Strahler, “On the derivation of kernels for kernel-driven
+modes of bidirectional reflectance,” Journal of Geophysical Research, vol.
+100, no. d10, pp. 21077-21089, Oct. 20, 1995.
+doi: 10.1029/95JD02371
+URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract">http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract</a></p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LiSparseReciprocalKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiSparseReciprocalKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">1.0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiSparseReciprocalKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
+<p>The Li-sparse-reciprocal kernel is a variation on the Li-sparse kernel which allows the incident/viewing angles
+to be swapped without changing the BRDF’s value (reciprocal) - See the MODIS Albedo/BRDF ATBD. It is recommended
+to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 39 from Strahler is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crown_shape</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 1.0</p></li>
+<li><p><strong>relative_height</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 2.0</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LiSparseReciprocalKernel</span><span class="p">(</span><span class="n">crown_shape</span><span class="o">=</span><span class="mf">1.0</span><span class="p">,</span> <span class="n">relative_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-0.477464829275686</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>A. H. Strahler, J. P. Muller, “MODIS BRDF/Albedo Product: Algorithm
+Theoretical Basis Document Version 5.0,” April 1999.
+URL: <a class="reference external" href="https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/atbd_mod09_v5.pdf">https://lpdaac.usgs.gov/sites/default/files/public/product_documentation/atbd_mod09_v5.pdf</a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LiDenseKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LiDenseKernel</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">crown_shape</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.5</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">relative_height</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">2.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LiDenseKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.LiKernel" title="sasktran.brdf.LiKernel"><code class="xref py py-class docutils literal notranslate"><span class="pre">LiKernel</span></code></a></p>
+<p>The Li-dense kernel models dense canopy where mutual shadowing cannot be ignored. It is recommended to use
+kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 47 from Wanner is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>crown_shape</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 2.5</p></li>
+<li><p><strong>relative_height</strong> (<em>float</em><em>, </em><em>optional</em>) – See sk.LiSparse - Default 2.0</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LiDenseKernel</span><span class="p">(</span><span class="n">crown_shape</span><span class="o">=</span><span class="mf">2.5</span><span class="p">,</span> <span class="n">relative_height</span><span class="o">=</span><span class="mf">2.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">-0.46940635114445084</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>W. Wanner and A. H. Strahler, “On the derivation of kernels for kernel-driven
+modes of bidirectional reflectance,” Journal of Geophysical Research, vol.
+100, no. d10, pp. 21077-21089, Oct. 20, 1995.
+doi: 10.1029/95JD02371
+URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract">http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract</a></p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.RossThinKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThinKernel</span></span><a class="headerlink" href="#sasktran.RossThinKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>The Ross-thin kernel models canopies with a small leaf area index (LAI) - see Wanner 1995 and Spurr 2002. It is
+recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 13 from Wanner is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">RossThinKernel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.8132395113781661</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+<p>W. Wanner and A. H. Strahler, “On the derivation of kernels for kernel-driven
+modles of bidirectional reflectance,” Journal of Geophysical Research, vol.
+100, no. d10, pp. 21077-21089, Oct. 20, 1995.
+doi: 10.1029/95JD02371
+URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract">http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract</a></p>
+</dd></dl>
+
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.RossThickKernel">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">RossThickKernel</span></span><a class="headerlink" href="#sasktran.RossThickKernel" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>The Ross-thick kernel models canopies with a large leaf area index (LAI) - see Wanner 1995 and Spurr 2002. It is
+recommended to use kernels as part of a LinearCombination and not as standalone BRDFs.</p>
+<p>Equation 7 from Wanner is implemented with the following changes:</p>
+<ul class="simple">
+<li><p>cos(phi) is replaced with -cos(phi)</p></li>
+<li><p>the reflectance is divided by pi</p></li>
+</ul>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">RossThickKernel</span><span class="p">()</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="mi">1050</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">54372</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mf">0.5</span><span class="p">,</span> <span class="mi">0</span><span class="p">)</span>
+<span class="go">0.07830987784454152</span>
+</pre></div>
+</div>
+<p class="rubric">References</p>
+<p>Robert J. D. Spurr, “A new approach to the retrieval of surface properties
+from earthshine measurements,” Journal of Quantitative Spectroscopy
+&amp; Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
+doi:10.1016/S0022-4073(02)00283-2
+url: http://www.sciencedirect.com/science/article/pii/S0022407302002832</p>
+<p>W. Wanner and A. H. Strahler, “On the derivation of kernels for kernel-driven
+modles of bidirectional reflectance,” Journal of Geophysical Research, vol.
+100, no. d10, pp. 21077-21089, Oct. 20, 1995.
+doi: 10.1029/95JD02371
+URL: <a class="reference external" href="http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract">http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract</a></p>
+</dd></dl>
+
+</section>
+<section id="two-dimensional-brdfs">
+<h2>Two-Dimensional BRDFs<a class="headerlink" href="#two-dimensional-brdfs" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN is capable of modelling surfaces where the BRDF varies across the surface of the Earth.
+These are BRDFs that have two-dimensional variation across the surface</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LatLonBRDF">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LatLonBRDF</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">longitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">latitudes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">brdfs</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">ndarray</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LatLonBRDF" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <a class="reference internal" href="#sasktran.BRDF" title="sasktran.brdf.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a></p>
+<p>A custom BRDF that is constructed as the combination of other BRDF’s on a uniform latitude/longitude grid.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>longitudes</strong> (<em>np.array</em>) – Longitude grid that the BRDF is specified on in degrees.  Longitudes must be specified from 0 to 360
+and not from -180 to 180.</p></li>
+<li><p><strong>latitudes</strong> (<em>np.array</em>) – Latitude grid that the BRDF is specified on in degrees</p></li>
+<li><p><strong>brdfs</strong> (<em>np.ndarray</em>) – 2-D Array of dimension (len(longitudes), len(latitudes)) of sk.BRDF objects</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">latitudes</span> <span class="o">=</span> <span class="p">[</span><span class="o">-</span><span class="mi">10</span><span class="p">,</span> <span class="mi">10</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">longitudes</span> <span class="o">=</span> <span class="p">[</span><span class="mi">40</span><span class="p">,</span> <span class="mi">60</span><span class="p">]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdfs</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">empty</span><span class="p">((</span><span class="nb">len</span><span class="p">(</span><span class="n">longitudes</span><span class="p">),</span> <span class="nb">len</span><span class="p">(</span><span class="n">latitudes</span><span class="p">)),</span> <span class="n">dtype</span><span class="o">=</span><span class="nb">object</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdfs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="mf">0.1</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdfs</span><span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="mf">0.5</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdfs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">0</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="mf">0.8</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdfs</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span> <span class="mi">1</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Lambertian</span><span class="p">(</span><span class="mf">1.0</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LatLonBRDF</span><span class="p">(</span><span class="n">longitudes</span><span class="p">,</span> <span class="n">latitudes</span><span class="p">,</span> <span class="n">brdfs</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">brdf</span><span class="o">.</span><span class="n">reflectance</span><span class="p">(</span><span class="n">wavel_nm</span><span class="o">=</span><span class="mi">750</span><span class="p">,</span> <span class="n">latitude</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mi">50</span><span class="p">,</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">54372</span><span class="p">,</span> <span class="n">mu_in</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">mu_out</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">cos_dphi</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+<span class="go">0.1909859317102744</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</section>
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference internal" href="atmosphere.html#atmosphere"><span class="std std-ref">Atmosphere</span></a></dt><dd><p>An object that describes the atmospheric constituents, and surface type to the engine.
+Atmospheric constituents are defined by a list of <a class="reference internal" href="species.html#species"><span class="std std-ref">Species</span></a>, and surfaces are defined by
+a given <a class="reference internal" href="#brdf"><span class="std std-ref">BRDF</span></a>.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="atmosphere.html" class="btn btn-neutral float-left" title="Atmosphere" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="climatology.html" class="btn btn-neutral float-right" title="Climatology" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

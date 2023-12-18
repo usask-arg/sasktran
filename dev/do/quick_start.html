@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sasktran-Disco Quick Start &mdash; SASKTRAN 1.8.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=82e6e318"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Advanced Topics" href="advanced.html" />
+    <link rel="prev" title="SASKTRAN-DO" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SASKTRAN-DO</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Sasktran-Disco Quick Start</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#usage">Usage</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#simple-example">Simple Example</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#radiance-output-format">Radiance Output Format</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#weighting-functions">Weighting Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#advanced-configuration">Advanced Configuration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#number-of-streams">Number of Streams</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#number-of-layers">Number of Layers</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#number-of-quadrature-terms">Number of Quadrature Terms</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#engine-options">Engine Options</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#about-these-figures">About These Figures</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l2"><a class="reference internal" href="lowlevelmain.html">The Low Level Interface to SASKTRAN-DO</a></li>
+<li class="toctree-l2"><a class="reference internal" href="api.html">API Reference</a></li>
+</ul>
+</li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">SASKTRAN-DO</a></li>
+      <li class="breadcrumb-item active">Sasktran-Disco Quick Start</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/do/quick_start.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sasktran-disco-quick-start">
+<span id="quick-start"></span><h1>Sasktran-Disco Quick Start<a class="headerlink" href="#sasktran-disco-quick-start" title="Link to this heading">¶</a></h1>
+<p>SASKTRAN-Disco (SK-DO) is a discrete-ordinates radiative transfer model. The engine is based of the well known DISORT and
+LIDORT models and has been verified to agree with DISORT v2.0 to 1e-7.  The vector mode of the model has been verified
+against the Coulsen tables, as well as various other benchmarks containing aerosol scatterers.  The linearization
+in SK-DO is verified with numerical perturbation techniques and is accurate to at least 6 significant
+figures.</p>
+<dl class="simple">
+<dt>Features</dt><dd><ul class="simple">
+<li><p>Scalar/vector radiative transfer computations</p></li>
+<li><p>Scalar/vector weighting function computations</p></li>
+<li><p>BRDF and Lambertian surfaces</p></li>
+<li><p>Linearized with respect to most input parameters</p></li>
+<li><p>Pseudo-spherical approximation for the solar beam, spherical line of sight corrections</p></li>
+</ul>
+</dd>
+<dt>Limitations</dt><dd><ul class="simple">
+<li><p>Spherical line of sight correction is only available in scalar mode</p></li>
+<li><p>No thermal emissions, two-stream approximations, single scatter solutions</p></li>
+</ul>
+</dd>
+<dt>Strengths</dt><dd><ul class="simple">
+<li><p>Fast</p></li>
+<li><p>Low-memory usage</p></li>
+<li><p>Easy to use</p></li>
+</ul>
+</dd>
+</dl>
+<section id="usage">
+<h2>Usage<a class="headerlink" href="#usage" title="Link to this heading">¶</a></h2>
+<section id="simple-example">
+<h3>Simple Example<a class="headerlink" href="#simple-example" title="Link to this heading">¶</a></h3>
+<p>The following is a simple example of how to (1) setup a basic radiative transfer calculation using the SASKTRAN
+framework, and (2) default configure a Disco engine.</p>
+<p>In this example we’ll setup a single line of sight. The observer will be <a class="reference external" href="https://directory.eoportal.org/web/eoportal/satellite-missions/t/tempo">TEMPO</a> and our single line of sight will be
+looking at the <a class="reference external" href="http://www.google.com/maps/place/52.131638,-106.633873">ARG office</a>.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="kn">import</span> <span class="nn">sasktran.disco.interface</span> <span class="k">as</span> <span class="nn">do</span>
+
+<span class="sd">&quot;&quot;&quot; Geometry configuration.</span>
+<span class="sd">First we need to configure our sk.Geometry object. This object specifies the</span>
+<span class="sd">line of sight vectors as well as the solar position (based on mean mjd).</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">NadirGeometry</span><span class="p">()</span>
+
+<span class="c1"># make the look vector from TEMPO to the ARG office</span>
+<span class="n">tempo</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
+<span class="n">tempo</span><span class="o">.</span><span class="n">from_lat_lon_alt</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="o">-</span><span class="mi">100</span><span class="p">,</span> <span class="mi">35786000</span><span class="p">)</span>
+<span class="n">geometry</span><span class="o">.</span><span class="n">from_lat_lon</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">57906.843</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="n">tempo</span><span class="p">,</span> <span class="n">lats</span><span class="o">=</span><span class="mf">52.131638</span><span class="p">,</span> <span class="n">lons</span><span class="o">=-</span><span class="mf">106.633873</span><span class="p">,</span> <span class="n">elevations</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
+
+<span class="sd">&quot;&quot;&quot; Atmosphere configuration.</span>
+<span class="sd">Next we need to configure our sk.Atmosphere object. This object specifies all</span>
+<span class="sd">atmospheric and surface properties to the engine.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+
+<span class="c1"># add our species</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;rayleigh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;o3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">O3OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;no2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">NO2OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Pratmo</span><span class="p">())</span>
+
+<span class="c1"># add our surface properties</span>
+<span class="n">atmosphere</span><span class="o">.</span><span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Kokhanovsky</span><span class="p">()</span>
+
+
+<span class="sd">&quot;&quot;&quot; Radiance calculation.</span>
+<span class="sd">We are now ready to perform the radiance calculation. Note that the engine can</span>
+<span class="sd">be default constructed (with properties set after construction), or the</span>
+<span class="sd">properties can be passed to the constructor.</span>
+<span class="sd">&quot;&quot;&quot;</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">do</span><span class="o">.</span><span class="n">EngineDO</span><span class="p">(</span><span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="p">[</span><span class="mi">350</span><span class="p">,</span> <span class="mi">700</span><span class="p">])</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+
+<span class="c1"># rad now hold the calculated radiances</span>
+</pre></div>
+</div>
+</section>
+<section id="radiance-output-format">
+<h3>Radiance Output Format<a class="headerlink" href="#radiance-output-format" title="Link to this heading">¶</a></h3>
+<p>In SK-DO the default radiance output format is as an xarray (<a class="reference external" href="https://docs.xarray.dev/en/stable/">https://docs.xarray.dev/en/stable/</a>) object.
+The output is self describing and is easy to save as a netcdf object.  If you prefer, you can use
+<cite>engine.calculate_radiance(output_format=’numpy’)</cite> to get a numpy array as output instead.</p>
+</section>
+<section id="weighting-functions">
+<h3>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h3>
+<p>SASKTRAN-Disco support the same weighting function interface as SASKTRAN-HR (weighting functions are in the same form
+as well). Disco also supports calculations of weighting functions with respect to multiple species simultaneously
+and weighting functions with respect to the surface albedo.
+Below is an overview of the weighting function interface.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Standard atmosphere configuration</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;rayleigh&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">Rayleigh</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;o3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">O3OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;no2&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">sk</span><span class="o">.</span><span class="n">NO2OSIRISRes</span><span class="p">(),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Pratmo</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">wf_species</span> <span class="o">=</span> <span class="s1">&#39;o3&#39;</span>            <span class="c1"># single species syntax</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">atmosphere</span><span class="o">.</span><span class="n">wf_species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;no2&#39;</span><span class="p">,</span> <span class="s1">&#39;o3&#39;</span><span class="p">]</span>   <span class="c1"># multiple species syntax</span>
+</pre></div>
+</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># calculate radiance and weighting functions</span>
+<span class="n">rad</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<section id="configuring-weighting-functions">
+<h4>Configuring Weighting Functions<a class="headerlink" href="#configuring-weighting-functions" title="Link to this heading">¶</a></h4>
+<p>Internally, SASKTRAN-DO ingests atmospheric parameters (number density, optical properties) on an altitude grid.
+We then integrate the atmospheric parameters over each internal layer to obtain the layer quantities.  Weighting
+functions are returned back with respect to the altitude grid, not the layer quantities.  The altitude grid
+can be accessed and set through the <a class="reference internal" href="api.html#sasktran.disco.interface.EngineDO.alt_grid" title="sasktran.disco.interface.EngineDO.alt_grid"><code class="xref py py-meth docutils literal notranslate"><span class="pre">sasktran.disco.interface.EngineDO.alt_grid()</span></code></a> method.  When requesting
+weighting functions it is always recommended to use the <cite>output_format=’xarray’</cite> option which is the default.</p>
+</section>
+</section>
+</section>
+<section id="advanced-configuration">
+<h2>Advanced Configuration<a class="headerlink" href="#advanced-configuration" title="Link to this heading">¶</a></h2>
+<p>Sasktran-Disco has four main configuration parameters which affect the accuracy of the calculation.
+The following are the default values of each parameter.</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># Sasktran-Disco defaults</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">num_streams</span> <span class="o">=</span> <span class="mi">16</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">=</span> <span class="mi">50</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">num_brdf_quadrature_terms</span> <span class="o">=</span> <span class="mi">64</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">alt_grid</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">100001</span><span class="p">,</span> <span class="mi">500</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Below the significance of each parameter is explained and demonstrated.</p>
+<section id="number-of-streams">
+<h3>Number of Streams<a class="headerlink" href="#number-of-streams" title="Link to this heading">¶</a></h3>
+<p>In the discrete-ordinates algorithm phase functions and the BRDF are expanded into series of Legendre polynomials.
+The value of NSTR is the number of polynomials used in these expansions.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">num_streams</span> <span class="o">=</span> <span class="mi">16</span>         <span class="c1"># default value</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Symbol<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NSTR</p>
+</dd>
+<dt class="field-even">Complexity<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(O(n^3)\)</span></p>
+</dd>
+<dt class="field-odd">Valid range<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NSTR = {4, 6, 8, …, 40}</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>16</p>
+</dd>
+<dt class="field-odd">Logic<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Increase with the complexity of the phase function (and potentially BRDF).</p>
+</dd>
+<dt class="field-even">Note<span class="colon">:</span></dt>
+<dd class="field-even"><p>This parameter will have the most drastic effect on runtime (and potentially neglibile effects on precision).</p>
+</dd>
+</dl>
+</div></blockquote>
+<img alt="../_images/nstr.svg" src="../_images/nstr.svg" /><dl>
+<dt>Phase Functions and the BRDF Expansions</dt><dd><p>The following is how these expansions are computed.</p>
+<div class="math notranslate nohighlight">
+\[p_l(\vec{x}) = \dfrac{1}{2} \int_{-\pi}^{\pi} L_l(\theta) f(\vec{x}, \theta) \ \mathrm{d} \theta
+\qquad l = 0, \ldots, 2N -1\]</div>
+<p>where</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(p_l\)</span> The <span class="math notranslate nohighlight">\(l\)</span>’th polynomial in the Legendre expansion of the function being expanded.</div>
+<div class="line"><span class="math notranslate nohighlight">\(\vec{x}\)</span> Some position in the atmosphere.</div>
+<div class="line"><span class="math notranslate nohighlight">\(L_l\)</span> The <span class="math notranslate nohighlight">\(l\)</span>’th Legendre polynomial.</div>
+<div class="line"><span class="math notranslate nohighlight">\(f\)</span> The function being expanded (phase functions or surface BRDF).</div>
+</div>
+</div></blockquote>
+</dd>
+<dt>Azimuth Separation</dt><dd><p>In the discrete-ordinates algorithm the azimuth component of the resultant intensity is expanded into a cosine
+Fourier series. During the computation, solutions to the radiative transfer equation for different azimuth
+components are lazily evaluated until the solution has converged. The value of NSTR is also the maximum number of
+azimuth components allowed before the computation is said to have failed.</p>
+<p>Solutions to the radiative transfer equation are reconstructed as follows.</p>
+<div class="math notranslate nohighlight">
+\[I(h, \mu, \phi) = \sum_{m = 0}^{C}I^m (\tau, \mu) \cos{m(\phi_0 - \phi)} \qquad C &lt; \mathrm{NSTR}\]</div>
+<p>where</p>
+<blockquote>
+<div><div class="line-block">
+<div class="line"><span class="math notranslate nohighlight">\(I\)</span> Intensity.</div>
+<div class="line"><span class="math notranslate nohighlight">\(h\)</span> Altitude.</div>
+<div class="line"><span class="math notranslate nohighlight">\(\mu\)</span> Line of sight zenith angle.</div>
+<div class="line"><span class="math notranslate nohighlight">\(\phi\)</span> Line of sight azimuth angle.</div>
+<div class="line"><span class="math notranslate nohighlight">\(\phi_0\)</span> Solar azimuth angle.</div>
+</div>
+</div></blockquote>
+</dd>
+</dl>
+</section>
+<section id="number-of-layers">
+<h3>Number of Layers<a class="headerlink" href="#number-of-layers" title="Link to this heading">¶</a></h3>
+<p>In the discrete-ordinates method, the atmosphere is discretized into NLYR homogeneous slabs. These slabs are spaced
+in optical depth and atmospheric properties are averaged within each slab (constant through slab).</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">num_layers</span> <span class="o">=</span> <span class="mi">50</span>          <span class="c1"># default value</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Symbol<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NLYR</p>
+</dd>
+<dt class="field-even">Complexity<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(O(n)\)</span></p>
+</dd>
+<dt class="field-odd">Valid range<span class="colon">:</span></dt>
+<dd class="field-odd"><p>0 &lt; NLYR</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>50</p>
+</dd>
+<dt class="field-odd">Logic<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Increase with optical depth.</p>
+</dd>
+<dt class="field-even">Note<span class="colon">:</span></dt>
+<dd class="field-even"><p>Reasonable values may vary from 10 to hundreds.</p>
+</dd>
+</dl>
+</div></blockquote>
+<img alt="../_images/nlyr.svg" src="../_images/nlyr.svg" /></section>
+<section id="number-of-quadrature-terms">
+<h3>Number of Quadrature Terms<a class="headerlink" href="#number-of-quadrature-terms" title="Link to this heading">¶</a></h3>
+<p>In the <a class="reference internal" href="#number-of-streams">Number of Streams</a> section we saw the following integral.</p>
+<blockquote>
+<div><div class="math notranslate nohighlight">
+\[\int_{-\pi}^{\pi} L_l(\theta) f(\vec{x}, \theta) \ \mathrm{d} \theta\]</div>
+</div></blockquote>
+<p>For the phase function expansion the Legendre coefficients are precomputed for the scatterers being included.
+However the coefficients in the BRDF expansion are computed directly from the BRDF angular function.
+The <code class="docutils literal notranslate"><span class="pre">num_brdf_quadrature_terms</span></code> parameter sets the number of quadrature terms used evaluated this integral numerically.
+This parameter is only important if you are including a non-Lambertian surface.</p>
+<blockquote>
+<div><div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">num_brdf_quadrature_terms</span> <span class="o">=</span> <span class="mi">64</span>           <span class="c1"># default value</span>
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Symbol<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NPHASEF_QT, NBRDF_QT</p>
+</dd>
+<dt class="field-even">Complexity<span class="colon">:</span></dt>
+<dd class="field-even"><p><span class="math notranslate nohighlight">\(O(n)\)</span></p>
+</dd>
+<dt class="field-odd">Valid range<span class="colon">:</span></dt>
+<dd class="field-odd"><p>NPHASEF_QT, NBRDF_QT = {64, 128, 256, 512, 1024}</p>
+</dd>
+<dt class="field-even">Default<span class="colon">:</span></dt>
+<dd class="field-even"><p>64</p>
+</dd>
+<dt class="field-odd">Logic<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Increase with complexity of function, <span class="math notranslate nohighlight">\(f\)</span>.</p>
+</dd>
+<dt class="field-even">Note<span class="colon">:</span></dt>
+<dd class="field-even"><p>The integral is evaluated seperately over the intervals [-1, 0] and [0, 1].</p>
+</dd>
+</dl>
+</div></blockquote>
+<img alt="../_images/nphasef.svg" src="../_images/nphasef.svg" /></section>
+<section id="engine-options">
+<h3>Engine Options<a class="headerlink" href="#engine-options" title="Link to this heading">¶</a></h3>
+<p>The following are settable options in Sasktran-Disco. Properties are lowercase strings with spaces removed.
+These are set your engines <a class="reference internal" href="../engine.html#sasktran.Engine.options" title="sasktran.Engine.options"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Engine.options</span></code></a>.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><p>Keyword</p></td>
+<td><p>Type</p></td>
+<td><p>Description</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">sun</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.array</span></code></p></td>
+<td><p>Three element unit vector pointing to the sun in <a class="reference internal" href="../geodetic.html#geodetic"><span class="std std-ref">Geodetic</span></a> coordinates.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">altitudegrid</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.array</span></code></p></td>
+<td><p>Array of altitudes (in meters) which define the range of altitudes where Sasktran-Disco will calculate radiance. These are also the altitudes where climatologies will be polled. The default is <code class="docutils literal notranslate"><span class="pre">np.linspace(0,</span> <span class="pre">100e3,</span> <span class="pre">201)</span></code> which means poll every 500m from the ground to 100km.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">wfaltitudes</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.array</span></code></p></td>
+<td><p>Altitudes where weighting functions are calculated at (in meters).</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wfwidths</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">np.array</span></code></p></td>
+<td><p>Defines the region in which the perturbation occurs. If this is set to 500 (meters) then the perturbations will occur 500m above and 500m below each <code class="docutils literal notranslate"><span class="pre">wfaltitudes</span></code>. A width must be specified for each <code class="docutils literal notranslate"><span class="pre">wfaltitudes</span></code>.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">numstreams</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Sets the number of streams.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">numlayers</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Sets the number of layers the atmosphere is discretized into.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">numbrdfexpansionterms</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Sets the number of quadrature terms used in the expansion of the BRDF.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">wfform</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Specifies the form that you would like the weighting functions returned in. A value of 0 return weighting function in the form <span class="math notranslate nohighlight">\((I' - I)/\mathrm{wfeps}\)</span>. A value of 1 returns weighting in the form <span class="math notranslate nohighlight">\((I' - I)/(\mathrm{wfeps} \times \mathrm{nd})\)</span> where <span class="math notranslate nohighlight">\(\mathrm{nd}\)</span> is the species unperturbed number density (this essentially gives you contribution per molecule).</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">convergencecriteria</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p>Specifies convergence criteria. Once consecutive (2) iteration of the azimuth expansion yield contributions less than this value the solution is said to have converged. If a solution does not converge its value (radiance) will be set to <code class="docutils literal notranslate"><span class="pre">nan</span></code> and a warning will be shown.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">forcenumazimuthterms</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">int</span></code></p></td>
+<td><p>Specifies the exact number of terms used in the azimuth expansion. The convergence criteria is ignored if this value is set.</p></td>
+</tr>
+<tr class="row-even"><td><p><code class="docutils literal notranslate"><span class="pre">ssadither</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">double</span></code></p></td>
+<td><p>Singularities occur for the case where the SSA (scattering albedo) is exactly 0 or 1 (which are unphysical but nevertheless useful). If one of thse cases occurs the value of the SSA will be dithered by this amount.</p></td>
+</tr>
+<tr class="row-odd"><td><p><code class="docutils literal notranslate"><span class="pre">averagereferencepoint</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">bool</span></code></p></td>
+<td><p>If true the engine will use a <em>single</em> reference point for all the lines of sight (the average of all ground-intersections), otherwise the ground-intersection of each line of sight will be used as the reference point (i.e. different reference point for each line of sight).</p></td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="about-these-figures">
+<h3>About These Figures<a class="headerlink" href="#about-these-figures" title="Link to this heading">¶</a></h3>
+<section id="configuration">
+<h4>Configuration<a class="headerlink" href="#configuration" title="Link to this heading">¶</a></h4>
+<dl class="simple">
+<dt>Geometry</dt><dd><dl class="field-list simple">
+<dt class="field-odd">Observer<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Geostationary satellite similar to TEMPO (location: 0N,-100E, altitude: 35,786 km)</p>
+</dd>
+<dt class="field-even">Line of sight<span class="colon">:</span></dt>
+<dd class="field-even"><p>Single line of sight looking at the ARG office in the Physics building at the University of Saskatchewan (location: 52.131638N,-106.633873E)</p>
+</dd>
+<dt class="field-odd">Time<span class="colon">:</span></dt>
+<dd class="field-odd"><p>3:14PM June 2, 2017</p>
+</dd>
+</dl>
+</dd>
+<dt>Atmosphere</dt><dd><dl class="field-list simple">
+<dt class="field-odd">Species<span class="colon">:</span></dt>
+<dd class="field-odd"><p>Rayleigh, O3, NO2, and an aerosol</p>
+</dd>
+<dt class="field-even">Surface<span class="colon">:</span></dt>
+<dd class="field-even"><p>Snow (Kokhanovsky, default settings)</p>
+</dd>
+<dt class="field-odd">Wavelengths<span class="colon">:</span></dt>
+<dd class="field-odd"><p>2 ozone retrieval wavelengths for OSIRIS, 322.5nm and 350.31nm are optically relatively thick and thin respectively. 1 aerosol retrieval wavelength, 749.94 where the influence of the aerosol is relatively significant.</p>
+</dd>
+</dl>
+</dd>
+</dl>
+</section>
+<section id="equations">
+<h4>Equations<a class="headerlink" href="#equations" title="Link to this heading">¶</a></h4>
+<p>Someone that is familiar with the discrete-ordinates method might notice that some of the equations presented above
+omit some important details. This was done for the sake of clarity.</p>
+</section>
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="index.html" class="btn btn-neutral float-left" title="SASKTRAN-DO" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="advanced.html" class="btn btn-neutral float-right" title="Advanced Topics" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full Property List &mdash; SASKTRAN 1.8.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=82e6e318"></script>
+        <script src="../_static/doctools.js?v=888ff710"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="SASKTRAN-DO" href="../do/index.html" />
+    <link rel="prev" title="Climatology" href="climatology.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.3
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SASKTRAN Thermal InfraRed Engine</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sasktran_tir.html">The TIR Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hitran.html">HITRAN Optical Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Full Property List</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#alphabetical-list-of-properties">Alphabetical List of Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#weighting-functions">Weighting Functions</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#addwfspecies">AddWFSpecies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wfheights">WFHeights</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wfspecies">WFSpecies</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wfwidths">WFWidths</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usevmrwfunit">UseVMRWFUnit</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#calctemperaturewf">CalcTemperatureWF</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#integration">Integration</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#minextinctionratioofcell">MinExtinctionRatioOfCell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#maxopticaldepthofcell">MaxOpticalDepthOfCell</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#sourcetermorder">SourceTermOrder</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#useadaptiveintegration">UseAdaptiveIntegration</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#uselinearextinction">UseLinearExtinction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#geometry-and-atmosphere">Geometry and Atmosphere</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#geoidmodel">GeoidModel</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#groundemissivity">GroundEmissivity</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opticalpropertiesheightres">OpticalPropertiesHeightRes</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#opticaltabledimensions">OpticalTableDimensions</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#raytracingshells">RayTracingShells</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#surfaceheight">SurfaceHeight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#toaheight">TOAHeight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#userefraction">UseRefraction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#performance">Performance</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#numthreads">NumThreads</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#usecache">UseCache</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#other">Other</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#wavelengths">Wavelengths</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#diagnostics">Diagnostics</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#look">Look</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#numlinesofsight">NumLinesOfSight</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#observer">Observer</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#referencepoint">ReferencePoint</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#tangentalts">TangentAlts</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#wavel">Wavel</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+      <li class="breadcrumb-item active">Full Property List</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tir/properties.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="full-property-list">
+<span id="properties"></span><h1>Full Property List<a class="headerlink" href="#full-property-list" title="Link to this heading">¶</a></h1>
+<p>When using the <code class="docutils literal notranslate"><span class="pre">sasktran</span></code> package properties are set through:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">options</span><span class="p">[</span><span class="s1">&#39;PropertyName&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">value</span>
+</pre></div>
+</div>
+<p>or with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span> <span class="o">=</span> <span class="n">isk_engine</span><span class="o">.</span><span class="n">SetProperty</span><span class="p">(</span><span class="s1">&#39;PropertyName&#39;</span><span class="p">,</span> <span class="n">value</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>when using the <code class="docutils literal notranslate"><span class="pre">sasktranif</span></code> package.
+The property name is not case sensitive
+Depending on the property, value may be a scalar, list, or array.</p>
+<p>A complete list of properties is provided for reference.</p>
+<section id="alphabetical-list-of-properties">
+<h2>Alphabetical List of Properties<a class="headerlink" href="#alphabetical-list-of-properties" title="Link to this heading">¶</a></h2>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Property</p></th>
+<th class="head"><p>Comments</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-addwfspecies"><span class="std std-ref">AddWFSpecies</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-calctemperaturewf"><span class="std std-ref">CalcTemperatureWF</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-geoidmodel"><span class="std std-ref">GeoidModel</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-groundemissivity"><span class="std std-ref">GroundEmissivity</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-look"><span class="std std-ref">Look</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-minextinctionratioofcell"><span class="std std-ref">MinExtinctionRatioOfCell</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-maxopticaldepthofcell"><span class="std std-ref">MaxOpticalDepthOfCell</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-numlinesofsight"><span class="std std-ref">NumLinesOfSight</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-numthreads"><span class="std std-ref">NumThreads</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-observer"><span class="std std-ref">Observer</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-opticalpropertiesheightres"><span class="std std-ref">OpticalPropertiesHeightRes</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-opticaltabledimensions"><span class="std std-ref">OpticalTableDimensions</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-raytracingshells"><span class="std std-ref">RayTracingShells</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-referencepoint"><span class="std std-ref">ReferencePoint</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-sourcetermorder"><span class="std std-ref">SourceTermOrder</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-surfaceheight"><span class="std std-ref">SurfaceHeight</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-tangentalts"><span class="std std-ref">TangentAlts</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-toaheight"><span class="std std-ref">TOAHeight</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-useadaptiveintegration"><span class="std std-ref">UseAdaptiveIntegration</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-usecache"><span class="std std-ref">UseCache</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-uselinearextinction"><span class="std std-ref">UseLinearExtinction</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-userefraction"><span class="std std-ref">UseRefraction</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-usevmrwfunit"><span class="std std-ref">UseVMRWFUnit</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-wavel"><span class="std std-ref">Wavel</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-wavelengths"><span class="std std-ref">Wavelengths</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-wfheights"><span class="std std-ref">WFHeights</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-even"><td><p><a class="reference internal" href="#tir-wfspecies"><span class="std std-ref">WFSpecies</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+<tr class="row-odd"><td><p><a class="reference internal" href="#tir-wfwidths"><span class="std std-ref">WFWidths</span></a></p></td>
+<td><ul class="simple">
+<li></li>
+</ul>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="weighting-functions">
+<h2>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h2>
+<p>General weighting function description goes here.</p>
+<section id="addwfspecies">
+<span id="tir-addwfspecies"></span><h3>AddWFSpecies<a class="headerlink" href="#addwfspecies" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-AddWFSpecies">
+<span class="sig-name descname"><span class="pre">AddWFSpecies</span></span><span class="sig-prename descclassname"> <span class="pre">(string</span> <span class="pre">s)</span> <span class="pre">[Default:</span> <span class="pre">None]</span></span><a class="headerlink" href="#cmdoption-arg-AddWFSpecies" title="Link to this definition">¶</a></dt>
+<dd><p>Tells the engine to compute weighting functions for a species. The input is a string with the <code class="docutils literal notranslate"><span class="pre">CLIMATOLOGY_HANDLE</span></code>
+of the desired species. E.g. to compute CO2 weighting functions, <code class="docutils literal notranslate"><span class="pre">s=&quot;SKCLIMATOLOGY_CO2_CM3&quot;</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="wfheights">
+<span id="tir-wfheights"></span><h3>WFHeights<a class="headerlink" href="#wfheights" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-WFHeights">
+<span class="sig-name descname"><span class="pre">WFHeights</span></span><span class="sig-prename descclassname"> <span class="pre">(array</span> <span class="pre">v)</span> <span class="pre">[Default:</span> <span class="pre">linspace(500</span></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">99500</span></span><span class="sig-prename descclassname"></span><span class="sig-prename descclassname"><span class="pre">,</span> </span><span class="sig-name descname"><span class="pre">100)]</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-WFHeights" title="Link to this definition">¶</a></dt>
+<dd><p>Heights, in meters, to compute analytic weighting functions at.</p>
+</dd></dl>
+
+</section>
+<section id="wfspecies">
+<span id="tir-wfspecies"></span><h3>WFSpecies<a class="headerlink" href="#wfspecies" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-WFSpecies">
+<span class="sig-name descname"><span class="pre">WFSpecies</span></span><span class="sig-prename descclassname"> <span class="pre">(string</span> <span class="pre">s)</span> <span class="pre">[Default:</span> <span class="pre">None]</span></span><a class="headerlink" href="#cmdoption-arg-WFSpecies" title="Link to this definition">¶</a></dt>
+<dd><p>Tells the engine which species to compute analytic weighting functions for. The input string is a list of comma- or
+space-separated climatology handles. E.g. to compute weighting functions for CO2 and O3,
+<code class="docutils literal notranslate"><span class="pre">s=&quot;SKCLIMATOLOGY_CO2_CM3,</span> <span class="pre">SKCLIMATOLOGY_O3_CM3&quot;</span></code>. Setting this option overwrites any previous weighting function
+species setting.</p>
+</dd></dl>
+
+</section>
+<section id="wfwidths">
+<span id="tir-wfwidths"></span><h3>WFWidths<a class="headerlink" href="#wfwidths" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-WFWidths">
+<span class="sig-name descname"><span class="pre">WFWidths</span></span><span class="sig-prename descclassname"> <span class="pre">(array</span> <span class="pre">v)</span> <span class="pre">[Default:</span> <span class="pre">ones(100)</span> <span class="pre">*</span> <span class="pre">1000]</span></span><a class="headerlink" href="#cmdoption-arg-WFWidths" title="Link to this definition">¶</a></dt>
+<dd><p>Weighting function widths. The weighting functions determine the effect of perturbing a species population at
+each height specified by <a class="reference internal" href="#cmdoption-arg-WFHeights"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFHeights</span></code></a> on the radiance. The property <a class="reference internal" href="#cmdoption-arg-WFWidths"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFWidths</span></code></a> species the vertical distance
+from each value in <a class="reference internal" href="#cmdoption-arg-WFHeights"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFHeights</span></code></a> to the height where the perturbation is zero. Therefore, <a class="reference internal" href="#cmdoption-arg-WFHeights"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFHeights</span></code></a> and <a class="reference internal" href="#cmdoption-arg-WFWidths"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFWidths</span></code></a>
+must have identical lengths.</p>
+<p>i.e. for a weighting function calculation at <code class="docutils literal notranslate"><span class="pre">wfheights[i]</span></code>, the perturbation is maximum at <code class="docutils literal notranslate"><span class="pre">wfheights[i]</span></code> and
+decreases linearly (with height) to 0 at <code class="docutils literal notranslate"><span class="pre">(wfheights[i]</span> <span class="pre">-</span> <span class="pre">wfwidths[i])</span></code> and <code class="docutils literal notranslate"><span class="pre">(wfheights[i]</span> <span class="pre">+</span> <span class="pre">wfwidths[i])</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="usevmrwfunit">
+<span id="tir-usevmrwfunit"></span><h3>UseVMRWFUnit<a class="headerlink" href="#usevmrwfunit" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-UseVMRWFUnit">
+<span class="sig-name descname"><span class="pre">UseVMRWFUnit</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-UseVMRWFUnit" title="Link to this definition">¶</a></dt>
+<dd><p>Tells the TIR engine to return weighting functions with VMR units. This means the weighting functions will have
+the form <span class="math notranslate nohighlight">\(\mathrm{d}I / \mathrm{d(VMR)}\)</span>. By default this option is not set and the weighting functions are
+computed as the change in radiance due to a change in the species number density (with units <span class="math notranslate nohighlight">\(\mathrm{cm^{-3}}\)</span>).</p>
+</dd></dl>
+
+</section>
+<section id="calctemperaturewf">
+<span id="tir-calctemperaturewf"></span><h3>CalcTemperatureWF<a class="headerlink" href="#calctemperaturewf" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-CalcTemperatureWF">
+<span class="sig-name descname"><span class="pre">CalcTemperatureWF</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-CalcTemperatureWF" title="Link to this definition">¶</a></dt>
+<dd><p>A boolean property, that if set to true (n=1), instructs the TIR engine to calculate weighting functions for
+temperature. If weighting functions of gas number density or VMR were also computed, the temperature weighting
+functions are appended to the gas species weighting functions.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="integration">
+<h2>Integration<a class="headerlink" href="#integration" title="Link to this heading">¶</a></h2>
+<p>The integration options affect the performance and accuracy of the line of sight integration.</p>
+<section id="minextinctionratioofcell">
+<span id="tir-minextinctionratioofcell"></span><h3>MinExtinctionRatioOfCell<a class="headerlink" href="#minextinctionratioofcell" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-MinExtinctionRatioOfCell">
+<span class="sig-name descname"><span class="pre">MinExtinctionRatioOfCell</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=0.9]</span></span><a class="headerlink" href="#cmdoption-arg-MinExtinctionRatioOfCell" title="Link to this definition">¶</a></dt>
+<dd><p>Set the minimum ratio between the extinction at the endpoints of single cell that is allowed before the cell
+is split, when adaptive integration is enabled. If the option <a class="reference internal" href="#cmdoption-arg-UseAdaptiveIntegration"><code class="xref std std-option docutils literal notranslate"><span class="pre">UseAdaptiveIntegration</span></code></a> is set to False, this
+option has no effect. The ratio is calculated as the smaller of the two extinction values divided by the
+larger.</p>
+</dd></dl>
+
+</section>
+<section id="maxopticaldepthofcell">
+<span id="tir-maxopticaldepthofcell"></span><h3>MaxOpticalDepthOfCell<a class="headerlink" href="#maxopticaldepthofcell" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-MaxOpticalDepthOfCell">
+<span class="sig-name descname"><span class="pre">MaxOpticalDepthOfCell</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=0.1]</span></span><a class="headerlink" href="#cmdoption-arg-MaxOpticalDepthOfCell" title="Link to this definition">¶</a></dt>
+<dd><p>Set the maximum optical depth of a single cell is allowed to have before it is split into two cells, when
+adaptive integration is enabled. If the option <a class="reference internal" href="#cmdoption-arg-UseAdaptiveIntegration"><code class="xref std std-option docutils literal notranslate"><span class="pre">UseAdaptiveIntegration</span></code></a> is set to False, this option has no
+effect.</p>
+</dd></dl>
+
+</section>
+<section id="sourcetermorder">
+<span id="tir-sourcetermorder"></span><h3>SourceTermOrder<a class="headerlink" href="#sourcetermorder" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-SourceTermOrder">
+<span class="sig-name descname"><span class="pre">SourceTermOrder</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-SourceTermOrder" title="Link to this definition">¶</a></dt>
+<dd><p>Determines how the source term is represented within each integration cell. Allowed values are 0 or 2.
+The default 0th order option makes the source term constant across the cell. If a value of 2 is used,
+the source function is quadratically splined along the line of sight.</p>
+<p>NOTE: The analytic weighting functions calculated by TIR assume a constant source term in each cell,
+regardless of this setting. Using a 2nd order source term will only effect the radiance returned by
+the model.</p>
+</dd></dl>
+
+</section>
+<section id="useadaptiveintegration">
+<span id="tir-useadaptiveintegration"></span><h3>UseAdaptiveIntegration<a class="headerlink" href="#useadaptiveintegration" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-UseAdaptiveIntegration">
+<span class="sig-name descname"><span class="pre">UseAdaptiveIntegration</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=1]</span></span><a class="headerlink" href="#cmdoption-arg-UseAdaptiveIntegration" title="Link to this definition">¶</a></dt>
+<dd><p>A boolean property that, if True, enables dynamic cell splitting during the radiative transfer integration.
+During the ray tracing process, the line of sight is split into cells based on the intersection of the line of
+sight with geometric shapes used to split the atmosphere into homogeneous layers. When the optical depth of a
+cell is computed, the cell is split if one or both of the following conditions are satisfied:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p>The optical depth of the cell exceeds the value specified by the property <a class="reference internal" href="#cmdoption-arg-MaxOpticalDepthOfCell"><code class="xref std std-option docutils literal notranslate"><span class="pre">MaxOpticalDepthOfCell</span></code></a></p></li>
+<li><p>The ratio of the smaller of the two values of extinction at the endpoints of the cell to the larger
+value is less than the property <a class="reference internal" href="#cmdoption-arg-MinExtinctionRatioOfCell"><code class="xref std std-option docutils literal notranslate"><span class="pre">MinExtinctionRatioOfCell</span></code></a></p></li>
+</ol>
+</div></blockquote>
+</dd></dl>
+
+</section>
+<section id="uselinearextinction">
+<span id="tir-uselinearextinction"></span><h3>UseLinearExtinction<a class="headerlink" href="#uselinearextinction" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-UseLinearExtinction">
+<span class="sig-name descname"><span class="pre">UseLinearExtinction</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=1]</span></span><a class="headerlink" href="#cmdoption-arg-UseLinearExtinction" title="Link to this definition">¶</a></dt>
+<dd><p>If this property is set to True, the engine calculates the optical depth of a cell by allowing the extinction
+to vary linearly with height, between the values at the endpoints of the cell. If this property is set to False,
+the extinction of a cell is constant, calculated as the average of the values at the endpoints.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="geometry-and-atmosphere">
+<h2>Geometry and Atmosphere<a class="headerlink" href="#geometry-and-atmosphere" title="Link to this heading">¶</a></h2>
+<section id="geoidmodel">
+<span id="tir-geoidmodel"></span><h3>GeoidModel<a class="headerlink" href="#geoidmodel" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-GeoidModel">
+<span class="sig-name descname"><span class="pre">GeoidModel</span></span><span class="sig-prename descclassname"> <span class="pre">(string</span> <span class="pre">s)</span> <span class="pre">[Default:</span> <span class="pre">s=&quot;WGS84&quot;]</span></span><a class="headerlink" href="#cmdoption-arg-GeoidModel" title="Link to this definition">¶</a></dt>
+<dd><p>Manually sets the reference ellipsoid used in the model coordinate system. Allowed values are
+<code class="docutils literal notranslate"><span class="pre">&quot;GEOID_SPHERE&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;IAU1976&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;GRS80&quot;</span></code>, <code class="docutils literal notranslate"><span class="pre">&quot;MERIT83&quot;</span></code>, and <code class="docutils literal notranslate"><span class="pre">&quot;WGS84&quot;</span></code>. Mainly useful for comparing with
+other radiative transfer models.</p>
+</dd></dl>
+
+</section>
+<section id="groundemissivity">
+<span id="tir-groundemissivity"></span><h3>GroundEmissivity<a class="headerlink" href="#groundemissivity" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-GroundEmissivity">
+<span class="sig-name descname"><span class="pre">GroundEmissivity</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=1.0]</span></span><a class="headerlink" href="#cmdoption-arg-GroundEmissivity" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the scalar emissivity of the surface of the Earth. If the line of sight ends at the ground, the emission
+from the Earth’s surface must be taken into account. In the TIR engine this emission is modelled as a
+black body with constant emissivity. For limb-viewing geometries this setting will have no effect as there are
+no scattering effects in the TIR engine.</p>
+</dd></dl>
+
+</section>
+<section id="opticalpropertiesheightres">
+<span id="tir-opticalpropertiesheightres"></span><h3>OpticalPropertiesHeightRes<a class="headerlink" href="#opticalpropertiesheightres" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-OpticalPropertiesHeightRes">
+<span class="sig-name descname"><span class="pre">OpticalPropertiesHeightRes</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=1000.0]</span></span><a class="headerlink" href="#cmdoption-arg-OpticalPropertiesHeightRes" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the height resolution (in meters) of the optical properties table. The optical properties table stores the
+values of species cross sections, absorption, and thermal emissions at discrete heights. To obtain the value
+of one of these properties at any height, the model performs an interpolation. The table values are distributed
+between <a class="reference internal" href="#cmdoption-arg-SurfaceHeight"><code class="xref std std-option docutils literal notranslate"><span class="pre">SurfaceHeight</span></code></a> and <a class="reference internal" href="#cmdoption-arg-TOAHeight"><code class="xref std std-option docutils literal notranslate"><span class="pre">TOAHeight</span></code></a> with a spacing of <a class="reference internal" href="#cmdoption-arg-OpticalPropertiesHeightRes"><code class="xref std std-option docutils literal notranslate"><span class="pre">OpticalPropertiesHeightRes</span></code></a>.
+Decreasing this spacing will improve model accuracy as there will be less interpolation error, but will result
+in increased computation times.</p>
+</dd></dl>
+
+</section>
+<section id="opticaltabledimensions">
+<span id="tir-opticaltabledimensions"></span><h3>OpticalTableDimensions<a class="headerlink" href="#opticaltabledimensions" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-OpticalTableDimensions">
+<span class="sig-name descname"><span class="pre">OpticalTableDimensions</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=1]</span></span><a class="headerlink" href="#cmdoption-arg-OpticalTableDimensions" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the number of dimensions for the atmosphere in the radiative transfer calculation.</p>
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Input</p></th>
+<th class="head"><p>Setting</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>1</p></td>
+<td><p>One-dimensional in altitude</p></td>
+</tr>
+<tr class="row-odd"><td><p>2</p></td>
+<td><p>Two-dimensional in altitude and along the line of sight</p></td>
+</tr>
+</tbody>
+</table>
+</dd></dl>
+
+</section>
+<section id="raytracingshells">
+<span id="tir-raytracingshells"></span><h3>RayTracingShells<a class="headerlink" href="#raytracingshells" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-RayTracingShells">
+<span class="sig-name descname"><span class="pre">RayTracingShells</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=500.0]</span></span><a class="headerlink" href="#cmdoption-arg-RayTracingShells" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the spacing (in meters) between the spherical shells which divide the atmosphere into homogeneous layers.
+During the ray tracing process the line of sight is divided into segments by determining its intersection with
+these spherical shells. Atmospheric properties are assumed to be constant across each segment. Decreasing the
+spacing will improve accuracy at the cost of increased computation time.</p>
+</dd></dl>
+
+</section>
+<section id="surfaceheight">
+<span id="tir-surfaceheight"></span><h3>SurfaceHeight<a class="headerlink" href="#surfaceheight" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-SurfaceHeight">
+<span class="sig-name descname"><span class="pre">SurfaceHeight</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=0.0]</span></span><a class="headerlink" href="#cmdoption-arg-SurfaceHeight" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the surface height in meters.</p>
+</dd></dl>
+
+</section>
+<section id="toaheight">
+<span id="tir-toaheight"></span><h3>TOAHeight<a class="headerlink" href="#toaheight" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-TOAHeight">
+<span class="sig-name descname"><span class="pre">TOAHeight</span></span><span class="sig-prename descclassname"> <span class="pre">(double</span> <span class="pre">d)</span> <span class="pre">[Default:</span> <span class="pre">d=100000.0]</span></span><a class="headerlink" href="#cmdoption-arg-TOAHeight" title="Link to this definition">¶</a></dt>
+<dd><p>Sets the altitude of the top of the atmosphere. Above this altitude it is assumed there is no atmosphere.
+Due to the assumption of local thermodynamic equilibrium within the Thermal InfraRed engine, increasing
+the value above 100000 m is not recommended because this simplification can not be used at higher altitudes.</p>
+</dd></dl>
+
+</section>
+<section id="userefraction">
+<span id="tir-userefraction"></span><h3>UseRefraction<a class="headerlink" href="#userefraction" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-UseRefraction">
+<span class="sig-name descname"><span class="pre">UseRefraction</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-UseRefraction" title="Link to this definition">¶</a></dt>
+<dd><p>If set to true, then refractive ray tracing is performed for the observer line of sight rays.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="performance">
+<h2>Performance<a class="headerlink" href="#performance" title="Link to this heading">¶</a></h2>
+<section id="numthreads">
+<span id="tir-numthreads"></span><h3>NumThreads<a class="headerlink" href="#numthreads" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-NumThreads">
+<span class="sig-name descname"><span class="pre">NumThreads</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-NumThreads" title="Link to this definition">¶</a></dt>
+<dd><p>Controls the number of threads to use when multithreading the radiative transfer calculation.  The default value
+of 0 indicates that the number of threads used will be equal to the number of available logical cores on
+the target machine.</p>
+<p>Setting this value to a lower number than the number of available cores can be useful when running a radiative
+transfer calculation in the background and the computer is too slow to multitask.</p>
+</dd></dl>
+
+</section>
+<section id="usecache">
+<span id="tir-usecache"></span><h3>UseCache<a class="headerlink" href="#usecache" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-UseCache">
+<span class="sig-name descname"><span class="pre">UseCache</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=0]</span></span><a class="headerlink" href="#cmdoption-arg-UseCache" title="Link to this definition">¶</a></dt>
+<dd><p>Designed to enable faster iterative radiance calculations, this setting instructs the TIR engine to compute
+absorption using cached cross sections. This can only be done if:</p>
+<blockquote>
+<div><ol class="arabic simple">
+<li><p><code class="xref py py-meth docutils literal notranslate"><span class="pre">CalculateRadiance()</span></code> has been called at least once</p></li>
+<li><p>The only change to the engine object since the last call to <code class="xref py py-meth docutils literal notranslate"><span class="pre">CalculateRadiance()</span></code> is the number density
+climatology of one or more species added to the engine. The optical properties used for these
+species must the same; if a new optical property is specified, the resulting radiance will be as though
+the old optical property were used.</p></li>
+<li><p>The species whose climatologies have been changed must also be set as the <a class="reference internal" href="#cmdoption-arg-WFSpecies"><code class="xref std std-option docutils literal notranslate"><span class="pre">WFSpecies</span></code></a> of the engine
+, i.e. only the species for which weighting functions are computed may have their climatologies
+changed</p></li>
+</ol>
+</div></blockquote>
+</dd></dl>
+
+</section>
+</section>
+<section id="other">
+<h2>Other<a class="headerlink" href="#other" title="Link to this heading">¶</a></h2>
+<section id="wavelengths">
+<span id="tir-wavelengths"></span><h3>Wavelengths<a class="headerlink" href="#wavelengths" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-Wavelengths">
+<span class="sig-name descname"><span class="pre">Wavelengths</span></span><span class="sig-prename descclassname"> <span class="pre">(array</span> <span class="pre">v)</span></span><a class="headerlink" href="#cmdoption-arg-Wavelengths" title="Link to this definition">¶</a></dt>
+<dd><p>This option exists to allow the TIR engine to use the <code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.engine</span></code> interface. Unlock other engines,
+TIR requires wavelengths to be set prior to model configuration where the optical properties table is allocated.
+The user does not need to use this option and should instead set wavelengths with the <code class="xref py py-meth docutils literal notranslate"><span class="pre">EngineTIR.wavelength()</span></code>
+property when using the <code class="docutils literal notranslate"><span class="pre">sasktran</span></code> package or the <code class="xref py py-meth docutils literal notranslate"><span class="pre">ISKEngine.SetWavelengths()</span></code> method when using <code class="docutils literal notranslate"><span class="pre">sasktranif</span></code>.</p>
+</dd></dl>
+
+</section>
+</section>
+<section id="diagnostics">
+<h2>Diagnostics<a class="headerlink" href="#diagnostics" title="Link to this heading">¶</a></h2>
+<p>The following options can be used to return information about the engine using the <code class="xref py py-meth docutils literal notranslate"><span class="pre">ISKEngine.GetProperty()</span></code> method.
+Some parameters such as <a class="reference internal" href="#tir-look"><span class="std std-ref">Look</span></a> and <a class="reference internal" href="#tir-observer"><span class="std std-ref">Observer</span></a> require an index to be added as part of
+the argument string passed to <code class="xref py py-meth docutils literal notranslate"><span class="pre">GetProperty()</span></code>. For example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">ok</span><span class="p">,</span> <span class="n">look</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">GetProperty</span><span class="p">(</span><span class="s1">&#39;Look[0]&#39;</span><span class="p">)</span>  <span class="c1"># Get look vector at index 0</span>
+</pre></div>
+</div>
+<section id="look">
+<span id="tir-look"></span><h3>Look<a class="headerlink" href="#look" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-Look">
+<span class="sig-name descname"><span class="pre">Look</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=-1]</span></span><a class="headerlink" href="#cmdoption-arg-Look" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the look unit vector of the line of sight at with index <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="numlinesofsight">
+<span id="tir-numlinesofsight"></span><h3>NumLinesOfSight<a class="headerlink" href="#numlinesofsight" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-NumLinesOfSight">
+<span class="sig-name descname"><span class="pre">NumLinesOfSight</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-NumLinesOfSight" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the number of lines of sight added to the engine, as a float value.</p>
+</dd></dl>
+
+</section>
+<section id="observer">
+<span id="tir-observer"></span><h3>Observer<a class="headerlink" href="#observer" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-Observer">
+<span class="sig-name descname"><span class="pre">Observer</span></span><span class="sig-prename descclassname"> <span class="pre">(int</span> <span class="pre">n)</span> <span class="pre">[Default:</span> <span class="pre">n=-1]</span></span><a class="headerlink" href="#cmdoption-arg-Observer" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the observer position for the line of sight at with index <code class="docutils literal notranslate"><span class="pre">n</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="referencepoint">
+<span id="tir-referencepoint"></span><h3>ReferencePoint<a class="headerlink" href="#referencepoint" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-ReferencePoint">
+<span class="sig-name descname"><span class="pre">ReferencePoint</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-ReferencePoint" title="Link to this definition">¶</a></dt>
+<dd><p>Return the <code class="xref py py-class docutils literal notranslate"><span class="pre">GEODETIC_INSTANT</span></code> ([latitude, longitude, height, mjd]) which the engine determined from the
+input line(s) of sight and used as the time and location to draw from climatologies to populate the atmospheric
+tables. Can only be called after <code class="xref py py-meth docutils literal notranslate"><span class="pre">CalculateRadiance()</span></code>.</p>
+</dd></dl>
+
+</section>
+<section id="tangentalts">
+<span id="tir-tangentalts"></span><h3>TangentAlts<a class="headerlink" href="#tangentalts" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-TangentAlts">
+<span class="sig-name descname"><span class="pre">TangentAlts</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-TangentAlts" title="Link to this definition">¶</a></dt>
+<dd><p>Returns a list of tangent altitudes (in meters) for each line of sight added to the engine. Can only
+be called after <code class="xref py py-meth docutils literal notranslate"><span class="pre">CalculateRadiance()</span></code>. For lines of sight not looking through the atmospheric limb the
+values returned may be negative or nonsensical.</p>
+</dd></dl>
+
+</section>
+<section id="wavel">
+<span id="tir-wavel"></span><h3>Wavel<a class="headerlink" href="#wavel" title="Link to this heading">¶</a></h3>
+<dl class="std option">
+<dt class="sig sig-object std" id="cmdoption-arg-Wavel">
+<span class="sig-name descname"><span class="pre">Wavel</span></span><span class="sig-prename descclassname"></span><a class="headerlink" href="#cmdoption-arg-Wavel" title="Link to this definition">¶</a></dt>
+<dd><p>Returns the wavelengths (in nm) of the most recent radiance calculation.</p>
+</dd></dl>
+
+</section>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="climatology.html" class="btn btn-neutral float-left" title="Climatology" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="../do/index.html" class="btn btn-neutral float-right" title="SASKTRAN-DO" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
