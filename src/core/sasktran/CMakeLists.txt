@@ -330,13 +330,8 @@ if(TRUE)
 			COMMAND ${CMAKE_COMMAND} -E copy $<TARGET_FILE:${SASKTRAN_CORE_NAME}> ${CMAKE_SOURCE_DIR}/src/core/sasktran/python_sasktrancore/sasktran_core/
 		)
 
-		if(WIN32)
-			set(YAML_LIBRARY_DIR ${YAML_CPP_LIBRARY_DIR})
-			get_target_property(YAML_INCLUDER_DIRS yaml-cpp INTERFACE_INCLUDE_DIRECTORIES)
-		else()
-			get_target_property(YAML_LIBRARY_DIR yaml-cpp LOCATION_RELEASE)
-			get_target_property(YAML_INCLUDER_DIRS yaml-cpp INTERFACE_INCLUDE_DIRECTORIES)
-		endif()
+		get_target_property(YAML_LIBRARY_DIR yaml-cpp LOCATION_RELEASE)
+		get_target_property(YAML_INCLUDER_DIRS yaml-cpp INTERFACE_INCLUDE_DIRECTORIES)
 
 
 		# This is the proper way to do it but for some reason this segfaults in the linux build container
@@ -344,7 +339,11 @@ if(TRUE)
 		# cmake_path(REMOVE_FILENAME YAML_LIBRARY_DIR)
 
 		set(SASKTRAN_IF_INCLUDE_PATH "${Boost_INCLUDE_DIRS}\;${YAML_CPP_INCLUDE_DIR}\;${YAML_INCLUDER_DIRS} ")
-		set(SASKTRAN_IF_LIBRARY_PATH "$<TARGET_FILE_DIR:${SASKTRANIF_NAME}>\;$<TARGET_FILE_DIR:${NXBASE_NAME}>\;${Boost_LIBRARY_DIRS}\;${YAML_LIBRARY_DIR}")
+		if(WIN32)
+			set(SASKTRAN_IF_LIBRARY_PATH "$<TARGET_FILE_DIR:${SASKTRANIF_NAME}>\;$<TARGET_FILE_DIR:${NXBASE_NAME}>\;${Boost_LIBRARY_DIRS}\;${YAML_LIBRARY_DIR};${YAML_CPP_LIBRARY_DIR} ")
+		else()
+			set(SASKTRAN_IF_LIBRARY_PATH "$<TARGET_FILE_DIR:${SASKTRANIF_NAME}>\;$<TARGET_FILE_DIR:${NXBASE_NAME}>\;${Boost_LIBRARY_DIRS}\;${YAML_LIBRARY_DIR}")
+		endif()
 
 		foreach(env ${PythonEnvironments})
 			if(WIN32)
