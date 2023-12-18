@@ -14,7 +14,7 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
 
       if [ $PYENV == "current" ]; then
           pushd pysasktran
-          python3 setup.py bdist_wheel -d ../wheelhouse
+          python3 -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation
           popd
 
       else
@@ -22,13 +22,15 @@ if [[ -z $CONDA_BUILD_STATE ]]; then
           conda activate $PYENV
 
           pushd pysasktran
-          python3 setup.py bdist_wheel -d ../wheelhouse
+          python3 -m pip install setuptools-scm
+          python3 -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation -vvv
           popd
           conda deactivate
       fi
   else
     pushd pysasktran
-    /opt/python/$PYENV/bin/python setup.py bdist_wheel -d ../wheelhouse
+    /opt/python/$PYENV/bin/python -m pip install setuptools-scm
+    /opt/python/$PYENV/bin/python -m pip wheel . -w ../wheelhouse --no-deps --no-build-isolation -vvv
     popd
   fi
 else

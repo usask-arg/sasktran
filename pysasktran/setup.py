@@ -2,11 +2,9 @@
 import os
 import sys
 from shutil import copyfile, rmtree
-import versioneer
 from setuptools import setup
 from setuptools import find_packages
-from setuptools.dist import Distribution
-from distutils.core import Extension
+from setuptools import Extension
 import glob
 from copy import copy
 from pathlib import Path
@@ -26,8 +24,8 @@ def get_install_requires() -> List[str]:
 def get_cplus_paths():
     cplus_include_path = []
     cplus_library_path = []
-    cplus_include_pathstr = os.environ.get("SASKTRAN_IF_INCLUDE_PATH")
-    cplus_library_pathstr = os.environ.get("SASKTRAN_IF_LIBRARY_PATH")
+    cplus_include_pathstr = os.environ.get("SASKTRAN_IF_INCLUDE_PATH", "")
+    cplus_library_pathstr = os.environ.get("SASKTRAN_IF_LIBRARY_PATH", "")
 
     print("\n**************************** READ THIS NOTICE ****************************************\n")
     print("CPLUS_INCLUDE_PATH = {}".format(os.environ.get("SASKTRAN_IF_INCLUDE_PATH")))
@@ -193,8 +191,6 @@ extension_module = Extension(                                                   
 
 setup(
     name='sasktran',
-    version=versioneer.get_version(),
-    cmdclass=versioneer.get_cmdclass(),
     packages=find_packages(),
     url='https://arg.usask.ca/docs/sasktran/',
     license='MIT',
@@ -208,6 +204,7 @@ setup(
     data_files=data_files,
     ext_modules=[extension_module],
     install_requires=get_install_requires(),
+    use_scm_version={"fallback_version": "9999"},
 )
 
 

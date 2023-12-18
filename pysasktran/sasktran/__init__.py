@@ -30,8 +30,15 @@ from .stokesvector import StokesVector
 
 from .handles import standard_handles
 from .exceptions import SasktranError
-from ._version import get_versions
-__version__ = get_versions()['version']
-del get_versions
+
+
+from importlib.metadata import version, PackageNotFoundError
+
+try:
+    __version__ = version("sasktran")
+except PackageNotFoundError:
+    # package is not installed
+    pass
+
 
 update_registry_from_config()
