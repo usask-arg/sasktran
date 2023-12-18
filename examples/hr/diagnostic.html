@@ -1,20 +1,22 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
+<html class="writer-html5" lang="en" data-content_root="../../">
 <head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.2 documentation</title>
-      <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/nbsphinx-code-cells.css" type="text/css" />
-      <link rel="stylesheet" href="../../_static/_static/theme_overrides.css" type="text/css" />
+  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.3 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
+      <link rel="stylesheet" type="text/css" href="../../_static/_static/theme_overrides.css" />
+
+  
     <link rel="shortcut icon" href="../../_static/sasktran-favicon.png"/>
   <!--[if lt IE 9]>
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/documentation_options.js?v=269e6701"></script>
+        <script src="../../_static/documentation_options.js?v=82e6e318"></script>
         <script src="../../_static/doctools.js?v=888ff710"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
@@ -40,7 +42,7 @@
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.2
+                1.8.3
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -428,38 +430,45 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 <div class="nboutput docutils container">
 <div class="prompt empty docutils container">
 </div>
-<div class="output_area stderr docutils container">
+<div class="output_area docutils container">
 <div class="highlight"><pre>
-/tmp/ipykernel_3270/2621053390.py:39: MatplotlibDeprecationWarning: Unable to determine Axes to steal space for Colorbar. Using gca(), but will raise in the future. Either provide the *cax* argument to use as the Axes for the Colorbar, provide the *ax* argument to steal space from it, or add *mappable* to an Axes.
-  fig.colorbar(m, shrink=0.5, aspect=15, ticks=np.linspace(min(facevals),
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+Cell <span class="ansi-green-fg">In[8], line 4</span>
+<span class="ansi-green-intense-fg ansi-bold">      1</span> fname <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">DiagnosticData.h5</span><span style="color: rgb(175,0,0)">&#39;</span>
+<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
+<span class="ansi-green-fg">----&gt; 4</span> <span class="ansi-yellow-bg">plotOnSphere</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">fname</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">350</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">in</span><span class="ansi-yellow-bg" style="color: rgb(175,0,0)">&#39;</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">order</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">profile</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">2</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">height</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">10500</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">mycolormap</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">plt</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">cm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">rainbow</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-intense-fg ansi-bold">      5</span> plotOnSphere(fname, <span style="color: rgb(98,98,98)">350</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">out</span><span style="color: rgb(175,0,0)">&#39;</span>, order<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1</span>, profile<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, height<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">10500</span>, mycolormap <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>cm<span style="color: rgb(98,98,98)">.</span>rainbow)
+<span class="ansi-green-intense-fg ansi-bold">      6</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
+
+Cell <span class="ansi-green-fg">In[7], line 34</span>, in <span class="ansi-cyan-fg">plotOnSphere</span><span class="ansi-blue-fg">(fname, wlen, type, order, profile, height, mycolormap)</span>
+<span class="ansi-green-intense-fg ansi-bold">     32</span> ax <span style="color: rgb(98,98,98)">=</span> fig<span style="color: rgb(98,98,98)">.</span>add_subplot(projection<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">3d</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-intense-fg ansi-bold">     33</span> ax<span style="color: rgb(98,98,98)">.</span>add_collection(coll)
+<span class="ansi-green-fg">---&gt; 34</span> <span class="ansi-yellow-bg">ax</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">axis</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">[</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">-</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">1</span><span class="ansi-yellow-bg">]</span><span class="ansi-yellow-bg">)</span>, ax<span style="color: rgb(98,98,98)">.</span>set_zlim(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>, <span style="color: rgb(98,98,98)">1</span>)
+<span class="ansi-green-intense-fg ansi-bold">     35</span> ax<span style="color: rgb(98,98,98)">.</span>set_xlabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">X</span><span style="color: rgb(175,0,0)">&#39;</span>), ax<span style="color: rgb(98,98,98)">.</span>set_ylabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Y</span><span style="color: rgb(175,0,0)">&#39;</span>), ax<span style="color: rgb(98,98,98)">.</span>set_zlabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Z</span><span style="color: rgb(175,0,0)">&#39;</span>)
+<span class="ansi-green-intense-fg ansi-bold">     37</span> m <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>cm<span style="color: rgb(98,98,98)">.</span>ScalarMappable(cmap<span style="color: rgb(98,98,98)">=</span>mycolormap)
+
+File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.9/site-packages/matplotlib/axes/_base.py:2112</span>, in <span class="ansi-cyan-fg">_AxesBase.axis</span><span class="ansi-blue-fg">(self, arg, emit, **kwargs)</span>
+<span class="ansi-green-intense-fg ansi-bold">   2110</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> arg <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-intense-fg ansi-bold">   2111</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(arg) <span style="color: rgb(98,98,98)">!=</span> <span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(0,135,0)">len</span>(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names):
+<span class="ansi-green-fg">-&gt; 2112</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>(
+<span class="ansi-green-intense-fg ansi-bold">   2113</span>             <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">The first argument to axis() must be an iterable of the form </span><span style="color: rgb(175,0,0)">&#34;</span>
+<span class="ansi-green-intense-fg ansi-bold">   2114</span>             <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">[</span><span class="ansi-bold" style="color: rgb(175,95,135)">{}</span><span style="color: rgb(175,0,0)">]</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>format(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">, </span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(
+<span class="ansi-green-intense-fg ansi-bold">   2115</span>                 <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">min, </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">max</span><span style="color: rgb(175,0,0)">&#34;</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names)))
+<span class="ansi-green-intense-fg ansi-bold">   2116</span>     limits <span style="color: rgb(98,98,98)">=</span> {
+<span class="ansi-green-intense-fg ansi-bold">   2117</span>         name: arg[<span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>i:<span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>(i<span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">1</span>)]
+<span class="ansi-green-intense-fg ansi-bold">   2118</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> i, name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">enumerate</span>(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names)
+<span class="ansi-green-intense-fg ansi-bold">   2119</span>     }
+<span class="ansi-green-intense-fg ansi-bold">   2120</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+
+<span class="ansi-red-fg">TypeError</span>: The first argument to axis() must be an iterable of the form [xmin, xmax, ymin, ymax, zmin, zmax]
 </pre></div></div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_10_1.png" src="../../_images/examples_hr_diagnostic_10_1.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_10_2.png" src="../../_images/examples_hr_diagnostic_10_2.png" />
-</div>
-</div>
-<div class="nboutput docutils container">
-<div class="prompt empty docutils container">
-</div>
-<div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_10_3.png" src="../../_images/examples_hr_diagnostic_10_3.png" />
-</div>
 </div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
 <div class="output_area docutils container">
-<img alt="../../_images/examples_hr_diagnostic_10_4.png" src="../../_images/examples_hr_diagnostic_10_4.png" />
+<img alt="../../_images/examples_hr_diagnostic_10_1.png" src="../../_images/examples_hr_diagnostic_10_1.png" />
 </div>
 </div>
 <div class="nbinput docutils container">
