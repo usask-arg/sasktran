@@ -255,13 +255,13 @@ jobs:
           activate-environment: ""
 
       - name: Create Conda py310 Build Environment
-        run: conda create -n py310 python=3.10 numpy=2.0.0
+        run: conda create -n py310 -c conda-forge python=3.10 numpy=2.0.0
 
       - name: Create Conda py311 Build Environment
-        run: conda create -n py311 python=3.11 numpy=2.0.0
+        run: conda create -n py311 -c conda-forge python=3.11 numpy=2.0.0
       
       - name: Create conda py312 Build Environment
-        run: conda create -n py312 python=3.12 numpy=2.0.0
+        run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0.0
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
