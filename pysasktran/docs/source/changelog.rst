@@ -3,6 +3,14 @@
 Changelog
 *********
 
+1.8.4
+=====
+* Re-release for numpy 2.0.0
+
+1.8.3
+=====
+* Re-release for Python 3.12
+
 1.8.2
 =====
 * Fixed a bug in how the tangent point was being calculated

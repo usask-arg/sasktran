@@ -193,7 +193,6 @@ setup(
     name='sasktran',
     packages=find_packages(),
     url='https://arg.usask.ca/docs/sasktran/',
-    license='MIT',
     author='Daniel Zawada',
     author_email='daniel.zawada@usask.ca',
     description='',
