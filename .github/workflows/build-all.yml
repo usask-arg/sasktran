@@ -176,9 +176,6 @@ jobs:
     runs-on: macos-12
     env:
         BUILDPYTHONENV: "current"
-        CONDA_BUILD_SYSROOT: "/tmp/MacOSX10.9.sdk"
-        SDKROOT: "/tmp/MacOSX10.9.sdk"
-        MACOSX_DEPLOYMENT_TARGET: "10.9"
     
     strategy:
       matrix:
@@ -189,12 +186,6 @@ jobs:
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Get 10.9 SDK
-        run: |
-          curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.9.sdk.tar.xz
-          mkdir -p /tmp
-          tar -xf MacOSX10.9.sdk.tar.xz -C /tmp
 
       - name: Setup Conda build environment 
         uses: conda-incubator/setup-miniconda@v2
