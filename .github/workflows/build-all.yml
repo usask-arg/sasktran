@@ -307,7 +307,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py38;py39;py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
+      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
@@ -363,6 +363,7 @@ jobs:
           activate-environment: ${{ matrix.py_version }}
           environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
           auto-activate-base: false
+          miniconda-version: "latest"
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
