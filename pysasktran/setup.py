@@ -61,7 +61,12 @@ extra_objects = []
 cplus_include_path, cplus_library_path = get_cplus_paths()
 
 import pkgutil
-np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
+
+try:
+    import numpy as np
+    np_path = np.get_include()
+except:
+    np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
 
 include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
                       r'../src/core/base/nxbase',
