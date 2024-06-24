@@ -1,6 +1,6 @@
 name: doc_env
 dependencies:
-  - python=3.9
+  - python=3.12
   - numpy
   - h5py
   - hdf4
@@ -11,7 +11,7 @@ dependencies:
   - jupyter
   - pandoc
   - matplotlib
-  - jinja2=3.0.3
+  - jinja2
   - xarray
   - pip
   - pip:

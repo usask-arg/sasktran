@@ -10,6 +10,6 @@ dependencies:
   - openblas=0.3.23
   - yaml-cpp=0.7.0
   - delocate=0.10.4
-  - numpy=1.22.4
+  - numpy=2.0.0
   - eigen=3.4.0
   - setuptools_scm

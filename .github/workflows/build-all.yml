@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
     env:
-        BUILDPYTHONENV: "cp38-cp38;cp39-cp39;cp310-cp310;cp311-cp311;cp312-cp312"
+        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312"
         IN_MANYLINUX_CONTAINER: "TRUE"
         CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
     steps:
@@ -48,7 +48,7 @@ jobs:
     container: continuumio/anaconda3
     strategy:
       matrix:
-        py_version: [py38, py39, py310, py311, py312]
+        py_version: [py310, py311, py312]
 
     steps:
       - name: Checkout repository
@@ -173,28 +173,19 @@ jobs:
           publish_dir: docs
 
   build-cpp-wheels-mac:
-    runs-on: macos-11
+    runs-on: macos-12
     env:
         BUILDPYTHONENV: "current"
-        CONDA_BUILD_SYSROOT: "/tmp/MacOSX10.9.sdk"
-        SDKROOT: "/tmp/MacOSX10.9.sdk"
-        MACOSX_DEPLOYMENT_TARGET: "10.9"
     
     strategy:
       matrix:
-        py_version: [py38, py39, py310, py311, py312]
+        py_version: [py310, py311, py312]
         
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
-
-      - name: Get 10.9 SDK
-        run: |
-          curl -L -O https://github.com/phracker/MacOSX-SDKs/releases/download/11.3/MacOSX10.9.sdk.tar.xz
-          mkdir -p /tmp
-          tar -xf MacOSX10.9.sdk.tar.xz -C /tmp
 
       - name: Setup Conda build environment 
         uses: conda-incubator/setup-miniconda@v2
@@ -236,7 +227,7 @@ jobs:
   build-cpp-wheels-windows:
     runs-on: windows-latest
     env:
-        BUILDPYTHONENV: "py38;py39;py310;py311;py312"
+        BUILDPYTHONENV: "py310;py311;py312"
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
         CMAKE_INSTALL_PREFIX: c:/local/sasktran
 
@@ -254,20 +245,14 @@ jobs:
           auto-activate-base: true
           activate-environment: ""
 
-      - name: Create Conda py38 Build Environment
-        run: conda create -n py38 python=3.8 numpy=1.11.3
-
-      - name: Create Conda py39 Build Environment
-        run: conda create -n py39 python=3.9 numpy=1.16.6
-
       - name: Create Conda py310 Build Environment
-        run: conda create -n py310 python=3.10 numpy=1.21.5
+        run: conda create -n py310 -c conda-forge python=3.10 numpy=2.0.0
 
       - name: Create Conda py311 Build Environment
-        run: conda create -n py311 python=3.11 numpy=1.22.3
+        run: conda create -n py311 -c conda-forge python=3.11 numpy=2.0.0
       
       - name: Create conda py312 Build Environment
-        run: conda create -n py312 python=3.12 numpy=1.26.0
+        run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0.0
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
@@ -322,7 +307,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py38;py39;py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
+      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
@@ -341,7 +326,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        py_version: [py38, py39, py310, py311, py312]
+        py_version: [py310, py311, py312]
 
     steps:
       - uses: conda-incubator/setup-miniconda@v2
@@ -367,7 +352,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py38, py39, py310, py311, py312]
+        py_version: [py310, py311, py312]
 
     steps:
       - name: Checkout repository
@@ -378,6 +363,7 @@ jobs:
           activate-environment: ${{ matrix.py_version }}
           environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
           auto-activate-base: false
+          miniconda-version: "latest"
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
@@ -431,18 +417,6 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: wheels-windows
-          path: dist
-
-      - name: Download mac wheel py38
-        uses: actions/download-artifact@v3
-        with:
-          name: wheels-mac-py38
-          path: dist
-
-      - name: Download mac wheel py39
-        uses: actions/download-artifact@v3
-        with:
-          name: wheels-mac-py39
           path: dist
 
       - name: Download mac wheel py310
