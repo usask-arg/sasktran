@@ -4,7 +4,7 @@
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Using the Baum Ice Crystal Database with HR &mdash; SASKTRAN 1.8.3 documentation</title>
+  <title>Using the Baum Ice Crystal Database with HR &mdash; SASKTRAN 1.8.4 documentation</title>
       <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=b76e3c8a" />
       <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css" />
@@ -16,8 +16,8 @@
     <script src="../../_static/js/html5shiv.min.js"></script>
   <![endif]-->
   
-        <script src="../../_static/documentation_options.js?v=82e6e318"></script>
-        <script src="../../_static/doctools.js?v=888ff710"></script>
+        <script src="../../_static/documentation_options.js?v=496f73d5"></script>
+        <script src="../../_static/doctools.js?v=9a2dae69"></script>
         <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
         <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
         <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
@@ -42,7 +42,7 @@
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
               <div class="version">
-                1.8.3
+                1.8.4
               </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
@@ -147,6 +147,15 @@
 </pre></div>
 </div>
 </div>
+<div class="nboutput docutils container">
+<div class="prompt empty docutils container">
+</div>
+<div class="output_area stderr docutils container">
+<div class="highlight"><pre>
+/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/sasktran/opticalproperty.py:66: SyntaxWarning: invalid escape sequence &#39;\m&#39;
+  &#34;&#34;&#34;
+</pre></div></div>
+</div>
 <div class="nboutput nblast docutils container">
 <div class="prompt empty docutils container">
 </div>
@@ -155,29 +164,29 @@
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">OSError</span>                                   Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[2], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> baum_species <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">sk</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">SpeciesBaumIceCloud</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">particlesize_microns</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">20</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span>
-<span class="ansi-green-intense-fg ansi-bold">      2</span> <span class="ansi-yellow-bg">                                      </span><span class="ansi-yellow-bg">cloud_top_m</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">16500</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span class="ansi-yellow-bg">                                      </span><span class="ansi-yellow-bg">cloud_width_fwhm_m</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">500</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      4</span> <span class="ansi-yellow-bg">                                      </span><span class="ansi-yellow-bg">vertical_optical_depth</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">0.01</span><span class="ansi-yellow-bg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">      5</span> <span class="ansi-yellow-bg">                                      </span><span class="ansi-yellow-bg">vertical_optical_depth_wavel_nm</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">750</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">----&gt; 1</span> baum_species <span style="color: rgb(98,98,98)">=</span> sk<span style="color: rgb(98,98,98)">.</span>SpeciesBaumIceCloud(particlesize_microns<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">20</span>,
+<span class="ansi-green-intense-fg ansi-bold">      2</span>                                       cloud_top_m<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">16500</span>,
+<span class="ansi-green-intense-fg ansi-bold">      3</span>                                       cloud_width_fwhm_m<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">500</span>,
+<span class="ansi-green-intense-fg ansi-bold">      4</span>                                       vertical_optical_depth<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0.01</span>,
+<span class="ansi-green-intense-fg ansi-bold">      5</span>                                       vertical_optical_depth_wavel_nm<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">750</span>)
 
-File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.9/site-packages/sasktran/species.py:255</span>, in <span class="ansi-cyan-fg">SpeciesBaumIceCloud.__init__</span><span class="ansi-blue-fg">(self, particlesize_microns, cloud_top_m, cloud_width_fwhm_m, vertical_optical_depth, vertical_optical_depth_wavel_nm, altitude_resolution_m, num_sigma, name, use_delta_eddington)</span>
+File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/sasktran/species.py:255</span>, in <span class="ansi-cyan-fg">SpeciesBaumIceCloud.__init__</span><span class="ansi-blue-fg">(self, particlesize_microns, cloud_top_m, cloud_width_fwhm_m, vertical_optical_depth, vertical_optical_depth_wavel_nm, altitude_resolution_m, num_sigma, name, use_delta_eddington)</span>
 <span class="ansi-green-intense-fg ansi-bold">    251</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>, particlesize_microns: <span style="color: rgb(0,135,0)">float</span>, cloud_top_m: <span style="color: rgb(0,135,0)">float</span>,
 <span class="ansi-green-intense-fg ansi-bold">    252</span>              cloud_width_fwhm_m: <span style="color: rgb(0,135,0)">float</span>, vertical_optical_depth: <span style="color: rgb(0,135,0)">float</span>,
 <span class="ansi-green-intense-fg ansi-bold">    253</span>              vertical_optical_depth_wavel_nm: <span style="color: rgb(0,135,0)">float</span>, altitude_resolution_m: <span style="color: rgb(0,135,0)">float</span><span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">10</span>, num_sigma: <span style="color: rgb(0,135,0)">int</span><span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">5</span>,
 <span class="ansi-green-intense-fg ansi-bold">    254</span>              name<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">icecloud</span><span style="color: rgb(175,0,0)">&#39;</span>, use_delta_eddington<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>):
-<span class="ansi-green-fg">--&gt; 255</span>     optical_property <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">sk</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">BaumIceCrystal</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">particlesize_microns</span><span class="ansi-yellow-bg">,</span><span class="ansi-yellow-bg"> </span><span class="ansi-yellow-bg">use_delta_eddington</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">=</span><span class="ansi-yellow-bg">use_delta_eddington</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">--&gt; 255</span>     optical_property <span style="color: rgb(98,98,98)">=</span> sk<span style="color: rgb(98,98,98)">.</span>BaumIceCrystal(particlesize_microns, use_delta_eddington<span style="color: rgb(98,98,98)">=</span>use_delta_eddington)
 <span class="ansi-green-intense-fg ansi-bold">    257</span>     cloud_sigma <span style="color: rgb(98,98,98)">=</span> cloud_width_fwhm_m <span style="color: rgb(98,98,98)">/</span> (<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>sqrt(<span style="color: rgb(98,98,98)">2</span> <span style="color: rgb(98,98,98)">*</span> np<span style="color: rgb(98,98,98)">.</span>log(<span style="color: rgb(98,98,98)">2</span>)))
 <span class="ansi-green-intense-fg ansi-bold">    259</span>     <span style="color: rgb(95,135,135)"># Cloud top is defined as middle + 2 sigma</span>
 
-File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.9/site-packages/sasktran/opticalproperty.py:859</span>, in <span class="ansi-cyan-fg">BaumIceCrystal.__init__</span><span class="ansi-blue-fg">(self, effective_size_microns, use_delta_eddington)</span>
+File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/sasktran/opticalproperty.py:859</span>, in <span class="ansi-cyan-fg">BaumIceCrystal.__init__</span><span class="ansi-blue-fg">(self, effective_size_microns, use_delta_eddington)</span>
 <span class="ansi-green-intense-fg ansi-bold">    857</span> <span class="ansi-bold" style="color: rgb(0,135,0)">def</span> <span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(0,135,0)">self</span>, effective_size_microns, use_delta_eddington<span style="color: rgb(98,98,98)">=</span><span class="ansi-bold" style="color: rgb(0,135,0)">True</span>):
 <span class="ansi-green-intense-fg ansi-bold">    858</span>     <span style="color: rgb(0,135,0)">super</span>()<span style="color: rgb(98,98,98)">.</span><span style="color: rgb(0,0,255)">__init__</span>(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">BAUM_ICECRYSTALS</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-fg">--&gt; 859</span>     <span class="ansi-yellow-bg" style="color: rgb(0,135,0)">self</span><span class="ansi-yellow-bg" style="color: rgb(98,98,98)">.</span><span class="ansi-yellow-bg">_validate_registry</span><span class="ansi-yellow-bg">(</span><span class="ansi-yellow-bg">)</span>
+<span class="ansi-green-fg">--&gt; 859</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_validate_registry()
 <span class="ansi-green-intense-fg ansi-bold">    861</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_effective_size_microns <span style="color: rgb(98,98,98)">=</span> effective_size_microns
 <span class="ansi-green-intense-fg ansi-bold">    862</span>     <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_use_delta_eddington <span style="color: rgb(98,98,98)">=</span> use_delta_eddington
 
-File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.9/site-packages/sasktran/opticalproperty.py:886</span>, in <span class="ansi-cyan-fg">BaumIceCrystal._validate_registry</span><span class="ansi-blue-fg">()</span>
+File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/sasktran/opticalproperty.py:886</span>, in <span class="ansi-cyan-fg">BaumIceCrystal._validate_registry</span><span class="ansi-blue-fg">()</span>
 <span class="ansi-green-intense-fg ansi-bold">    884</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> os<span style="color: rgb(98,98,98)">.</span>path<span style="color: rgb(98,98,98)">.</span>isfile(os<span style="color: rgb(98,98,98)">.</span>path<span style="color: rgb(98,98,98)">.</span>join(baum_folder, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">GeneralHabitMixture_SeverelyRough_AllWavelengths_FullPhaseMatrix.nc</span><span style="color: rgb(175,0,0)">&#39;</span>)):
 <span class="ansi-green-intense-fg ansi-bold">    885</span>     user_config <span style="color: rgb(98,98,98)">=</span> config<span style="color: rgb(98,98,98)">.</span>user_config_file_location()
 <span class="ansi-green-fg">--&gt; 886</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">IOError</span>(
@@ -210,7 +219,7 @@ File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.9
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[3], line 3</span>
 <span class="ansi-green-intense-fg ansi-bold">      1</span> altitudes <span style="color: rgb(98,98,98)">=</span> np<span style="color: rgb(98,98,98)">.</span>arange(<span style="color: rgb(98,98,98)">10000</span>, <span style="color: rgb(98,98,98)">20000</span>, <span style="color: rgb(98,98,98)">10</span>)
-<span class="ansi-green-fg">----&gt; 3</span> cloud_dens <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">baum_species</span><span style="color: rgb(98,98,98)">.</span>climatology<span style="color: rgb(98,98,98)">.</span>get_parameter(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">icecloud</span><span style="color: rgb(175,0,0)">&#39;</span>, latitude<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, longitude<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, mjd<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">54372</span>, altitudes<span style="color: rgb(98,98,98)">=</span>altitudes)
+<span class="ansi-green-fg">----&gt; 3</span> cloud_dens <span style="color: rgb(98,98,98)">=</span> baum_species<span style="color: rgb(98,98,98)">.</span>climatology<span style="color: rgb(98,98,98)">.</span>get_parameter(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">icecloud</span><span style="color: rgb(175,0,0)">&#39;</span>, latitude<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, longitude<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">0</span>, mjd<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">54372</span>, altitudes<span style="color: rgb(98,98,98)">=</span>altitudes)
 <span class="ansi-green-intense-fg ansi-bold">      5</span> plt<span style="color: rgb(98,98,98)">.</span>plot(cloud_dens, altitudes)
 <span class="ansi-green-intense-fg ansi-bold">      6</span> plt<span style="color: rgb(98,98,98)">.</span>ylabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Altitude [m]</span><span style="color: rgb(175,0,0)">&#39;</span>)
 
@@ -253,7 +262,7 @@ Cell <span class="ansi-green-fg">In[3], line 3</span>
 Cell <span class="ansi-green-fg">In[4], line 12</span>
 <span class="ansi-green-intense-fg ansi-bold">     10</span> atmosphere[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">ozone</span><span style="color: rgb(175,0,0)">&#39;</span>] <span style="color: rgb(98,98,98)">=</span> sk<span style="color: rgb(98,98,98)">.</span>Species(sk<span style="color: rgb(98,98,98)">.</span>O3OSIRISRes(), sk<span style="color: rgb(98,98,98)">.</span>Labow())
 <span class="ansi-green-intense-fg ansi-bold">     11</span> atmosphere[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">air</span><span style="color: rgb(175,0,0)">&#39;</span>] <span style="color: rgb(98,98,98)">=</span> sk<span style="color: rgb(98,98,98)">.</span>Species(sk<span style="color: rgb(98,98,98)">.</span>Rayleigh(), sk<span style="color: rgb(98,98,98)">.</span>MSIS90())
-<span class="ansi-green-fg">---&gt; 12</span> atmosphere[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">cloud</span><span style="color: rgb(175,0,0)">&#39;</span>] <span style="color: rgb(98,98,98)">=</span> <span class="ansi-yellow-bg">baum_species</span>
+<span class="ansi-green-fg">---&gt; 12</span> atmosphere[<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">cloud</span><span style="color: rgb(175,0,0)">&#39;</span>] <span style="color: rgb(98,98,98)">=</span> baum_species
 <span class="ansi-green-intense-fg ansi-bold">     14</span> <span style="color: rgb(95,135,135)"># And now make the engine</span>
 <span class="ansi-green-intense-fg ansi-bold">     15</span> engine <span style="color: rgb(98,98,98)">=</span> sk<span style="color: rgb(98,98,98)">.</span>EngineHR(geometry<span style="color: rgb(98,98,98)">=</span>geometry, atmosphere<span style="color: rgb(98,98,98)">=</span>atmosphere)
 
@@ -285,7 +294,7 @@ Cell <span class="ansi-green-fg">In[4], line 12</span>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">NameError</span>                                 Traceback (most recent call last)
 Cell <span class="ansi-green-fg">In[5], line 1</span>
-<span class="ansi-green-fg">----&gt; 1</span> <span class="ansi-yellow-bg">engine</span><span style="color: rgb(98,98,98)">.</span>configure_for_cloud(cloud_altitudes<span style="color: rgb(98,98,98)">=</span>baum_species<span style="color: rgb(98,98,98)">.</span>altitude_grid, grid_spacing_m<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)
+<span class="ansi-green-fg">----&gt; 1</span> engine<span style="color: rgb(98,98,98)">.</span>configure_for_cloud(cloud_altitudes<span style="color: rgb(98,98,98)">=</span>baum_species<span style="color: rgb(98,98,98)">.</span>altitude_grid, grid_spacing_m<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1000</span>)
 <span class="ansi-green-intense-fg ansi-bold">      3</span> rad <span style="color: rgb(98,98,98)">=</span> engine<span style="color: rgb(98,98,98)">.</span>calculate_radiance()
 <span class="ansi-green-intense-fg ansi-bold">      4</span> plt<span style="color: rgb(98,98,98)">.</span>plot(rad<span style="color: rgb(98,98,98)">.</span>T, tanalts_km)
 
