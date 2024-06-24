@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Choosing an Engine &mdash; SASKTRAN 1.8.4 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/documentation_options.js?v=496f73d5"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Specifying Aerosol" href="user_aerosol.html" />
+    <link rel="prev" title="Constructing the Geometry" href="constructing_geometry.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.4
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Choosing an Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#sasktran-hr">SASKTRAN-HR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#suitable-for">Suitable For</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#advantages">Advantages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#disadvantages">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sasktran-occ">SASKTRAN-OCC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id1">Suitable For</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id2">Advantages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id3">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sasktran-mc">SASKTRAN-MC</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id4">Suitable For</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id5">Advantages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id6">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sasktran-do">SASKTRAN-DO</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id7">Suitable For</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id8">Advantages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id9">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#sasktran-tir">SASKTRAN-TIR</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#id10">Suitable For</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id11">Advantages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#id12">Disadvantages</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#references">References</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">Choosing an Engine</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/other_engines.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="choosing-an-engine">
+<span id="other-engines"></span><h1>Choosing an Engine<a class="headerlink" href="#choosing-an-engine" title="Link to this heading">¶</a></h1>
+<p>SASKTRAN is a framework containing modules to handle all aspects of the radiative transfer problem, including setting up the geometry, defining the atmosphere, and solving the radiative transfer equation.
+The radiative transfer equation can be solved in multiple ways, and SASKTRAN contains multiple engines, or solvers, to perform this task.
+Which engine to use depends on the specific task at hand.</p>
+<section id="sasktran-hr">
+<h2>SASKTRAN-HR<a class="headerlink" href="#sasktran-hr" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN-HR is the primary engine used and is described in Zawada et. al. (2015).</p>
+<section id="suitable-for">
+<h3>Suitable For<a class="headerlink" href="#suitable-for" title="Link to this heading">¶</a></h3>
+<p>Problems requiring fast and accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant.</p>
+</section>
+<section id="advantages">
+<h3>Advantages<a class="headerlink" href="#advantages" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fully spherical geometry</p></li>
+<li><p>Fast</p></li>
+<li><p>Approximate, analytic Jacobian calculation</p></li>
+<li><p>Support for two- and three-dimensionally varying atmospheres</p></li>
+</ul>
+</section>
+<section id="disadvantages">
+<h3>Disadvantages<a class="headerlink" href="#disadvantages" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Accuracy is controlled by a wide variety of settings which may require specific tuning for your problem.</p></li>
+<li><p>Support for atmospheric emissions is available, but experimental and limited.</p></li>
+</ul>
+</section>
+</section>
+<section id="sasktran-occ">
+<h2>SASKTRAN-OCC<a class="headerlink" href="#sasktran-occ" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN-OCC is an engine designed for fast occultation applications.</p>
+<section id="id1">
+<h3>Suitable For<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h3>
+<p>Occultation viewing geometry in all spectral regions.</p>
+</section>
+<section id="id2">
+<h3>Advantages<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Extremely fast</p></li>
+<li><p>Refraction is treated within a fully spherical atmosphere</p></li>
+</ul>
+</section>
+<section id="id3">
+<h3>Disadvantages<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Scattering and emission terms are neglected</p></li>
+</ul>
+</section>
+</section>
+<section id="sasktran-mc">
+<h2>SASKTRAN-MC<a class="headerlink" href="#sasktran-mc" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN-MC performs Monte-Carlo integration to solve the RTE and is described in Zawada et. al. (2015).</p>
+<section id="id4">
+<h3>Suitable For<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>Problems requiring accurate radiative transfer in the UV-VIS-NIR spectral region where scattering is dominant and runtime is of secondary concern.</p>
+</section>
+<section id="id5">
+<h3>Advantages<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fully spherical geometry</p></li>
+<li><p>Accurate, requiring much less configuration than SASKTRAN-HR</p></li>
+</ul>
+</section>
+<section id="id6">
+<h3>Disadvantages<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Can be slow depending on the application</p></li>
+<li><p>Results contain random noise</p></li>
+</ul>
+</section>
+</section>
+<section id="sasktran-do">
+<h2>SASKTRAN-DO<a class="headerlink" href="#sasktran-do" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN-DO is a discrete ordinates solver based upon the VLIDORT technique.</p>
+<section id="id7">
+<h3>Suitable For<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p>Nadir viewing applications in the UV-VIS-NIR spectral region.</p>
+</section>
+<section id="id8">
+<h3>Advantages<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Extremely fast</p></li>
+<li><p>Perfectly linearized for most inputs</p></li>
+</ul>
+</section>
+<section id="id9">
+<h3>Disadvantages<a class="headerlink" href="#id9" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Not suitable for limb viewing applications</p></li>
+<li><p>Errors that increase as the viewing zenith angle increases.</p></li>
+</ul>
+</section>
+</section>
+<section id="sasktran-tir">
+<h2>SASKTRAN-TIR<a class="headerlink" href="#sasktran-tir" title="Link to this heading">¶</a></h2>
+<p>SASKTRAN-TIR is a thermal radiative transfer model designed for applications in the IR and beyond spectral regions.</p>
+<section id="id10">
+<h3>Suitable For<a class="headerlink" href="#id10" title="Link to this heading">¶</a></h3>
+<p>Applications in the IR and beyond spectral regime where scattering can be neglected.</p>
+</section>
+<section id="id11">
+<h3>Advantages<a class="headerlink" href="#id11" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Fast</p></li>
+<li><p>Spherical geometry</p></li>
+<li><p>Linearized for most atmospheric parameters</p></li>
+</ul>
+</section>
+<section id="id12">
+<h3>Disadvantages<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p>Scattering is not included</p></li>
+</ul>
+</section>
+</section>
+<section id="references">
+<h2>References<a class="headerlink" href="#references" title="Link to this heading">¶</a></h2>
+<p>Zawada, D. J., Dueck, S. R., Rieger, L. A., Bourassa, A. E., Lloyd, N. D., and Degenstein, D. A.: High-resolution and Monte Carlo additions to the SASKTRAN radiative transfer model, Atmos. Meas. Tech., 8, 2609-2623, <a class="reference external" href="https://doi.org/10.5194/amt-8-2609-2015">https://doi.org/10.5194/amt-8-2609-2015</a>, 2015.</p>
+<p>Bourassa, A. E., Degenstein, D. A., and Llewellyn, E. J.: SASKTRAN: A Spherical Geometry Radiative Transfer Code for Efficient Estimation of Limb Scattered Sunlight, J Quant Spectrosc Radiat Trans, Volume 109, Issue 1, 52-73, <a class="reference external" href="https://doi.org/10.1016/j.jqsrt.2007.07.007">https://doi.org/10.1016/j.jqsrt.2007.07.007</a>, 2008.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="constructing_geometry.html" class="btn btn-neutral float-left" title="Constructing the Geometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="user_aerosol.html" class="btn btn-neutral float-right" title="Specifying Aerosol" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
