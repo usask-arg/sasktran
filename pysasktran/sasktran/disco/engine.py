@@ -297,7 +297,7 @@ class EngineDO(sk.Engine):
 
     @layer_construction.setter
     def layer_construction(self, layers: Union[str, np.array]):
-        if type(layers) == str:
+        if isinstance(layers, str):
             if layers.lower() == 'uniform_pressure':
                 self._options['layerconstructionmethod'] = 0
             elif layers.lower() == 'uniform_height':
