@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Weighting Functions &mdash; SASKTRAN 1.8.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=daef7da6"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="HITRAN Optical Properties" href="hitran.html" />
+    <link rel="prev" title="The TIR Engine" href="sasktran_tir.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">SASKTRAN Thermal InfraRed Engine</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="sasktran_tir.html">The TIR Engine</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Weighting Functions</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#weighting-function-units">Weighting Function Units</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#multiple-species-calculations">Multiple Species Calculations</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="hitran.html">HITRAN Optical Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html">Full Property List</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+      <li class="breadcrumb-item active">Weighting Functions</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tir/weighting_functions.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="weighting-functions">
+<span id="id1"></span><h1>Weighting Functions<a class="headerlink" href="#weighting-functions" title="Link to this heading">¶</a></h1>
+<p>SASKTRAN-TIR supports the analytic computation of weighting functions for concentrations of gas species and temperature.
+It is possible to compute weighting functions for a single parameter or for multiple parameters simultaneously.
+Weighting functions computed for a single parameter have the form:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{wf[i, j, k]} = \frac{\partial I(\lambda_\mathrm{i}, \mathrm{L_j})}{\partial \mathrm{S_k}}\]</div>
+<p>while those computed for multiple species are given by:</p>
+<div class="math notranslate nohighlight">
+\[\mathrm{wf[i, j, n, k]} = \frac{\partial I(\lambda_\mathrm{i}, \mathrm{L_j})}{\partial \mathrm{S_{n, k}}}\]</div>
+<p>where</p>
+<blockquote>
+<div><table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Meaning</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\lambda_\mathrm{i}\)</span></p></td>
+<td><p>Wavelength <span class="math notranslate nohighlight">\(\mathrm{i}\)</span></p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathrm{L_\mathrm{j}}\)</span></p></td>
+<td><p>Line of sight <span class="math notranslate nohighlight">\(\mathrm{j}\)</span></p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathrm{S_\mathrm{n, k}}\)</span></p></td>
+<td><p>Species <span class="math notranslate nohighlight">\(\mathrm{n}\)</span> at altitude <span class="math notranslate nohighlight">\(\mathrm{k}\)</span></p></td>
+</tr>
+</tbody>
+</table>
+</div></blockquote>
+<p>To calculate weighting functions for a gas species the <a class="reference internal" href="../atmosphere.html#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a> must be set.
+To compute temperature weighting functions set the <code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran_tir_engine.EngineTIR.do_temperature_wf</span></code> option to True.</p>
+<section id="weighting-function-units">
+<h2>Weighting Function Units<a class="headerlink" href="#weighting-function-units" title="Link to this heading">¶</a></h2>
+<p>By definition, SASKTRAN-TIR weighting functions have units of <span class="math notranslate nohighlight">\(\mathrm{radiance / species}\)</span>.
+The radiance portion has units of <span class="math notranslate nohighlight">\(\mathrm{photon}/(\mathrm{s \: cm^2 \: nm \: sr})\)</span>.
+The units of the weighting function species are configurable.
+By default, weighting functions are given for gas number density, in <span class="math notranslate nohighlight">\(\mathrm{cm}^{-3}\)</span>.
+To calculate gas species weighting functions with respect to Volume Mixing Ratio (VMR) set the
+<code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran_tir.engine.EngineTIR.do_vmr_wf</span></code> option to True.</p>
+</section>
+<section id="multiple-species-calculations">
+<h2>Multiple Species Calculations<a class="headerlink" href="#multiple-species-calculations" title="Link to this heading">¶</a></h2>
+<p>When weighting functions are computed for more than one species, an extra dimension is added to the weighting function
+array. The index <span class="math notranslate nohighlight">\(n\)</span> of each species are assigned in the same order as the species were listed when setting
+<a class="reference internal" href="../atmosphere.html#sasktran.Atmosphere.wf_species" title="sasktran.Atmosphere.wf_species"><code class="xref py py-attr docutils literal notranslate"><span class="pre">sasktran.Atmosphere.wf_species</span></code></a>. If temperature weighting functions are also being computed, they are
+assigned the highest species index.</p>
+<p>For example, consider a SASKTRAN-TIR engine object with the
+weighting function species configured as follows:</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">engine</span><span class="o">.</span><span class="n">atmosphere</span><span class="o">.</span><span class="n">wf_species</span> <span class="o">=</span> <span class="p">[</span><span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="s1">&#39;O3&#39;</span><span class="p">]</span>
+<span class="n">engine</span><span class="o">.</span><span class="n">do_temperature_wf</span> <span class="o">=</span> <span class="kc">True</span>
+<span class="n">rad</span><span class="p">,</span> <span class="n">wf</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>The CO2 weighting functions will be given by <code class="docutils literal notranslate"><span class="pre">wf[:,</span> <span class="pre">:,</span> <span class="pre">0,</span> <span class="pre">:]</span></code>, the O3 weighting functions by <code class="docutils literal notranslate"><span class="pre">wf[:,</span> <span class="pre">:,</span> <span class="pre">1,</span> <span class="pre">:]</span></code>, and the temperature weighting functions
+by <code class="docutils literal notranslate"><span class="pre">wf[:,</span> <span class="pre">:,</span> <span class="pre">2,</span> <span class="pre">:]</span></code>.</p>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="sasktran_tir.html" class="btn btn-neutral float-left" title="The TIR Engine" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="hitran.html" class="btn btn-neutral float-right" title="HITRAN Optical Properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>

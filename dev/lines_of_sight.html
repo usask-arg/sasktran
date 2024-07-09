@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="./">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lines of Sight &mdash; SASKTRAN 1.8.6 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="_static/documentation_options.js?v=daef7da6"></script>
+        <script src="_static/doctools.js?v=9a2dae69"></script>
+        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+    <script src="_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="genindex.html" />
+    <link rel="search" title="Search" href="search.html" />
+    <link rel="next" title="Optical Properties" href="optical_property.html" />
+    <link rel="prev" title="Geometry" href="geometry.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="index.html">
+            
+              <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.6
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="config.html">Configuration</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="api_reference.html">API Reference</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="api_reference.html#complete-api-reference-pages">Complete API Reference Pages</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="atmosphere.html">Atmosphere</a></li>
+<li class="toctree-l3"><a class="reference internal" href="brdf.html">BRDF</a></li>
+<li class="toctree-l3"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l3"><a class="reference internal" href="engine.html">Engine</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geodetic.html">Geodetic</a></li>
+<li class="toctree-l3"><a class="reference internal" href="geometry.html">Geometry</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Lines of Sight</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#sasktran.LineOfSight"><code class="docutils literal notranslate"><span class="pre">LineOfSight</span></code></a></li>
+<li class="toctree-l4"><a class="reference internal" href="#see-also">See Also</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="optical_property.html">Optical Properties</a></li>
+<li class="toctree-l3"><a class="reference internal" href="emission.html">Emission</a></li>
+<li class="toctree-l3"><a class="reference internal" href="solar_spectrum.html">Solar Spectrum</a></li>
+<li class="toctree-l3"><a class="reference internal" href="species.html">Species</a></li>
+<li class="toctree-l3"><a class="reference internal" href="stokes_vector.html">Stokes Vector</a></li>
+<li class="toctree-l3"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="api_reference.html#additional-topics">Additional Topics</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="changelog.html">Changelog</a></li>
+</ul>
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tir/index.html">SASKTRAN Thermal InfraRed Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
+          <li class="breadcrumb-item"><a href="api_reference.html">API Reference</a></li>
+      <li class="breadcrumb-item active">Lines of Sight</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="_sources/lines_of_sight.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="lines-of-sight">
+<span id="id1"></span><h1>Lines of Sight<a class="headerlink" href="#lines-of-sight" title="Link to this heading">¶</a></h1>
+<p>Module: <code class="docutils literal notranslate"><span class="pre">sasktran.lineofsight</span></code></p>
+<p>This is an object that describes a line of sight. A line of sight is made up of three components:</p>
+<ul class="simple">
+<li><p>A look vector (a unit vector in <a class="reference internal" href="geodetic.html#geodetic"><span class="std std-ref">Geodetic</span></a> coordinates)</p></li>
+<li><p>An observer location (a position vector in <a class="reference internal" href="geodetic.html#geodetic"><span class="std std-ref">Geodetic</span></a> coordinates)</p></li>
+<li><p>An observation time in MJD</p></li>
+</ul>
+<p>A list of these objects are usually added to a <a class="reference internal" href="geometry.html#geometry"><span class="std std-ref">Geometry</span></a> object to describe lines of sight
+to calculate radiances for.</p>
+<dl class="py class">
+<dt class="sig sig-object py" id="sasktran.LineOfSight">
+<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LineOfSight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LineOfSight" title="Link to this definition">¶</a></dt>
+<dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
+<p>Class which represents a single line of sight in SASKTRAN.  A single line of sight is defined by the observer
+position, a timestamp, and a unit look vector.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>mjd</strong> (<em>float</em>) – Modified julian date for the measurement</p></li>
+<li><p><strong>observer</strong> (<em>np.array</em>) – Three element array indicating the observer position for the measurement.</p></li>
+<li><p><strong>look_vector</strong> (<em>np.array</em>) – Three element array which is the unit look vector away from the instrument</p></li>
+</ul>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                          <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662e-001</span><span class="p">,</span> <span class="mf">7.925287180643269e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238e-001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="p">)</span>
+<span class="go">Observer: [367601.31547888, 1009976.31364, -6871601.202127]</span>
+<span class="go">Look: [0.2884568631765662, 0.7925287180643269, 0.5372996083468238]</span>
+<span class="go">MJD: 54832.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">mjd</span><span class="p">)</span>
+<span class="go">54832.5</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">observer</span><span class="p">)</span>
+<span class="go">[367601.31547888, 1009976.31364, -6871601.202127]</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">look_vector</span><span class="p">)</span>
+<span class="go">[0.2884568631765662, 0.7925287180643269, 0.5372996083468238]</span>
+</pre></div>
+</div>
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.LineOfSight.ground_intersection">
+<span class="sig-name descname"><span class="pre">ground_intersection</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">altitude</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0.0</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LineOfSight.ground_intersection" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an sk.Geodetic object containing the location where the line of sight intersects the earth at the given
+altitude. Returns None if the intersection does not exist.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters<span class="colon">:</span></dt>
+<dd class="field-odd"><p><strong>altitude</strong> (<em>float</em>) – The altitude of the desired intersection in meters. Default 0.</p>
+</dd>
+</dl>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                              <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.878657667526608e-001</span><span class="p">,</span> <span class="mf">7.909046939869273e-001</span><span class="p">,</span> <span class="mf">5.400028382900848e-001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">ground_intersection</span><span class="p">(</span><span class="n">altitude</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">))</span>
+<span class="go">ISKGeodetic: IAU 1976</span>
+<span class="go"> Latitude: -57.4997267221534, Longitude: 69.99999999999979, Altitude: 999.9999956705142</span>
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="py method">
+<dt class="sig sig-object py" id="sasktran.LineOfSight.tangent_location">
+<span class="sig-name descname"><span class="pre">tangent_location</span></span><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LineOfSight.tangent_location" title="Link to this definition">¶</a></dt>
+<dd><p>Returns an sk.Geodetic object containing the location where the line of sight is tangent to the surface of the
+earth. Returns None if the line of sight intersects the earth.</p>
+<p class="rubric">Examples</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                              <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662e-001</span><span class="p">,</span> <span class="mf">7.925287180643269e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238e-001</span><span class="p">])</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">tangent_location</span><span class="p">())</span>
+<span class="go">ISKGeodetic: IAU 1976</span>
+<span class="go"> Latitude: -57.49972673428996, Longitude: 69.99999999999979, Altitude: 10000.000072206138</span>
+</pre></div>
+</div>
+</dd></dl>
+
+</dd></dl>
+
+<section id="see-also">
+<h2>See Also<a class="headerlink" href="#see-also" title="Link to this heading">¶</a></h2>
+<dl class="simple">
+<dt><a class="reference internal" href="geometry.html#geometry"><span class="std std-ref">Geometry</span></a></dt><dd><p>Objects which describe the geometry of the calculations to the engine. At a minimum these
+objects define the <a class="reference internal" href="#lines-of-sight"><span class="std std-ref">Lines of Sight</span></a>, but can also specify things such as the suns
+position and the polling reference point.</p>
+</dd>
+</dl>
+<dl class="simple">
+<dt><a class="reference internal" href="geodetic.html#geodetic"><span class="std std-ref">Geodetic</span></a></dt><dd><p>Internally SASKTRAN use a <a class="reference internal" href="geodetic.html#geodetic"><span class="std std-ref">Geodetic</span></a> coordinate system. This class implements
+some helpers for working with geodetic coordinates.</p>
+</dd>
+</dl>
+</section>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="geometry.html" class="btn btn-neutral float-left" title="Geometry" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="optical_property.html" class="btn btn-neutral float-right" title="Optical Properties" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
