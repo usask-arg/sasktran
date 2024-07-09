@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en" data-content_root="../">
+<head>
+  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SASKTRAN Thermal InfraRed Engine &mdash; SASKTRAN 1.8.5 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=b76e3c8a" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+      <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
+
+  
+    <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
+  <!--[if lt IE 9]>
+    <script src="../_static/js/html5shiv.min.js"></script>
+  <![endif]-->
+  
+        <script src="../_static/documentation_options.js?v=ed17f7cc"></script>
+        <script src="../_static/doctools.js?v=9a2dae69"></script>
+        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
+        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <script src="../_static/js/theme.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="The TIR Engine" href="sasktran_tir.html" />
+    <link rel="prev" title="SASKTRAN-HR" href="../sasktran_hr.html" /> 
+</head>
+
+<body class="wy-body-for-nav"> 
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+
+          
+          
+          <a href="../index.html">
+            
+              <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
+          </a>
+              <div class="version">
+                1.8.5
+              </div>
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+              <ul>
+<li class="toctree-l1"><a class="reference internal" href="../installing.html">Installing SASKTRAN</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../quickstart.html">Quickstart Guide</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_atmosphere.html">Specifying the Atmosphere</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../constructing_geometry.html">Constructing the Geometry</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../other_engines.html">Choosing an Engine</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../user_aerosol.html">Specifying Aerosol</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../examples.html">Examples</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../config.html">Configuration</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../api_reference.html">API Reference</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../advanced.html">Advanced Topics</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../experimental.html">Experimental Features</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../changelog.html">Changelog</a></li>
+</ul>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../sasktran_hr.html">SASKTRAN-HR</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">SASKTRAN Thermal InfraRed Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_tir.html">The TIR Engine</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="hitran.html">HITRAN Optical Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html">Climatology</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html">Full Property List</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../do/index.html">SASKTRAN-DO</a></li>
+</ul>
+
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">SASKTRAN</a>
+      </nav>
+
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+  <ul class="wy-breadcrumbs">
+      <li><a href="../index.html" class="icon icon-home" aria-label="Home"></a></li>
+      <li class="breadcrumb-item active">SASKTRAN Thermal InfraRed Engine</li>
+      <li class="wy-breadcrumbs-aside">
+            <a href="../_sources/tir/index.rst.txt" rel="nofollow"> View page source</a>
+      </li>
+  </ul>
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+             
+  <section id="sasktran-thermal-infrared-engine">
+<span id="tir-main"></span><h1>SASKTRAN Thermal InfraRed Engine<a class="headerlink" href="#sasktran-thermal-infrared-engine" title="Link to this heading">¶</a></h1>
+<p>The TIR engine solves the radiative transfer equation in the thermal infra-region on a true spherical Earth.</p>
+<div class="admonition important">
+<p class="admonition-title">Important</p>
+<p>Unlike other SASKTRAN engines, the TIR engine does not produce radiances with sun-normalized units. Solar
+radiation is negligible in the thermal infrared regime and using sun-normalized units would require
+the thermal emissions to be divided by a solar spectrum, which would add uncertainty to the calculation
+result.</p>
+<p>The TIR engine returns radiances with units of <span class="math notranslate nohighlight">\(\mathrm{photon}/(\mathrm{s \: cm^2 \: nm \: sr})\)</span>.</p>
+<p>Wavelengths must be passed to the engine in increasing order.</p>
+</div>
+<p>The following example shows how to calculate radiance using the TIR engine. As with other SASKTRAN engines, there
+are three inputs required by the TIR engine object:</p>
+<ul class="simple">
+<li><p>An atmospheric object which defines the species contained in the model atmosphere. Each species is defined by
+a climatology and optical property.</p></li>
+<li><p>A geometry object which defines the lines of sight along for which the radiance will be computed.</p></li>
+<li><p>An array of wavelengths to calculate the radiance at.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sasktran.tir.engine</span> <span class="kn">import</span> <span class="n">EngineTIR</span>
+<span class="kn">from</span> <span class="nn">sasktran.tir.opticalproperty</span> <span class="kn">import</span> <span class="n">HITRANChemicalTIR</span>
+<span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="c1"># select wavelengths</span>
+<span class="n">wavelen</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">arange</span><span class="p">(</span><span class="mf">13077.02</span><span class="p">,</span> <span class="mf">13097.58</span><span class="p">,</span> <span class="mf">0.005</span><span class="p">)</span>
+
+<span class="c1"># specify a limb line of sight</span>
+<span class="n">geometry</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">VerticalImage</span><span class="p">()</span>
+<span class="n">geometry</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="n">sza</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">saa</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mi">45</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tanalts_km</span><span class="o">=</span><span class="p">[</span><span class="mi">20</span><span class="p">],</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">56300</span><span class="p">,</span> <span class="n">locallook</span><span class="o">=</span><span class="mf">0.0</span><span class="p">)</span>
+
+<span class="c1"># create an atmosphere containing ozone</span>
+<span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
+<span class="n">atmosphere</span><span class="o">.</span><span class="n">atmospheric_state</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">MSIS90</span><span class="p">()</span>
+<span class="n">atmosphere</span><span class="p">[</span><span class="s1">&#39;O3&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">HITRANChemicalTIR</span><span class="p">(</span><span class="s1">&#39;O3&#39;</span><span class="p">),</span> <span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">())</span>
+
+<span class="c1"># create the engine</span>
+<span class="n">engine</span> <span class="o">=</span> <span class="n">EngineTIR</span><span class="p">(</span><span class="n">geometry</span><span class="o">=</span><span class="n">geometry</span><span class="p">,</span> <span class="n">atmosphere</span><span class="o">=</span><span class="n">atmosphere</span><span class="p">,</span> <span class="n">wavelengths</span><span class="o">=</span><span class="n">wavelen</span><span class="p">)</span>
+
+<span class="c1"># do the calculation</span>
+<span class="n">radiance</span> <span class="o">=</span> <span class="n">engine</span><span class="o">.</span><span class="n">calculate_radiance</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>See <a class="reference internal" href="../examples/tir_examples.html#tir-examples"><span class="std std-ref">SASKTRAN-TIR Examples</span></a> for more examples of usage.</p>
+<p>Contents:</p>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="sasktran_tir.html">The TIR Engine</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_tir.html#weighting-functions">Weighting Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="sasktran_tir.html#engine-options">Engine Options</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="weighting_functions.html">Weighting Functions</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="weighting_functions.html#weighting-function-units">Weighting Function Units</a></li>
+<li class="toctree-l2"><a class="reference internal" href="weighting_functions.html#multiple-species-calculations">Multiple Species Calculations</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="hitran.html">HITRAN Optical Properties</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="hitran.html#sasktran.tir.opticalproperty.HITRANChemicalTIR"><code class="docutils literal notranslate"><span class="pre">HITRANChemicalTIR</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="climatology.html">Climatology</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html#sasktran.tir.climatology.ClimatologyAtmosphericState"><code class="docutils literal notranslate"><span class="pre">ClimatologyAtmosphericState</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html#sasktran.tir.climatology.ClimatologySpecies"><code class="docutils literal notranslate"><span class="pre">ClimatologySpecies</span></code></a></li>
+<li class="toctree-l2"><a class="reference internal" href="climatology.html#sasktran.tir.climatology.ClimatologyFull"><code class="docutils literal notranslate"><span class="pre">ClimatologyFull</span></code></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="properties.html">Full Property List</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#alphabetical-list-of-properties">Alphabetical List of Properties</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#weighting-functions">Weighting Functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#integration">Integration</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#geometry-and-atmosphere">Geometry and Atmosphere</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#performance">Performance</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#other">Other</a></li>
+<li class="toctree-l2"><a class="reference internal" href="properties.html#diagnostics">Diagnostics</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</section>
+
+
+           </div>
+          </div>
+          <footer><div class="rst-footer-buttons" role="navigation" aria-label="Footer">
+        <a href="../sasktran_hr.html" class="btn btn-neutral float-left" title="SASKTRAN-HR" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left" aria-hidden="true"></span> Previous</a>
+        <a href="sasktran_tir.html" class="btn btn-neutral float-right" title="The TIR Engine" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right" aria-hidden="true"></span></a>
+    </div>
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>&#169; Copyright 2022, ARG University of Saskatchewan.</p>
+  </div>
+
+  Built with <a href="https://www.sphinx-doc.org/">Sphinx</a> using a
+    <a href="https://github.com/readthedocs/sphinx_rtd_theme">theme</a>
+    provided by <a href="https://readthedocs.org">Read the Docs</a>.
+   
+
+</footer>
+        </div>
+      </div>
+    </section>
+  </div>
+  <script>
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script> 
+
+</body>
+</html>
