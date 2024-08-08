@@ -258,8 +258,15 @@ bool SKTRAN_HR_Specs_Internal_Core::CreateDiffuseTableType( std::unique_ptr<SKTR
 		case InternalDiffusePlacementType::LinearLOS1DExit:
 		case InternalDiffusePlacementType::LinearLOS1DEntryExit: 
 		{
-			std::unique_ptr<SKTRAN_HR_Diffuse_Table_SZA> diffuselocal(new SKTRAN_HR_Diffuse_Table_SZA);
-			diffusetable = std::move(diffuselocal);
+			if(m_in3dmode) {
+				// Have to always make the CPU talbe in 3d mode
+				std::unique_ptr<SKTRAN_HR_Diffuse_Table_CPU> diffuselocal(new SKTRAN_HR_Diffuse_Table_CPU);
+				diffusetable = std::move(diffuselocal);
+			} else {
+				std::unique_ptr<SKTRAN_HR_Diffuse_Table_SZA> diffuselocal(new SKTRAN_HR_Diffuse_Table_SZA);
+				diffusetable = std::move(diffuselocal);
+			}
+
 			break;
 		}
 		default:
