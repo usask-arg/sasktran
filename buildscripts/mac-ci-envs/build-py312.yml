@@ -1,9 +1,9 @@
 name: build_py311
 dependencies:
   - python=3.12
-  - c-compiler=1.5.2
-  - cxx-compiler=1.5.2
-  - fortran-compiler=1.5.2
+  - c-compiler=1.7.0
+  - cxx-compiler=1.7.0
+  - fortran-compiler=1.7.0
   - boost=1.82.0
   - libnetcdf=4.9.2
   - catch2=3.3.2
