@@ -243,3 +243,46 @@ void ISKBrdf_Stub_UserDefinedLatLon::MakeScalarSetFunctions()
 		}
 	);
 }
+
+
+
+
+ISKBrdf_Stub_Plane::ISKBrdf_Stub_Plane(skBRDF_AlbedoPlane* brdf) : ISKBrdf_Stub_Base(brdf)
+{
+	m_brdf = brdf;
+	m_brdf->AddRef();
+
+	MakeObjectSetFunctions();
+}
+
+ISKBrdf_Stub_Plane::~ISKBrdf_Stub_Plane()
+{
+    if(m_brdf != nullptr)
+	    m_brdf->Release();
+}
+
+
+void ISKBrdf_Stub_Plane::MakeObjectSetFunctions()
+{
+	AddSetObjectFunction("clim",
+		[&, this](nxUnknown* obj)
+		{
+
+			skClimatology* clim = dynamic_cast<skClimatology*>(obj);
+			if( clim == nullptr )
+			{
+				return false;
+			}
+			else
+			{
+                m_brdf->set_climatology(clim);
+				return true;
+			}
+		}
+	);
+}
+
+bool ISKBrdf_Stub_Plane::SetPropertyObject(const char* propertyname, nxUnknown* object)
+{
+    return ISKModuleBase_Stub::SetPropertyObject(propertyname, object);
+}

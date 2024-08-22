@@ -172,6 +172,7 @@ bool ConfigureSasktranIFEntries( const char* dllname, bool createentries)
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/BRDF/MODIS",										dllname, createentries); ok = ok && ok1;	
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/BRDF/USERDEFINED_LATLON",                         dllname, createentries); ok = ok && ok1;
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/BRDF/SPECTRAL_VARYING",                           dllname, createentries); ok = ok && ok1;
+    ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/BRDF/PLANE",                                      dllname, createentries); ok = ok && ok1;
 
 	ok1 = ConfigureSasktranIFEntry ( "/SasktranIF/Mie/WISCOMBE",                                    dllname, createentries); ok = ok && ok1;
 
