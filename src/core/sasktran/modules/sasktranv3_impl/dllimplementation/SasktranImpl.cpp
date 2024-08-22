@@ -194,6 +194,7 @@ extern "C" DLL_PUBLIC bool SKTRANIF_CreateBRDF2( const char* brdfname, ISKBrdf_S
 	else if (name == "MODIS")						*brdf = new ISKBrdf_Stub_MODIS_RossThickLiSparseReciprocal	( new SKTRAN_BRDF_MODIS_RossThickLiSparseReciprocal);
 	else if (name == "USERDEFINED_LATLON")          *brdf = new ISKBrdf_Stub_UserDefinedLatLon                  ( new SKTRAN_BRDF_UserDefinedLatLon );
 	else if (name == "SPECTRAL_VARYING")            *brdf = new ISKBrdf_Stub_SpectralVarying                    ( new SKTRAN_BRDF_SpectralVarying );
+	else if (name == "PLANE")                       *brdf = new ISKBrdf_Stub_Plane                              ( new skBRDF_AlbedoPlane );
 	else
 	{
 		*brdf = nullptr;

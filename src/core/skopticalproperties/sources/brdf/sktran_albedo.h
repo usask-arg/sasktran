@@ -80,6 +80,10 @@ class skBRDF_AlbedoPlane : public skBRDF
 	private:
 		skClimatology*			m_clim;
 	public:
+            skBRDF_AlbedoPlane() {
+                m_clim = nullptr;
+            }
+
 			skBRDF_AlbedoPlane ( skClimatology* clim )
 			{
 				m_clim = clim;
@@ -87,8 +91,18 @@ class skBRDF_AlbedoPlane : public skBRDF
 			};
 			virtual ~skBRDF_AlbedoPlane()
 			{
-				m_clim->Release();
+                if(m_clim != nullptr) {
+                    m_clim->Release();
+                }
 			};
+
+            void set_climatology(skClimatology* clim) {
+                if(m_clim != nullptr) {
+                    m_clim->Release();
+                }
+                m_clim = clim;
+                m_clim->AddRef();
+            }
 
 			bool BRDF( double wavelennm, const GEODETIC_INSTANT& pt, double MU_in, double MU_out, double DPHI, double* brdf) const
 			{

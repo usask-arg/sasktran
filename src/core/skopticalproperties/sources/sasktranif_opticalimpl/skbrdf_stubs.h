@@ -219,6 +219,23 @@ public:
 
 };
 
+/*-----------------------------------------------------------------------------
+*		ISKBrdf_Stub_UserDefinedLatLon		  2020-01-10*/
+/** **/
+/*---------------------------------------------------------------------------*/
+class ISKBrdf_Stub_Plane : public ISKBrdf_Stub_Base
+{
+private:
+	skBRDF_AlbedoPlane*	m_brdf;
+
+	void								MakeObjectSetFunctions();
+
+public:
+    ISKBrdf_Stub_Plane(skBRDF_AlbedoPlane* brdf);
+	virtual 						   ~ISKBrdf_Stub_Plane() override;
+    virtual bool						SetPropertyObject(const char* propertyname, nxUnknown* object) override;
+};
+
 
 /*-----------------------------------------------------------------------------
 *		ISKBrdf_Stub_UserDefinedLatLon		  2020-01-10*/
