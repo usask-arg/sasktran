@@ -1,8 +1,9 @@
-name: build_py310
+name: build_py311
 channels:
+  - conda-forge/label/python_rc
   - conda-forge
 dependencies:
-  - python=3.10
+  - python=3.13
   - c-compiler=1.7.0
   - cxx-compiler=1.7.0
   - fortran-compiler=1.7.0
