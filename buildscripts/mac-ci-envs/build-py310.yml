@@ -1,4 +1,6 @@
 name: build_py310
+channels:
+  - conda-forge
 dependencies:
   - python=3.10
   - c-compiler=1.7.0

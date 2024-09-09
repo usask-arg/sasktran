@@ -1,4 +1,7 @@
 name: build_py311
+channels:
+  - conda-forge/label/python_rc
+  - conda-forge
 dependencies:
   - python=3.13
   - c-compiler=1.7.0

@@ -193,7 +193,6 @@ jobs:
         with:
           activate-environment: build_${{ matrix.py_version }}
           environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
-          channels: conda-forge
           auto-activate-base: false
 
       - name: Display conda environment
@@ -256,7 +255,7 @@ jobs:
         run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0.0
       
       - name: Create conda py313 Build Environment
-        run: conda create -n py313 -c conda-forge python=3.13 numpy=2.0.0
+        run: conda create -n py313 -c conda-forge -c conda-forge/label/python_rc python=3.13 numpy=2.0.0
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
