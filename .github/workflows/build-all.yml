@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
     env:
-        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312"
+        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312;cp313-cp313"
         IN_MANYLINUX_CONTAINER: "TRUE"
         CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
@@ -49,7 +49,7 @@ jobs:
     container: continuumio/anaconda3
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
 
     steps:
       - name: Checkout repository
@@ -180,7 +180,7 @@ jobs:
     
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
         
     steps:
       - name: Checkout repository
@@ -228,7 +228,7 @@ jobs:
   build-cpp-wheels-windows:
     runs-on: windows-latest
     env:
-        BUILDPYTHONENV: "py310;py311;py312"
+        BUILDPYTHONENV: "py310;py311;py312;py313"
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
         CMAKE_INSTALL_PREFIX: c:/local/sasktran
 
@@ -254,6 +254,9 @@ jobs:
       
       - name: Create conda py312 Build Environment
         run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0.0
+      
+      - name: Create conda py313 Build Environment
+        run: conda create -n py313 -c conda-forge python=3.13 numpy=2.0.0
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
@@ -327,7 +330,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
 
     steps:
       - uses: conda-incubator/setup-miniconda@v2
@@ -353,7 +356,7 @@ jobs:
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
 
     steps:
       - name: Checkout repository
