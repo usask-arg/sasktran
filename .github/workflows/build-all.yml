@@ -361,12 +361,10 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: mamba-org/setup-micromamba@v2
         with:
-          activate-environment: ${{ matrix.py_version }}
           environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
-          auto-activate-base: false
-          miniconda-version: "latest"
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
