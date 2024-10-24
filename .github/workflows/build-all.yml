@@ -193,8 +193,6 @@ jobs:
         uses: mamba-org/setup-micromamba@v2
         with:
           environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
-          create-args: >-
-            conda
 
       - name: Display conda environment
         shell: bash -el {0}
