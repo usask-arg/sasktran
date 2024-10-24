@@ -197,7 +197,7 @@ jobs:
       - name: Display conda environment
         shell: bash -el {0}
         run: | 
-          mamba list
+          micromamba list
 
       - name: configure cmake project
         shell: bash -el {0}
