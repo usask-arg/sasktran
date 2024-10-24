@@ -174,13 +174,14 @@ jobs:
           publish_dir: docs
 
   build-cpp-wheels-mac:
-    runs-on: macos-12
+    runs-on: ${{ matrix.os }}
     env:
         BUILDPYTHONENV: "current"
     
     strategy:
       matrix:
         py_version: [py310, py311, py312, py313]
+        os: [macos-13, macos-14]
         
     steps:
       - name: Checkout repository
@@ -221,7 +222,7 @@ jobs:
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: wheels-mac-${{ matrix.py_version }}
+          name: wheels-${{ matrix.os }}-${{ matrix.py_version }}
           path: wheelhouse
 
   build-cpp-wheels-windows:
@@ -351,11 +352,12 @@ jobs:
 
   test-wheels-mac:
     needs: build-cpp-wheels-mac 
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: true
     strategy:
       matrix:
         py_version: [py310, py311, py312, py313]
+        os: [macos-13, macos-14]
 
     steps:
       - name: Checkout repository
@@ -371,7 +373,7 @@ jobs:
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-${{ matrix.py_version }}
+          name: wheels-${{ matrix.os }}-${{ matrix.py_version }}
           path: wheelhouse
       
       - name: Test wheel
@@ -425,19 +427,49 @@ jobs:
       - name: Download mac wheel py310
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py310
+          name: wheels-macos-13-py310
           path: dist
 
       - name: Download mac wheel py311
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py311
+          name: wheels-macos-13-py311
           path: dist
       
       - name: Download mac wheel py312
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py312
+          name: wheels-macos-13-py312
+          path: dist
+
+      - name: Download mac wheel py313
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-13-py313
+          path: dist
+
+      - name: Download mac ARM wheel py310
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py310
+          path: dist
+  
+      - name: Download mac ARM wheel py311
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py311
+          path: dist
+        
+      - name: Download mac ARM wheel py312
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py312
+          path: dist
+  
+      - name: Download mac ARM wheel py313
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py313
           path: dist
 
       - name: Publish package to PyPI
