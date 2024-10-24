@@ -207,7 +207,7 @@ jobs:
           cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
       - name: build cpp
         shell: bash -el {0}
-        run: cmake --build build --config Release --target install -j 3
+        run: cmake --build build --config Release -j 3
 
       - name: delocate wheels
         shell: bash -el {0}
