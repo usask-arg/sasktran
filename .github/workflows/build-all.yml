@@ -214,8 +214,8 @@ jobs:
         run: | 
           cd wheelhouse
           ls
-          find . -name "*x86_64.whl" -type f -exec delocate-listdeps --all '{}' \;
-          find . -name "*x86_64.whl" -type f -exec delocate-wheel -v '{}' \;
+          find . -name "*.whl" -type f -exec delocate-listdeps --all '{}' \;
+          find . -name "*.whl" -type f -exec delocate-wheel -v '{}' \;
           cd ..
 
 
