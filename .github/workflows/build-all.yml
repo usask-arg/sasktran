@@ -189,12 +189,12 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Conda build environment 
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: mamba-org/setup-micromamba@v2
         with:
-          activate-environment: build_${{ matrix.py_version }}
           environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
-          auto-activate-base: false
+          create-args: >-
+            conda
 
       - name: Display conda environment
         shell: bash -el {0}

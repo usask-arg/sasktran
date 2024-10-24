@@ -1,4 +1,4 @@
-name: build_py311
+name: build_py313
 channels:
   - conda-forge/label/python_rc
   - conda-forge
