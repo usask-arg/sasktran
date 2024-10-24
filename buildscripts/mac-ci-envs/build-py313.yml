@@ -1,8 +1,8 @@
-name: build_py312
+name: build_py313
 channels:
   - conda-forge
 dependencies:
-  - python=3.12
+  - python=3.13
   - c-compiler
   - cxx-compiler
   - fortran-compiler
@@ -12,6 +12,6 @@ dependencies:
   - openblas
   - yaml-cpp=0.7
   - delocate
-  - numpy=2.0
+  - numpy=2
   - eigen=3.4
   - setuptools_scm

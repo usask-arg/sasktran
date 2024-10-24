@@ -1,0 +1,15 @@
+name: py313_test
+channels:
+  - conda-forge
+dependencies:
+  - python=3.13
+  - numpy
+  - xarray
+  - pytest
+  - netcdf4
+  - pip
+  - scipy
+  - nomkl
+  - pip:
+    - pytest-cov
+    - zenodo_get

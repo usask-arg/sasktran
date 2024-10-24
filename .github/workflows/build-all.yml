@@ -19,7 +19,7 @@ jobs:
     runs-on: ubuntu-latest
     container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
     env:
-        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312"
+        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312;cp313-cp313"
         IN_MANYLINUX_CONTAINER: "TRUE"
         CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true
@@ -49,7 +49,7 @@ jobs:
     container: continuumio/anaconda3
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
 
     steps:
       - name: Checkout repository
@@ -174,13 +174,14 @@ jobs:
           publish_dir: docs
 
   build-cpp-wheels-mac:
-    runs-on: macos-12
+    runs-on: ${{ matrix.os }}
     env:
         BUILDPYTHONENV: "current"
     
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
+        os: [macos-13, macos-14]
         
     steps:
       - name: Checkout repository
@@ -188,18 +189,15 @@ jobs:
         with:
           fetch-depth: 0
 
-      - name: Setup Conda build environment 
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: mamba-org/setup-micromamba@v2
         with:
-          activate-environment: build_${{ matrix.py_version }}
           environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
-          channels: conda-forge
-          auto-activate-base: false
 
       - name: Display conda environment
         shell: bash -el {0}
         run: | 
-          conda list
+          micromamba list
 
       - name: configure cmake project
         shell: bash -el {0}
@@ -207,28 +205,28 @@ jobs:
           cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
       - name: build cpp
         shell: bash -el {0}
-        run: cmake --build build --config Release --target install -j 3
+        run: cmake --build build --config Release -j 3
 
       - name: delocate wheels
         shell: bash -el {0}
         run: | 
           cd wheelhouse
           ls
-          find . -name "*x86_64.whl" -type f -exec delocate-listdeps --all '{}' \;
-          find . -name "*x86_64.whl" -type f -exec delocate-wheel -v '{}' \;
+          find . -name "*.whl" -type f -exec delocate-listdeps --all '{}' \;
+          find . -name "*.whl" -type f -exec delocate-wheel -v '{}' \;
           cd ..
 
 
       - name: Save wheel artifacts
         uses: actions/upload-artifact@v3
         with:
-          name: wheels-mac-${{ matrix.py_version }}
+          name: wheels-${{ matrix.os }}-${{ matrix.py_version }}
           path: wheelhouse
 
   build-cpp-wheels-windows:
     runs-on: windows-latest
     env:
-        BUILDPYTHONENV: "py310;py311;py312"
+        BUILDPYTHONENV: "py310;py311;py312;py313"
         VCPKG_DEFAULT_TRIPLET: x64-windows-static-md
         CMAKE_INSTALL_PREFIX: c:/local/sasktran
 
@@ -247,13 +245,16 @@ jobs:
           activate-environment: ""
 
       - name: Create Conda py310 Build Environment
-        run: conda create -n py310 -c conda-forge python=3.10 numpy=2.0.0
+        run: conda create -n py310 -c conda-forge python=3.10 numpy=2.0
 
       - name: Create Conda py311 Build Environment
-        run: conda create -n py311 -c conda-forge python=3.11 numpy=2.0.0
+        run: conda create -n py311 -c conda-forge python=3.11 numpy=2.0
       
       - name: Create conda py312 Build Environment
-        run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0.0
+        run: conda create -n py312 -c conda-forge python=3.12 numpy=2.0
+      
+      - name: Create conda py313 Build Environment
+        run: conda create -n py313 -c conda-forge python=3.13 numpy=2.1
 
       - name: Install netCDF
         run: vcpkg install netcdf-c
@@ -308,7 +309,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
+      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312;py313" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
@@ -327,7 +328,7 @@ jobs:
     runs-on: windows-latest
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
 
     steps:
       - uses: conda-incubator/setup-miniconda@v2
@@ -349,27 +350,26 @@ jobs:
 
   test-wheels-mac:
     needs: build-cpp-wheels-mac 
-    runs-on: macos-latest
+    runs-on: ${{ matrix.os }}
     continue-on-error: true
     strategy:
       matrix:
-        py_version: [py310, py311, py312]
+        py_version: [py310, py311, py312, py313]
+        os: [macos-13, macos-14]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: mamba-org/setup-micromamba@v2
         with:
-          activate-environment: ${{ matrix.py_version }}
           environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
-          auto-activate-base: false
-          miniconda-version: "latest"
 
       - name: Download wheel artifacts 
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-${{ matrix.py_version }}
+          name: wheels-${{ matrix.os }}-${{ matrix.py_version }}
           path: wheelhouse
       
       - name: Test wheel
@@ -380,7 +380,7 @@ jobs:
           pip install sasktran --no-index -f wheelhouse/
           cd pysasktran
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
-          python dummy_install.py > /dev/null 2>&1
+          python dummy_install.py
           py.test sasktran
   
   pycodestyle_check:
@@ -423,19 +423,49 @@ jobs:
       - name: Download mac wheel py310
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py310
+          name: wheels-macos-13-py310
           path: dist
 
       - name: Download mac wheel py311
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py311
+          name: wheels-macos-13-py311
           path: dist
       
       - name: Download mac wheel py312
         uses: actions/download-artifact@v3
         with:
-          name: wheels-mac-py312
+          name: wheels-macos-13-py312
+          path: dist
+
+      - name: Download mac wheel py313
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-13-py313
+          path: dist
+
+      - name: Download mac ARM wheel py310
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py310
+          path: dist
+  
+      - name: Download mac ARM wheel py311
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py311
+          path: dist
+        
+      - name: Download mac ARM wheel py312
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py312
+          path: dist
+  
+      - name: Download mac ARM wheel py313
+        uses: actions/download-artifact@v3
+        with:
+          name: wheels-macos-14-py313
           path: dist
 
       - name: Publish package to PyPI
