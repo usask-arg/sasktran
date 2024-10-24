@@ -309,7 +309,7 @@ jobs:
         with:
           fetch-depth: 0
 
-      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
+      - run: cmake -S . -B build  -DPythonEnvironments="py310;py311;py312;py313" -DCMAKE_BUILD_TYPE=Release -DVCPKG_TARGET_TRIPLET=x64-windows-static-md  -DCMAKE_TOOLCHAIN_FILE=c:/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_PREFIX_PATH="c:/local/openblas/;C:/Program Files (x86)/Eigen3/"
         env:
           BOOST_ROOT: C:/local/boost_1_82_0
           BOOST_LIBRARYDIR: C:/local/boost_1_82_0/lib64-msvc-14.3/
@@ -380,7 +380,7 @@ jobs:
           pip install sasktran --no-index -f wheelhouse/
           cd pysasktran
           mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
-          python dummy_install.py > /dev/null 2>&1
+          python dummy_install.py
           py.test sasktran
   
   pycodestyle_check:
