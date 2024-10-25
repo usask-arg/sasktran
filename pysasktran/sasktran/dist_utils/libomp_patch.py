@@ -16,6 +16,10 @@ def patch_libomp():
     # First we need to determine if we are in an anaconda environment, and that if libomp exists
     conda_dylib = Path(sys.base_prefix).joinpath('lib/libomp.dylib')
 
+    print(f"conda_dylib: {conda_dylib}")
+    print(f"bundled_dylib: {bundled_dylib}")
+
     if conda_dylib.exists() and bundled_dylib.exists() and not (bundled_dylib.is_symlink()):
+        print("Patching libomp.dylib")
         bundled_dylib.unlink()
         bundled_dylib.symlink_to(conda_dylib)
