@@ -1,4 +1,6 @@
+print("importing dist_utils")
 import sasktran.dist_utils
+print("dist_utils imported")
 from .config import update_registry_from_config
 from .geometry import Geometry, VerticalImage, NadirGeometry
 from .atmosphere import Atmosphere

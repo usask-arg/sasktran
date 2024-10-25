@@ -4,8 +4,10 @@ import pkgutil
 
 
 def patch_libomp():
+    print("Trying to patch openmp")
     # Only on mac
     if sys.platform != 'darwin':
+        print("Not on mac, skipping")
         return
 
     # Check if we have bundled .dylibs
