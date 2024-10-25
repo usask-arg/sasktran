@@ -350,6 +350,8 @@ jobs:
 
   test-wheels-mac:
     needs: build-cpp-wheels-mac 
+    env:
+      KMP_DUPLICATE_LIB_OK: TRUE
     runs-on: ${{ matrix.os }}
     continue-on-error: true
     strategy:
