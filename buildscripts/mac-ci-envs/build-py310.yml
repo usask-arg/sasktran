@@ -6,7 +6,7 @@ dependencies:
   - c-compiler
   - cxx-compiler
   - fortran-compiler
-  - boost=1.82
+  - boost=1.84
   - libnetcdf
   - catch2=3
   - openblas
