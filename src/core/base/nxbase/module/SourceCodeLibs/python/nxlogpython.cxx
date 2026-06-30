@@ -1,4 +1,11 @@
-#include "Python.h"			// MATLAB include file
+#if defined(_DEBUG) && defined(SWIG_PYTHON_INTERPRETER_NO_DEBUG)
+/* Use debug wrappers with the Python release dll */
+# undef _DEBUG
+# include <Python.h>
+# define _DEBUG 1
+#else
+# include <Python.h>
+#endif
 #include "nxlib.h"
 #include "nxlogpython.h"
 

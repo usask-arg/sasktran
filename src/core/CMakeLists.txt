@@ -48,7 +48,7 @@ endif()
 message(STATUS "Found HDF5")
 
 
-target_link_libraries(sasktranCoreBuildProperties INTERFACE yaml-cpp)
+target_link_libraries(sasktranCoreBuildProperties INTERFACE yaml-cpp::yaml-cpp)
 target_link_libraries(sasktranCoreBuildProperties INTERFACE ${netCDF_LIBRARIES})
 target_link_libraries(sasktranCoreBuildProperties INTERFACE ${HDF5_LIBRARY})
 
