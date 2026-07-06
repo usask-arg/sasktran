@@ -4569,16 +4569,16 @@ SWIGINTERN PyObject *_wrap_nxVector_FromSequence(PyObject *self, PyObject *args)
         SWIG_Python_SetErrorMsg(PyExc_ValueError,"Size mismatch. Expected 3 elements");
         SWIG_fail;
       }
-      for (i = 0; i < 3; i++)
+      for (i = 0; i < 3; i++) 
       {
         PyObject *o = PySequence_GetItem(swig_obj[0],i);
-        if (PyNumber_Check(o))
+        if (PyNumber_Check(o)) 
         {
           temp2[i] = PyFloat_AsDouble(o);
-        }
-        else
+        } 
+        else 
         {
-          SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+          SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
           SWIG_fail;
         }
       }
@@ -4594,7 +4594,7 @@ SWIGINTERN PyObject *_wrap_nxVector_FromSequence(PyObject *self, PyObject *args)
         SWIG_fail;
       }
       d = (double*) PyArray_DATA(obj);
-      for (i = 0; i < 3; i++)
+      for (i = 0; i < 3; i++) 
       {
         temp2[i] = d[i];
       }
@@ -4627,7 +4627,7 @@ SWIGINTERN PyObject *_wrap_nxVector_FromSequence(PyObject *self, PyObject *args)
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -4677,7 +4677,7 @@ SWIGINTERN PyObject *_wrap_nxVector_AsSequence(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -4739,7 +4739,7 @@ SWIGINTERN PyObject *_wrap_nxVector_SetCoords__SWIG_0(PyObject *self, Py_ssize_t
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -4785,7 +4785,7 @@ SWIGINTERN PyObject *_wrap_nxVector_SetCoords__SWIG_1(PyObject *self, Py_ssize_t
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -4896,7 +4896,7 @@ SWIGINTERN PyObject *_wrap_nxVector_FromLatLong__SWIG_0(PyObject *self, Py_ssize
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -4950,7 +4950,7 @@ SWIGINTERN PyObject *_wrap_nxVector_FromLatLong__SWIG_1(PyObject *self, Py_ssize
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5052,7 +5052,7 @@ SWIGINTERN PyObject *_wrap_nxVector_IsZero(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5098,7 +5098,7 @@ SWIGINTERN PyObject *_wrap_nxVector_IsValid(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5136,7 +5136,7 @@ SWIGINTERN PyObject *_wrap_nxVector_SetInvalid(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5175,7 +5175,7 @@ SWIGINTERN PyObject *_wrap_nxVector_X(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5214,7 +5214,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Y(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5253,7 +5253,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Z(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5292,7 +5292,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Data(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5333,9 +5333,9 @@ SWIGINTERN PyObject *_wrap_nxVector_AngleTo(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -5380,7 +5380,7 @@ SWIGINTERN PyObject *_wrap_nxVector_AngleTo(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5430,7 +5430,7 @@ SWIGINTERN PyObject *_wrap_nxVector_UnitVector(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5471,9 +5471,9 @@ SWIGINTERN PyObject *_wrap_nxVector_ComponentPerpendicularTo(PyObject *self, PyO
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -5529,7 +5529,7 @@ SWIGINTERN PyObject *_wrap_nxVector_ComponentPerpendicularTo(PyObject *self, PyO
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5570,9 +5570,9 @@ SWIGINTERN PyObject *_wrap_nxVector_ComponentParallelTo(PyObject *self, PyObject
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -5628,7 +5628,7 @@ SWIGINTERN PyObject *_wrap_nxVector_ComponentParallelTo(PyObject *self, PyObject
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5667,7 +5667,7 @@ SWIGINTERN PyObject *_wrap_nxVector_IndexOfMaxComponent(PyObject *self, PyObject
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5706,7 +5706,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Longitude(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5745,7 +5745,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Latitude(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5808,7 +5808,7 @@ SWIGINTERN PyObject *_wrap_nxVector_EquatorialToGeographic(PyObject *self, PyObj
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5871,7 +5871,7 @@ SWIGINTERN PyObject *_wrap_nxVector_GeographicToEquatorial(PyObject *self, PyObj
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5921,7 +5921,7 @@ SWIGINTERN PyObject *_wrap_nxVector_GeographicToGeomagneticDipole(PyObject *self
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -5961,9 +5961,9 @@ SWIGINTERN PyObject *_wrap_nxVector_TransformToNewPole__SWIG_0(PyObject *self, P
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6006,9 +6006,9 @@ SWIGINTERN PyObject *_wrap_nxVector_TransformToNewPole__SWIG_0(PyObject *self, P
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -6053,7 +6053,7 @@ SWIGINTERN PyObject *_wrap_nxVector_TransformToNewPole__SWIG_0(PyObject *self, P
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6107,7 +6107,7 @@ SWIGINTERN PyObject *_wrap_nxVector_TransformToNewPole__SWIG_1(PyObject *self, P
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6201,7 +6201,7 @@ SWIGINTERN PyObject *_wrap_nxVector_RotateAboutXaxis(PyObject *self, PyObject *a
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6249,7 +6249,7 @@ SWIGINTERN PyObject *_wrap_nxVector_RotateAboutZaxis(PyObject *self, PyObject *a
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6290,9 +6290,9 @@ SWIGINTERN PyObject *_wrap_nxVector_Dot(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6337,7 +6337,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Dot(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6376,7 +6376,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Magnitude(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6417,9 +6417,9 @@ SWIGINTERN PyObject *_wrap_nxVector_Cross(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6475,7 +6475,7 @@ SWIGINTERN PyObject *_wrap_nxVector_Cross(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6514,9 +6514,9 @@ SWIGINTERN PyObject *_wrap_nxVector___add____SWIG_0(PyObject *self, Py_ssize_t n
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6572,7 +6572,7 @@ SWIGINTERN PyObject *_wrap_nxVector___add____SWIG_0(PyObject *self, Py_ssize_t n
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6618,9 +6618,9 @@ SWIGINTERN PyObject *_wrap_nxVector___iadd__(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6665,7 +6665,7 @@ SWIGINTERN PyObject *_wrap_nxVector___iadd__(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6706,9 +6706,9 @@ SWIGINTERN PyObject *_wrap_nxVector___isub__(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6753,7 +6753,7 @@ SWIGINTERN PyObject *_wrap_nxVector___isub__(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6792,9 +6792,9 @@ SWIGINTERN PyObject *_wrap_nxVector___imul____SWIG_0(PyObject *self, Py_ssize_t 
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -6839,7 +6839,7 @@ SWIGINTERN PyObject *_wrap_nxVector___imul____SWIG_0(PyObject *self, Py_ssize_t 
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6886,7 +6886,7 @@ SWIGINTERN PyObject *_wrap_nxVector___imul____SWIG_1(PyObject *self, Py_ssize_t 
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -6971,7 +6971,7 @@ SWIGINTERN PyObject *_wrap_nxVector___itruediv__(PyObject *self, PyObject *args)
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7010,9 +7010,9 @@ SWIGINTERN PyObject *_wrap_nxVector___sub____SWIG_0(PyObject *self, Py_ssize_t n
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -7068,7 +7068,7 @@ SWIGINTERN PyObject *_wrap_nxVector___sub____SWIG_0(PyObject *self, Py_ssize_t n
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7123,7 +7123,7 @@ SWIGINTERN PyObject *_wrap_nxVector___neg__(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7186,7 +7186,7 @@ SWIGINTERN PyObject *_wrap_nxVector___add____SWIG_1(PyObject *self, Py_ssize_t n
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7282,7 +7282,7 @@ SWIGINTERN PyObject *_wrap_nxVector___sub____SWIG_1(PyObject *self, Py_ssize_t n
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7380,7 +7380,7 @@ SWIGINTERN PyObject *_wrap_nxVector___truediv__(PyObject *self, PyObject *args) 
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7426,9 +7426,9 @@ SWIGINTERN PyObject *_wrap_nxVector___xor__(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -7484,7 +7484,7 @@ SWIGINTERN PyObject *_wrap_nxVector___xor__(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7530,9 +7530,9 @@ SWIGINTERN PyObject *_wrap_nxVector___and__(PyObject *self, PyObject *args) {
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -7577,7 +7577,7 @@ SWIGINTERN PyObject *_wrap_nxVector___and__(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -7620,7 +7620,7 @@ SWIGINTERN PyObject *_wrap_delete_nxVector(PyObject *self, PyObject *args) {
     v1[0] = (*arg1).X();
     v1[1] = (*arg1).Y();
     v1[2] = (*arg1).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult1);
   }
   return resultobj;
 fail:
@@ -8019,9 +8019,9 @@ SWIGINTERN PyObject *_wrap_GEODETIC_INSTANT___eq__(PyObject *self, PyObject *arg
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -8105,16 +8105,16 @@ SWIGINTERN PyObject *_wrap_GEODETIC_INSTANT_FromSequence(PyObject *self, PyObjec
         SWIG_Python_SetErrorMsg(PyExc_ValueError,"Size mismatch. Expected 4 elements");
         SWIG_fail;
       }
-      for (i = 0; i < 4; i++)
+      for (i = 0; i < 4; i++) 
       {
         PyObject *o = PySequence_GetItem(swig_obj[1],i);
-        if (PyNumber_Check(o))
+        if (PyNumber_Check(o)) 
         {
           temp2[i] = PyFloat_AsDouble(o);
-        }
-        else
+        } 
+        else 
         {
-          SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+          SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
           SWIG_fail;
         }
       }
@@ -8130,7 +8130,7 @@ SWIGINTERN PyObject *_wrap_GEODETIC_INSTANT_FromSequence(PyObject *self, PyObjec
         SWIG_fail;
       }
       d = (double*) PyArray_DATA(obj);
-      for (i = 0; i < 4; i++)
+      for (i = 0; i < 4; i++) 
       {
         temp2[i] = d[i];
       }
@@ -11051,9 +11051,9 @@ SWIGINTERN PyObject *_wrap_ISKBasisDirection_Assign(PyObject *self, PyObject *ar
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -11096,9 +11096,9 @@ SWIGINTERN PyObject *_wrap_ISKBasisDirection_Assign(PyObject *self, PyObject *ar
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -11141,9 +11141,9 @@ SWIGINTERN PyObject *_wrap_ISKBasisDirection_Assign(PyObject *self, PyObject *ar
       {
         temp4.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg4 = &temp4;
@@ -11964,9 +11964,9 @@ SWIGINTERN PyObject *_wrap_ISKStokesVector_to_new_basis__SWIG_1(PyObject *self, 
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -12009,9 +12009,9 @@ SWIGINTERN PyObject *_wrap_ISKStokesVector_to_new_basis__SWIG_1(PyObject *self, 
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -12054,9 +12054,9 @@ SWIGINTERN PyObject *_wrap_ISKStokesVector_to_new_basis__SWIG_1(PyObject *self, 
       {
         temp4.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg4 = &temp4;
@@ -12671,7 +12671,7 @@ SWIGINTERN PyObject *_wrap_ISKModuleBase_SetProperty(PyObject *self, PyObject *a
     {
       arg3   = nullptr;
       arg4   = -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar, array or SasktranIF object derived from ISKModuleBase");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar, array or SasktranIF object derived from ISKModuleBase"); 
       SWIG_fail;
     }
   }
@@ -12793,7 +12793,7 @@ SWIGINTERN PyObject *_wrap_ISKModuleBase_GetProperty(PyObject *self, PyObject *a
         }
       }
     }
-    resultobj = SWIG_Python_AppendOutput(resultobj, radarray, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj,radarray);
   }
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
@@ -13035,9 +13035,9 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_UpdateCache(PyObject *self, PyObject *
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -13137,7 +13137,7 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetParameter(PyObject *self, PyObject 
       result = SWIG_ConvertPtr(swig_obj[1], &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
       if (!SWIG_IsOK(result))
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
         SWIG_fail;
       }
       arg2 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -13165,9 +13165,9 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetParameter(PyObject *self, PyObject 
         temp3.heightm = PyFloat_AsDouble(o3);
         temp3.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -13277,7 +13277,7 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetHeightProfile(PyObject *self, PyObj
       result = SWIG_ConvertPtr(swig_obj[1], &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
       if (!SWIG_IsOK(result))
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
         SWIG_fail;
       }
       arg2 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -13305,9 +13305,9 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetHeightProfile(PyObject *self, PyObj
         temp3.heightm = PyFloat_AsDouble(o3);
         temp3.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -13365,7 +13365,7 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetHeightProfile(PyObject *self, PyObj
       arg4 = nullptr;
       arg5 = nullptr;
       arg6 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -13391,11 +13391,11 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_GetHeightProfile(PyObject *self, PyObj
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad4, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad4);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad4), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad4));
       
     }
   }
@@ -13463,7 +13463,7 @@ SWIGINTERN PyObject *_wrap_ISKClimatology_SetPropertyUserDefined(PyObject *self,
       result = SWIG_ConvertPtr(swig_obj[1], &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
       if (!SWIG_IsOK(result))
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
         SWIG_fail;
       }
       arg2 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -13801,9 +13801,9 @@ SWIGINTERN PyObject *_wrap_ISKOpticalProperty_SetLocation(PyObject *self, PyObje
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -13894,9 +13894,9 @@ SWIGINTERN PyObject *_wrap_ISKOpticalProperty_InternalClimatology_UpdateCache(Py
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -14014,7 +14014,7 @@ SWIGINTERN PyObject *_wrap_ISKOpticalProperty_CalculateCrossSections(PyObject *s
       arg4 = nullptr;
       arg5 = nullptr;
       arg6 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -14039,15 +14039,15 @@ SWIGINTERN PyObject *_wrap_ISKOpticalProperty_CalculateCrossSections(PyObject *s
     int n = arg6;
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectabsxs2, 0);
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectextxs2, 0);
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectscatxs2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectabsxs2);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectextxs2);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectscatxs2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarabsxs2), 0);
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarextxs2), 0);
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarscatxs2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarabsxs2));
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarextxs2));
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarscatxs2));
       
     }
   }
@@ -14586,9 +14586,9 @@ SWIGINTERN PyObject *_wrap_ISKEmission_UpdateLocation(PyObject *self, PyObject *
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -14684,9 +14684,9 @@ SWIGINTERN PyObject *_wrap_ISKEmission_UpdateCache(PyObject *self, PyObject *arg
         temp2.heightm = PyFloat_AsDouble(o3);
         temp2.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -14790,7 +14790,7 @@ SWIGINTERN PyObject *_wrap_ISKEmission_IsotropicEmission(PyObject *self, PyObjec
       arg2 = nullptr;
       arg3 = nullptr;
       arg4 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -14816,11 +14816,11 @@ SWIGINTERN PyObject *_wrap_ISKEmission_IsotropicEmission(PyObject *self, PyObjec
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2));
       
     }
   }
@@ -15050,9 +15050,9 @@ SWIGINTERN PyObject *_wrap_ISKBrdf_BRDF(PyObject *self, PyObject *args) {
         temp3.heightm = PyFloat_AsDouble(o3);
         temp3.mjd = PyFloat_AsDouble(o4);
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
         return NULL;
       }
@@ -15293,7 +15293,7 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_Irradiance(PyObject *self, PyObject 
       arg2 = nullptr;
       arg3 = nullptr;
       arg4 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -15319,11 +15319,11 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_Irradiance(PyObject *self, PyObject 
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2));
       
     }
   }
@@ -15397,7 +15397,7 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_IrradianceAt1AU(PyObject *self, PyOb
       arg2 = nullptr;
       arg3 = nullptr;
       arg4 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -15423,11 +15423,11 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_IrradianceAt1AU(PyObject *self, PyOb
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2));
       
     }
   }
@@ -15691,7 +15691,7 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_NanometerResolutionFWHM(PyObject *se
       arg2 = nullptr;
       arg3 = nullptr;
       arg4 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -15717,11 +15717,11 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_NanometerResolutionFWHM(PyObject *se
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2));
       
     }
   }
@@ -15795,7 +15795,7 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_SampleSpacing(PyObject *self, PyObje
       arg2 = nullptr;
       arg3 = nullptr;
       arg4 =  -9999;
-      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
+      SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
       SWIG_fail;
     }
   }
@@ -15821,11 +15821,11 @@ SWIGINTERN PyObject *_wrap_ISKSolarSpectrum_SampleSpacing(PyObject *self, PyObje
     
     if (n >= 0)
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2, 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, (PyObject*)objectrad2);
     }
     else
     {
-      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2), 0);
+      resultobj = SWIG_Python_AppendOutput(resultobj, PyFloat_FromDouble(scalarrad2));
       
     }
   }
@@ -16194,9 +16194,9 @@ SWIGINTERN PyObject *_wrap_ISKEngine_AddLineOfSight(PyObject *self, PyObject *ar
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -16239,9 +16239,9 @@ SWIGINTERN PyObject *_wrap_ISKEngine_AddLineOfSight(PyObject *self, PyObject *ar
       {
         temp4.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg4 = &temp4;
@@ -16343,7 +16343,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_AddSpecies(PyObject *self, PyObject *args) 
       result = SWIG_ConvertPtr(swig_obj[1], &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
       if (!SWIG_IsOK(result))
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
         SWIG_fail;
       }
       arg2 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -16433,7 +16433,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_AddEmission(PyObject *self, PyObject *args)
       result = SWIG_ConvertPtr(swig_obj[1], &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
       if (!SWIG_IsOK(result))
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
         SWIG_fail;
       }
       arg2 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -16836,7 +16836,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_CalculateRadiance(PyObject *self, PyObject 
         }
       }
     }
-    resultobj = SWIG_Python_AppendOutput(resultobj, radarray, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj,radarray);
   }
   return resultobj;
 fail:
@@ -16923,7 +16923,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_CalculateStokesVector(PyObject *self, PyObj
         }
       }
     }
-    resultobj = SWIG_Python_AppendOutput(resultobj, radarray, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj,radarray);
   }
   return resultobj;
 fail:
@@ -16990,7 +16990,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_GetWeightingFunctions(PyObject *self, PyObj
     if (!wfarray) SWIG_fail;
     outptr = (double *)PyArray_DATA((PyArrayObject*)wfarray);
     for (int i = 0; i < numelem; i++) outptr[i] = (*arg2)[i];
-    resultobj = SWIG_Python_AppendOutput(resultobj, wfarray, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, wfarray);
   }
   return resultobj;
 fail:
@@ -17079,7 +17079,7 @@ SWIGINTERN PyObject *_wrap_ISKEngine_GetProperty(PyObject *self, PyObject *args)
         }
       }
     }
-    resultobj = SWIG_Python_AppendOutput(resultobj, radarray, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj,radarray);
   }
   if (alloc2 == SWIG_NEWOBJ) delete[] buf2;
   return resultobj;
@@ -17289,9 +17289,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationXYZ(PyObject *self, PyObject *
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -17376,9 +17376,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationFromTangentPoint(PyObject *sel
       {
         temp2.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg2 = &temp2;
@@ -17421,9 +17421,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationFromTangentPoint(PyObject *sel
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -17521,9 +17521,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationFromTangentAltitude(PyObject *
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -17566,9 +17566,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationFromTangentAltitude(PyObject *
       {
         temp4.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg4 = &temp4;
@@ -17620,7 +17620,7 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_SetLocationFromTangentAltitude(PyObject *
     v5[0] = (*arg5).X();
     v5[1] = (*arg5).Y();
     v5[2] = (*arg5).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult5, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult5);
   }
   return resultobj;
 fail:
@@ -17951,9 +17951,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_GetAltitudeIntercepts(PyObject *self, PyO
       {
         temp3.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg3 = &temp3;
@@ -17996,9 +17996,9 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_GetAltitudeIntercepts(PyObject *self, PyO
       {
         temp4.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
       }
-      else
+      else 
       {
-        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
+        SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
         SWIG_fail;
       }
       arg4 = &temp4;
@@ -18050,7 +18050,7 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_GetAltitudeIntercepts(PyObject *self, PyO
     v5[0] = (*arg5).X();
     v5[1] = (*arg5).Y();
     v5[2] = (*arg5).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult5, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult5);
   }
   {
     npy_intp dims[1] = {
@@ -18062,7 +18062,7 @@ SWIGINTERN PyObject *_wrap_ISKGeodetic_GetAltitudeIntercepts(PyObject *self, PyO
     v6[0] = (*arg6).X();
     v6[1] = (*arg6).Y();
     v6[2] = (*arg6).Z();
-    resultobj = SWIG_Python_AppendOutput(resultobj, tresult6, 0);
+    resultobj = SWIG_Python_AppendOutput(resultobj, tresult6);
   }
   return resultobj;
 fail:
@@ -18552,8 +18552,8 @@ SWIGINTERN PyObject *_wrap_ISKMie_S1(PyObject *self, PyObject *args) {
       }
     }
     
-    resultobj = SWIG_Python_AppendOutput(resultobj, out_real_array, 1);
-    resultobj = SWIG_Python_AppendOutput(resultobj, out_imag_array, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj,out_real_array);
+    resultobj = SWIG_Python_AppendOutput(resultobj,out_imag_array);
   }
   return resultobj;
 fail:
@@ -18629,8 +18629,8 @@ SWIGINTERN PyObject *_wrap_ISKMie_S2(PyObject *self, PyObject *args) {
       }
     }
     
-    resultobj = SWIG_Python_AppendOutput(resultobj, out_real_array, 1);
-    resultobj = SWIG_Python_AppendOutput(resultobj, out_imag_array, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj,out_real_array);
+    resultobj = SWIG_Python_AppendOutput(resultobj,out_imag_array);
   }
   return resultobj;
 fail:
@@ -18698,7 +18698,7 @@ SWIGINTERN PyObject *_wrap_ISKMie_PMom(PyObject *self, PyObject *args) {
       }
     }
     
-    resultobj = SWIG_Python_AppendOutput(resultobj, out_array, 1);
+    resultobj = SWIG_Python_AppendOutput(resultobj,out_array);
   }
   return resultobj;
 fail:

@@ -18,9 +18,10 @@ concurrency:
 jobs:
   build-cpp-wheels-manylinux2014:
     runs-on: ubuntu-latest
-    container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
+    # container: ghcr.io/usask-arg/sasktran-manylinux2014-build-container:main
+    container: ghcr.io/ndl303/sasktran-manylinux2014-build-container:main
     env:
-        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312"
+        BUILDPYTHONENV: "cp310-cp310;cp311-cp311;cp312-cp312;cp313-cp313"
         IN_MANYLINUX_CONTAINER: "TRUE"
         CMAKE_INSTALL_PREFIX: "/opt/sasktran/"
         ACTIONS_ALLOW_USE_UNSECURE_NODE_VERSION: true

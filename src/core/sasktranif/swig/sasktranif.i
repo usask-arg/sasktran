@@ -65,7 +65,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 //%{
 //PyTypeObject*	m_geoid_typeobject= nullptr;
 //
-//PyObject* Create_GeodeticInstantObject(const GEODETIC_INSTANT& geoid) 
+//PyObject* Create_GeodeticInstantObject(const GEODETIC_INSTANT& geoid)
 //{
 //	PyObject*				geoid_object;
 //
@@ -106,7 +106,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
  **/
 /*---------------------------------------------------------------------------*/
 
-%typemap(in, numinputs=0) ( const double** radiance, int* numwavelens, int* numlinesofsight)  
+%typemap(in, numinputs=0) ( const double** radiance, int* numwavelens, int* numlinesofsight)
 						   (double *data_temp,  int numwave_temp, int numlos_temp)
 {
   $1 = &data_temp;					// Let radiance point to local variable, data_temp
@@ -114,7 +114,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
   $3 = &numlos_temp;				// Let numlinesofsight point to local variable
 }
 
-%typemap(argout) ( const double** radiance, int* numwavelens, int* numlinesofsight)	
+%typemap(argout) ( const double** radiance, int* numwavelens, int* numlinesofsight)
 {
 	PyObject*				radarray;									// Object to hold the numpy object copied form the radiance
 	double*					outptr;										// Pointer to the data int the numpy object
@@ -142,7 +142,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			}
 		}
 	}
-	$result = SWIG_Python_AppendOutput($result,radarray);
+	$result = SWIG_AppendOutput($result,radarray);
 }
 
 /*-----------------------------------------------------------------------------
@@ -151,7 +151,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
  **/
 /*---------------------------------------------------------------------------*/
 
-%typemap(in, numinputs=0) ( const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight)  
+%typemap(in, numinputs=0) ( const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight)
 						   (ISKStokesVector* data_temp,  int numwave_temp, int numlos_temp)
 {
   $1 = &data_temp;				// Let radiance point to local variable, data_temp
@@ -159,7 +159,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
   $3 = &numlos_temp;				// Let numlinesofsight point to local variable
 }
 
-%typemap(argout) ( const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight)	
+%typemap(argout) ( const ISKStokesVector** radiancep, int* numwavelens, int* numlinesofsight)
 {
 	PyObject*				radarray;									// Object to hold the numpy object copied form the radiance
 	PyObject**				outptr;										// Pointer to the data int the numpy object
@@ -193,16 +193,16 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			}
 		}
 	}
-	$result = SWIG_Python_AppendOutput($result,radarray);
+	$result = SWIG_AppendOutput($result,radarray);
 }
 
 /*-----------------------------------------------------------------------------
  *					Typemap for ISKEngine::GetWeightingFunctions		 2015- 10- 1*/
-/** 
+/**
 **/
 /*---------------------------------------------------------------------------*/
 
-%typemap(in, numinputs=0) ( const double** wf, int* numwavelens, int* numlinesofsight, int* numwf)  
+%typemap(in, numinputs=0) ( const double** wf, int* numwavelens, int* numlinesofsight, int* numwf)
 						   (double * data_temp,  int dim1_temp, int dim2_temp, int dim3_temp)
 {
   $1 = &data_temp;				// Let wf point to local variable, data_temp
@@ -222,25 +222,25 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 	if (!wfarray) SWIG_fail;
 	outptr = (double *)PyArray_DATA((PyArrayObject*)wfarray);
 	for (int i = 0; i < numelem; i++) outptr[i] = (*$1)[i];
-	$result = SWIG_Python_AppendOutput($result, wfarray);
+	$result = SWIG_AppendOutput($result, wfarray);
 }
 
 /*-----------------------------------------------------------------------------
  *					Typemap for ISKEngine::GetPropertyArray		 2015- 10- 1*/
-/**  Return the C++ array as a 1-D array, 
+/**  Return the C++ array as a 1-D array,
  * In python:
  * ok,array = ISKEngine::GetPropertyArray( name)
  **/
 /*---------------------------------------------------------------------------*/
 
-%typemap(in, numinputs=0) (const double** value, int* numpoints)  
+%typemap(in, numinputs=0) (const double** value, int* numpoints)
 						  (double * data_temp,  int dim1_temp)
 {
   $1 = &data_temp;				// Let radiance point to local variable, data_temp
   $2 = &dim1_temp;				// Let numlinesofsight point to local variable, dim1_temp
 }
 
-%typemap(argout) (const double** value, int* numpoints)	
+%typemap(argout) (const double** value, int* numpoints)
 {
 	PyObject*	radarray;									// Object to hold the numpy object copied form the radiance
 	double*		outptr;										// Pointer to the data int the numpy object
@@ -251,17 +251,17 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 	if (!radarray) SWIG_fail;										// see if it failed
 	outptr = (double *)PyArray_DATA((PyArrayObject*)radarray);		// Get a pointer to the start of the array
 	for (int i = 0; i < numelem; i++) outptr[i] = (*$1)[i];
-	$result = SWIG_Python_AppendOutput($result,radarray);
+	$result = SWIG_AppendOutput($result,radarray);
 }
 
 
 /*-----------------------------------------------------------------------------
- *				Input Typemap for ISKOpticalProperty::CalculateCrossSections		 2015- 10- 1*/ 
-/**  		
+ *				Input Typemap for ISKOpticalProperty::CalculateCrossSections		 2015- 10- 1*/
+/**
  *	Accepts a scalar or array
  *	Copy the input wavelength array into a locally allocated contiguous sequence and arrange for
  *	destruction in the [freearg] section. The absorption, scattering and extinction cross-sections
- *  are created locally and passed beck to the python code. 
+ *  are created locally and passed beck to the python code.
  *	This typemap maps the C++ function to python function
  *	(ok, absxs, extxs, scattxs) = ISKOpticalProperty::CalculateCrossSectionsArray( wavenumber)
  *	$1 = wavenumber
@@ -271,7 +271,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
  *	$5 = numortype
  **/
 /*---------------------------------------------------------------------------*/
-%typemap(in, numinputs=1) ( const double * wavenumber,  double *absxs, double* extxs, double* scattxs, int numortype)  
+%typemap(in, numinputs=1) ( const double * wavenumber,  double *absxs, double* extxs, double* scattxs, int numortype)
 						   (double         scalarwavenumber, double         scalarabsxs, double         scalarextxs, double         scalarscatxs,
 						    PyArrayObject* objectwavenumber, PyArrayObject* objectabsxs, PyArrayObject* objectextxs, PyArrayObject* objectscatxs, int isnewarray)
 {
@@ -311,25 +311,25 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		$3 = nullptr;
 		$4 = nullptr;
 		$5 =  -9999;
-		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
+		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
 		SWIG_fail;
 	}
 }
 
-%typemap(argout) ( const double * wavenumber,  double *absxs, double* extxs, double* scattxs, int numortype)  
+%typemap(argout) ( const double * wavenumber,  double *absxs, double* extxs, double* scattxs, int numortype)
 {
 	int n = $5;
 	if (n >= 0)
 	{
-		$result = SWIG_Python_AppendOutput($result, (PyObject*)objectabsxs$argnum);
-		$result = SWIG_Python_AppendOutput($result, (PyObject*)objectextxs$argnum);
-		$result = SWIG_Python_AppendOutput($result, (PyObject*)objectscatxs$argnum);
+		$result = SWIG_AppendOutput($result, (PyObject*)objectabsxs$argnum);
+		$result = SWIG_AppendOutput($result, (PyObject*)objectextxs$argnum);
+		$result = SWIG_AppendOutput($result, (PyObject*)objectscatxs$argnum);
 	}
 	else
 	{
-		$result = SWIG_Python_AppendOutput($result, PyFloat_FromDouble(scalarabsxs$argnum));
-		$result = SWIG_Python_AppendOutput($result, PyFloat_FromDouble(scalarextxs$argnum));
-		$result = SWIG_Python_AppendOutput($result, PyFloat_FromDouble(scalarscatxs$argnum));
+		$result = SWIG_AppendOutput($result, PyFloat_FromDouble(scalarabsxs$argnum));
+		$result = SWIG_AppendOutput($result, PyFloat_FromDouble(scalarextxs$argnum));
+		$result = SWIG_AppendOutput($result, PyFloat_FromDouble(scalarscatxs$argnum));
 
 	}
 }
@@ -340,11 +340,11 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
     { Py_DECREF(objectwavenumber$argnum); }
 }
 /*-----------------------------------------------------------------------------
- *				Input Typemap for double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS		 2015- 10- 1*/ 
-/**  		
+ *				Input Typemap for double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS		 2015- 10- 1*/
+/**
  *	Accepts a scalar or array
  *	Copy the input (wavelength) array into a locally allocated contiguous sequence and arrange for
- *	destruction in the [freearg] section. The output array is created locally and passed back to the python code. 
+ *	destruction in the [freearg] section. The output array is created locally and passed back to the python code.
  *	This typemap maps the C++ function to python function
  *	(ok, radiance) = ISKEmission::IsotropicEmiision( wavenumbers )
  *
@@ -353,8 +353,8 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
  *	$3 = numortype
  **/
 /*---------------------------------------------------------------------------*/
-%typemap(in, numinputs=1) ( double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS) 
-						   (double         scalarwavenumber, double         scalarrad, 
+%typemap(in, numinputs=1) ( double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS)
+						   (double         scalarwavenumber, double         scalarrad,
 						    PyArrayObject* objectwavenumber, PyArrayObject* objectrad,int isnewarray)
 {
 	isnewarray   = 0;
@@ -385,22 +385,22 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		$1 = nullptr;
 		$2 = nullptr;
 		$3 =  -9999;
-		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array "); 
+		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar or array ");
 		SWIG_fail;
 	}
 }
 
-%typemap(argout) ( double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS)  
+%typemap(argout) ( double* IN_ARRAY1, double*  OUTARRAY1, int NUMPOINTS)
 {
 	int n = $3;
 
 	if (n >= 0)
 	{
-		$result = SWIG_Python_AppendOutput($result, (PyObject*)objectrad$argnum);
+		$result = SWIG_AppendOutput($result, (PyObject*)objectrad$argnum);
 	}
 	else
 	{
-		$result = SWIG_Python_AppendOutput($result, PyFloat_FromDouble(scalarrad$argnum));
+		$result = SWIG_AppendOutput($result, PyFloat_FromDouble(scalarrad$argnum));
 
 	}
 }
@@ -411,14 +411,14 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
     { Py_DECREF(objectwavenumber$argnum); }
 }
 /*-----------------------------------------------------------------------------
- *				Input Typemap for const CLIMATOLOGY_HANDLE&			2015- 10- 1*/ 
+ *				Input Typemap for const CLIMATOLOGY_HANDLE&			2015- 10- 1*/
 /*---------------------------------------------------------------------------*/
 
 %typemap(in) ( const CLIMATOLOGY_HANDLE& species)
 {
 	void*  objectptr;
 	int	   result;
-	nxString  name;	
+	nxString  name;
 
 	if (PyBytes_Check($input))
 	{
@@ -430,12 +430,12 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		nxStringw		w;
 		int			type;
 		int				xlen = sizeof(wchar_t);
-      
+
 		PyUnicode_READY($input);
 		type = PyUnicode_KIND($input);
-	
+
 		if      ( type == PyUnicode_1BYTE_KIND) name = (char *)PyUnicode_1BYTE_DATA($input);
-		else if ( (type == PyUnicode_2BYTE_KIND) && (xlen ==2) ) 
+		else if ( (type == PyUnicode_2BYTE_KIND) && (xlen ==2) )
 		{
 			w    = (wchar_t *)PyUnicode_2BYTE_DATA($input);
 			name = w.ConvertToChar();
@@ -447,7 +447,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		}
 		else
 		{
-			SWIG_Python_SetErrorMsg(PyExc_ValueError, "Error converting string to simple ascii string. Current sasktranIF only handles simple strings. Error fetching CLIMATOLOGY_HANDLE"); 
+			SWIG_Python_SetErrorMsg(PyExc_ValueError, "Error converting string to simple ascii string. Current sasktranIF only handles simple strings. Error fetching CLIMATOLOGY_HANDLE");
 			SWIG_fail;
 		}
 		name.RemoveWhiteSpace();
@@ -459,7 +459,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		result = SWIG_ConvertPtr($input, &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
 		if (!SWIG_IsOK(result))
 		{
-			SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
+			SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
 			SWIG_fail;
 		}
 		$1 = reinterpret_cast< CLIMATOLOGY_HANDLE * >(objectptr);
@@ -468,7 +468,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 
 /*-----------------------------------------------------------------------------
  *	Input Typemap for a CLIMATOLOGY_HANDLE& 2019-09-18 */
-/* 
+/*
  *	Typemap for.
  *		ISKCLimatology::GetParameter          ( const char * climatology_handle_name,  const GEODETIC_INSTANT& location, double* valueout );
  *		ISKCLimatology::GetHeightProfile      ( const char * climatology_handle_name,  GEODETIC_INSTANT location, const double* altitude, double *profile, int numalts );
@@ -493,7 +493,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 	if (PyBytes_Check($input))
 	{
 		$1 = (char*)(intptr_t)PyBytes_AsString($input);
-		
+
 	}
 	else if (PyUnicode_Check($input))
 	{
@@ -512,7 +512,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		result = SWIG_ConvertPtr($input, &objectptr, SWIGTYPE_p_GUID, 0 |  0 );
 		if (!SWIG_IsOK(result))
 		{
-			SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &"); 
+			SWIG_Python_SetErrorMsg(PyExc_ValueError, " error converting argument to CLIMATOLOGY_HANDLE const &");
 			SWIG_fail;
 		}
 		$1 = (char*)(intptr_t)FindGlobalClimatologyNameOfHandle( (*(CLIMATOLOGY_HANDLE*)(objectptr)) );
@@ -523,7 +523,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
  *					Typemap for nxVector conversions				2015- 10- 1*/
 /*---------------------------------------------------------------------------*/
 
-%typemap(out) const nxVector& 
+%typemap(out) const nxVector&
 {
 	npy_intp dims[1] = { 3 };
 	double*	 v;
@@ -551,7 +551,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 	v$argnum[0] = (*$1).X();
 	v$argnum[1] = (*$1).Y();
 	v$argnum[2] = (*$1).Z();
-	$result = SWIG_Python_AppendOutput($result, tresult$argnum);
+	$result = SWIG_AppendOutput($result, tresult$argnum);
 }
 
 %typemap(in) (const nxVector&)
@@ -573,9 +573,9 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 		{
 			temp.SetCoords(PyFloat_AsDouble(o1), PyFloat_AsDouble(o2), PyFloat_AsDouble(o3));
 		}
-		else 
+		else
 		{
-			SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
+			SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
 			SWIG_fail;
 		}
 		$1 = &temp;
@@ -640,9 +640,9 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			temp.heightm = PyFloat_AsDouble(o3);
 			temp.mjd = PyFloat_AsDouble(o4);
 		}
-		else 
+		else
 		{
-			SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
+			SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
 			SWIG_fail;
 			return NULL;
 		}
@@ -699,13 +699,13 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 }
 
 /*-----------------------------------------------------------------------------
- *				Typemap for nxVector::FromSequence( const double fixedarray[3])	2015- 10- 1 
+ *				Typemap for nxVector::FromSequence( const double fixedarray[3])	2015- 10- 1
  *				and GEODETIC_INSTANT::FromSequence( const double fixedarray[4]) */
-/**  		
+/**
  **/
 /*---------------------------------------------------------------------------*/
 
-%typemap(in) double fixedarray[ANY] (double temp[$1_dim0]) 
+%typemap(in) double fixedarray[ANY] (double temp[$1_dim0])
 {
 	int i;
 
@@ -716,16 +716,16 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			SWIG_Python_SetErrorMsg(PyExc_ValueError,"Size mismatch. Expected $1_dim0 elements");
 			SWIG_fail;
 		}
-		for (i = 0; i < $1_dim0; i++) 
+		for (i = 0; i < $1_dim0; i++)
 		{
 			PyObject *o = PySequence_GetItem($input,i);
-			if (PyNumber_Check(o)) 
+			if (PyNumber_Check(o))
 			{
 				temp[i] = PyFloat_AsDouble(o);
-			} 
-			else 
+			}
+			else
 			{
-				SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");      
+				SWIG_Python_SetErrorMsg(PyExc_ValueError,"Sequence elements must be numbers");
 				SWIG_fail;
 			}
 		}
@@ -741,7 +741,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			SWIG_fail;
 		}
 		d = (double*) PyArray_DATA(obj);
-		for (i = 0; i < $1_dim0; i++) 
+		for (i = 0; i < $1_dim0; i++)
 		{
 			temp[i] = d[i];
 		}
@@ -756,13 +756,13 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 }
 
 /*-----------------------------------------------------------------------------
- *				Typemap for ISKModuleBase::SetProperty			2015- 10- 1*/ 
-/**  		
- *	Accepst a scalar, array or sequence or an ISKModuleBase object 
+ *				Typemap for ISKModuleBase::SetProperty			2015- 10- 1*/
+/**
+ *	Accepst a scalar, array or sequence or an ISKModuleBase object
  **/
 /*---------------------------------------------------------------------------*/
-  
-%typemap(in, numinputs=1) ( void* valueorobject, int numpoints_or_type)  
+
+%typemap(in, numinputs=1) ( void* valueorobject, int numpoints_or_type)
 						   (void* objectptr,  void* arrayptr, double scalarvalue, PyArrayObject* newarray, int isnewarray)
 {
 	isnewarray   = 0;
@@ -795,7 +795,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 	{
 		$1   = nullptr;
 		$2   = -9999;
-		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar, array or SasktranIF object derived from ISKModuleBase"); 
+		SWIG_Python_SetErrorMsg(PyExc_ValueError, "Expected a scalar, array or SasktranIF object derived from ISKModuleBase");
 		SWIG_fail;
 	}
 }
@@ -820,20 +820,20 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 
 
 /*-----------------------------------------------------------------------------
- *				Typemap for ISKModuleBase::GetProperty			2015- 10- 1*/ 
-/**  		
+ *				Typemap for ISKModuleBase::GetProperty			2015- 10- 1*/
+/**
  *	Accepst a scalar or double array  from ISKModuleBase::GetProperty
  **/
 /*---------------------------------------------------------------------------*/
-  
-%typemap(in, numinputs=0) ( const double** propertyvalue, int* numpoints)  
+
+%typemap(in, numinputs=0) ( const double** propertyvalue, int* numpoints)
 						  ( double* propptr,  int numpts)
 {
 	$1 = (double**)&propptr;
 	$2 = &numpts;
 }
 
-%typemap(argout) ( const double** propertyvalue, int* numpoints)	
+%typemap(argout) ( const double** propertyvalue, int* numpoints)
 {
 	PyObject*				radarray;									// Object to hold the numpy object copied form the radiance
 	double*					outptr;										// Pointer to the data int the numpy object
@@ -864,7 +864,7 @@ PyModule_AddObject(m, "functionfail", g_sasktranifError);
 			}
 		}
 	}
-	$result = SWIG_Python_AppendOutput($result,radarray);
+	$result = SWIG_AppendOutput($result,radarray);
 }
 
 
@@ -945,8 +945,8 @@ $2 = &nump;
         }
     }
 
-    $result = SWIG_Python_AppendOutput($result,out_real_array);
-    $result = SWIG_Python_AppendOutput($result,out_imag_array);
+    $result = SWIG_AppendOutput($result,out_real_array);
+    $result = SWIG_AppendOutput($result,out_imag_array);
 }
 
 
@@ -983,7 +983,7 @@ $2 = &nump;
         }
     }
 
-    $result = SWIG_Python_AppendOutput($result,out_array);
+    $result = SWIG_AppendOutput($result,out_array);
 }
 
 
