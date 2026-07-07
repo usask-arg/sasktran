@@ -20,7 +20,7 @@ def test_coulsen_tables():
 
     nd = od / (xs) / (100000 * 100)
 
-    clim = sk.ClimatologyUserDefined([0, 100000], {'air': [nd, nd]})
+    clim = sk.ClimatologyUserDefined([0, 100000], {'air': [nd[0], nd[0]]})
 
     atmo['air'] = sk.Species(rayleigh, clim)
     atmo.brdf = 0
