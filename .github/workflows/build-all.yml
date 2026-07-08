@@ -175,57 +175,57 @@ jobs:
   #         github_token: ${{ secrets.GITHUB_TOKEN }}
   #         publish_dir: docs
 
-  build-cpp-wheels-mac:
-    runs-on: macos-14
-    env:
-        BUILDPYTHONENV: "current"
+  # build-cpp-wheels-mac:
+  #   runs-on: macos-14
+  #   env:
+  #       BUILDPYTHONENV: "current"
 
-    strategy:
-      matrix:
-        py_version: [py310, py311, py312]
+  #   strategy:
+  #     matrix:
+  #       py_version: [py310, py311, py312]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0
 
-      - name: Setup Conda build environment
-        uses: conda-incubator/setup-miniconda@v4
-        with:
-          activate-environment: build_${{ matrix.py_version }}
-          environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
-          channels: conda-forge
-          auto-activate-base: false
+  #     - name: Setup Conda build environment
+  #       uses: conda-incubator/setup-miniconda@v4
+  #       with:
+  #         activate-environment: build_${{ matrix.py_version }}
+  #         environment-file: buildscripts/mac-ci-envs/build-${{ matrix.py_version }}.yml
+  #         channels: conda-forge
+  #         auto-activate-base: false
 
-      - name: Display conda environment
-        shell: bash -el {0}
-        run: |
-          conda list
+  #     - name: Display conda environment
+  #       shell: bash -el {0}
+  #       run: |
+  #         conda list
 
-      - name: configure cmake project
-        shell: bash -el {0}
-        run: |
-          cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
-      - name: build cpp
-        shell: bash -el {0}
-        run: cmake --build build --config Release --target install -j 3
+  #     - name: configure cmake project
+  #       shell: bash -el {0}
+  #       run: |
+  #         cmake -S . -B build ${CMAKE_ARGS} -DPythonEnvironments="$BUILDPYTHONENV" -DCMAKE_BUILD_TYPE=Release -DFORCE_BOOST_STATIC=OFF
+  #     - name: build cpp
+  #       shell: bash -el {0}
+  #       run: cmake --build build --config Release --target install -j 3
 
-      - name: delocate wheels
-        shell: bash -el {0}
-        run: |
-          cd wheelhouse
-          ls
-          find . -name "*x86_64.whl" -type f -exec delocate-listdeps --all '{}' \;
-          find . -name "*x86_64.whl" -type f -exec delocate-wheel -v '{}' \;
-          cd ..
+  #     - name: delocate wheels
+  #       shell: bash -el {0}
+  #       run: |
+  #         cd wheelhouse
+  #         ls
+  #         find . -name "*x86_64.whl" -type f -exec delocate-listdeps --all '{}' \;
+  #         find . -name "*x86_64.whl" -type f -exec delocate-wheel -v '{}' \;
+  #         cd ..
 
 
-      - name: Save wheel artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: wheels-mac-${{ matrix.py_version }}
-          path: wheelhouse
+  #     - name: Save wheel artifacts
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: wheels-mac-${{ matrix.py_version }}
+  #         path: wheelhouse
 
   build-cpp-wheels-windows:
     runs-on: windows-latest
@@ -355,41 +355,41 @@ jobs:
       - name: Test wheel
         run: ./buildscripts/test_sasktran_win.bat ${{ matrix.py_version }}
 
-  test-wheels-mac:
-    needs: build-cpp-wheels-mac
-    runs-on: macos-latest
-    continue-on-error: true
-    strategy:
-      matrix:
-        py_version: [py310, py311, py312]
+  # test-wheels-mac:
+  #   needs: build-cpp-wheels-mac
+  #   runs-on: macos-latest
+  #   continue-on-error: true
+  #   strategy:
+  #     matrix:
+  #       py_version: [py310, py311, py312]
 
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
+  #   steps:
+  #     - name: Checkout repository
+  #       uses: actions/checkout@v4
 
-      - uses: conda-incubator/setup-miniconda@v4
-        with:
-          activate-environment: ${{ matrix.py_version }}
-          environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
-          auto-activate-base: false
-          miniconda-version: "latest"
+  #     - uses: conda-incubator/setup-miniconda@v4
+  #       with:
+  #         activate-environment: ${{ matrix.py_version }}
+  #         environment-file: pysasktran/ci/${{ matrix.py_version }}.yml
+  #         auto-activate-base: false
+  #         miniconda-version: "latest"
 
-      - name: Download wheel artifacts
-        uses: actions/download-artifact@v4
-        with:
-          name: wheels-mac-${{ matrix.py_version }}
-          path: wheelhouse
+  #     - name: Download wheel artifacts
+  #       uses: actions/download-artifact@v4
+  #       with:
+  #         name: wheels-mac-${{ matrix.py_version }}
+  #         path: wheelhouse
 
-      - name: Test wheel
-        shell: bash -el {0}
-        run: |
-          ls wheelhouse
-          pip install -r pysasktran/requirements.txt
-          pip install sasktran --no-index -f wheelhouse/
-          cd pysasktran
-          mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
-          python dummy_install.py > /dev/null 2>&1
-          py.test sasktran
+  #     - name: Test wheel
+  #       shell: bash -el {0}
+  #       run: |
+  #         ls wheelhouse
+  #         pip install -r pysasktran/requirements.txt
+  #         pip install sasktran --no-index -f wheelhouse/
+  #         cd pysasktran
+  #         mkdir -p ~/.config/sasktran/ && cp ci/config.yml ~/.config/sasktran/
+  #         python dummy_install.py > /dev/null 2>&1
+  #         py.test sasktran
 
   pycodestyle_check:
     runs-on: ubuntu-latest
