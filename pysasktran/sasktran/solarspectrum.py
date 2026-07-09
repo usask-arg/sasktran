@@ -143,7 +143,8 @@ class SolarSpectrum(object):
     def _convolution_wavelengths(self, wavelengths, stdev):
 
         spacing = self.resolution(np.nanmean(wavelengths))
-
+        if isinstance(spacing, np.ndarray):
+            spacing = np.nanmean(spacing)
         wavels = np.arange(np.nanmin(wavelengths) - 5 * np.nanmax(stdev),
                            np.nanmax(wavelengths) + 5 * np.nanmax(stdev), spacing)
 

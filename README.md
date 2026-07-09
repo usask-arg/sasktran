@@ -62,3 +62,13 @@ cmake --build build --config Release --target install
 ```
 
 Which will build the `c++` code and create a Python wheel for the current Python interpreter on the path.
+
+## Release Notes
+**July 9, 2026: version 1.8.9**
+
+Updated the build from ``manylinux2014`` to ``manylinux2_28``. This version should be well supported on python 3.10 up to python 3.13 or python 3.14. The Mac-os wheels are not produced in this release, simply because (i) we don't have an immediate need, (ii) the old build in the workflow generates a few errors, and (iii) I don't have a good working knowledge of the Mac-os system.
+
+One of the driving forces for the update was that the old version was crashing hard within calculations made by the Altius project. This crash could not be repeated when we built a debug version of Sasktran;  the problem never occurred. Nor did it occur in the Release build. We suspect the crash may have been related to a mixing of numpy 1.xx in the Altius code with the numpy 2.x interfaces used by Sasktran (but that is speculation).
+
+### Bug fixes:
+There were a few locations, eg ``test_polarization.py``, and a call to ``np.arange`` in ``solarspectrum.py`` that were using ``float`` to convert a 1 element array into a floating point scalar. This seems to have worked within numpy 1.x but throws an exception when using numpy 2.x. The behaviour has been fixed to use ``np.float`` or explicitly index the first element.

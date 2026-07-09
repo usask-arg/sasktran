@@ -12,7 +12,7 @@ Key		2013-11-19*/
  *	to set the key to the relevant state parameters. This set of numbers is
  *	then used to generate the key to cache the the convolved spectrum.
  *
- *	NOte that wavelength is 
+ *	NOte that wavelength is
  *
 
  **/
@@ -41,7 +41,7 @@ class skOpticalProperty_AdditionalStateInfoKey
  *	via a unique index. This was first develeoped for convolution algorithms which
  *	need to cache a set of convolved cross-sections for different atmospheric conditions.
  *
- *	Many of the skOpticalProperty cross-sections are only dependent upon 
+ *	Many of the skOpticalProperty cross-sections are only dependent upon
  *	temperature (or pressure and temperature) so it relatively easy to assign a unique index
  *	with each atmospheric state using justthe temperature.
  **/
@@ -104,12 +104,12 @@ class skOpticalProperty_AdditionalStateInfo_PressTemperatureDependent: public sk
 class skWavelengthToPSF_Table
 {
 	public:
-		virtual			   ~skWavelengthToPSF_Table		(){}	
+		virtual			   ~skWavelengthToPSF_Table		(){}
 
 		/*-----------------------------------------------------------------------------
 		 *					GetInstrumentPSF_FWHM		2013-6-24*/
 		/** Returns the Full Width Half Max of the point spread function at wavelength "nm"
-		 *	used to measure the associated cross-section data. This value is accounted for 
+		 *	used to measure the associated cross-section data. This value is accounted for
 		 *	when convolving the lab-measured cross-section data so we have consistency.
 		 **/
 		/*---------------------------------------------------------------------------*/
@@ -171,12 +171,12 @@ class skWavelengthToPSF_TableConstantWavenumber : public skWavelengthToPSF_Table
 		void				SetInstrumentPSF_FWHMWavenumber		( double deltak)    { m_deltak = deltak;}
 		void				SetInstrumentPointSpacingWavenumber	( double spacingcm1){ m_pointspacingcm1 = spacingcm1;}
 
-		virtual double		GetInstrumentPSF_FWHM				( double nm  ) const; 
+		virtual double		GetInstrumentPSF_FWHM				( double nm  ) const;
 		virtual double		GetInstrumentPointSpacing			( double nm  ) const;
 };
 /*-----------------------------------------------------------------------------
  *					class skWavelengthToPSF_Table		2012-7-24*/
-/** \internal 
+/** \internal
  *	Pure virtual class used to return the point spread function of an instrument
  *	used to measure the tables. This is used in class skOpticalProperties_UserDefinedAbsorption
  *	to tell the user the PSF of the instrument used to measure the tables.
@@ -430,7 +430,7 @@ class skOpticalProperties_TabulatedExtinction_HeightWavelength: public skOptical
  */
 /*-------------------------------------------------------------------------*/
 class skOpticalProperties_O3_GomeBurrows: public skOpticalProperties_UserDefinedAbsorption,
-	                                      public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections 
+	                                      public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections
 										  public skOpticalProperty_AdditionalStateInfo_TemperatureDependent	// Describes what state parameters affetct the cross-section
 
 {
@@ -487,7 +487,7 @@ class skOpticalProperties_O3_GomeBurrows: public skOpticalProperties_UserDefined
 /* ------------------------------------------------------------------------- */
 
 class skOpticalProperties_O3_SciaBogumilV3: public skOpticalProperties_UserDefinedAbsorption,
-	                                        public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections 
+	                                        public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections
 											public skOpticalProperty_AdditionalStateInfo_TemperatureDependent	// Describes what state parameters affetct the cross-section
 
 
@@ -513,7 +513,7 @@ class skOpticalProperties_O3_SciaBogumilV3: public skOpticalProperties_UserDefin
 /*---------------------------------------------------------------------------*/
 
 class skOpticalProperties_O3_SciaBogumilV4: public skOpticalProperties_UserDefinedAbsorption,
-	                                        public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections 
+	                                        public skWavelengthToPSF_TableArray,								// Describes the instrument used to measure these cross-sections
 											public skOpticalProperty_AdditionalStateInfo_TemperatureDependent	// Describes what state parameters affetct the cross-section
 
 {
@@ -540,13 +540,13 @@ class skOpticalProperties_O3_SciaBogumilV4: public skOpticalProperties_UserDefin
  *	The table covers the wavelength range 245.0180 .. 342.7800 nm in 1956 samples,  approx 0.05 nm per step.
  *
  *	\par Temperature Range
- *	The Bass-Paur data set uses a quadratic temperature function 
+ *	The Bass-Paur data set uses a quadratic temperature function
  *	where the quadratic coeffs are given for each wavelength.
  *	The valid temperature range is 203 K to 298 K. The code truncates temperature dependence
  *	curves to these limits.
  *
  *	\par Spectral Resolution
- *	The spectral resolution is better than 0.025 nm. 
+ *	The spectral resolution is better than 0.025 nm.
  *
  *	\par Data Source
  *	These data are an exact replication of the data in file bp.par on the IGACO site, http://igaco-o3.fmi.fi/ACSO/files/cross_sections
@@ -555,10 +555,10 @@ class skOpticalProperties_O3_SciaBogumilV4: public skOpticalProperties_UserDefin
  *
  *	\par References
  *  -#	Bass, A. M. and Paur, R. J., The ultraviolet cross-sections of ozone, I. Measurements
- *		Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel, Dordrecht, pp. 606–610, 1984
+ *		Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel, Dordrecht, pp. 606-610, 1984
  *  -#	Bass, A. M. and Paur, R. J., The ultraviolet cross-sections of ozone, Ii. Results and
  *		temperature dependence. Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel,
- *		Dordrecht, pp. 611–616, 1984
+ *		Dordrecht, pp. 611-616, 1984
  *
  */
 /*-------------------------------------------------------------------------*/
@@ -623,7 +623,7 @@ class skOpticalProperties_O3_BassPaurQuadratic: public skOpticalProperties,
  *	The Bass Paur tables provide measurements at 6 temperatures: 203 K, 223 K, 246 K, 273 K, 276 K and 280 K.
  *
  *	\par Spectral Resolution
- *	The spectral resolution is better than 0.025 nm. 
+ *	The spectral resolution is better than 0.025 nm.
  *
  *	\par Data Source
  *	These data are an exact replication of the data files bp_203clc.dat, bp_223clc.dat, bp_246clc.dat,
@@ -633,10 +633,10 @@ class skOpticalProperties_O3_BassPaurQuadratic: public skOpticalProperties,
  *
  *	\par References
  *  -#	Bass, A. M. and Paur, R. J., The ultraviolet cross-sections of ozone, I. Measurements
- *		Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel, Dordrecht, pp. 606–610, 1984
+ *		Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel, Dordrecht, pp. 606-610, 1984
  *  -#	Bass, A. M. and Paur, R. J., The ultraviolet cross-sections of ozone, Ii. Results and
  *		temperature dependence. Proc. Quadrennial Ozone Symp. Halkidiki, Greece, Reidel,
- *		Dordrecht, pp. 611–616, 1984
+ *		Dordrecht, pp. 611-616, 1984
  */
 /*---------------------------------------------------------------------------*/
 
@@ -674,7 +674,7 @@ class skOpticalProperties_O3_BassPaur: public skOpticalProperties_UserDefinedAbs
  *		-# 243 K
  *		-# 273 K
  *		-# 295 K
- *	
+ *
  *	\par Wavelength Range
  *	The wavelength range of each temperature table is slightly different and is given below. Note that most of
  *	the temperature variation occurs in the huggins band between 315 and 360 nm
@@ -743,20 +743,20 @@ class skOpticalProperties_O3_DaumontBrionMalicet : public skOpticalProperties_Us
  *		-# 293 K
  *
  *	\par References
- *		-# S. Voigt, J. Orphal, K. Bogumil, J.P. Burrows, The temperature dependence (203–293 K)
- *			of the absorption cross sections of O3 in the 230–850 nm region measured by
+ *		-# S. Voigt, J. Orphal, K. Bogumil, J.P. Burrows, The temperature dependence (203-293 K)
+ *			of the absorption cross sections of O3 in the 230-850 nm region measured by
  *			Fourier-transform spectroscopy. Journal of Photochemistry and Photobiology A: Chemistry Vol. 143, 2001.
  *		-# J. Orphal et al. A critical review of the absorption cross-sections of O3 and NO2 in the 240-790 nm region
  *			ESA Technical Note MO-TN-ESA-GO-0302, 2002.
 *
  *	\par Abstract of Paper 1.
- *	Absolute absorption cross sections of O3 were measured in the 230–850 nm (11765–43478 cm?1) region
- *	at five different temperatures (203–293 K) using a Fourier-transform spectrometer, at a spectral
+ *	Absolute absorption cross sections of O3 were measured in the 230-850 nm (11765-43478 cm?1) region
+ *	at five different temperatures (203-293 K) using a Fourier-transform spectrometer, at a spectral
  *	resolution of 5.0 cm?1 (corresponding to about 0.027 nm at 230 nm and to about 0.36 nm at 850 nm).
- *	The spectral accuracy of the data is better than 0.1 cm?1 — about 0.5 pm at 230 nm and about 7.2 pm
- *	at 850 nm — validated by recording of I2 absorption spectra in the visible using the
+ *	The spectral accuracy of the data is better than 0.1 cm?1  about 0.5 pm at 230 nm and about 7.2 pm
+ *	at 850 nm  validated by recording of I2 absorption spectra in the visible using the
  *	same experimental set-up. O3 absorption spectra at different concentrations were recorded at five
- *	different sample temperatures in the range 203–293 K, and at each temperature at two total
+ *	different sample temperatures in the range 203-293 K, and at each temperature at two total
  *	pressures (100 and 1000 mbar) using O2/N2 mixtures as buffer gas. Within the limits of
  *	experimental uncertainties, no influence of total pressure on the O3 spectrum was observed in
  *	the entire spectral region, as expected from the short lifetimes of the upper electronic states of
@@ -836,7 +836,7 @@ class skWavelengthToPSF_SerdyuchenkoV1 : public skWavelengthToPSF_Table
 		skWavelengthToPSF_TableConstantWavenumber					m_psfwavenum;
 
 	public:
-							skWavelengthToPSF_SerdyuchenkoV1		();	
+							skWavelengthToPSF_SerdyuchenkoV1		();
 		virtual			   ~skWavelengthToPSF_SerdyuchenkoV1		(){}
 		bool				DeepCopy								( const skWavelengthToPSF_SerdyuchenkoV1& other )	{ return m_psfwavenum.DeepCopy( other.m_psfwavenum);}
 		virtual double		GetInstrumentPSF_FWHM					( double nm ) const;
@@ -869,12 +869,12 @@ class skWavelengthToPSF_SerdyuchenkoV1 : public skWavelengthToPSF_Table
  *		   in Spectroscopy Europe, http://www.spectroscopyeurope.com/articles/55-articles/3082-new-broadband-high-resolution-ozone-absorption-cross-sections
  *		-# Peer reviewed paper submitted in summer 2012.
 
- *	\par Abstract 
+ *	\par Abstract
  *	In this article, we report on the research to improve our knowledge of the ozone absorption cross-sections.
  *	This is required for active and passive remote sensing applications yielding the total column and profiles of ozone.
  *	New laboratory measurements provide data for a wide spectral range in the ultraviolet (UV), visible (vis) and
  *	near infrared (NIR) regions at a spectral resolution of 0.02 nm. An absolute accuracy of about 3% or better
- *	and wavelength accuracy better than 0.005 nm throughout the spectral range have been achieved at 11 
+ *	and wavelength accuracy better than 0.005 nm throughout the spectral range have been achieved at 11
  *	temperatures from 195 K to 293 K.
  *
  *	Comparison of the available ozone cross-sections with our new dataset shows good agreement within the
@@ -898,7 +898,7 @@ class skWavelengthToPSF_SerdyuchenkoV1 : public skWavelengthToPSF_Table
  *	to review and recommend ozone cross-sections for all the commonly used (both ground-based and satellite)
  *	atmospheric ozone monitoring instruments.]
  *
- *	Among high-resolution datasets, the most important are the so-called data of Bass–Paur5,6 and data
+ *	Among high-resolution datasets, the most important are the so-called data of Bass-Paur5,6 and data
  *	of Malicet, Daumont, Brion et al.7 (and references cited therein). Regardless of the high quality of these data,
  *	they have serious limitations, leaving room for improvement. Both datasets are based on experimental data acquired
  *	at only five temperatures, compelling researchers to use interpolation for other temperatures. In addition, these
@@ -912,13 +912,13 @@ class skWavelengthToPSF_SerdyuchenkoV1 : public skWavelengthToPSF_Table
  *	datasets to the maximum possible extent. The data were obtained for 11 temperatures down to 195 K. For convenient
  *	use in various current and future projects, the new dataset uniquely combines a broad spectral coverage from 220 nm
  *	to 1000 nm with spectral resolution as high as 0.02 nm. This dataset enables accurate convolution with the slit
- *	functions of all currently relevant ground-based and satellite-based remote sensing ­instruments.
+ *	functions of all currently relevant ground-based and satellite-based remote sensing instruments.
  *
  *	\par Header details from distributed Data Files
- *	
+ *
  *		- Source: IUP, MolSpec Lab, Serdyuchenko A., Gorshelev V, Weber M.
- *		- Spectrometer:   Echelle Spectrometer ESA 4000 and Bruker HR 120 FTS 
- *		- Double jacket quartz cell, thermo-insulated, pre-cooler, cryogenic cooling 
+ *		- Spectrometer:   Echelle Spectrometer ESA 4000 and Bruker HR 120 FTS
+ *		- Double jacket quartz cell, thermo-insulated, pre-cooler, cryogenic cooling
  *
  *		- Spectral Resolution(HWHM):
  *			- 0.01 nm below 290 nm},
@@ -934,10 +934,10 @@ class skWavelengthToPSF_SerdyuchenkoV1 : public skWavelengthToPSF_Table
  *			- absorption length: < 0.1%
  *			.
  *		- Total relative systematic uncertainty <3%
- * 
+ *
  *		- Concatenated spectra parameters:
  *			- Spectral regions: Lightsource stability  Optical density limits:
- *			- 213-290 nm	    0.5%                   0.5-2	
+ *			- 213-290 nm	    0.5%                   0.5-2
  *			- 290-310 nm 	    2%                     0.1-2
  *			- 310-340 nm	    1%                     0.1-2
  *			- 340-450 nm	    1%                     0.05-1
@@ -967,8 +967,8 @@ class skOpticalProperties_O3_SerdyuchenkoV1 : public skOpticalProperties_UserDef
  *	This table is based upon the cross-sections of Bogumil Orphal and Burrows.
  *	This may change in the furture if it is decided that betetr O3 cross-sections exist.
  *
- *	Note that this class sets the QuietWavelength Truncation flag, 
- *	m_quietwavelengthtruncation in the base class skOpticalProperties_UserDefinedAbsorption, 
+ *	Note that this class sets the QuietWavelength Truncation flag,
+ *	m_quietwavelengthtruncation in the base class skOpticalProperties_UserDefinedAbsorption,
  *	so it will return a zero cross-section without any error for all wavelengths outside its
  *	tabular range.
  */
@@ -1028,9 +1028,9 @@ class skOpticalProperties_O3_OSIRISRes: public skOpticalProperties_UserDefinedAb
 /*-------------------------------------------------------------------------*/
 
 class skOpticalProperties_NO2_Burrows98: public skOpticalProperties_UserDefinedAbsorption,
-	                                     public skWavelengthToPSF_TableArray,									// Describes the instrument used to measure these cross-sections 
+	                                     public skWavelengthToPSF_TableArray,									// Describes the instrument used to measure these cross-sections
 										 public skOpticalProperty_AdditionalStateInfo_TemperatureDependent		// Describes what state parameters affetct the cross-section
-	                                   
+
 {
 	private:
 												skOpticalProperties_NO2_Burrows98	( const skOpticalProperties_NO2_Burrows98& other );	// dont allow copy constructor
@@ -1060,5 +1060,3 @@ class skOpticalProperties_NO2_OSIRISRes: public skOpticalProperties_UserDefinedA
 												skOpticalProperties_NO2_OSIRISRes();
 		virtual								   ~skOpticalProperties_NO2_OSIRISRes() override {}
 };
-
-

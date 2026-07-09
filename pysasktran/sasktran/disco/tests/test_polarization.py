@@ -16,10 +16,12 @@ def test_coulsen_tables():
     od = 0.5
     w = 350
 
-    xs = float(rayleigh.calculate_cross_sections(sk.MSIS90(), 0, 0, 10000, 54372, [w]).total)
+    xs = np.float64(rayleigh.calculate_cross_sections(sk.MSIS90(), 0, 0, 10000, 54372, [w]).total)
 
     nd = od / (xs) / (100000 * 100)
 
+    if isinstance(nd, np.ndarray):
+        nd = nd[0]
     clim = sk.ClimatologyUserDefined([0, 100000], {'air': [nd, nd]})
 
     atmo['air'] = sk.Species(rayleigh, clim)

@@ -41,3 +41,5 @@ out/
 build2/
 make_vs_sln.bat
 *_version.py*
+local
+build_ninja

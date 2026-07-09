@@ -24,9 +24,8 @@ requirements:
   host:
     - python {{ python }}
     - boost
-    - numpy # [py!=311]
-    - numpy 1.23 # [py==311]
-    - libnetcdf
+    - numpy
+    - libnetcdf >=1.6
     - hdf5
     - yaml-cpp
     - catch2
@@ -35,7 +34,7 @@ requirements:
     - zlib
   run:
     - {{ pin_compatible("numpy") }}
-    - libnetcdf
+    - libnetcdf >=1.6
     - hdf5
     - yaml-cpp
     - libopenblas

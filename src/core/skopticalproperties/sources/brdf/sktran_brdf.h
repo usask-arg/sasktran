@@ -6,14 +6,14 @@
  *					class skBRDF		 2016- 12- 9*/
 /** Implements the Bidirectional Reflectance Distribution function interface
  *	for the Sasktran model.
- *  
+ *
  *	There are some different conventions/assumptions made regarding BRDFs
  *	across the literature - I will list all of the options that I know about
  *	and state which ones are used in Sasktran.
  *
  *	Relative azimuth angle convention:
  *		A relative azimuth angle (raa)(phi) of 0 can be defined as forward or
- *		backward scattering - Sasktran defines it as the former. When 
+ *		backward scattering - Sasktran defines it as the former. When
  *		a model defines the raa as the latter, phi must be replaced with
 *       pi - phi (equivalently cos(phi) must be replaced with -cos(phi))
  *		to match conventions.
@@ -35,7 +35,7 @@
  *		 - radiance factor: RADF = pi I / J
  *			 - (reflectance of a surface) / (reflectance of a perfectly
  *			   diffuse surface under normal incidence)
- *			    
+ *
  *		By these definitions, Sasktran uses BRDFs but most of the literature
  *		on remote sensing BRDFs uses REFFs, so their formulas must be scaled
  *		down by pi to match Sasktran's convention.
@@ -52,7 +52,7 @@ class skBRDF : public nxUnknown
 
 		/*-----------------------------------------------------------------------------
 		 *					BRDF										2016- 12- 9*/
-		/** Fetch the scalar BRDF for the given wavelength at the given location for 
+		/** Fetch the scalar BRDF for the given wavelength at the given location for
 		 *	the given ray geometry:
 		 *
 		 *	\param wavelennm
@@ -65,22 +65,22 @@ class skBRDF : public nxUnknown
 		 *	assumed that this is the ground surface at the given latitude, longitude
 		 *	and time, i.e. ignore the height field. Many BRDF implementations may choose
 		 *	to ignore this parameter if they implement a location/time independent BRDF's
-		 *	
+		 *
 		 *	\param MU_in
 		 *	Cosine of the zenith angle of the incoming ray. Note that this is the
-		 *	cosine of the angle between the local up direction and the incoming ray 
+		 *	cosine of the angle between the local up direction and the incoming ray
 		 *	vector in the direction AWAY from the surface.
-		 *	
+		 *
 		 *	\param MU_in
 		 *	Cosine of the zenith angle of the out-going ray. Note that this is the
-		 *	cosine of the angle between the local up direction and the out-going ray 
+		 *	cosine of the angle between the local up direction and the out-going ray
 		 *	vector in the direction AWAY from the surface.
 		 *
 		 *	\param COSDPHI
 		 *	Cosine of the azimuth angle between the incoming and outgoing ray. We use
 		 *	the cosine as we need a value between 0 and \f$\pi\f$ and the cosine does this
-		 *	while avoiding the need to specify degrees or radians. Note that the azimuth 
-		 *	should be measured betwee the incoming ray vector TOWARD the surface and the 
+		 *	while avoiding the need to specify degrees or radians. Note that the azimuth
+		 *	should be measured betwee the incoming ray vector TOWARD the surface and the
 		 *	outgoing ray vector AWAY from the surface.
 		 *
 		 *	\param brdf
@@ -132,7 +132,7 @@ class SKTRAN_BRDF_Lambertian : public skBRDF
 /** **/
 /*---------------------------------------------------------------------------*/
 
-class SKTRAN_BRDF_Roujean_entry 
+class SKTRAN_BRDF_Roujean_entry
 {
 	public:
 		double	k0;
@@ -150,10 +150,10 @@ class SKTRAN_BRDF_Roujean_entry
 /** Implements the BRDF function described by Roujean et al. The model is
  *	designed to model vegetation surfaces. It contains three adjustable
  *	parameters and the model considers the surface reflectance to consist
- *	of two main processes  (i) a diffuse reflection component and (ii) a 
+ *	of two main processes  (i) a diffuse reflection component and (ii) a
  *	volume  scattering by a collection of dispersed facets.
- *	
- *  Equation 10 is implemented with values of k0, k1, and k2 from Table 1, 
+ *
+ *  Equation 10 is implemented with values of k0, k1, and k2 from Table 1,
  *  but with the following changes:
  *	 - cos(phi) is replaced with -cos(phi)
  *	 - the reflectance is divided by pi
@@ -162,7 +162,7 @@ class SKTRAN_BRDF_Roujean_entry
  *	Reference:
  *	Roujean, J.-L., M. Leroy, and P.-Y. Deschamps (1992), A bidirectional
  *	reflectance model of the Earth's surface for the correction of remote
- *	sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.
+ *	sensing data, J. Geophys. Res., 97(D18), 20455-20468, doi:10.1029/92JD01411.
  **/
 /*---------------------------------------------------------------------------*/
 
@@ -195,13 +195,13 @@ class SKTRAN_BRDF_Roujean : public skBRDF
  *	authors suggest deriving the free parameters from fitting data at several wavelengths.
  *	This implementation provides default values for the two parameters based upon snow measured
  *	Greenland in May 2006.
- *	
+ *
  *	Equation 1 is implemented with the following changes:
  *	 - the reflectance is divided by pi
- *	
+ *
  *	References:
  *	A. A. Kokhanovsky and F. M. Breon, "Validation of an Analytical Snow BRDF Model
- *	Using PARASOL Multi-Angular and Multispectral Observations," 
+ *	Using PARASOL Multi-Angular and Multispectral Observations,"
  *	IEEE Geoscience and Remote Sensing Letters, vol. 9, no. 5, pp. 928-932, Sept. 2012.
  *  doi: 10.1109/LGRS.2012.2185775
  *  URL: http://ieeexplore.ieee.org/stamp/stamp.jsp?tp=&arnumber=6166850&isnumber=6205680
@@ -238,9 +238,9 @@ class SKTRAN_BRDF_Snow_Kokhanovsky2012 : public skBRDF
 *	SKTRAN_BRDF_Roujean.
 *
 *	This is one of eight BRDF kernels listed by Spurr in
-*   his 2002 paper. There is a discrepancy between Spurr Equation A.1 and 
+*   his 2002 paper. There is a discrepancy between Spurr Equation A.1 and
 *	Roujean Equation 2: the first term in Spurr A.1 should be divided by 2pi.
-*	
+*
 *	Equation 2 from Roujean was implemented with the following changes:
 *	 - cos(phi) is replaced with -cos(phi)
 *	 - the reflectance is divided by pi
@@ -254,7 +254,7 @@ class SKTRAN_BRDF_Snow_Kokhanovsky2012 : public skBRDF
 *
 *	Roujean, J.-L., M. Leroy, and P.-Y. Deschamps (1992), A bidirectional
 *	reflectance model of the Earth's surface for the correction of remote
-*	sensing data, J. Geophys. Res., 97(D18), 20455–20468, doi:10.1029/92JD01411.
+*	sensing data, J. Geophys. Res., 97(D18), 20455-20468, doi:10.1029/92JD01411.
 **/
 /*---------------------------------------------------------------------------*/
 class SKTRAN_BRDF_Roujean_Kernel : public skBRDF
@@ -273,9 +273,9 @@ public:
 *					SKTRAN_BRDF_Li_Kernel		 2017-03-06                          */
 /** The Li-sparse and Li-Dense kernels were published by Wanner and Strahler in 1995.
 *	They are BRDF kernels that model the reflectance of forest canopies. Both
-*	kernels share two non-linear parameters: the crown shape ratio b/r and 
-*	the relative height ratio h/b (trees are modelled as oblate spheroids of 
-*	height b and width r with their centres at height h off the ground). 
+*	kernels share two non-linear parameters: the crown shape ratio b/r and
+*	the relative height ratio h/b (trees are modelled as oblate spheroids of
+*	height b and width r with their centres at height h off the ground).
 *
 *	There is a discrepancy between Spurr's Equation A.2/A.3 and Wanner Equation
 *	35/50: the final term in d(x) in Spurr A.2/A.3 should be added, not
@@ -288,21 +288,21 @@ public:
 *
 *	These are two of eight BRDF kernels listed by Spurr in
 *   his 2002 paper.
-*	
-*	Equation 32 (sparse) and 47 (dense) from Wanner and Equation 39 from 
+*
+*	Equation 32 (sparse) and 47 (dense) from Wanner and Equation 39 from
 *	Strahler (sparse reciprocal) are implemented with the following changes:
 *	 - cos(phi) is replaced with -cos(phi)
 *	 - the reflectance is divided by pi
 *
 *	References:
-*	W. Wanner and A. H. Strahler, "On the derivation of kernels for kernel-driven 
-*	modles of bidirectional reflectance," Journal of Geophysical Research, vol. 
+*	W. Wanner and A. H. Strahler, "On the derivation of kernels for kernel-driven
+*	modles of bidirectional reflectance," Journal of Geophysical Research, vol.
 *	100, no. d10, pp. 21077-21089, Oct. 20, 1995.
 *	doi: 10.1029/95JD02371
 *	URL: http://onlinelibrary.wiley.com/doi/10.1029/95JD02371/abstract
 *
 *	Robert J. D. Spurr, "A new approach to the retrieval of surface properties
-*	from earthshine measurements," Journal of Quantitative Spectroscopy 
+*	from earthshine measurements," Journal of Quantitative Spectroscopy
 *	& Radiative Transfer, vol. 83, pp. 15-46, Oct. 9, 2002.
 *	doi:10.1016/S0022-4073(02)00283-2
 *	url: http://www.sciencedirect.com/science/article/pii/S0022407302002832
@@ -366,14 +366,14 @@ class SKTRAN_BRDF_LiDense_Kernel : public SKTRAN_BRDF_Li_Kernel
 
 /*-----------------------------------------------------------------------------
 *					SKTRAN_BRDF_Ross_Kernel		                           */
-/** 
+/**
 *	The Ross-thick and Ross-thin kernels are volume-scattering kernels that
 *	model the reflection of surface facets (leaves). It is purely geometric
 *	and depends on no additional parameters.
 *
 *	These are two of eight BRDF kernels listed by Spurr in
 *   his 2002 paper.
-*	
+*
 *	Equation 7 (thick) and 13 (thin) from Wanner are implemented with the
 *	following changes:
 *	 - cos(phi) is replaced with -cos(phi)
@@ -409,7 +409,7 @@ class SKTRAN_BRDF_Ross_Kernel : public skBRDF
 /*---------------------------------------------------------------------------*/
 class SKTRAN_BRDF_RossThin_Kernel : public SKTRAN_BRDF_Ross_Kernel
 {
-	public: 
+	public:
 		virtual bool BRDF(double wavelennm, const GEODETIC_INSTANT& pt, double MU_in, double MU_out, double COSDPHI, double* brdf) const override;
 };
 
@@ -440,7 +440,7 @@ public:
 *	 - the reflectance is divided by pi
 *
 *	References:
-*	Hapke B. Theory of reflectance and emittance spectroscopy. Cambridge: 
+*	Hapke B. Theory of reflectance and emittance spectroscopy. Cambridge:
 *	Cambridge University Press, 1993.
 *
 *	Robert J. D. Spurr, "A new approach to the retrieval of surface properties
@@ -481,15 +481,15 @@ public:
 *	parameters: wind speed and the index of refraction of water.
 *
 *	This is one of eight BRDF kernels listed by Spurr in
-*   his 2002 paper. 
-*	
+*   his 2002 paper.
+*
 *	Equation A.18 from Spurr is implemented with the following changes:
 *	 - cos(phi) is replaced with -cos(phi)
 *	 - the reflectance is divided by pi
 *
 *	References:
-*	Cox C, Munk W. The measurement of the roughness of the sea surface 
-*	from photographs of the Sun glitter. J Opt Soc Ann 1954; 44:838–50.
+*	Cox C, Munk W. The measurement of the roughness of the sea surface
+*	from photographs of the Sun glitter. J Opt Soc Ann 1954; 44:838-50.
 *
 *	Robert J. D. Spurr, "A new approach to the retrieval of surface properties
 *	from earthshine measurements," Journal of Quantitative Spectroscopy
@@ -521,19 +521,19 @@ public:
 *
 *	This is a semiempirical model with 3 parameters, designed
 *	to model the reflectance of arbitrary natural surfaces in the visible
-*	and near-infrared bands.	
+*	and near-infrared bands.
 *
 *	This is one of eight BRDF kernels listed by Spurr in
-*   his 2002 paper. 
-*	
+*   his 2002 paper.
+*
 *	Equation 2 from Rahman is implemented with the following changes:
 *	 - cos(phi) is replaced with -cos(phi)
 *	 - the reflectance is divided by pi
 *
 *	References:
-*	Rahman H, Pinty B, Verstraete M. Coupled surface atmosphere reflectance 
+*	Rahman H, Pinty B, Verstraete M. Coupled surface atmosphere reflectance
 *	(CSAR) model: 2. Semi-empirical surface model usable with NOAA AVHRR
-*	data. J Geophys Res 1993; 98:20,791–801.
+*	data. J Geophys Res 1993; 98:20,791-801.
 *
 *	Robert J. D. Spurr, "A new approach to the retrieval of surface properties
 *	from earthshine measurements," Journal of Quantitative Spectroscopy
@@ -606,7 +606,7 @@ public:
 *	consists of a linear combination of an isotropic (lambertian) term, a
 *	volume scattering term (Ross-thick), and a geometric scattering term
 *	(Li-Sparse-Reciprocal).
-*	
+*
 *	References:
 *	Robert J. D. Spurr, "A new approach to the retrieval of surface properties
 *	from earthshine measurements," Journal of Quantitative Spectroscopy

@@ -23,10 +23,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Conda build environment 
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: conda_build
           environment-file: buildscripts/conda-build-env.yml
@@ -39,11 +39,11 @@ jobs:
           conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe --output-folder pkgs/
 
       - name: Save conda package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: conda-${{ matrix.os}}-x86-${{ matrix.py_version }}
           path: pkgs
-  
+
   build-conda-cross-mac-arm:
     runs-on: macos-11
 
@@ -54,10 +54,10 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
-      - name: Setup Conda build environment 
-        uses: conda-incubator/setup-miniconda@v2
+      - name: Setup Conda build environment
+        uses: conda-incubator/setup-miniconda@v4
         with:
           activate-environment: conda_build
           environment-file: buildscripts/conda-build-env.yml
@@ -70,7 +70,7 @@ jobs:
           conda-build --python ${{ matrix.py_version }} -c conda-forge conda-recipe -m conda-recipe/osx_arm64_.yaml --output-folder pkgs/ --no-test
 
       - name: Save conda package
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: conda-macos-11-arm-${{ matrix.py_version }}
           path: pkgs
