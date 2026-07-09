@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Quickstart Guide &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <title>Quickstart Guide &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/documentation_options.js?v=32f5de64"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,9 +36,6 @@
             
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -112,7 +107,7 @@ a look vector, and a timestamp for the measurements.  <code class="docutils lite
 <p>The raw input to <code class="docutils literal notranslate"><span class="pre">sasktran</span></code> for each measurement is the observer location, a unit look vector, and a timestamp
 represented with a Modified Julian Date.  If you already have these things, excellent, we can directly create a
 <a class="reference internal" href="geometry.html#sasktran.Geometry" title="sasktran.Geometry"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Geometry</span></code></a> object,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">geometry</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geometry</span><span class="p">()</span>
 
@@ -127,7 +122,7 @@ represented with a Modified Julian Date.  If you already have these things, exce
 </pre></div>
 </div>
 <p>If you want to define the geometry based on solar angles, there are several convenience methods that can help:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sasktran.geometry</span> <span class="kn">import</span> <span class="n">VerticalImage</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">VerticalImage</span>
 
 <span class="n">geometry</span> <span class="o">=</span> <span class="n">VerticalImage</span><span class="p">()</span>
 <span class="n">geometry</span><span class="o">.</span><span class="n">from_sza_saa</span><span class="p">(</span><span class="n">sza</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">saa</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">lat</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">lon</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">tanalts_km</span><span class="o">=</span><span class="p">[</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">30</span><span class="p">,</span> <span class="mi">40</span><span class="p">],</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">54372</span><span class="p">,</span> <span class="n">locallook</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span>
@@ -135,7 +130,7 @@ represented with a Modified Julian Date.  If you already have these things, exce
 </pre></div>
 </div>
 <p>Nadir viewing geometries can also be configured in a similar way:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">sasktran.geometry</span> <span class="kn">import</span> <span class="n">NadirGeometry</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">NadirGeometry</span>
 
 <span class="n">geometry</span> <span class="o">=</span> <span class="n">NadirGeometry</span><span class="p">()</span>
 <span class="n">geometry</span><span class="o">.</span><span class="n">from_zeniths_and_azimuths</span><span class="p">(</span><span class="n">solar_zenith</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">solar_azimuth</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">observer_mjds</span><span class="o">=</span><span class="p">[</span><span class="mi">54372</span><span class="p">],</span> <span class="n">observer_zeniths</span><span class="o">=</span><span class="p">[</span><span class="mi">90</span><span class="p">],</span> <span class="n">observer_azimuths</span><span class="o">=</span><span class="p">[</span><span class="mi">60</span><span class="p">])</span>
@@ -153,7 +148,7 @@ helps here.  All climatologies are specified with respect to particle number den
 <p>The <a class="reference internal" href="atmosphere.html#sasktran.Atmosphere" title="sasktran.Atmosphere"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Atmosphere</span></code></a> combines these things together for multiple species to make up the full atmospheric
 state.  Many precomputed climatologies and optical properties are avaialable, or you can define your own.  But for now
 let’s create an atmosphere consisting of Rayleigh scattering and ozone absorption with precomputed climatologies:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
 
@@ -167,8 +162,8 @@ let’s create an atmosphere consisting of Rayleigh scattering and ozone absorpt
 <p>The final step is creating the <a class="reference internal" href="engine.html#sasktran.Engine" title="sasktran.Engine"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.Engine</span></code></a> object which actually performs the radiative transfer
 calculation.  <cite>sasktran</cite> contains multiple radiative transfer models, but for most standard applications it is
 recommended to use the <code class="docutils literal notranslate"><span class="pre">hr</span></code> engine which is suitable for all viewing geometries in the UV-VIS-NIR spectral regime:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
-<span class="kn">from</span> <span class="nn">sasktran.geometry</span> <span class="kn">import</span> <span class="n">VerticalImage</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sasktran.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">VerticalImage</span>
 
 <span class="c1"># First recreate our geometry and atmosphere classes</span>
 <span class="n">geometry</span> <span class="o">=</span> <span class="n">VerticalImage</span><span class="p">()</span>

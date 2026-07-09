@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>HITRAN Optical Properties &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+  <title>HITRAN Optical Properties &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../_static/documentation_options.js?v=32f5de64"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -38,9 +36,6 @@
             
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -109,7 +104,7 @@
 <p>SASKTRAN-TIR supports HITRAN optical properties.
 However, if the <a class="reference internal" href="../optical_property.html#sasktran.HITRANChemical" title="sasktran.HITRANChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">sasktran.HITRANChemical</span></code></a> class is used, it is necessary to set the <code class="docutils literal notranslate"><span class="pre">use_cache</span></code> option to be false.
 For example,</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="n">hitran_o3</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">HITRANChemical</span><span class="p">(</span><span class="s1">&#39;O3&#39;</span><span class="p">,</span> <span class="n">use_cache</span><span class="o">=</span><span class="kc">False</span><span class="p">)</span>
 </pre></div>
 </div>
@@ -125,7 +120,7 @@ This class also makes it possible to set the micro window margin during initiali
 </table>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.tir.opticalproperty.HITRANChemicalTIR">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.tir.opticalproperty.</span></span><span class="sig-name descname"><span class="pre">HITRANChemicalTIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chemical_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_line_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotope_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro_window_margin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.tir.opticalproperty.HITRANChemicalTIR" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sasktran.tir.opticalproperty.</span></span><span class="sig-name descname"><span class="pre">HITRANChemicalTIR</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">chemical_name</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">str</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">line_tolerance</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">max_line_strength</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">isotope_filter</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">micro_window_margin</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.tir.opticalproperty.HITRANChemicalTIR" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <a class="reference internal" href="../optical_property.html#sasktran.HITRANChemical" title="sasktran.opticalproperty.HITRANChemical"><code class="xref py py-class docutils literal notranslate"><span class="pre">HITRANChemical</span></code></a></p>
 <p>Calculates the optical absorption and extinction of various atmospheric molecules using the Voigt line-shape and
 the HITRAN spectral line database. The object supports all of the HITRAN species specified in the HITRAN database
@@ -134,8 +129,8 @@ file molparam.txt.</p>
 forced to False because the TIR engine uses the internal array-based cross section calculation. This property
 may cause issues if set to True, particularly when calculate_radiance is more than once on the same engine object.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran.tir.opticalproperty</span> <span class="kn">import</span> <span class="n">HITRANChemicalTIR</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">MSIS90</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran.tir.opticalproperty</span><span class="w"> </span><span class="kn">import</span> <span class="n">HITRANChemicalTIR</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="kn">import</span> <span class="n">MSIS90</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hitran_co2</span> <span class="o">=</span> <span class="n">HITRANChemicalTIR</span><span class="p">(</span><span class="s1">&#39;CO2&#39;</span><span class="p">,</span> <span class="n">micro_window_margin</span><span class="o">=</span><span class="mi">50</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">atmospheric_state</span> <span class="o">=</span> <span class="n">MSIS90</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">hitran_co2</span><span class="o">.</span><span class="n">calculate_cross_sections</span><span class="p">(</span><span class="n">atmospheric_state</span><span class="p">,</span> <span class="n">latitude</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mi">20000</span><span class="p">,</span> <span class="n">mjd</span><span class="o">=</span><span class="mi">54372</span><span class="p">,</span>                                            <span class="n">wavelengths</span><span class="o">=</span><span class="p">[</span><span class="mi">10000</span><span class="p">,</span> <span class="mi">10001</span><span class="p">])</span>

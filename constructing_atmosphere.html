@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Specifying the Atmosphere &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <title>Specifying the Atmosphere &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/documentation_options.js?v=32f5de64"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,9 +36,6 @@
             
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -216,7 +211,7 @@ into SASKTRAN (see <cite>Useful Climatology Shorthands</cite>).</p>
 <p>The <a class="reference internal" href="species.html#sasktran.Species" title="sasktran.Species"><code class="xref py py-class docutils literal notranslate"><span class="pre">Species</span></code></a> class is a combination of a <a class="reference internal" href="climatology.html#sasktran.Climatology" title="sasktran.Climatology"><code class="xref py py-class docutils literal notranslate"><span class="pre">Climatology</span></code></a>
 and <a class="reference internal" href="optical_property.html#sasktran.OpticalProperty" title="sasktran.OpticalProperty"><code class="xref py py-class docutils literal notranslate"><span class="pre">OpticalProperty</span></code></a>,
 linking them together.  In most cases creating the Species is as simple as:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">ozone_species</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Species</span><span class="p">(</span><span class="n">climatology</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">Labow</span><span class="p">(),</span> <span class="n">optical_property</span><span class="o">=</span><span class="n">sk</span><span class="o">.</span><span class="n">O3DBM</span><span class="p">())</span>
 </pre></div>
@@ -253,7 +248,7 @@ atmospheric constituents, they are not used to define Rayleigh scattering within
 a separate Climatology and OpticalProperty.</p>
 <p>By default the atmospheric state is set to the <a class="reference internal" href="climatology.html#sasktran.MSIS90" title="sasktran.MSIS90"><code class="xref py py-class docutils literal notranslate"><span class="pre">MSIS90</span></code></a> climatology, however it can
 be changed through:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
 
@@ -272,7 +267,7 @@ it is necessary that both of these keys are supported.</p>
 <h2>BRDF<a class="headerlink" href="#brdf" title="Link to this heading">¶</a></h2>
 <p>The <a class="reference internal" href="brdf.html#sasktran.BRDF" title="sasktran.BRDF"><code class="xref py py-class docutils literal notranslate"><span class="pre">BRDF</span></code></a> object controls the surface reflectance inside the radiative transfer model.
 This could be as simple as a scalar which represents an isotropically reflecting Lambertian surface:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">atmosphere</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Atmosphere</span><span class="p">()</span>
 
@@ -315,7 +310,7 @@ This could be as simple as a scalar which represents an isotropically reflecting
 <h3>Kernel Based BRDF’s<a class="headerlink" href="#kernel-based-brdf-s" title="Link to this heading">¶</a></h3>
 <p>For advanced users it is possible to combine multiple BRDF Kernels together to create a hybrid BRDF object.
 The main class which enables this is the <a class="reference internal" href="brdf.html#sasktran.LinearCombination" title="sasktran.LinearCombination"><code class="xref py py-class docutils literal notranslate"><span class="pre">LinearCombination</span></code></a> object.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 
 <span class="n">brdf</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">LinearCombination</span><span class="p">()</span>
 

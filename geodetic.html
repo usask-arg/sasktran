@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Geodetic &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <title>Geodetic &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/documentation_options.js?v=32f5de64"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,9 +36,6 @@
             
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -124,7 +119,7 @@
 This module provides some helpers for working with geodetic coordinates.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.Geodetic">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geodetic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geoid_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">Geodetic</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">geoid_name</span></span><span class="o"><span class="pre">=</span></span><span class="default_value"><span class="pre">None</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.Geodetic" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class which handles the representation of the Earth geometry.  The object is initialized through one of the
 <cite>from</cite> methods, and then after initialization various parameters are available.</p>
@@ -134,7 +129,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_lat_lon_alt</span><span class="p">(</span><span class="n">latitude</span><span class="o">=</span><span class="mi">60</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=</span><span class="mi">30</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mi">0</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="p">)</span>
@@ -148,10 +143,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </div>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.altitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">altitude</span></span><a class="headerlink" href="#sasktran.Geodetic.altitude" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">altitude</span></span><a class="headerlink" href="#sasktran.Geodetic.altitude" title="Link to this definition">¶</a></dt>
 <dd><p>Altitude in meters</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">altitude</span><span class="p">)</span>
@@ -186,8 +181,8 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
-<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">look</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">from_tangent_altitude</span><span class="p">(</span><span class="mi">15322</span><span class="p">,</span> <span class="p">[</span><span class="mf">3.676013154788849600e+005</span><span class="p">,</span> <span class="mf">1.009976313640051500e+006</span><span class="p">,</span>                                                       <span class="o">-</span><span class="mf">6.871601202127538600e+006</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">obs</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">location</span>
@@ -214,7 +209,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_lat_lon_alt</span><span class="p">(</span><span class="n">latitude</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mi">7342</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="p">)</span>
@@ -244,7 +239,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">look</span> <span class="o">=</span> <span class="n">geodetic</span><span class="o">.</span><span class="n">from_tangent_altitude</span><span class="p">(</span><span class="mi">15322</span><span class="p">,</span> <span class="p">[</span> <span class="mf">3.676013154788849600e+005</span><span class="p">,</span> <span class="mf">1.009976313640051500e+006</span><span class="p">,</span>                                                          <span class="o">-</span><span class="mf">6.871601202127538600e+006</span><span class="p">],</span> <span class="p">[</span><span class="mi">0</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">1</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">look</span><span class="p">)</span>
@@ -269,7 +264,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_tangent_point</span><span class="p">([</span> <span class="mf">3.676013154788849600e+005</span><span class="p">,</span> <span class="mf">1.009976313640051500e+006</span><span class="p">,</span>                                         <span class="o">-</span><span class="mf">6.871601202127538600e+006</span><span class="p">],</span> <span class="p">[</span> <span class="mf">2.884568631765662100e-001</span><span class="p">,</span>                                          <span class="mf">7.925287180643269000e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238900e-001</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="p">)</span>
@@ -289,7 +284,7 @@ This module provides some helpers for working with geodetic coordinates.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="p">)</span>
@@ -301,10 +296,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.latitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">latitude</span></span><a class="headerlink" href="#sasktran.Geodetic.latitude" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">latitude</span></span><a class="headerlink" href="#sasktran.Geodetic.latitude" title="Link to this definition">¶</a></dt>
 <dd><p>Latitude in degrees in the range (-90 to 90)</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">latitude</span><span class="p">)</span>
@@ -320,10 +315,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_south">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_south</span></span><a class="headerlink" href="#sasktran.Geodetic.local_south" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">local_south</span></span><a class="headerlink" href="#sasktran.Geodetic.local_south" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector unit vector tangent to the Earth pointing south</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">local_south</span><span class="p">)</span>
@@ -339,10 +334,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_up">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_up</span></span><a class="headerlink" href="#sasktran.Geodetic.local_up" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">local_up</span></span><a class="headerlink" href="#sasktran.Geodetic.local_up" title="Link to this definition">¶</a></dt>
 <dd><p>Three element unit vector normal to the surface of the Earth pointing up</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">local_up</span><span class="p">)</span>
@@ -358,10 +353,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.local_west">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">local_west</span></span><a class="headerlink" href="#sasktran.Geodetic.local_west" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">local_west</span></span><a class="headerlink" href="#sasktran.Geodetic.local_west" title="Link to this definition">¶</a></dt>
 <dd><p>Three element unit vector tangent to the surface of the Earth pointing west</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">local_west</span><span class="p">)</span>
@@ -377,10 +372,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.location">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#sasktran.Geodetic.location" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">location</span></span><a class="headerlink" href="#sasktran.Geodetic.location" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector representing the position in geocentric coordinates</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_lat_lon_alt</span><span class="p">(</span><span class="n">latitude</span><span class="o">=-</span><span class="mi">15</span><span class="p">,</span> <span class="n">longitude</span><span class="o">=-</span><span class="mi">20</span><span class="p">,</span> <span class="n">altitude</span><span class="o">=</span><span class="mi">7342</span><span class="p">)</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">location</span><span class="p">)</span>
@@ -396,10 +391,10 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.longitude">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">longitude</span></span><a class="headerlink" href="#sasktran.Geodetic.longitude" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">longitude</span></span><a class="headerlink" href="#sasktran.Geodetic.longitude" title="Link to this definition">¶</a></dt>
 <dd><p>Longitude in degrees in the range (0 to 360)</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">longitude</span><span class="p">)</span>
@@ -415,11 +410,11 @@ This module provides some helpers for working with geodetic coordinates.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.osculating_spheroid_center">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_center</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_center" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">osculating_spheroid_center</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_center" title="Link to this definition">¶</a></dt>
 <dd><p>Three element vector representing the center of the osculating spheroid, relative to the center
 of the geoid, in meters.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">osculating_spheroid_center</span><span class="p">)</span>
@@ -435,10 +430,10 @@ of the geoid, in meters.</p>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.Geodetic.osculating_spheroid_radius">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">osculating_spheroid_radius</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_radius" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">osculating_spheroid_radius</span></span><a class="headerlink" href="#sasktran.Geodetic.osculating_spheroid_radius" title="Link to this definition">¶</a></dt>
 <dd><p>Radius of the osculating spheroid in meters.
 .. rubric:: Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span> <span class="o">=</span> <span class="n">sk</span><span class="o">.</span><span class="n">Geodetic</span><span class="p">()</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">geodetic</span><span class="o">.</span><span class="n">from_xyz</span><span class="p">([</span> <span class="mf">5797230.47518212</span><span class="p">,</span> <span class="o">-</span><span class="mf">2110019.3341472</span><span class="p">,</span> <span class="o">-</span><span class="mf">1642001.16317228</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">geodetic</span><span class="o">.</span><span class="n">osculating_spheroid_radius</span><span class="p">)</span>

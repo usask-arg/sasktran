@@ -1,27 +1,25 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+  <title>Collecting diagnostic data during radiative transfer calculation with HR &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
       <link rel="stylesheet" type="text/css" href="../../_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="../../_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/documentation_options.js?v=32f5de64"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -41,9 +39,6 @@
             
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -139,11 +134,11 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
-<span class="kn">from</span> <span class="nn">sasktran.geometry</span> <span class="kn">import</span> <span class="n">VerticalImage</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
-<span class="kn">import</span> <span class="nn">h5py</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">sasktran.geometry</span><span class="w"> </span><span class="kn">import</span> <span class="n">VerticalImage</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">h5py</span>
 </pre></div>
 </div>
 </div>
@@ -257,13 +252,13 @@ The following diagnostic data was stored:
 </pre></div>
 </div>
 <div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Keep the first file under different name</span>
-<span class="kn">import</span> <span class="nn">os</span>
-<span class="k">def</span> <span class="nf">convert_bytes</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">os</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">convert_bytes</span><span class="p">(</span><span class="n">num</span><span class="p">):</span>
     <span class="k">for</span> <span class="n">x</span> <span class="ow">in</span> <span class="p">[</span><span class="s1">&#39;bytes&#39;</span><span class="p">,</span> <span class="s1">&#39;KB&#39;</span><span class="p">,</span> <span class="s1">&#39;MB&#39;</span><span class="p">,</span> <span class="s1">&#39;GB&#39;</span><span class="p">,</span> <span class="s1">&#39;TB&#39;</span><span class="p">]:</span>
         <span class="k">if</span> <span class="n">num</span> <span class="o">&lt;</span> <span class="mf">1024.0</span><span class="p">:</span>
             <span class="k">return</span> <span class="s2">&quot;</span><span class="si">%3.1f</span><span class="s2"> </span><span class="si">%s</span><span class="s2">&quot;</span> <span class="o">%</span> <span class="p">(</span><span class="n">num</span><span class="p">,</span> <span class="n">x</span><span class="p">)</span>
         <span class="n">num</span> <span class="o">/=</span> <span class="mf">1024.0</span>
-<span class="k">def</span> <span class="nf">file_size</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">file_size</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
    <span class="k">if</span> <span class="n">os</span><span class="o">.</span><span class="n">path</span><span class="o">.</span><span class="n">isfile</span><span class="p">(</span><span class="n">file_path</span><span class="p">):</span>
         <span class="n">file_info</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">stat</span><span class="p">(</span><span class="n">file_path</span><span class="p">)</span>
         <span class="k">return</span> <span class="n">convert_bytes</span><span class="p">(</span><span class="n">file_info</span><span class="o">.</span><span class="n">st_size</span><span class="p">)</span>
@@ -310,12 +305,12 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[7]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">plotOnSphere</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">wlen</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">profile</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4500</span><span class="p">,</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span><span class="w"> </span><span class="nf">plotOnSphere</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">wlen</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">order</span> <span class="o">=</span> <span class="mi">1</span><span class="p">,</span> <span class="n">profile</span> <span class="o">=</span> <span class="mi">0</span><span class="p">,</span> <span class="n">height</span><span class="o">=</span><span class="mi">4500</span><span class="p">,</span>
                  <span class="n">mycolormap</span> <span class="o">=</span> <span class="n">plt</span><span class="o">.</span><span class="n">cm</span><span class="o">.</span><span class="n">coolwarm</span><span class="p">):</span>
-    <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d</span> <span class="kn">import</span> <span class="n">Axes3D</span>
-    <span class="kn">from</span> <span class="nn">mpl_toolkits.mplot3d.art3d</span> <span class="kn">import</span> <span class="n">Poly3DCollection</span>
-    <span class="kn">from</span> <span class="nn">scipy.spatial</span> <span class="kn">import</span> <span class="n">ConvexHull</span>
-    <span class="kn">import</span> <span class="nn">matplotlib.colors</span> <span class="k">as</span> <span class="nn">colors</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Axes3D</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">mpl_toolkits.mplot3d.art3d</span><span class="w"> </span><span class="kn">import</span> <span class="n">Poly3DCollection</span>
+    <span class="kn">from</span><span class="w"> </span><span class="nn">scipy.spatial</span><span class="w"> </span><span class="kn">import</span> <span class="n">ConvexHull</span>
+    <span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.colors</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">colors</span>
 
     <span class="n">h5f</span> <span class="o">=</span> <span class="n">h5py</span><span class="o">.</span><span class="n">File</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="s1">&#39;r&#39;</span><span class="p">)</span>
     <span class="n">heights</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">array</span><span class="p">(</span> <span class="n">h5f</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s1">&#39;heights&#39;</span><span class="p">)</span> <span class="p">)</span>
@@ -357,7 +352,7 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
     <span class="n">plt</span><span class="o">.</span><span class="n">show</span><span class="p">()</span>
     <span class="n">plt</span><span class="o">.</span><span class="n">close</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">plot2DHeightProf</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">wlen</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">orders</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">profile</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span> <span class="p">,</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">plot2DHeightProf</span><span class="p">(</span><span class="n">fname</span><span class="p">,</span> <span class="n">wlen</span><span class="p">,</span> <span class="nb">type</span> <span class="o">=</span> <span class="s1">&#39;in&#39;</span><span class="p">,</span> <span class="n">orders</span><span class="o">=</span><span class="p">[</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">,</span><span class="mi">3</span><span class="p">],</span> <span class="n">profile</span><span class="o">=</span><span class="mi">0</span><span class="p">,</span> <span class="n">point</span> <span class="o">=</span> <span class="p">[</span><span class="mf">0.</span> <span class="p">,</span><span class="mf">0.</span><span class="p">,</span> <span class="mf">1.</span><span class="p">],</span>
                      <span class="n">theta</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">phi</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="n">np2int</span> <span class="o">=</span> <span class="mi">4</span><span class="p">):</span>
     <span class="c1"># where np2int is a number of points to interpolate</span>
     <span class="c1"># and the target point can be specified either as [x y z] or as {theta, phi}</span>
@@ -434,32 +429,37 @@ WARNING :ISKEngine HR, The diagnosticdiffuseprofiles property has 0 length; Diag
 <div class="highlight"><pre>
 <span class="ansi-red-fg">---------------------------------------------------------------------------</span>
 <span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-Cell <span class="ansi-green-fg">In[8], line 4</span>
-<span class="ansi-green-intense-fg ansi-bold">      1</span> fname <span style="color: rgb(98,98,98)">=</span> <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">DiagnosticData.h5</span><span style="color: rgb(175,0,0)">&#39;</span>
-<span class="ansi-green-intense-fg ansi-bold">      3</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
-<span class="ansi-green-fg">----&gt; 4</span> plotOnSphere(fname, <span style="color: rgb(98,98,98)">350</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">in</span><span style="color: rgb(175,0,0)">&#39;</span>, order<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1</span>, profile<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, height<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">10500</span>, mycolormap <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>cm<span style="color: rgb(98,98,98)">.</span>rainbow)
-<span class="ansi-green-intense-fg ansi-bold">      5</span> plotOnSphere(fname, <span style="color: rgb(98,98,98)">350</span>, <span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">out</span><span style="color: rgb(175,0,0)">&#39;</span>, order<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">1</span>, profile<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">2</span>, height<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(98,98,98)">10500</span>, mycolormap <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>cm<span style="color: rgb(98,98,98)">.</span>rainbow)
-<span class="ansi-green-intense-fg ansi-bold">      6</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[8]</span><span class="ansi-green-fg">, line 4</span>
+<span class="ansi-green-fg">      1</span> fname = <span class="ansi-yellow-fg">&#39;DiagnosticData.h5&#39;</span>
+<span class="ansi-green-fg">      2</span>
+<span class="ansi-green-fg">      3</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
+<span class="ansi-green-fg">----&gt; </span><span class="ansi-green-fg">4</span> plotOnSphere(fname, <span class="ansi-green-fg">350</span>, <span class="ansi-yellow-fg">&#39;in&#39;</span>, order=<span class="ansi-green-fg">1</span>, profile=<span class="ansi-green-fg">2</span>, height=<span class="ansi-green-fg">10500</span>, mycolormap = plt.cm.rainbow)
+<span class="ansi-green-fg">      5</span> plotOnSphere(fname, <span class="ansi-green-fg">350</span>, <span class="ansi-yellow-fg">&#39;out&#39;</span>, order=<span class="ansi-green-fg">1</span>, profile=<span class="ansi-green-fg">2</span>, height=<span class="ansi-green-fg">10500</span>, mycolormap = plt.cm.rainbow)
+<span class="ansi-green-fg">      6</span> <span style="color: rgb(95,135,135)"># - plot on unisphere, one plot per one order, profile, height</span>
+<span class="ansi-green-fg">      7</span> plotOnSphere(fname, <span class="ansi-green-fg">400</span>, <span class="ansi-yellow-fg">&#39;in&#39;</span>, order=<span class="ansi-green-fg">2</span>, profile=<span class="ansi-green-fg">0</span>, height=<span class="ansi-green-fg">0.01</span>)
 
-Cell <span class="ansi-green-fg">In[7], line 34</span>, in <span class="ansi-cyan-fg">plotOnSphere</span><span class="ansi-blue-fg">(fname, wlen, type, order, profile, height, mycolormap)</span>
-<span class="ansi-green-intense-fg ansi-bold">     32</span> ax <span style="color: rgb(98,98,98)">=</span> fig<span style="color: rgb(98,98,98)">.</span>add_subplot(projection<span style="color: rgb(98,98,98)">=</span><span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">3d</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-intense-fg ansi-bold">     33</span> ax<span style="color: rgb(98,98,98)">.</span>add_collection(coll)
-<span class="ansi-green-fg">---&gt; 34</span> ax<span style="color: rgb(98,98,98)">.</span>axis([<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>, <span style="color: rgb(98,98,98)">1</span>,<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>, <span style="color: rgb(98,98,98)">1</span>]), ax<span style="color: rgb(98,98,98)">.</span>set_zlim(<span style="color: rgb(98,98,98)">-</span><span style="color: rgb(98,98,98)">1</span>, <span style="color: rgb(98,98,98)">1</span>)
-<span class="ansi-green-intense-fg ansi-bold">     35</span> ax<span style="color: rgb(98,98,98)">.</span>set_xlabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">X</span><span style="color: rgb(175,0,0)">&#39;</span>), ax<span style="color: rgb(98,98,98)">.</span>set_ylabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Y</span><span style="color: rgb(175,0,0)">&#39;</span>), ax<span style="color: rgb(98,98,98)">.</span>set_zlabel(<span style="color: rgb(175,0,0)">&#39;</span><span style="color: rgb(175,0,0)">Z</span><span style="color: rgb(175,0,0)">&#39;</span>)
-<span class="ansi-green-intense-fg ansi-bold">     37</span> m <span style="color: rgb(98,98,98)">=</span> plt<span style="color: rgb(98,98,98)">.</span>cm<span style="color: rgb(98,98,98)">.</span>ScalarMappable(cmap<span style="color: rgb(98,98,98)">=</span>mycolormap)
+<span class="ansi-cyan-fg">Cell</span><span class="ansi-cyan-fg"> </span><span class="ansi-green-fg">In[7]</span><span class="ansi-green-fg">, line 34</span>, in <span class="ansi-cyan-fg">plotOnSphere</span><span class="ansi-blue-fg">(fname, wlen, type, order, profile, height, mycolormap)</span>
+<span class="ansi-green-fg">     30</span>
+<span class="ansi-green-fg">     31</span>     fig = plt.figure(figsize=(<span class="ansi-green-fg">10</span>,<span class="ansi-green-fg">8</span>))
+<span class="ansi-green-fg">     32</span>     ax = fig.add_subplot(projection=<span class="ansi-yellow-fg">&#39;3d&#39;</span>)
+<span class="ansi-green-fg">     33</span>     ax.add_collection(coll)
+<span class="ansi-green-fg">---&gt; </span><span class="ansi-green-fg">34</span>     ax.axis([-<span class="ansi-green-fg">1</span>, <span class="ansi-green-fg">1</span>,-<span class="ansi-green-fg">1</span>, <span class="ansi-green-fg">1</span>]), ax.set_zlim(-<span class="ansi-green-fg">1</span>, <span class="ansi-green-fg">1</span>)
+<span class="ansi-green-fg">     35</span>     ax.set_xlabel(<span class="ansi-yellow-fg">&#39;X&#39;</span>), ax.set_ylabel(<span class="ansi-yellow-fg">&#39;Y&#39;</span>), ax.set_zlabel(<span class="ansi-yellow-fg">&#39;Z&#39;</span>)
+<span class="ansi-green-fg">     36</span>
+<span class="ansi-green-fg">     37</span>     m = plt.cm.ScalarMappable(cmap=mycolormap)
 
-File <span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/matplotlib/axes/_base.py:2112</span>, in <span class="ansi-cyan-fg">_AxesBase.axis</span><span class="ansi-blue-fg">(self, arg, emit, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">   2110</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> arg <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
-<span class="ansi-green-intense-fg ansi-bold">   2111</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(arg) <span style="color: rgb(98,98,98)">!=</span> <span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span><span style="color: rgb(0,135,0)">len</span>(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names):
-<span class="ansi-green-fg">-&gt; 2112</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>(
-<span class="ansi-green-intense-fg ansi-bold">   2113</span>             <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">The first argument to axis() must be an iterable of the form </span><span style="color: rgb(175,0,0)">&#34;</span>
-<span class="ansi-green-intense-fg ansi-bold">   2114</span>             <span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">[</span><span class="ansi-bold" style="color: rgb(175,95,135)">{}</span><span style="color: rgb(175,0,0)">]</span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>format(<span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(175,0,0)">, </span><span style="color: rgb(175,0,0)">&#34;</span><span style="color: rgb(98,98,98)">.</span>join(
-<span class="ansi-green-intense-fg ansi-bold">   2115</span>                 <span style="color: rgb(175,0,0)">f</span><span style="color: rgb(175,0,0)">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">min, </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span style="color: rgb(175,0,0)">max</span><span style="color: rgb(175,0,0)">&#34;</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names)))
-<span class="ansi-green-intense-fg ansi-bold">   2116</span>     limits <span style="color: rgb(98,98,98)">=</span> {
-<span class="ansi-green-intense-fg ansi-bold">   2117</span>         name: arg[<span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>i:<span style="color: rgb(98,98,98)">2</span><span style="color: rgb(98,98,98)">*</span>(i<span style="color: rgb(98,98,98)">+</span><span style="color: rgb(98,98,98)">1</span>)]
-<span class="ansi-green-intense-fg ansi-bold">   2118</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> i, name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">enumerate</span>(<span style="color: rgb(0,135,0)">self</span><span style="color: rgb(98,98,98)">.</span>_axis_names)
-<span class="ansi-green-intense-fg ansi-bold">   2119</span>     }
-<span class="ansi-green-intense-fg ansi-bold">   2120</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
+<span class="ansi-cyan-fg">File </span><span class="ansi-green-fg">/usr/share/miniconda/envs/doc_env/lib/python3.12/site-packages/matplotlib/axes/_base.py:2239</span>, in <span class="ansi-cyan-fg">_AxesBase.axis</span><span class="ansi-blue-fg">(self, arg, emit, **kwargs)</span>
+<span class="ansi-green-fg">   2237</span> <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> arg <span class="ansi-bold" style="color: rgb(175,0,255)">is</span> <span class="ansi-bold" style="color: rgb(175,0,255)">not</span> <span class="ansi-bold" style="color: rgb(0,135,0)">None</span>:
+<span class="ansi-green-fg">   2238</span>     <span class="ansi-bold" style="color: rgb(0,135,0)">if</span> <span style="color: rgb(0,135,0)">len</span>(arg) != <span class="ansi-green-fg">2</span>*<span style="color: rgb(0,135,0)">len</span>(<span style="color: rgb(0,135,0)">self</span>._axis_names):
+<span class="ansi-green-fg">-&gt; </span><span class="ansi-green-fg">2239</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">raise</span> <span class="ansi-bold" style="color: rgb(215,95,95)">TypeError</span>(
+<span class="ansi-green-fg">   2240</span>             <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">The first argument to axis() must be an iterable of the form </span><span class="ansi-yellow-fg">&#34;</span>
+<span class="ansi-green-fg">   2241</span>             <span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">[</span><span class="ansi-bold" style="color: rgb(175,95,135)">{}</span><span class="ansi-yellow-fg">]</span><span class="ansi-yellow-fg">&#34;</span>.format(<span class="ansi-yellow-fg">&#34;</span><span class="ansi-yellow-fg">, </span><span class="ansi-yellow-fg">&#34;</span>.join(
+<span class="ansi-green-fg">   2242</span>                 <span class="ansi-yellow-fg">f</span><span class="ansi-yellow-fg">&#34;</span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-yellow-fg">min, </span><span class="ansi-bold" style="color: rgb(175,95,135)">{</span>name<span class="ansi-bold" style="color: rgb(175,95,135)">}</span><span class="ansi-yellow-fg">max</span><span class="ansi-yellow-fg">&#34;</span> <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">self</span>._axis_names)))
+<span class="ansi-green-fg">   2243</span>     limits = {
+<span class="ansi-green-fg">   2244</span>         name: arg[<span class="ansi-green-fg">2</span>*i:<span class="ansi-green-fg">2</span>*(i+<span class="ansi-green-fg">1</span>)]
+<span class="ansi-green-fg">   2245</span>         <span class="ansi-bold" style="color: rgb(0,135,0)">for</span> i, name <span class="ansi-bold" style="color: rgb(175,0,255)">in</span> <span style="color: rgb(0,135,0)">enumerate</span>(<span style="color: rgb(0,135,0)">self</span>._axis_names)
+<span class="ansi-green-fg">   2246</span>     }
+<span class="ansi-green-fg">   2247</span> <span class="ansi-bold" style="color: rgb(0,135,0)">else</span>:
 
 <span class="ansi-red-fg">TypeError</span>: The first argument to axis() must be an iterable of the form [xmin, xmax, ymin, ymax, zmin, zmax]
 </pre></div></div>

@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="./">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lines of Sight &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=19f00094" />
+  <title>Lines of Sight &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="_static/doctools.js?v=9a2dae69"></script>
-        <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="_static/documentation_options.js?v=32f5de64"></script>
+      <script src="_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="_static/js/theme.js"></script>
     <link rel="index" title="Index" href="genindex.html" />
     <link rel="search" title="Search" href="search.html" />
@@ -38,9 +36,6 @@
             
               <img src="_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -130,7 +125,7 @@
 to calculate radiances for.</p>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.LineOfSight">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LineOfSight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LineOfSight" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sasktran.</span></span><span class="sig-name descname"><span class="pre">LineOfSight</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">mjd</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">float</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">observer</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">look_vector</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">array</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.LineOfSight" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <p>Class which represents a single line of sight in SASKTRAN.  A single line of sight is defined by the observer
 position, a timestamp, and a unit look vector.</p>
@@ -144,7 +139,7 @@ position, a timestamp, and a unit look vector.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineOfSight</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                          <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662e-001</span><span class="p">,</span> <span class="mf">7.925287180643269e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238e-001</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="p">)</span>
 <span class="go">Observer: [367601.31547888, 1009976.31364, -6871601.202127]</span>
@@ -169,7 +164,7 @@ altitude. Returns None if the intersection does not exist.</p>
 </dd>
 </dl>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineOfSight</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                              <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.878657667526608e-001</span><span class="p">,</span> <span class="mf">7.909046939869273e-001</span><span class="p">,</span> <span class="mf">5.400028382900848e-001</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">ground_intersection</span><span class="p">(</span><span class="n">altitude</span><span class="o">=</span><span class="mf">1000.0</span><span class="p">))</span>
 <span class="go">ISKGeodetic: IAU 1976</span>
@@ -184,7 +179,7 @@ altitude. Returns None if the intersection does not exist.</p>
 <dd><p>Returns an sk.Geodetic object containing the location where the line of sight is tangent to the surface of the
 earth. Returns None if the line of sight intersects the earth.</p>
 <p class="rubric">Examples</p>
-<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">sasktran</span> <span class="kn">import</span> <span class="n">LineOfSight</span>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="kn">import</span> <span class="n">LineOfSight</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="n">los</span> <span class="o">=</span> <span class="n">LineOfSight</span><span class="p">(</span><span class="n">mjd</span><span class="o">=</span><span class="mf">54832.5</span><span class="p">,</span> <span class="n">observer</span><span class="o">=</span><span class="p">[</span><span class="mf">3.6760131547888e+005</span><span class="p">,</span> <span class="mf">1.0099763136400e+006</span><span class="p">,</span> <span class="o">-</span><span class="mf">6.871601202127e+006</span><span class="p">],</span>                              <span class="n">look_vector</span><span class="o">=</span><span class="p">[</span><span class="mf">2.884568631765662e-001</span><span class="p">,</span> <span class="mf">7.925287180643269e-001</span><span class="p">,</span>  <span class="mf">5.372996083468238e-001</span><span class="p">])</span>
 <span class="gp">&gt;&gt;&gt; </span><span class="nb">print</span><span class="p">(</span><span class="n">los</span><span class="o">.</span><span class="n">tangent_location</span><span class="p">())</span>
 <span class="go">ISKGeodetic: IAU 1976</span>

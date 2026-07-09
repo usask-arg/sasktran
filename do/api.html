@@ -1,24 +1,22 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>API Reference &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=19f00094" />
+  <title>API Reference &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="../_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script src="../_static/documentation_options.js?v=32f5de64"></script>
+      <script src="../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
     <script src="../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -37,9 +35,6 @@
             
               <img src="../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -202,88 +197,88 @@ Default: plane_parallel</p>
 <h2>Low Level Interface<a class="headerlink" href="#low-level-interface" title="Link to this heading">¶</a></h2>
 <dl class="py class">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere">
-<em class="property"><span class="pre">class</span><span class="w"> </span></em><span class="sig-prename descclassname"><span class="pre">sasktran.disco.lowlevel.</span></span><span class="sig-name descname"><span class="pre">Atmosphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nwavel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nstokes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">class</span></span><span class="w"> </span></span><span class="sig-prename descclassname"><span class="pre">sasktran.disco.lowlevel.</span></span><span class="sig-name descname"><span class="pre">Atmosphere</span></span><span class="sig-paren">(</span><em class="sig-param"><span class="n"><span class="pre">nstr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlyr</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nwavel</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nlos</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">0</span></span></em>, <em class="sig-param"><span class="n"><span class="pre">nstokes</span></span><span class="p"><span class="pre">:</span></span><span class="w"> </span><span class="n"><span class="pre">int</span></span><span class="w"> </span><span class="o"><span class="pre">=</span></span><span class="w"> </span><span class="default_value"><span class="pre">1</span></span></em><span class="sig-paren">)</span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere" title="Link to this definition">¶</a></dt>
 <dd><p>Bases: <code class="xref py py-class docutils literal notranslate"><span class="pre">object</span></code></p>
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.a1">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a1" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a1</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a1" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer a1 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.a2">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a2" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a2</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a2" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer a2 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.a3">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a3" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a3</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a3" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer a3 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.a4">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">a4</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a4" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">a4</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.a4" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer a4 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.albedo">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">albedo</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.albedo" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">albedo</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.albedo" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Surface albedo, shape (nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.b1">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b1</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.b1" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">b1</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.b1" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer b1 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.b2">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">b2</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.b2" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">b2</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.b2" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer b2 Legendre coefficient, shape (nstr, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.f">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">f</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.f" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">f</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.f" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer delta scaling coefficient, shape (nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.layer_boundary_altitudes">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">layer_boundary_altitudes</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.layer_boundary_altitudes" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">layer_boundary_altitudes</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.layer_boundary_altitudes" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Boundary altitudes of the layer, shape (nlyr+1).
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.od">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">od</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.od" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">od</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.od" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer Optical Depths, shape (nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.ss_phase">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ss_phase</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.ss_phase" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ss_phase</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.ss_phase" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Single scatter phase function, shape (nstokes, nlos, nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>
 
 <dl class="py property">
 <dt class="sig sig-object py" id="sasktran.disco.lowlevel.Atmosphere.ssa">
-<em class="property"><span class="pre">property</span><span class="w"> </span></em><span class="sig-name descname"><span class="pre">ssa</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.ssa" title="Link to this definition">¶</a></dt>
+<span class="property"><span class="k"><span class="pre">property</span></span><span class="w"> </span></span><span class="sig-name descname"><span class="pre">ssa</span></span><a class="headerlink" href="#sasktran.disco.lowlevel.Atmosphere.ssa" title="Link to this definition">¶</a></dt>
 <dd><p>returns: Layer single scatter albedo, shape (nlayer, nwavel)
 :rtype: np.ndarray</p>
 </dd></dl>

@@ -1,27 +1,25 @@
+
+
 <!DOCTYPE html>
 <html class="writer-html5" lang="en" data-content_root="../../">
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Multiple Species Weighting Function Calculations &mdash; SASKTRAN 1.8.8 documentation</title>
-      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=fa44fd50" />
-      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=19f00094" />
+  <title>Multiple Species Weighting Function Calculations &mdash; SASKTRAN 1.8.9 documentation</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=03e43079" />
+      <link rel="stylesheet" type="text/css" href="../../_static/css/theme.css?v=9edc463e" />
       <link rel="stylesheet" type="text/css" href="../../_static/nbsphinx-code-cells.css?v=2aa19091" />
       <link rel="stylesheet" type="text/css" href="../../_static/_static/theme_overrides.css" />
 
   
     <link rel="shortcut icon" href="../../_static/sasktran-favicon.png"/>
-  <!--[if lt IE 9]>
-    <script src="../../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script src="../../_static/documentation_options.js?v=968d5a7d"></script>
-        <script src="../../_static/doctools.js?v=9a2dae69"></script>
-        <script src="../../_static/sphinx_highlight.js?v=dc90522c"></script>
-        <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
-        <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-        <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+      <script src="../../_static/documentation_options.js?v=32f5de64"></script>
+      <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+      <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+      <script crossorigin="anonymous" integrity="sha256-Ae2Vz/4ePdIu6ZyI/5ZGsYnb+m0JlOmKPjt6XZ9JJkA=" src="https://cdnjs.cloudflare.com/ajax/libs/require.js/2.3.4/require.min.js"></script>
+      <script>window.MathJax = {"tex": {"inlineMath": [["$", "$"], ["\\(", "\\)"]], "processEscapes": true}, "options": {"ignoreHtmlClass": "tex2jax_ignore|mathjax_ignore|document", "processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+      <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
     <script src="../../_static/js/theme.js"></script>
     <link rel="index" title="Index" href="../../genindex.html" />
     <link rel="search" title="Search" href="../../search.html" />
@@ -41,9 +39,6 @@
             
               <img src="../../_static/sasktran-light.png" class="logo" alt="Logo"/>
           </a>
-              <div class="version">
-                1.8.8
-              </div>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../../search.html" method="get">
     <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
@@ -131,10 +126,10 @@
 <div class="prompt highlight-none notranslate"><div class="highlight"><pre><span></span>[2]:
 </pre></div>
 </div>
-<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sasktran</span> <span class="k">as</span> <span class="nn">sk</span>
-<span class="kn">import</span> <span class="nn">sasktran.disco.interface</span> <span class="k">as</span> <span class="nn">do</span>
-<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
-<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+<div class="input_area highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span><span class="w"> </span><span class="nn">sasktran</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">sk</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">sasktran.disco.interface</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">do</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">numpy</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">np</span>
+<span class="kn">import</span><span class="w"> </span><span class="nn">matplotlib.pyplot</span><span class="w"> </span><span class="k">as</span><span class="w"> </span><span class="nn">plt</span>
 </pre></div>
 </div>
 </div>
@@ -588,24 +583,24 @@ WARNING :skClimatology_Pratmo::LoadProfileFromBinaryFile, Error loading the PRAT
 WARNING :skClimatology_Pratmo::LoadProfileFromBinaryFile, Error loading the PRATMO climatology. Erasing the profile
 WARNING :skClimatology_Pratmo::LoadProfileFromBinaryFile, Error loading the PRATMO climatology. Erasing the profile
 WARNING :skClimatology_Pratmo::LoadProfileFromBinaryFile, Error loading the PRATMO climatology. Erasing the profile
-&lt;xarray.Dataset&gt;
+&lt;xarray.Dataset&gt; Size: 2MB
 Dimensions:            (wavelength: 361, los: 1, xyz: 3, perturbation: 201)
 Coordinates:
-  * wavelength         (wavelength) float64 340.0 341.0 342.0 ... 699.0 700.0
-  * xyz                (xyz) &lt;U1 &#39;x&#39; &#39;y&#39; &#39;z&#39;
-  * perturbation       (perturbation) object MultiIndex
-  * altitude           (perturbation) int64 0 500 1000 ... 99000 99500 100000
+  * wavelength         (wavelength) float64 3kB 340.0 341.0 ... 699.0 700.0
+  * xyz                (xyz) &lt;U1 12B &#39;x&#39; &#39;y&#39; &#39;z&#39;
+  * perturbation       (perturbation) object 2kB MultiIndex
+  * altitude           (perturbation) int64 2kB 0 500 1000 ... 99500 100000
 Dimensions without coordinates: los
 Data variables:
-    radiance           (wavelength, los) float64 0.06624 0.06641 ... 0.04759
-    mjd                (los) float64 5.82e+04
-    los_vector         (los, xyz) float64 0.1761 0.588 -0.7894
-    observer_position  (los, xyz) float64 -1.231e+06 -4.111e+06 5.486e+06
-    wf_brdf            (wavelength, los) float64 0.085 0.08612 ... 0.1511 0.1512
-    wf_rayleigh        (wavelength, los, perturbation) float64 2.253e-23 ... ...
-    wf_o3              (wavelength, los, perturbation) float64 -3.675e-18 ......
-    wf_no2             (wavelength, los, perturbation) float64 -9.505e-16 ......
-    los_transmission   (wavelength, los) float64 0.4937 0.499 ... 0.9586 0.959
+    radiance           (wavelength, los) float64 3kB 0.06624 0.06641 ... 0.04759
+    mjd                (los) float64 8B 5.82e+04
+    los_vector         (los, xyz) float64 24B 0.1761 0.588 -0.7894
+    observer_position  (los, xyz) float64 24B -1.231e+06 -4.111e+06 5.486e+06
+    wf_brdf            (wavelength, los) float64 3kB 0.085 0.08612 ... 0.1512
+    wf_rayleigh        (wavelength, los, perturbation) float64 580kB 2.253e-2...
+    wf_o3              (wavelength, los, perturbation) float64 580kB -3.675e-...
+    wf_no2             (wavelength, los, perturbation) float64 580kB -9.505e-...
+    los_transmission   (wavelength, los) float64 3kB 0.4937 0.499 ... 0.959
 </pre></div></div>
 </div>
 <p>In the resulting dataset we have weighting functions for the three species as a function of altitude, and the weighting function for the surface that is not a function of altitude.</p>
