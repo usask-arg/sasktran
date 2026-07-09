@@ -145,35 +145,35 @@ jobs:
           name: docs
           path: pysasktran/docs/build/html
 
-  # upload-docs-to-pages:
-  #   needs: build-docs
-  #   runs-on: ubuntu-latest
+  upload-docs-to-pages:
+    needs: build-docs
+    runs-on: ubuntu-latest
 
-  #   # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
-  #   permissions:
-  #     contents: write      # to deploy to Pages
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      contents: write      # to deploy to Pages
 
-  #   steps:
-  #     - name: Download doc artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: docs
-  #         path: docs
+    steps:
+      - name: Download doc artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: docs
+          path: docs
 
-  #     - name: Deploy dev docs
-  #       uses: peaceiris/actions-gh-pages@v3
-  #       if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         publish_dir: docs
-  #         destination_dir: dev
+      - name: Deploy dev docs
+        uses: peaceiris/actions-gh-pages@v3
+        if: (github.event_name == 'push') && (github.ref == 'refs/heads/main')
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs
+          destination_dir: dev
 
-  #     - name: Deploy release docs
-  #       uses: peaceiris/actions-gh-pages@v3
-  #       if: github.event_name == 'release'
-  #       with:
-  #         github_token: ${{ secrets.GITHUB_TOKEN }}
-  #         publish_dir: docs
+      - name: Deploy release docs
+        uses: peaceiris/actions-gh-pages@v3
+        if: github.event_name == 'release'
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: docs
 
   # build-cpp-wheels-mac:
   #   runs-on: macos-14
@@ -404,49 +404,31 @@ jobs:
           pip install pycodestyle
           pycodestyle sasktran
 
-  # upload-to-pypi:
-  #   needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-cpp-wheels-mac, build-docs]
-  #   if: github.event_name == 'release'
-  #   runs-on: ubuntu-latest
+  upload-to-pypi:
+    needs: [test-wheels-linux, test-wheels-windows, test-linux-wheel-system-python, build-docs]
+    if: github.event_name == 'release'
+    runs-on: ubuntu-latest
 
-  #   environment:
-  #     name: pypi
-  #     url: https://pypi.org/p/sasktran
-  #   permissions:
-  #     id-token: write
+    environment:
+      name: pypi
+      url: https://pypi.org/p/sasktran
+    permissions:
+      id-token: write
 
-  #   steps:
-  #     - name: Download linux wheel artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: wheels-linux
-  #         path: dist
+    steps:
+      - name: Download linux wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels-linux
+          path: dist
 
-  #     - name: Download windows wheel artifacts
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: wheels-windows
-  #         path: dist
+      - name: Download windows wheel artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: wheels-windows
+          path: dist
 
-  #     - name: Download mac wheel py310
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: wheels-mac-py310
-  #         path: dist
-
-  #     - name: Download mac wheel py311
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: wheels-mac-py311
-  #         path: dist
-
-  #     - name: Download mac wheel py312
-  #       uses: actions/download-artifact@v4
-  #       with:
-  #         name: wheels-mac-py312
-  #         path: dist
-
-  #     - name: Publish package to PyPI
-  #       uses: pypa/gh-action-pypi-publish@v1.8.7
-  #       with:
-  #         verbose: true
+      - name: Publish package to PyPI
+        uses: pypa/gh-action-pypi-publish@v1.8.7
+        with:
+          verbose: true
