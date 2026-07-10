@@ -62,16 +62,22 @@ cplus_include_path, cplus_library_path = get_cplus_paths()
 
 import pkgutil
 
-try:
-    import numpy as np
-    np_path = np.get_include()
-except:
-    np_path = Path(pkgutil.get_loader('numpy').get_filename()).parent.joinpath('core/include/')
+def get_numpy_include_path():
+    try:
+        import numpy as np
+        return np.get_include()
+    except Exception:
+        loader = pkgutil.get_loader('numpy')
+        if loader is None:
+            return None
+        return Path(loader.get_filename()).parent.joinpath('core/include/')
+
+
+np_path = get_numpy_include_path()
 
 include_dirs      =[  r'../src/core/sasktranif/includes',                                                              # setup the include folders for the compilation
                       r'../src/core/base/nxbase',
-                      np_path,
-                      ] +  cplus_include_path
+                      ] + ([np_path] if np_path is not None else []) +  cplus_include_path
 
 
 if sys.platform =='win32':                                                                              # if we are on a windows Machine
