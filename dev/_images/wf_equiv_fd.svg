@@ -1,0 +1,32 @@
+<svg width="400" height="600" xmlns="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+ <g>
+  <title>background</title>
+  <rect fill="none" id="canvas_background" height="602" width="402" y="-1" x="-1"/>
+  <g display="none" overflow="visible" y="0" x="0" height="100%" width="100%" id="canvasGrid">
+   <rect fill="url(#gridpattern)" stroke-width="0" y="0" x="0" height="100%" width="100%"/>
+  </g>
+ </g>
+ <g>
+  <title>Layer 1</title>
+  <path stroke="#b2b2b2" transform="rotate(90 160.07476806640622,313.2494201660157) " id="svg_12" d="m54.185889,383.471633l105.888877,-140.444392l105.888877,140.444392l-211.777754,0z" stroke-width="0" fill="#6ab0de"/>
+  <line stroke="#2980b9" stroke-linecap="null" stroke-linejoin="null" id="svg_6" y2="558.150446" x2="89.592188" y1="91.443136" x1="89.592188" stroke-width="1.5" fill="#fff"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_7" y2="206.443136" x2="71.366306" y1="206.443136" x1="53.42552" stroke-opacity="null" stroke-width="1.5" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_14" y2="559.369958" x2="62.464684" y1="98.300292" x1="62.464684" stroke-opacity="null" stroke-width="1.5" fill="none"/>
+  <path stroke="#000" id="svg_15" d="m55.120032,97.615006l7,-13.99999l7,13.99999l-14,0z" stroke-opacity="null" stroke-width="1.5" fill="#000000"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_16" y2="419.346552" x2="71.366306" y1="419.346552" x1="53.42552" stroke-opacity="null" stroke-width="1.5" fill="none"/>
+  <line stroke="#000" stroke-linecap="null" stroke-linejoin="null" id="svg_17" y2="520.563706" x2="257.675496" y1="520.563706" x1="30.925328" fill-opacity="null" stroke-opacity="null" stroke-width="1.5" fill="none"/>
+  <path transform="rotate(90 265.3460083007812,520.9616699218751) " stroke="#000" id="svg_18" d="m258.346019,527.96163l7,-13.99999l7,13.99999l-14,0z" stroke-opacity="null" stroke-width="1.5" fill="#000000"/>
+  <line stroke="#000" stroke-dasharray="2,2" stroke-linecap="null" stroke-linejoin="null" id="svg_31" y2="313.419863" x2="75.951182" y1="313.419863" x1="50.318189" stroke-opacity="null" stroke-width="1.5" fill="none"/>
+  <line stroke="#2980b9" stroke-linecap="null" stroke-linejoin="null" id="svg_33" y2="108.627641" x2="162.914455" y1="88.445331" x1="162.914455" stroke-width="1.5" fill="#fff"/>
+  <path stroke="#b2b2b2" transform="rotate(90 162.9144439697266,123.52343750000001) " id="svg_34" d="m152.939653,130.138412l9.974797,-13.229947l9.974796,13.229947l-19.949593,0z" stroke-width="0" fill="#6ab0de"/>
+  <text xml:space="preserve" text-anchor="start" font-family="Lato, sans-serif" font-size="18" id="svg_39" y="104.850709" x="186.962882" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Unperturbed Profile</text>
+  <text transform="matrix(1,0,0,1,0,0) " xml:space="preserve" text-anchor="start" font-family="Lato, sans-serif" font-size="18" id="svg_40" y="129.838882" x="186.954684" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Perturbation Volume</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Lato, sans-serif" font-size="18" id="svg_41" y="155.343171" x="186.962148" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Perturbation Widths</text>
+  <text xml:space="preserve" text-anchor="start" font-family="Lato, sans-serif" font-size="18" id="svg_42" y="179.895311" x="186.958273" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Perturbation Altitude</text>
+  <text style="cursor: move;" xml:space="preserve" text-anchor="start" font-family="Lato, sans-serif" font-size="24" id="svg_43" y="47.337184" x="44.732501" fill-opacity="null" stroke-opacity="null" stroke-width="0" stroke="#000" fill="#000000">Finite-Difference Equivalent</text>
+  <line transform="rotate(90 162.9144287109375,149.03363037109378) " stroke="#000000" stroke-linecap="null" stroke-linejoin="null" id="svg_44" y2="159.124777" x2="162.914445" y1="138.942466" x1="162.914445" stroke-width="1.5" fill="#fff"/>
+  <line transform="rotate(90 162.91445922851562,173.57800292968753) " stroke="#000000" stroke-linecap="null" stroke-linejoin="null" id="svg_45" y2="183.669178" x2="162.91445" y1="163.486868" x1="162.91445" stroke-width="1.5" fill="#fff"/>
+ </g>
+</svg>
