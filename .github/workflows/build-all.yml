@@ -38,8 +38,8 @@ jobs:
       - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
       - name: Validate wheel metadata
         run: |
-          python3 -m pip install twine
-          twine check wheelhouse/*.whl
+          /opt/python/cp310-cp310/bin/python -m pip install twine
+          /opt/python/cp310-cp310/bin/python -m twine check wheelhouse/*.whl
       - run: cd ..
       - run: ls wheelhouse/
 
