@@ -36,6 +36,10 @@ jobs:
       - run: cd wheelhouse
       - run: find . -name "*.whl" -type f -exec auditwheel show '{}' \;
       - run: find . -name "*.whl" -type f -exec auditwheel repair '{}' \; -exec rm '{}' \;
+      - name: Validate wheel metadata
+        run: |
+          python3 -m pip install twine
+          twine check wheelhouse/*.whl
       - run: cd ..
       - run: ls wheelhouse/
 
@@ -427,6 +431,16 @@ jobs:
         with:
           name: wheels-windows
           path: dist
+
+      - name: Setup Python for metadata validation
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.11"
+
+      - name: Validate wheel metadata
+        run: |
+          python -m pip install twine
+          twine check dist/*.whl
 
       - name: Publish package to PyPI
         uses: pypa/gh-action-pypi-publish@v1.8.7

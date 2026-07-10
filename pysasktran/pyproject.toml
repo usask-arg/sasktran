@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>64", "wheel", "setuptools-scm>=8.0"]
+requires = ["setuptools>64", "wheel", "setuptools-scm>=8.0", "numpy"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -21,4 +21,4 @@ classifiers = [
 
 [tool.setuptools_scm]
 root = ".."
-write_to = "pysasktran/sasktran/_version.py"
+write_to = "sasktran/_version.py"
