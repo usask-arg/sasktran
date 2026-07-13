@@ -443,6 +443,6 @@ jobs:
           twine check dist/*.whl
 
       - name: Publish package to PyPI
-        uses: pypa/gh-action-pypi-publish@v1.8.7
+        uses: pypa/gh-action-pypi-publish@release/v1
         with:
           verbose: true
